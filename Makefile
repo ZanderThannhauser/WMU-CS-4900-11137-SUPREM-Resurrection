@@ -26,7 +26,7 @@ SYS     = SYSV
 #.. have permission to write into the appropriate directories.
 
 #.. Where are we?
-HERE	= $(SUPREM4_HOME)
+HERE	= .
 
 #.. What are we going to call it and where does all this go?
 SUPREM	= suprem
@@ -45,13 +45,13 @@ DATADIR = $(HERE)/data
 #CC	= cc
 CC	= gcc
 #FC	= f77
-FC	= g77
+FC	= fort77
 
 #.. What optimization level for the compilers?
 COPT	= -O2
 FOPT	= -O2
-#COPT	= -g
-#FOPT	= -g
+COPT	= -g
+FOPT	= -g
 
 #.. One of two graphics options is supported and must be chosen at
 #.. compile time.  One is for X windows, (specific to X11R4), which

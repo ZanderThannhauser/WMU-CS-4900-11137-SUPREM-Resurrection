@@ -78,15 +78,6 @@ expand.o: ../include/key.h
 main.o: main.c
 main.o: /usr/include/stdio.h
 main.o: ../include/sysdep.h
-main.o: /usr/include/sys/file.h
-main.o: /usr/include/sys/types.h
-#main.o: /usr/include/sys/stdtypes.h
-main.o: /usr/include/sys/sysmacros.h
-#main.o: /usr/include/sys/fcntlcom.h
-main.o: /usr/include/sys/fcntl.h
-#main.o: /usr/include/sys/stdtypes.h
-main.o: /usr/include/sys/stat.h
-main.o: /usr/include/sys/types.h
 main.o: ../include/check.h
 main.o: ../include/key.h
 write.o: write.c
