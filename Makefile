@@ -48,10 +48,11 @@ CC	= gcc
 FC	= fort77
 
 #.. What optimization level for the compilers?
-COPT	= -O2
-FOPT	= -O2
-COPT	= -g
-FOPT	= -g
+COPT	+= -O2
+FOPT	+= -O2
+COPT	+= -g
+COPT	+= -Werror
+FOPT	+= -g
 
 #.. One of two graphics options is supported and must be chosen at
 #.. compile time.  One is for X windows, (specific to X11R4), which

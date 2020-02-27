@@ -30,16 +30,6 @@ SUPREM	= suprem4
 HELPDIR	= $(HERE)/../help
 DATADIR	= $(HERE)/../data
 
-#.. Which C and Fortran Compiler?
-CC	= gcc
-FC	= g77
-
-#.. What optimization level for the compilers?
-COPT	= -O2
-FOPT	= -O2
-#COPT	= -g
-#FOPT	= -g
-
 #.. if you want the X11 plotting uncomment the following.
 #GRLIBS	= -lXaw -lXmu -lXt -lXext -lX11
 #GRINC	=

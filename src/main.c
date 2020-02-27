@@ -45,11 +45,13 @@
 #include "device.h"
 #endif
 
-/*signal location of return*/
-extern onintr();
+// function headers:
+#include "./shell/lex.h"
+#include "./src/misc/cpu.h"
+#include "./src/misc/man.h"
+#include "./src/plot/plot_2d.h"
 
 /*every command subroutine has to be declared here*/
-extern echo(), cpu(), man(), plot_2d();
 extern option(), method(), diffuse(), implant();
 extern sel_var(), contour(), plot_1d(), print_1d();
 extern vacancy(), interstitial(), antimony();
@@ -94,16 +96,10 @@ struct command_table command[NUMCMD] = {
     "", NULL, 47,			"", NULL, 48,
     "", NULL, 49};
 
-main(argc, argv)
-int argc;
-char **argv;
+int main(int argc, char **argv)
 {
     int i;
     char dot_name[80], *t;
-
-/*
-    (void)malloc_debug(2);
- */
 
     /* this is for debugging only */
     if (0) { double x; void pa(); pa(&x, 0, 0); }

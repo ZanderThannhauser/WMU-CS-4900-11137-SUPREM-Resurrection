@@ -29,9 +29,7 @@
  *  systems.								*
  *									*
  ************************************************************************/
-man( par, param )
-char *par;
-int param;
+int man(char *par, int param )
 {
     FILE *help, *more;
     char *s;

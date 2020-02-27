@@ -448,7 +448,7 @@ char *str;
  *  Original:	MEL	11/86						*
  *									*
  ************************************************************************/
-do_echo()
+void do_echo()
 {
 
     if ( *(echo_buffer + echo_bufptr-1) != '\n' )
