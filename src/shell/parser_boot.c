@@ -30,9 +30,7 @@
  *			parser going					*
  *	Orignal: CSR Thu Jan 15 17:07:46 PST 1987			*
  ************************************************************************/
-parser_boot( Pkeyfile, Pprompt)
-     char *Pkeyfile;
-     char *Pprompt;
+void parser_boot(char *Pkeyfile, char *Pprompt)
 {
     int i;
 

@@ -59,6 +59,7 @@
 #include "./plot/plot_1d.h"
 #include "./plot/print_1d.h"
 #include "./oxide/coeffox.h"
+#include "./oxide/mater.h"
 #include "./diffuse/Vacancy.h"
 #include "./diffuse/Interst.h"
 #include "./diffuse/Antimony.h"
@@ -66,8 +67,13 @@
 #include "./diffuse/Phosphorus.h"
 #include "./mesh/rect.h"
 #include "./mesh/initialize.h"
+#include "./diffuse/diff_init.h"
+#include "./dbase/dimen.h"
 #include "./mesh/structure.h"
+#include "./mesh/profile.h"
 #include "./refine/deposit.h"
+#include "./shell/do_action.h"
+#include "./shell/parser_boot.h"
 #include "./refine/etch.h"
 #include "./diffuse/Gold.h"
 #include "./plot/label.h"
@@ -85,8 +91,12 @@
 #include "./diffuse/Zinc.h"
 #include "./diffuse/Carbon.h"
 #include "./diffuse/Generic.h"
+#include "./misc/get.h"
+#include "./gpsup/include.h"
 
 int mode_cmd(char *par, int param);
+
+int yyparse();
 
 struct command_table command[NUMCMD] = {
     "echo", echo, 0,			"man", man, 0,
@@ -167,9 +177,6 @@ int main(int argc, char **argv)
 #endif
     vxmin = vymin = 0.0;	vxmax = vymax = 1.0;
 
-    /*plot initialization*/
-    xgPlotInit();
-
     /*some grid initialization*/
     rect_boot();
 
@@ -200,7 +207,6 @@ int main(int argc, char **argv)
     if (cpufile != NULL)
 	fclose(cpufile);
 
-    xgUpdate(1);
 
 }
 

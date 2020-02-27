@@ -59,7 +59,7 @@ char XY[]="xyz";
 /*-----------------RECT_BOOT--------------------------------------------
  * Initialize rectangular mesh data.
  *----------------------------------------------------------------------*/
-rect_boot()
+void rect_boot()
 {
     static int before = 0;
     int i, j;
@@ -100,9 +100,7 @@ rect_boot()
  * Return value: none
  * Diagnostics: complains if there are too many input nodes
  *----------------------------------------------------------------------*/
-rline (par, param)
-    char *par;
-    int param;
+int rline(char *par, int param)
 {
     int i, j, dim, nu;
     double lloc, spa;

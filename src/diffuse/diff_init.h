@@ -1,0 +1,1 @@
+void diffuse_init();

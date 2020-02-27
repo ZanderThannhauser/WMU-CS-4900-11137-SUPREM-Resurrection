@@ -29,8 +29,7 @@
  *  Original:	MEL	10/84						*
  *									*
  ************************************************************************/
-set_dim( dim )
-int dim;
+void set_dim( int dim)
 {
     switch( dim ) {
     case 1 :

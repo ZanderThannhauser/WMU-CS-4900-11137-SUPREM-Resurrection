@@ -71,7 +71,7 @@ extern Gboundary(), Gactive();
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-diffuse_init()
+void diffuse_init()
 {
     int i, j, k, l;
     int mat, mat2;

@@ -39,7 +39,7 @@ extern poisson_block(), electron_block(), hole_block(), circuit_setup();
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-device_init( )
+void device_init()
 {
     int mat, mat2, i;
 
@@ -270,8 +270,7 @@ int device( char *par, int param )
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-init_dev(temp)
-double temp;
+void init_dev(double temp)
 {
     register int i, j, imp;
     register int Ps;

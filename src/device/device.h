@@ -1,1 +1,2 @@
-int device( char *par, int param );
+int device(char *par, int param);
+void device_init();
