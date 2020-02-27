@@ -9,27 +9,6 @@
 #
 #----------------------------------------------------------------------
 
-# change these lines when porting to other machines
-#
-# SYS should be one of {BSD, CONVEX, HPUX, CRAY}
-# BSD - "vanilla" BSD4.2 system
-# SYSV - vanilla system V unix
-# CONVEX - like BSD but uses vectorizing Fortran sparse matrix routines
-# HPUX - example of a non-BSD system
-# CRAY - like HPUX, but uses vectorizing Fortran sparse matrix routines
-SYS     = SYSV
-
-#.. Where are we?
-HERE	 = .
-
-#.. What are we going to call it and where does it go?
-BINDIR  = $(HERE)/../bin
-SUPREM	= suprem4
-
-#.. Edit these to change the location of the help and data files
-HELPDIR	= $(HERE)/../help
-DATADIR	= $(HERE)/../data
-
 #.. if you want the X11 plotting uncomment the following.
 #GRLIBS	= -lXaw -lXmu -lXt -lXext -lX11
 #GRINC	=
