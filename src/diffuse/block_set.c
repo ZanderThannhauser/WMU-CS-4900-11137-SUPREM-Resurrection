@@ -28,6 +28,8 @@
 #include "diffuse.h"
 #include "matrix.h"
 
+#include "../include/diffuse.h"
+
 #ifndef ardent
 #define pragma define
 #endif

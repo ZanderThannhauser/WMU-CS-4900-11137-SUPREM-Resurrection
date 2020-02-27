@@ -321,7 +321,7 @@ int no_exec;
 
     (void)check_x();
 
-    if (check(par, cards[command[index].param]) == -1) {
+    if (check(par, r[command[index].param]) == -1) {
 	fprintf(stderr, "errors detected on command input\n");
 	return;
     }

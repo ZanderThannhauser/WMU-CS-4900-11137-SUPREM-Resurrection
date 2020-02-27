@@ -32,7 +32,7 @@
  *  memory for the mesh information.					*
  *									*
  ************************************************************************/
-dis_all()
+void dis_all()
 {
     int i;
     while( nsreg > 0 ) free_skel(0);
@@ -158,8 +158,7 @@ int waste()
 }
 
 
-lose_impurity( imp)
-     int imp;
+void lose_impurity(int imp)
 {
     int i, j, sol = imptosol[ imp ];
 
@@ -180,28 +179,28 @@ lose_impurity( imp)
 /*-----------------MeshValid--------------------------------------------
  * Try not to crash due to absence of mesh.
  *----------------------------------------------------------------------*/
-MeshValid()
+int MeshValid()
 {
-    /* This is as good a guess as any. */
-    /* Maybe someday we'll keep a global flag */
-    return( ne != 0 && np != 0 && nn != 0);
+	/* This is as good a guess as any. */
+	/* Maybe someday we'll keep a global flag */
+	return( ne != 0 && np != 0 && nn != 0);
 }
 
-MeshInvalidate()
+void MeshInvalidate()
 {
-    ne = 0;
-    np = 0;
-    nn = 0;
+	ne = 0;
+	np = 0;
+	nn = 0;
 }
 
-InvalidMeshCheck()
+int InvalidMeshCheck()
 {
-    if( !MeshValid()) {
-	fprintf( stderr, "No mesh defined!\n");
-	return(-1);
-    }
-    else
-	return(0);
+	if( !MeshValid()) {
+		fprintf( stderr, "No mesh defined!\n");
+		return(-1);
+	}
+	else
+		return(0);
 }
 
 

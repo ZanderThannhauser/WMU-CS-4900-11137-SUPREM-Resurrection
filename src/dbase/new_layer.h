@@ -1,0 +1,1 @@
+void NativeOxide(double thick);

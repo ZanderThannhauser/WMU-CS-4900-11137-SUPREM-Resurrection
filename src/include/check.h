@@ -45,29 +45,38 @@
 
 /*define a type for the data in a table field*/
 typedef union {
-    int ival;
-    float dval;
-    char *sval;
-    } val_str;
+	int ival;
+	float dval;
+	char *sval;
+} val_str;
 
 /*define the boolean expression structure*/
 struct bool_exp {
-    val_str value;		/*the value at this node*/
-    int type;			/*the type of value that was*/
-    struct bool_exp *right;	/*the right hand son*/
-    struct bool_exp *left;	/*the left hand son*/
-    };
+	val_str value;		/*the value at this node*/
+	int type;		/*the type of value that was*/
+	struct bool_exp *right;	/*the right hand son*/
+	struct bool_exp *left;	/*the left hand son*/
+};
 
 /*structure to store away an individual parameter*/
 struct par_str {
-    char name[12];		/*the parameter name*/
-    char *units;		/*the units to specify the parameter in*/
-    val_str def;		/*the parameter default value*/
-    val_str value;		/*the parameter value*/
-    struct bool_exp *bexp;	/*the parameter legality function*/
-    int type;			/*type of the parameter*/
-    char *err_msg;		/*pointer to the error message at this node*/
-    struct par_str **param;	/*list of sub parameters*/
-    };
+	char name[12];		/*the parameter name*/
+	char *units;		/*the units to specify the parameter in*/
+	val_str def;		/*the parameter default value*/
+	val_str value;		/*the parameter value*/
+	struct bool_exp *bexp;	/*the parameter legality function*/
+	int type;		/*type of the parameter*/
+	char *err_msg;		/*pointer to the error message at this node*/
+	struct par_str **param;	/*list of sub parameters*/
+};
 
 EXTERN struct par_str *cards[NUMPAR];
+
+
+
+
+
+
+
+
+

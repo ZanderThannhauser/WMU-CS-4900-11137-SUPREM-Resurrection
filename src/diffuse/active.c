@@ -32,6 +32,8 @@
 #include "plot.h"
 #include "device.h"
 
+#include "../include/diffuse.h"
+
 /************************************************************************
  *									*
  *	active() - This routine computes the active concentration and	*

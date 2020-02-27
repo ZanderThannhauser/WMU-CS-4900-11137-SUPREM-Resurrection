@@ -132,11 +132,11 @@ int get_int(struct par_str * par, char *name)
  ************************************************************************/
 float get_float(struct par_str * par, char *name)
 {
-    val_str value;
+	val_str value;
 
-    if (get_value(par->param, name, &value) != -1)
-	return( value.dval );
-    return(0);
+	if (get_value(par->param, name, &value) != -1)
+		return( value.dval );
+	return(0);
 }
 
 
@@ -153,10 +153,20 @@ float get_float(struct par_str * par, char *name)
  ************************************************************************/
 int is_specified(struct par_str * par, char *name)
 {
-    int temp;
-    val_str value;
+	int temp;
+	val_str value;
 
-    if ((temp=get_value(par->param, name, &value)) != -1)
-	return( temp );
-    return(0);
+	if ((temp=get_value(par->param, name, &value)) != -1)
+		return( temp );
+	
+	return(0);
 }
+
+
+
+
+
+
+
+
+

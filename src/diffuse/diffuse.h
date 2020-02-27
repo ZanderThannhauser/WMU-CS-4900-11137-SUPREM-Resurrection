@@ -1,1 +1,2 @@
-int diffuse( char *par, int param );
+
+int diffuse(char *par,int param);

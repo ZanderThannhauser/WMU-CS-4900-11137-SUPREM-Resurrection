@@ -29,6 +29,8 @@
 #include "diffuse.h"
 #include "matrix.h"
 
+#include "../include/diffuse.h"
+
 #include "plot.h"
 extern float form_eval();
 

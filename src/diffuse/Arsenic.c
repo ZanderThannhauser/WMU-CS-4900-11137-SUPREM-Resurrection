@@ -20,6 +20,8 @@
 #include "material.h"
 #include "diffuse.h"
 
+#include "../include/diffuse.h"
+
 /*definitions for impurity constants as a function of material*/
 		/*pre exp constant with neutral V*/
 #define Dix0(M)	impur[As].constant[M][1][IS_IMPLANTED(As)]

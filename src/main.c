@@ -225,16 +225,33 @@ int main(int argc, char **argv)
  ************************************************************************/
 int mode_cmd( char *par, int param )
 {
-#   define CHOSEN(x) (is_specified( param, x) && get_bool( param, x))
+	
+	# define CHOSEN(x) (is_specified( param, x) && get_bool( param, x))
 
-    /*how much barfola the user wants*/
-    if( CHOSEN("one.dim")) {
-	set_dim( 1 );
-    }
-    if( CHOSEN("two.dim")) {
-       set_dim( 2 );
-    }
+	/*how much barfola the user wants*/
+	if( CHOSEN("one.dim")) {
+		set_dim( 1 );
+	}
+	if( CHOSEN("two.dim")) {
+		set_dim( 2 );
+	}
 
-    return(0);
+	return(0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

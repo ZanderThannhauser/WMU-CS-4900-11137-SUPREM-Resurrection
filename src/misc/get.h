@@ -1,1 +1,1 @@
-int is_specified(struct par_str * par, char *name);
+int is_specified(struct par_str *par, char *name);

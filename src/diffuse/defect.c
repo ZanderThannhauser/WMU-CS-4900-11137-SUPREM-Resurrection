@@ -21,6 +21,8 @@
 #include "matrix.h"
 #include "diffuse.h"
 
+#include "../include/diffuse.h"
+
 static int vadd = 0, iadd = 0, tadd = 0;
 
 /************************************************************************

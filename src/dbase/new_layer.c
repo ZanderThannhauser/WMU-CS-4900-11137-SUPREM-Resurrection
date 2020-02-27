@@ -37,7 +37,6 @@
 #define dot(A,B) ((mode == ONED)?((A)[0]*(B)[0]):((A)[0]*(B)[0]+(A)[1]*(B)[1]))
 
 
-
 /*-----------------NativeOxide------------------------------------------
  * Deposits oxide on bare silicon surfaces.
  * Like new_layer but different.
@@ -50,8 +49,7 @@
  * Insinuates oxide under nitride if nitride on bare silicon.
  * Restores all geometry when done.
  *----------------------------------------------------------------------*/
-NativeOxide(thick)
-    double thick;		/* That's me */
+void NativeOxide(double thick) /* That's me */
 {
     int in;			/* Silicon node to deposit on */
     int addedOx=0;		/* whether anything happened */
@@ -146,7 +144,6 @@ NativeOxide(thick)
 }
 
 
-
 /*-----------------NEW_LAYER--------------------------------------------
  * Inserts a thin new layer of oxide at the Si/SiO2 interface.
  *
@@ -226,7 +223,6 @@ new_layer(Msil, Mox, oxide_grid, dt )
 	
 
 
-
 /*-----------------SplitNode-------------------------------------------
  * This routine splits a boundary point in two, separated by a given delta.
  * The area between the two points is to be later filled with triangles
@@ -312,7 +308,6 @@ exposed(in)
 }
 	
 
-
 /*-----------------SPLIT_THICK------------------------------------------
  * A heuristic function to decide when oxide nodes need splitting
  * Returns suitable displacement of node, 0 if none.
