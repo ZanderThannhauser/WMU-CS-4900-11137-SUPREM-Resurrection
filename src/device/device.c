@@ -151,9 +151,7 @@ device_init( )
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-device( par, param )
-char *par;
-int param;
+int device( char *par, int param )
 {
     double *area;
     int tfl, tfm;

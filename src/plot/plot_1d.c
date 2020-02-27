@@ -34,9 +34,7 @@
  *  Original:	MEL	1/85	(modeled on pisces2)			*
  *									*
  ************************************************************************/
-plot_1d( par, param )
-char *par;
-int param;
+int plot_1d( char *par, int param )
 {
     int boundary;
     int line_type;

@@ -45,28 +45,48 @@
 #include "device.h"
 #endif
 
-// function headers:
-#include "./shell/lex.h"
-#include "./src/misc/cpu.h"
-#include "./src/misc/man.h"
-#include "./src/plot/plot_2d.h"
+// function headers for command subroutines:
+#include "./misc/echo.h"
+#include "./misc/cpu.h"
+#include "./misc/man.h"
+#include "./plot/plot_2d.h"
+#include "./plot/option.h"
+#include "./math/symb.h"
+#include "./diffuse/diffuse.h"
+#include "./implant/implant.h"
+#include "./plot/select.h"
+#include "./plot/contour.h"
+#include "./plot/plot_1d.h"
+#include "./plot/print_1d.h"
+#include "./oxide/coeffox.h"
+#include "./diffuse/Vacancy.h"
+#include "./diffuse/Interst.h"
+#include "./diffuse/Antimony.h"
+#include "./diffuse/Arsenic.h"
+#include "./diffuse/Phosphorus.h"
+#include "./mesh/rect.h"
+#include "./mesh/initialize.h"
+#include "./mesh/structure.h"
+#include "./refine/deposit.h"
+#include "./refine/etch.h"
+#include "./diffuse/Gold.h"
+#include "./plot/label.h"
+#include "./oxide/viscous.h"
+#include "./diffuse/Cesium.h"
+#include "./diffuse/Trap.h"
+#include "./device/device.h"
+#include "./diffuse/Boron.h"
+#include "./diffuse/Beryllium.h"
+#include "./diffuse/Magnesium.h"
+#include "./diffuse/Selenium.h"
+#include "./diffuse/Silicon.h"
+#include "./diffuse/Tin.h"
+#include "./diffuse/Germanium.h"
+#include "./diffuse/Zinc.h"
+#include "./diffuse/Carbon.h"
+#include "./diffuse/Generic.h"
 
-/*every command subroutine has to be declared here*/
-extern option(), method(), diffuse(), implant();
-extern sel_var(), contour(), plot_1d(), print_1d();
-extern vacancy(), interstitial(), antimony();
-extern arsenic(), boron(), regrid(), coeffox();
-extern phosphorus(), rregion(), redge(), rline();
-extern initialize(), structure();
-extern user_deposit(), user_etch();
-extern gold(), draw_lab();
-extern stress_analysis();
-extern c_mater(), cesium();
-extern uPause(), trap(), user_print(), profile();
-extern mode_cmd();
-extern device();
-extern beryllium(), magnesium(), selenium(), silicon(), tin();
-extern germanium(), zinc(), carbon(), generic();
+int mode_cmd(char *par, int param);
 
 struct command_table command[NUMCMD] = {
     "echo", echo, 0,			"man", man, 0,
@@ -197,9 +217,7 @@ int main(int argc, char **argv)
  *  Original:	MEL	10/84						*
  *									*
  ************************************************************************/
-mode_cmd( par, param )
-char *par;
-int param;
+int mode_cmd( char *par, int param )
 {
 #   define CHOSEN(x) (is_specified( param, x) && get_bool( param, x))
 

@@ -46,9 +46,7 @@
 /*-----------------USER_ETCH--------------------------------------------
  * User interface to etching routine.
  *----------------------------------------------------------------------*/
-user_etch( par, param)
-    char *par;
-    int param;
+int user_etch( char *par, int param)
 {
     register int i;
     static int mater_save;

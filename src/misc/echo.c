@@ -23,9 +23,7 @@
  *	echo( par, param ) - this routine prints its parameter string.  *
  *									*
  ************************************************************************/
-echo( par, param )
-char *par;
-int param;
+int echo( char *par, int param )
 {
     char tmp[512];
     char *err;
@@ -65,7 +63,7 @@ int param;
  * Nice for reading someone else's input deck and checking it out on
  * the fly.
  *----------------------------------------------------------------------*/
-uPause()
+int uPause(char* unused_0, int unused_1)
 {
     char *CommandBuf;
     char *s;
@@ -105,9 +103,7 @@ uPause()
  *	user_print( par, param ) - this routine prints its parameter string.  *
  *									*
  ************************************************************************/
-user_print( par, param )
-char *par;
-int param;
+int user_print( char *par, int param )
 {
     char *argv[50];
     char tmp[512];

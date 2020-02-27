@@ -490,9 +490,7 @@ double *ar1, *ar2;
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-interstitial( par, param )
-char *par;
-int param;
+int interstitial( char *par, int param )
 {
     int mat, mat2 = -1;
     int imp = -1;

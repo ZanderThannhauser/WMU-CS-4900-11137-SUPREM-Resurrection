@@ -173,9 +173,7 @@ struct bound_str *bval;
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-cesium( par, param )
-char *par;
-int param;
+int cesium( char *par, int param)
 { 
     int i, j;
     int tmpfl, imp_flag, gro_flag;

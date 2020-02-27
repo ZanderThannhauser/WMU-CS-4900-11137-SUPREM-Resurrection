@@ -52,9 +52,7 @@
  *	Original :	Mark E. Law	Oct, 1984			*
  *									*
  ************************************************************************/
-method( par, param )
-char *par;
-int param;
+int method( char *par, int param )
 {
     char *s;
     float tmpf;

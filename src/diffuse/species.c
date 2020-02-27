@@ -37,9 +37,7 @@
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-clear_row(n, sol)
-int n;
-int sol;
+void clear_row(int n, int sol)
 {
     register int j,k;
 

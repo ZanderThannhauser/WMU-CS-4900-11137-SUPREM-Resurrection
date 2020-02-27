@@ -38,9 +38,7 @@
  *		MEL	4/87   rewrote the work portion			*
  *		LCC     4/90   add 1-D mode				*
  ************************************************************************/
-user_deposit( par, param )
-char *par;
-int param;
+int user_deposit( char *par, int param )
 {
     register int mater, ndiv, i;
     double thick;

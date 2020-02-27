@@ -35,9 +35,7 @@
  *  Original:	MEL	1/85	(modeled on pisces2)			*
  *									*
  ************************************************************************/
-print_1d(par, param )
-char *par;
-int param;
+int print_1d(char *par, int param )
 {
     float x, xmin, xmax, ymin, ymax;
     float y;

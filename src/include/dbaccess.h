@@ -258,7 +258,7 @@ extern float area_tri();
 
 /*EDGE STUFF*/
 /*n1, n2 returns edge number*/
-extern mk_edg();
+int mk_edg(int n1, int n2);
 #define nd_edg(A,B)		edg[A]->nd[B]
 #define pt_edg(A,B)		pt_nd(edg[A]->nd[B])
 #define num_tri_edg(A)		edg[A]->ele.num
@@ -284,7 +284,7 @@ extern double l_edge();
 
 /*REGION STUFF*/
 #define num_reg 	nreg
-extern mk_reg();	
+int mk_reg(int mat);
 #define mat_reg(A)	reg[A]->mater
 
 #define num_edg_reg(A)	reg[A]->edg.num

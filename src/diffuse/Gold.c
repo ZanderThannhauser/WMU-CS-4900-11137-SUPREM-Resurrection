@@ -173,9 +173,7 @@ Aucoupling()
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-gold( par, param )
-char *par;
-int param;
+int gold( char *par, int param)
 { 
     int i, j;
     int tmpfl, imp_flag, gro_flag;

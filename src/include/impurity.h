@@ -181,8 +181,7 @@ extern double get_conc();
 #define right_side(A, B, C, D) C[B][A] += D
 
 
-extern clear_row();
-extern remove_time();
+void clear_row(int n, int sol);
 extern double get_area();
 
 /*

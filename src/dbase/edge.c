@@ -29,8 +29,7 @@ static int maxedg = 0;
 /*
  * Create an edge from scratch
  */
-mk_edg(n1, n2)
-int n1, n2;
+int mk_edg(int n1, int n2)
 {
     if (ned + 1 >= maxedg) {
 	if ( maxedg == 0 ) {

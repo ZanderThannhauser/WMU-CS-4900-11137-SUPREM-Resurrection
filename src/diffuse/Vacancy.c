@@ -420,9 +420,7 @@ struct call_str *cs;
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-vacancy( par, param )
-char *par;
-int param;
+int vacancy( char *par, int param )
 {
     int mat, mat2 = -1;
     int imp = -1;

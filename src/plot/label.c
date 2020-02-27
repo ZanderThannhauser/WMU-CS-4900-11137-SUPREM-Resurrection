@@ -33,9 +33,8 @@
  *  Original:	MEL	1/87						*
  *									*
  ************************************************************************/
-draw_lab( par, param )
-char *par;
-int param;
+
+int draw_lab( char *par, int param )
 {
     char *label;
     float x,y;

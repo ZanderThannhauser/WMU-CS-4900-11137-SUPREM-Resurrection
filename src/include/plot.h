@@ -29,9 +29,6 @@ EXTERN int sel_log;
 EXTERN int znn;
 EXTERN float *z;
 
-/*function for quick sort of floats*/
-extern compar();
-
 /*following stuff is all used in the three dimensional code*/
 /*definitions of the corners we are looking at*/
 #define RIGHT 0x01

@@ -283,9 +283,7 @@ double *noni;
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-antimony( par, param )
-char *par;
-int param;
+int antimony( char *par, int param )
 { 
     int mat;
     int mat2 = -1;

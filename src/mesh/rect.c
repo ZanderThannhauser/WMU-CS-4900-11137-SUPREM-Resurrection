@@ -450,9 +450,7 @@ squares(new_mr)
 
 #define chosen(A) is_specified( param, A) && get_bool( param, A)
 
-rregion(par, param)
-    char *par;
-    int param;
+int rregion(char *par, int param)
 {
     int mater;
 
@@ -491,9 +489,7 @@ rregion(par, param)
 /*-----------------REDGE------------------------------------------------
  * Read user edge data.
  *----------------------------------------------------------------------*/
-redge(par, param)
-    char *par;
-    int param;
+int redge(char *par, int param)
 {
     /* There is a new edge */
     nuj++;

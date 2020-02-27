@@ -38,9 +38,7 @@
  *  Original :	MEL	Sept, 1988					*
  *									*
  ************************************************************************/
-profile( par, param )
-char *par;
-int param;
+int profile( char *par, int param )
 {
     register int i;
     char *infile;

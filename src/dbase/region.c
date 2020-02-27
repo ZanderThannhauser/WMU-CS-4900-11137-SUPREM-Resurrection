@@ -24,8 +24,7 @@
 #include <material.h>	/* So we can set nmat to 0 - want this? */
 
 
-mk_reg(mat)
-int mat;
+int mk_reg(int mat)
 {
     if (nreg+1 > MAXREG) panic ("Too many edges generated");
     reg[nreg] = (reg_typ *) malloc (sizeof (reg_typ));

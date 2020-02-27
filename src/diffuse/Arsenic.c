@@ -385,9 +385,7 @@ struct bound_str *bval;
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-arsenic( par, param )
-char *par;
-int param;
+int arsenic( char *par, int param )
 { 
     int mat;
     int mat2 = -1;

@@ -299,9 +299,7 @@ struct bound_str *bval;
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-selenium( par, param )
-char *par;
-int param;
+int selenium( char *par, int param )
 { 
     int mat;
     int mat2 = -1;

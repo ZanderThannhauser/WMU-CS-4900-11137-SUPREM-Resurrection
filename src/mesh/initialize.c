@@ -35,9 +35,7 @@
  *  Original :	MEL	Apr, 1986					*
  *									*
  ************************************************************************/
-initialize( par, param )
-char *par;
-int param;
+int initialize( char *par, int param )
 {
     int ier;
     int lflip;

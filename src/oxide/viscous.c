@@ -86,13 +86,11 @@ visco_growth( temp, dt)
     return;
 }
 
-
+
 /*-----------------Stress_Analysis--------------------------------------
  * Thermal elastic stresses.
  *----------------------------------------------------------------------*/
-stress_analysis( par, param)
-     char *par;
-     int param;
+int stress_analysis( char *par, int param)
 {
     float temp1=1000, temp2=1000;
     int element;

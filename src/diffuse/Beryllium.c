@@ -298,9 +298,7 @@ struct bound_str *bval;
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-beryllium( par, param )
-char *par;
-int param;
+int beryllium( char *par, int param )
 { 
     int mat;
     int mat2 = -1;

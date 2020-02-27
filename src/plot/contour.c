@@ -38,9 +38,7 @@
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-contour( par, param )
-char *par;
-int param;
+int contour( char *par, int param )
 {
     float value;
     float arr[MAXVRT][3], p[2][3];

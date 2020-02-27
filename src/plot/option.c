@@ -40,9 +40,7 @@
  *  Original:	MEL	10/84						*
  *									*
  ************************************************************************/
-option( par, param )
-char *par;
-int param;
+int option( char *par, int param )
 {
 
 #   define CHOSEN(x) (is_specified( param, x) && get_bool( param, x))

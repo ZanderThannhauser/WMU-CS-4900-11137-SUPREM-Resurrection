@@ -30,9 +30,7 @@
  *  Original:	MEL	6/87						*
  *									*
  ************************************************************************/
-c_mater( par, param )
-char *par;
-int param;
+int c_mater( char *par, int param )
 {
     int mat = -1;
     int wd = -1;

@@ -18,9 +18,6 @@
 #define EXTERN extern
 #endif
 
-/*typedef a pointer to a function, (it works, trust me)*/
-typedef int (* PTR_FUNC)();
-
 EXTERN char *prompt;
 
 /*these variables are used for input processing*/
@@ -86,9 +83,9 @@ EXTERN int depth;
 /*this structure and information is used to keep pointers to functions*/
 struct command_table {
 	char *name;
-	PTR_FUNC func;
+	int (*func)(char*, int);
 	int param;
-	};
+};
 
 #define NUMCMD 50
 extern struct command_table command[NUMCMD];

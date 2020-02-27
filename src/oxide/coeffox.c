@@ -56,9 +56,7 @@
  * Original: CSR 4/86
  *----------------------------------------------------------------------*/
 
-coeffox (par, param)
-    char *par;
-    int param;
+int coeffox(char *par, int param)
 {
     int ornt=(-1);	/* the orientation for which the coefficient applies */
     int spes;		/* which oxidizing species we mean */

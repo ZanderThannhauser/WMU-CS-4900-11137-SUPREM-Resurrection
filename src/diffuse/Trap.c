@@ -46,9 +46,7 @@
  *  Original:	MEL	11/85						*
  *									*
  ************************************************************************/
-trap(par, param)
-char *par;
-int param;
+int trap(char *par, int param)
 {
     int mat;
 

@@ -37,9 +37,7 @@
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-sel_var( par, param )
-char *par;
-int param;
+int sel_var( char *par, int param )
 {
     char *zstr;
     struct vec_str *zexp;

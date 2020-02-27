@@ -309,9 +309,7 @@ double *noni;
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-phosphorus( par, param )
-char *par;
-int param;
+int phosphorus( char *par, int param )
 { 
     int mat;
     int mat2 = -1;

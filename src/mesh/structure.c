@@ -60,9 +60,7 @@
  *  Added parameter for string etch files for SAMPLE link		*
  *  Goodwin Chin	October, 1990					*
  ************************************************************************/
-structure( par, param )
-char *par;
-int param;
+int structure( char *par, int param )
 {
     int ier;
     int lflip;

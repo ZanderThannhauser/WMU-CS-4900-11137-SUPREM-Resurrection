@@ -323,9 +323,7 @@ double *noni;
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-boron( par, param )
-char *par;
-int param;
+int boron( char *par, int param )
 { 
     int mat;
     int mat2 = -1;
