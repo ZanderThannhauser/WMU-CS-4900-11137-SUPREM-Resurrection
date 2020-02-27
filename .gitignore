@@ -4,6 +4,6 @@ data/
 *.a
 *.uk
 
-./src/suprem
-./src/keyread/keyread
-./bin/suprem
+suprem
+keyread
+suprem
