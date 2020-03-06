@@ -12,55 +12,46 @@
 /*   diff_init.c                Version 5.1     */
 /*   Last Modification : 7/3/91 10:50:00 */
 
-
 #include <stdio.h>
-#include "global.h"
-#include "constant.h"
-#include "impurity.h"
-#include "defect.h"
-#include "material.h"
-#include "diffuse.h"
-#include "check.h"
 
-extern time_val();
-extern double Bdiff_coeff();
-extern Bboundary(), Bactive(), Gaactive(), Gaboundary();
-extern double Asdiff_coeff();
-extern Asboundary(), Asactive();
-extern double Sbdiff_coeff();
-extern Sbboundary(), Sbactive();
-extern double Pdiff_coeff();
-extern Pboundary(), Pactive();
-extern double Idiff_coeff();
-extern Icoupling(), Iboundary(), Iactive(), Itime_val();
-extern double Vdiff_coeff();
-extern Vcoupling(), Vboundary(), Vactive(), Vtime_val();
-extern double O2diff_coeff(), H2Odiff_coeff();
-extern O2boundary(), H2Oboundary();
-extern double Audiff_coeff(); 
-extern Auboundary(), Aucoupling();
-extern double Csdiff_coeff(); 
-extern Csboundary(); 
-extern IVblock_set(), PSbblock_set(), BAsblock_set(), poisson_block();
-extern neut_block_set();
-extern double Bediff_coeff();
-extern Beboundary(), Beactive();
-extern double Mgdiff_coeff();
-extern Mgboundary(), Mgactive();
-extern double Sediff_coeff();
-extern Seboundary(), Seactive();
-extern double Sidiff_coeff();
-extern Siboundary(), Siactive();
-extern double Sndiff_coeff();
-extern Snboundary(), Snactive();
-extern double Gediff_coeff();
-extern Geboundary(), Geactive();
-extern double Zndiff_coeff();
-extern Znboundary(), Znactive();
-extern double Cdiff_coeff();
-extern Cboundary(), Cactive();
-extern double Gdiff_coeff();
-extern Gboundary(), Gactive();
+#include "./include/constant.h"
+#include "./include/check.h"
+#include "./include/defect.h"
+#include "./include/diffuse.h"
+#include "./include/global.h"
+#include "./include/impurity.h"
+#include "./include/material.h"
+
+
+
+// 2020 includes:
+#include "./diffuse/Antimony.h"
+#include "./diffuse/defect.h"
+#include "./diffuse/Vacancy.h"
+#include "./diffuse/Interst.h"
+#include "./diffuse/Boron.h"
+#include "./diffuse/Arsenic.h"
+#include "./diffuse/block_set.h"
+#include "./diffuse/Cesium.h"
+#include "./diffuse/setup.h"
+#include "./diffuse/Magnesium.h"
+#include "./diffuse/Phosphorus.h"
+#include "./diffuse/Gold.h"
+#include "./diffuse/Beryllium.h"
+#include "./diffuse/Selenium.h"
+#include "./diffuse/Silicon.h"
+#include "./diffuse/Tin.h"
+#include "./diffuse/Germanium.h"
+#include "./diffuse/Zinc.h"
+#include "./diffuse/Carbon.h"
+#include "./diffuse/Generic.h"
+#include "./oxide/Oxidant.h"
+#include "diff_init.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
+
 
 
 /************************************************************************
@@ -71,8 +62,7 @@ extern Gboundary(), Gactive();
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void diffuse_init()
-{
+void diffuse_init() {
     int i, j, k, l;
     int mat, mat2;
 
@@ -80,35 +70,54 @@ void diffuse_init()
 
     /* When we have a materials clearinghouse, this will go there*/
     for (mat = 0; mat < MAXMAT; mat++)
-	for (mat2 = 0; mat2 < MAXMAT; mat2++)
-	    alpha[ mat][ mat2] = 1.0;
+        for (mat2 = 0; mat2 < MAXMAT; mat2++)
+            alpha[mat][mat2] = 1.0;
 
     /*set up each impurity in turn*/
-    for(i = 0; i < MAXIMP; i++) {
-	imptosol[i] = -1;
-	soltoimp[i] = -1;
+    for (i = 0; i < MAXIMP; i++) {
+        imptosol[i] = -1;
+        soltoimp[i] = -1;
 
-	/* clear all flags except acceptor and active */
-	CLEAR_FLAGS(i, (ALL_FLAGS^(ACTIVE_ACCEPTOR|ACTIVE)));
+        /* clear all flags except acceptor and active */
+        CLEAR_FLAGS(i, (ALL_FLAGS ^ (ACTIVE_ACCEPTOR | ACTIVE)));
 
-	switch (i) {
+        switch (i) {
 
-	/*clear the flags for the velocities and stresses, active conc*/
-	case XVEL: case YVEL: case DELA:
-	case Asa: case Sba: case Pa: case Ba:
-	case Sxx: case Syy: case Sxy: case GRN:
-	case iBea: case iMga: case iSea: case iSia: case iSna:
-	case iGea: case iZna: case iCa: case iGa:
-	case V: case I: case O2: case H2O: case T: case Psi:
-		break;
+        /*clear the flags for the velocities and stresses, active conc*/
+        case XVEL:
+        case YVEL:
+        case DELA:
+        case Asa:
+        case Sba:
+        case Pa:
+        case Ba:
+        case Sxx:
+        case Syy:
+        case Sxy:
+        case GRN:
+        case iBea:
+        case iMga:
+        case iSea:
+        case iSia:
+        case iSna:
+        case iGea:
+        case iZna:
+        case iCa:
+        case iGa:
+        case V:
+        case I:
+        case O2:
+        case H2O:
+        case T:
+        case Psi:
+            break;
 
-	/*the rest are mobile diffusers*/
-	default:
-		SET_FLAGS(i, (DIFFUSING | MOBILE) );
-		break;
-	}
+        /*the rest are mobile diffusers*/
+        default:
+            SET_FLAGS(i, (DIFFUSING | MOBILE));
+            break;
+        }
     }
-
 
     /*vacancies*/
     impur[V].diff_coeff = Vdiff_coeff;
@@ -119,25 +128,25 @@ void diffuse_init()
     impur[V].algebc = NULL;
     impur[V].time_val = Vtime_val;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[V].constant[mat][i][0] = 0.0;
-	    impur[V].constant[mat][i][1] = 0.0;
-	}
-	for(j = 0; j < MAXCHG; j++) {
-	    Dfrac0[V][mat][j] = 0.0;
-	    DfracE[V][mat][j] = 0.0;
-	    for(i = 0; i < MAXIMP; Kcouple[V][mat][i++][j] = 0.0);
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[V].seg[SEG0][mat][mat2] = 1.0;
-	    impur[V].seg[SEGE][mat][mat2] = 0.0;
-	    impur[V].seg[TRN0][mat][mat2] = 0.0;
-	    impur[V].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[V].constant[mat][i][0] = 0.0;
+            impur[V].constant[mat][i][1] = 0.0;
+        }
+        for (j = 0; j < MAXCHG; j++) {
+            Dfrac0[V][mat][j] = 0.0;
+            DfracE[V][mat][j] = 0.0;
+            for (i = 0; i < MAXIMP; Kcouple[V][mat][i++][j] = 0.0)
+                ;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[V].seg[SEG0][mat][mat2] = 1.0;
+            impur[V].seg[SEGE][mat][mat2] = 0.0;
+            impur[V].seg[TRN0][mat][mat2] = 0.0;
+            impur[V].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
     SET_FLAGS(V, PSEUDO);
-
 
     /*interstitials*/
     impur[I].diff_coeff = Idiff_coeff;
@@ -148,22 +157,23 @@ void diffuse_init()
     impur[I].algebc = NULL;
     impur[I].time_val = Itime_val;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[I].constant[mat][i][0] = 0.9;
-	    impur[I].constant[mat][i][1] = 0.0;
-	}
-	for(j = 0; j < MAXCHG; j++) {
-		Dfrac0[I][mat][j] = 0.0;
-		DfracE[I][mat][j] = 0.0;
-		for(i = 0; i < MAXIMP; Kcouple[I][mat][i++][j] = 0.0);
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[I].seg[SEG0][mat][mat2] = 1.0;
-	    impur[I].seg[SEGE][mat][mat2] = 0.0;
-	    impur[I].seg[TRN0][mat][mat2] = 0.0;
-	    impur[I].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[I].constant[mat][i][0] = 0.9;
+            impur[I].constant[mat][i][1] = 0.0;
+        }
+        for (j = 0; j < MAXCHG; j++) {
+            Dfrac0[I][mat][j] = 0.0;
+            DfracE[I][mat][j] = 0.0;
+            for (i = 0; i < MAXIMP; Kcouple[I][mat][i++][j] = 0.0)
+                ;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[I].seg[SEG0][mat][mat2] = 1.0;
+            impur[I].seg[SEGE][mat][mat2] = 0.0;
+            impur[I].seg[TRN0][mat][mat2] = 0.0;
+            impur[I].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
     SET_FLAGS(I, PSEUDO);
 
@@ -176,22 +186,23 @@ void diffuse_init()
     impur[As].time_val = time_val;
     impur[As].block_set = BAsblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[As].constant[mat][i][0] = 0.0;
-	    impur[As].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[As].seg[SEG0][mat][mat2] = 1.0;
-	    impur[As].seg[SEGE][mat][mat2] = 0.0;
-	    impur[As].seg[TRN0][mat][mat2] = 0.0;
-	    impur[As].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[As].constant[mat][i][0] = 0.0;
+            impur[As].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[As].seg[SEG0][mat][mat2] = 1.0;
+            impur[As].seg[SEGE][mat][mat2] = 0.0;
+            impur[As].seg[TRN0][mat][mat2] = 0.0;
+            impur[As].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
-    for(i = 0; i < 2; i++)
-	for(j = 0; j < MAXMAT; j++)
-	    for(k = 0; k < MAXIMP; k++)
-		for(l = 0; l < MAXCHG; l++) Kcouple[i][j][k][l] = 0.0;
+    for (i = 0; i < 2; i++)
+        for (j = 0; j < MAXMAT; j++)
+            for (k = 0; k < MAXIMP; k++)
+                for (l = 0; l < MAXCHG; l++)
+                    Kcouple[i][j][k][l] = 0.0;
 
     /*Phosphorus*/
     impur[P].diff_coeff = Pdiff_coeff;
@@ -202,17 +213,17 @@ void diffuse_init()
     impur[P].time_val = time_val;
     impur[P].block_set = PSbblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[P].constant[mat][i][0] = 0.0;
-	    impur[P].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[P].seg[SEG0][mat][mat2] = 1.0;
-	    impur[P].seg[SEGE][mat][mat2] = 0.0;
-	    impur[P].seg[TRN0][mat][mat2] = 0.0;
-	    impur[P].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[P].constant[mat][i][0] = 0.0;
+            impur[P].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[P].seg[SEG0][mat][mat2] = 1.0;
+            impur[P].seg[SEGE][mat][mat2] = 0.0;
+            impur[P].seg[TRN0][mat][mat2] = 0.0;
+            impur[P].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*Antimony*/
@@ -224,17 +235,17 @@ void diffuse_init()
     impur[Sb].time_val = time_val;
     impur[Sb].block_set = PSbblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[Sb].constant[mat][i][0] = 0.0;
-	    impur[Sb].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[Sb].seg[SEG0][mat][mat2] = 1.0;
-	    impur[Sb].seg[SEGE][mat][mat2] = 0.0;
-	    impur[Sb].seg[TRN0][mat][mat2] = 0.0;
-	    impur[Sb].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[Sb].constant[mat][i][0] = 0.0;
+            impur[Sb].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[Sb].seg[SEG0][mat][mat2] = 1.0;
+            impur[Sb].seg[SEGE][mat][mat2] = 0.0;
+            impur[Sb].seg[TRN0][mat][mat2] = 0.0;
+            impur[Sb].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*Boron*/
@@ -249,19 +260,23 @@ void diffuse_init()
     impur[Ga].block_set = neut_block_set;
     impur[B].block_set = BAsblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[Ga].constant[mat][i][0] = 0.0;
-	    impur[Ga].constant[mat][i][1] = 0.0;
-	    impur[B ].constant[mat][i][0] = 0.0;
-	    impur[B ].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[Ga].seg[SEG0][mat][mat2]=impur[B].seg[SEG0][mat][mat2] = 1.0;
-	    impur[Ga].seg[SEGE][mat][mat2]=impur[B].seg[SEGE][mat][mat2] = 0.0;
-	    impur[Ga].seg[TRN0][mat][mat2]=impur[B].seg[TRN0][mat][mat2] = 0.0;
-	    impur[Ga].seg[TRNE][mat][mat2]=impur[B].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[Ga].constant[mat][i][0] = 0.0;
+            impur[Ga].constant[mat][i][1] = 0.0;
+            impur[B].constant[mat][i][0] = 0.0;
+            impur[B].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[Ga].seg[SEG0][mat][mat2] = impur[B].seg[SEG0][mat][mat2] =
+                1.0;
+            impur[Ga].seg[SEGE][mat][mat2] = impur[B].seg[SEGE][mat][mat2] =
+                0.0;
+            impur[Ga].seg[TRN0][mat][mat2] = impur[B].seg[TRN0][mat][mat2] =
+                0.0;
+            impur[Ga].seg[TRNE][mat][mat2] = impur[B].seg[TRNE][mat][mat2] =
+                0.0;
+        }
     }
 
     /*Oxidants*/
@@ -273,19 +288,19 @@ void diffuse_init()
     impur[O2].time_val = time_val;
     impur[O2].block_set = neut_block_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[O2].constant[mat][i][0] = 0.0;
-	    impur[O2].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[O2].seg[SEG0][mat][mat2] = 1.0;
-	    impur[O2].seg[SEGE][mat][mat2] = 0.0;
-	    impur[O2].seg[TRN0][mat][mat2] = 0.0;
-	    impur[O2].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[O2].constant[mat][i][0] = 0.0;
+            impur[O2].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[O2].seg[SEG0][mat][mat2] = 1.0;
+            impur[O2].seg[SEGE][mat][mat2] = 0.0;
+            impur[O2].seg[TRN0][mat][mat2] = 0.0;
+            impur[O2].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
-    SET_FLAGS(O2, (DIFFUSING | MOBILE | LOCKSTEP | STEADY) );
+    SET_FLAGS(O2, (DIFFUSING | MOBILE | LOCKSTEP | STEADY));
 
     impur[H2O].diff_coeff = H2Odiff_coeff;
     impur[H2O].boundary = H2Oboundary;
@@ -295,21 +310,21 @@ void diffuse_init()
     impur[H2O].time_val = time_val;
     impur[H2O].block_set = neut_block_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[H2O].constant[mat][i][0] = 0.0;
-	    impur[H2O].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[H2O].seg[0][mat][mat2] = 1.0;
-	    impur[H2O].seg[1][mat][mat2] = 0.0;
-	    impur[H2O].seg[SEG0][mat][mat2] = 1.0;
-	    impur[H2O].seg[SEGE][mat][mat2] = 0.0;
-	    impur[H2O].seg[TRN0][mat][mat2] = 0.0;
-	    impur[H2O].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[H2O].constant[mat][i][0] = 0.0;
+            impur[H2O].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[H2O].seg[0][mat][mat2] = 1.0;
+            impur[H2O].seg[1][mat][mat2] = 0.0;
+            impur[H2O].seg[SEG0][mat][mat2] = 1.0;
+            impur[H2O].seg[SEGE][mat][mat2] = 0.0;
+            impur[H2O].seg[TRN0][mat][mat2] = 0.0;
+            impur[H2O].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
-    SET_FLAGS(H2O, (DIFFUSING | MOBILE | LOCKSTEP | STEADY) );
+    SET_FLAGS(H2O, (DIFFUSING | MOBILE | LOCKSTEP | STEADY));
 
     impur[T].diff_coeff = NULL;
     impur[T].boundary = NULL;
@@ -329,17 +344,17 @@ void diffuse_init()
     impur[Au].time_val = time_val;
     impur[Au].block_set = neut_block_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[Au].constant[mat][i][0] = 0.0;
-	    impur[Au].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[Au].seg[SEG0][mat][mat2] = 1.0;
-	    impur[Au].seg[SEGE][mat][mat2] = 0.0;
-	    impur[Au].seg[TRN0][mat][mat2] = 0.0;
-	    impur[Au].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[Au].constant[mat][i][0] = 0.0;
+            impur[Au].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[Au].seg[SEG0][mat][mat2] = 1.0;
+            impur[Au].seg[SEGE][mat][mat2] = 0.0;
+            impur[Au].seg[TRN0][mat][mat2] = 0.0;
+            impur[Au].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*potential*/
@@ -363,17 +378,17 @@ void diffuse_init()
     impur[Cs].time_val = time_val;
     impur[Cs].block_set = neut_block_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[Cs].constant[mat][i][0] = 0.0;
-	    impur[Cs].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[Cs].seg[SEG0][mat][mat2] = 1.0;
-	    impur[Cs].seg[SEGE][mat][mat2] = 0.0;
-	    impur[Cs].seg[TRN0][mat][mat2] = 0.0;
-	    impur[Cs].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[Cs].constant[mat][i][0] = 0.0;
+            impur[Cs].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[Cs].seg[SEG0][mat][mat2] = 1.0;
+            impur[Cs].seg[SEGE][mat][mat2] = 0.0;
+            impur[Cs].seg[TRN0][mat][mat2] = 0.0;
+            impur[Cs].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*Beryllium*/
@@ -388,17 +403,17 @@ void diffuse_init()
      */
     impur[iBe].block_set = BAsblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[iBe].constant[mat][i][0] = 0.0;
-	    impur[iBe].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[iBe].seg[SEG0][mat][mat2] = 1.0;
-	    impur[iBe].seg[SEGE][mat][mat2] = 0.0;
-	    impur[iBe].seg[TRN0][mat][mat2] = 0.0;
-	    impur[iBe].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[iBe].constant[mat][i][0] = 0.0;
+            impur[iBe].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[iBe].seg[SEG0][mat][mat2] = 1.0;
+            impur[iBe].seg[SEGE][mat][mat2] = 0.0;
+            impur[iBe].seg[TRN0][mat][mat2] = 0.0;
+            impur[iBe].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*Magnesium*/
@@ -413,17 +428,17 @@ void diffuse_init()
      */
     impur[iMg].block_set = BAsblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[iMg].constant[mat][i][0] = 0.0;
-	    impur[iMg].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[iMg].seg[SEG0][mat][mat2] = 1.0;
-	    impur[iMg].seg[SEGE][mat][mat2] = 0.0;
-	    impur[iMg].seg[TRN0][mat][mat2] = 0.0;
-	    impur[iMg].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[iMg].constant[mat][i][0] = 0.0;
+            impur[iMg].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[iMg].seg[SEG0][mat][mat2] = 1.0;
+            impur[iMg].seg[SEGE][mat][mat2] = 0.0;
+            impur[iMg].seg[TRN0][mat][mat2] = 0.0;
+            impur[iMg].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*Selenium*/
@@ -438,17 +453,17 @@ void diffuse_init()
      */
     impur[iSe].block_set = BAsblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[iSe].constant[mat][i][0] = 0.0;
-	    impur[iSe].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[iSe].seg[SEG0][mat][mat2] = 1.0;
-	    impur[iSe].seg[SEGE][mat][mat2] = 0.0;
-	    impur[iSe].seg[TRN0][mat][mat2] = 0.0;
-	    impur[iSe].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[iSe].constant[mat][i][0] = 0.0;
+            impur[iSe].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[iSe].seg[SEG0][mat][mat2] = 1.0;
+            impur[iSe].seg[SEGE][mat][mat2] = 0.0;
+            impur[iSe].seg[TRN0][mat][mat2] = 0.0;
+            impur[iSe].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*Silicon*/
@@ -463,17 +478,17 @@ void diffuse_init()
      */
     impur[iSi].block_set = BAsblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[iSi].constant[mat][i][0] = 0.0;
-	    impur[iSi].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[iSi].seg[SEG0][mat][mat2] = 1.0;
-	    impur[iSi].seg[SEGE][mat][mat2] = 0.0;
-	    impur[iSi].seg[TRN0][mat][mat2] = 0.0;
-	    impur[iSi].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[iSi].constant[mat][i][0] = 0.0;
+            impur[iSi].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[iSi].seg[SEG0][mat][mat2] = 1.0;
+            impur[iSi].seg[SEGE][mat][mat2] = 0.0;
+            impur[iSi].seg[TRN0][mat][mat2] = 0.0;
+            impur[iSi].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*Tin*/
@@ -488,17 +503,17 @@ void diffuse_init()
      */
     impur[iSn].block_set = BAsblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[iSn].constant[mat][i][0] = 0.0;
-	    impur[iSn].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[iSn].seg[SEG0][mat][mat2] = 1.0;
-	    impur[iSn].seg[SEGE][mat][mat2] = 0.0;
-	    impur[iSn].seg[TRN0][mat][mat2] = 0.0;
-	    impur[iSn].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[iSn].constant[mat][i][0] = 0.0;
+            impur[iSn].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[iSn].seg[SEG0][mat][mat2] = 1.0;
+            impur[iSn].seg[SEGE][mat][mat2] = 0.0;
+            impur[iSn].seg[TRN0][mat][mat2] = 0.0;
+            impur[iSn].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*Germanium*/
@@ -513,17 +528,17 @@ void diffuse_init()
      */
     impur[iGe].block_set = BAsblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[iGe].constant[mat][i][0] = 0.0;
-	    impur[iGe].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[iGe].seg[SEG0][mat][mat2] = 1.0;
-	    impur[iGe].seg[SEGE][mat][mat2] = 0.0;
-	    impur[iGe].seg[TRN0][mat][mat2] = 0.0;
-	    impur[iGe].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[iGe].constant[mat][i][0] = 0.0;
+            impur[iGe].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[iGe].seg[SEG0][mat][mat2] = 1.0;
+            impur[iGe].seg[SEGE][mat][mat2] = 0.0;
+            impur[iGe].seg[TRN0][mat][mat2] = 0.0;
+            impur[iGe].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*Zinc*/
@@ -538,17 +553,17 @@ void diffuse_init()
      */
     impur[iZn].block_set = BAsblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[iZn].constant[mat][i][0] = 0.0;
-	    impur[iZn].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[iZn].seg[SEG0][mat][mat2] = 1.0;
-	    impur[iZn].seg[SEGE][mat][mat2] = 0.0;
-	    impur[iZn].seg[TRN0][mat][mat2] = 0.0;
-	    impur[iZn].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[iZn].constant[mat][i][0] = 0.0;
+            impur[iZn].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[iZn].seg[SEG0][mat][mat2] = 1.0;
+            impur[iZn].seg[SEGE][mat][mat2] = 0.0;
+            impur[iZn].seg[TRN0][mat][mat2] = 0.0;
+            impur[iZn].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*Carbon*/
@@ -563,17 +578,17 @@ void diffuse_init()
      */
     impur[iC].block_set = BAsblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[iC].constant[mat][i][0] = 0.0;
-	    impur[iC].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[iC].seg[SEG0][mat][mat2] = 1.0;
-	    impur[iC].seg[SEGE][mat][mat2] = 0.0;
-	    impur[iC].seg[TRN0][mat][mat2] = 0.0;
-	    impur[iC].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[iC].constant[mat][i][0] = 0.0;
+            impur[iC].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[iC].seg[SEG0][mat][mat2] = 1.0;
+            impur[iC].seg[SEGE][mat][mat2] = 0.0;
+            impur[iC].seg[TRN0][mat][mat2] = 0.0;
+            impur[iC].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 
     /*Generic*/
@@ -588,16 +603,16 @@ void diffuse_init()
      */
     impur[iG].block_set = BAsblock_set;
     /*constants*/
-    for(mat = 0; mat < MAXMAT; mat++) {
-	for(i = 0; i < 25; i++) {
-	    impur[iG].constant[mat][i][0] = 0.0;
-	    impur[iG].constant[mat][i][1] = 0.0;
-	}
-	for(mat2 = 0; mat2 < MAXMAT; mat2++) {
-	    impur[iG].seg[SEG0][mat][mat2] = 1.0;
-	    impur[iG].seg[SEGE][mat][mat2] = 0.0;
-	    impur[iG].seg[TRN0][mat][mat2] = 0.0;
-	    impur[iG].seg[TRNE][mat][mat2] = 0.0;
-	}
+    for (mat = 0; mat < MAXMAT; mat++) {
+        for (i = 0; i < 25; i++) {
+            impur[iG].constant[mat][i][0] = 0.0;
+            impur[iG].constant[mat][i][1] = 0.0;
+        }
+        for (mat2 = 0; mat2 < MAXMAT; mat2++) {
+            impur[iG].seg[SEG0][mat][mat2] = 1.0;
+            impur[iG].seg[SEGE][mat][mat2] = 0.0;
+            impur[iG].seg[TRN0][mat][mat2] = 0.0;
+            impur[iG].seg[TRNE][mat][mat2] = 0.0;
+        }
     }
 }

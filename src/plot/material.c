@@ -17,13 +17,21 @@
 /*   Last Modification : 7/3/91 08:38:56 */
 
 #include <stdio.h>
-#include <global.h>
-#include <constant.h>
-#include <dbaccess.h>
+
+#include "./include/global.h"
+#include "./include/constant.h"
+#include "./include/dbaccess.h"
+
+// 2020 includes:
+#include "material.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /*define a macro to get the material code for the material*/
-#define XCORD(A, B) (pt[ nd[ tri[A]->nd[B] ]->pt ]->cord[0])
-#define YCORD(A, B) (pt[ nd[ tri[A]->nd[B] ]->pt ]->cord[1])
+#define XCORD(A, B) (pt[nd[tri[A]->nd[B]]->pt]->cord[0])
+#define YCORD(A, B) (pt[nd[tri[A]->nd[B]]->pt]->cord[1])
 
 /************************************************************************
  *									*
@@ -31,18 +39,4 @@
  *  draws any sides that are material boundaries.			*
  *									*
  ************************************************************************/
-material(line_bound)
-    int line_bound;
-{
-    register int ir;	/*current triangle*/
-    register int sr;
-
-
-    xgNewSet();
-    xgSetName("Materials");
-    for(ir = 0; ir < nreg; ir++) {
-	sr = skel_reg(ir);
-	reg_pl(sr);
-	free_skel(sr);
-    }
-}
+void material(int line_bound) {}

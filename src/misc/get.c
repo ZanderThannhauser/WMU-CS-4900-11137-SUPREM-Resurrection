@@ -15,8 +15,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "global.h"
-#include "check.h"
+#include "./include/check.h"
+#include "./include/global.h"
+
+// 2020 includes:
+#include "get.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /************************************************************************
  *									*
@@ -25,7 +32,6 @@
  *  assumes the user can and will ask for everything.			*
  *									*
  ************************************************************************/
-
 
 /************************************************************************
  *									*
@@ -37,8 +43,7 @@
  *	Original:	Mark E. Law	Oct, 1984			*
  * 									*
  ************************************************************************/
-int get_value( par, name , value)
-struct par_str **par;
+int get_value(par, name, value) struct par_str **par;
 char *name;
 val_str *value;
 {
@@ -46,27 +51,26 @@ val_str *value;
     register char *s, *ss;
 
     /*check each parameter*/
-    for( ; par[0] != NULL; par++ ) {
+    for (; par[0] != NULL; par++) {
 
-	if (*(par[0]->name) == *name) {
-	    for (s=par[0]->name, ss=name; *ss == *s && *s; s++, ss++);
-	    if  ( !*ss || !*s ) {
-		/*found it go home*/
-		*value =  par[0]->value;
-		return ( par[0]->type & SPECIFIED );
-	    }
-	}
-	/*check any subparameters...*/
-	if (par[0]->param != NULL) {
-	    if ( (i = get_value (par[0]->param, name, value)) >= 0)
-		return( i );
-	}
+        if (*(par[0]->name) == *name) {
+            for (s = par[0]->name, ss = name; *ss == *s && *s; s++, ss++)
+                ;
+            if (!*ss || !*s) {
+                /*found it go home*/
+                *value = par[0]->value;
+                return (par[0]->type & SPECIFIED);
+            }
+        }
+        /*check any subparameters...*/
+        if (par[0]->param != NULL) {
+            if ((i = get_value(par[0]->param, name, value)) >= 0)
+                return (i);
+        }
     }
     value->ival = 0;
-    return(-1);
+    return (-1);
 }
-
-
 
 /************************************************************************
  *									*
@@ -76,14 +80,13 @@ val_str *value;
  *	Original:	Mark E. Law	Oct, 1984			*
  *									*
  ************************************************************************/
-int get_bool(struct par_str * par, char *name)
-{
+int get_bool(struct par_str *par, char *name) {
     val_str value;
 
     if (get_value(par->param, name, &value) != -1)
-	return( value.ival );
+        return (value.ival);
 
-    return(0);
+    return (0);
 }
 
 /************************************************************************
@@ -94,13 +97,12 @@ int get_bool(struct par_str * par, char *name)
  *	Original:	Mark E. Law	Oct, 1984			*
  *									*
  ************************************************************************/
-char *get_string(struct par_str * par, char *name)
-{
+char *get_string(struct par_str *par, char *name) {
     val_str value;
 
     if (get_value(par->param, name, &value) != -1)
-	return( value.sval );
-    return(NULL);
+        return (value.sval);
+    return (NULL);
 }
 
 /************************************************************************
@@ -111,16 +113,13 @@ char *get_string(struct par_str * par, char *name)
  *	Original:	Mark E. Law	Oct, 1984			*
  *									*
  ************************************************************************/
-int get_int(struct par_str * par, char *name)
-{
+int get_int(struct par_str *par, char *name) {
     val_str value;
 
     if (get_value(par->param, name, &value) != -1)
-	return( value.ival );
-    return(0);
+        return (value.ival);
+    return (0);
 }
-
-
 
 /************************************************************************
  *									*
@@ -130,17 +129,13 @@ int get_int(struct par_str * par, char *name)
  *	Original:	Mark E. Law	Oct, 1984			*
  *									*
  ************************************************************************/
-float get_float(struct par_str * par, char *name)
-{
-	val_str value;
+float get_float(struct par_str *par, char *name) {
+    val_str value;
 
-	if (get_value(par->param, name, &value) != -1)
-		return( value.dval );
-	return(0);
+    if (get_value(par->param, name, &value) != -1)
+        return (value.dval);
+    return (0);
 }
-
-
-
 
 /************************************************************************
  *									*
@@ -151,22 +146,12 @@ float get_float(struct par_str * par, char *name)
  * Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-int is_specified(struct par_str * par, char *name)
-{
-	int temp;
-	val_str value;
+int is_specified(struct par_str *par, char *name) {
+    int temp;
+    val_str value;
 
-	if ((temp=get_value(par->param, name, &value)) != -1)
-		return( temp );
-	
-	return(0);
+    if ((temp = get_value(par->param, name, &value)) != -1)
+        return (temp);
+
+    return (0);
 }
-
-
-
-
-
-
-
-
-

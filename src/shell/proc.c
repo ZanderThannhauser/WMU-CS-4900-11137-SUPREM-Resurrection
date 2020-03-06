@@ -13,7 +13,16 @@
 
 #include <stdio.h>
 #include <string.h>
-#include "shell.h"
+
+#include "./include/shell.h"
+
+// 2020 includes:
+#include "proc.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
+
 
 /*here be stuff that should live in .h some day*/
 #define FALSE 0
@@ -29,9 +38,7 @@
  *	Original	Mark E. Law		Sept, 1984		*
  *									*
  ************************************************************************/
-get_proc(name)
-char *name;
-{
+int get_proc(char *name) {
     int test;
     int match, best_match;
     int best;
@@ -44,29 +51,26 @@ char *name;
     best = -1;
     ambig = FALSE;
     best_match = 0;
-    for(test = 0; command[test].name[0] != '\0'; test++) {
-	match = substring(command[test].name, name);
-	if (match == best_match)
-	    ambig = TRUE;
-	if ((match > best_match) && (match == length)) {
-	    best_match = match;
-	    best = test;
-	    ambig = FALSE;
-	    }
-	}
+    for (test = 0; command[test].name[0] != '\0'; test++) {
+        match = substring(command[test].name, name);
+        if (match == best_match)
+            ambig = TRUE;
+        if ((match > best_match) && (match == length)) {
+            best_match = match;
+            best = test;
+            ambig = FALSE;
+        }
+    }
 
     /*now use the best fit as the executable command*/
     if (best == -1)
-	return(-1);
-    else
-	if (ambig) {
-	    fprintf(stderr, "the command is ambiguous\n");
-	    return(-1);
-	}
-	else
-	    return(best);
+        return (-1);
+    else if (ambig) {
+        fprintf(stderr, "the command is ambiguous\n");
+        return (-1);
+    } else
+        return (best);
 }
-
 
 /************************************************************************
  *									*
@@ -78,18 +82,16 @@ char *name;
  *	Original	Conor S. Rafferty	Oct, 1986		*
  *									*
  ************************************************************************/
-substring(s, ss)
-    char *s, *ss;
-{
+int substring(char *s, char *ss) {
     char *ass;
 
-    for (ass=ss; (*s == *ss) && *ss; s++, ss++) ;
+    for (ass = ss; (*s == *ss) && *ss; s++, ss++)
+        ;
 
-    if (!*ss) return (ss-ass);
+    if (!*ss)
+        return (ss - ass);
     return (0);
 }
-
-
 
 /************************************************************************
  *									*
@@ -101,24 +103,25 @@ substring(s, ss)
  *	Original	Mark E. Law		Sept, 1984		*
  *									*
  ************************************************************************/
-FILE *file_parse(name, type)
-char *name;
+FILE *file_parse(name, type) char *name;
 char *type;
 {
     char *end_str;
 
     /*strip off leading blanks*/
-    for( ; (*name == ' ') || (*name == '\t'); name++);
+    for (; (*name == ' ') || (*name == '\t'); name++)
+        ;
 
     /*strip off trailing blanks*/
-    for(end_str = name; *end_str; end_str++);
+    for (end_str = name; *end_str; end_str++)
+        ;
     end_str--;
-    if( (*end_str == ' ') || (*end_str == '\t') ) {
-	for(end_str-- ; (*end_str == ' ') || (*end_str == '\t'); end_str--);
-	*(end_str + 1) = '\0';
+    if ((*end_str == ' ') || (*end_str == '\t')) {
+        for (end_str--; (*end_str == ' ') || (*end_str == '\t'); end_str--)
+            ;
+        *(end_str + 1) = '\0';
     }
 
     /*open the file and return*/
-    return( fopen(name, type) );
+    return (fopen(name, type));
 }
-

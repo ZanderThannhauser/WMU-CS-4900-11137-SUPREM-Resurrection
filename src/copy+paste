@@ -1,0 +1,28 @@
+
+
+
+// 2020 includes:
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
+
+#include "./misc/get.h"
+
+./include/
+
+struct par_str*
+
+#include "./include/constant.h"
+#include "./include/defect.h"
+#include "./include/diffuse.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#include "./include/impurity.h"
+#include "./include/material.h"
+#include "./include/matrix.h"
+#include "./include/plot.h"
+
+-rw-r--r--  1 zander zander 82579 Feb  6 10:22 suprem.key
+-rw-r--r--  1 zander zander 67535 Mar  5 16:17 suprem.uk
+

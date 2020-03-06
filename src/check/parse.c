@@ -16,12 +16,21 @@
 /*   parse.c                Version 5.1     */
 /*   Last Modification : 7/3/91 08:12:30 */
 
-#include <stdio.h>
-#include <math.h>
 #include <ctype.h>
-#include "global.h"
-#include "expr.h"
+#include <math.h>
+#include <stdio.h>
 
+#include "./include/expr.h"
+#include "./include/global.h"
+
+// 2020 includes:
+#include "./check/lexical.h"
+#include "./check/reduce.h"
+#include "parse.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /************************************************************************
  *									*
@@ -44,8 +53,6 @@
  *									*
  ************************************************************************/
 
-
-
 /************************************************************************
  *									*
  *	detect_error() - This routine uses the stack and input token	*
@@ -57,42 +64,42 @@
  *  Original:	MEL	2/85						*
  *  									*
  ************************************************************************/
-detect_error()
-{
-    switch( stack[st_pnt].type ) {
-    case OP1  : if ( ! input_token.type & (VFN | FN | LPAR | RCONST | SOLVAL)) {
-		    if ( input_token.type == OP1 ) {
-			if ( stack[st_pnt-1].type != EXPR )
-			    return( TRUE );
-		    }
-		    else 
-			return( TRUE );
-		}
-		break;
-    case TOPSTK :
-    case OP3  :
-    case OP2  :
-    case COM  :
-    case LPAR :
-    case VFN  :
-    case FN   : if (! input_token.type & (VFN|FN | OP1 | LPAR | RCONST|SOLVAL))
-		    return( TRUE );
-		break;
-    case EXPR :
-    case RCONST :
-    case SOLVAL :
-    case STRING  :
-    case RPAR : if ( ! input_token.type & (EOI | RPAR | OP1 | OP2 | OP3 ))
-		    return( TRUE );
-		break;
-    case EOI  : break;
-    default   : return( TRUE );
+int detect_error() {
+    switch (stack[st_pnt].type) {
+    case OP1:
+        if (((!input_token.type) & (VFN | FN | LPAR | RCONST | SOLVAL))) {
+            if (input_token.type == OP1) {
+                if (stack[st_pnt - 1].type != EXPR)
+                    return (TRUE);
+            } else
+                return (TRUE);
+        }
+        break;
+    case TOPSTK:
+    case OP3:
+    case OP2:
+    case COM:
+    case LPAR:
+    case VFN:
+    case FN:
+        if ((!input_token.type) & (VFN | FN | OP1 | LPAR | RCONST | SOLVAL))
+            return (TRUE);
+        break;
+    case EXPR:
+    case RCONST:
+    case SOLVAL:
+    case STRING:
+    case RPAR:
+        if ((!input_token.type) & (EOI | RPAR | OP1 | OP2 | OP3))
+            return (TRUE);
+        break;
+    case EOI:
+        break;
+    default:
+        return (TRUE);
     }
-    return( FALSE );
+    return (FALSE);
 }
-
-
-
 
 /************************************************************************
  *									*
@@ -104,11 +111,10 @@ detect_error()
  *  Original:	MEL	2/85						*
  *									*
  ************************************************************************/
-char *parse_expr( str, out ) 
-char *str;
+char *parse_expr(str, out) char *str;
 struct vec_str **out;
 {
-    
+
     /*make the return null to handle error conditions*/
     out[0] = NULL;
 
@@ -119,29 +125,30 @@ struct vec_str **out;
 
     /*repeat until an error or end of input encountered*/
     do {
-	
-	/*get an input token for parsing*/
-	if (lexical(str, &input_token) == -1)
-	    return("unrecognized strings in expression\n");
 
-	/*check for an error*/
-	if (detect_error() ) 
-	    return("grammar rule violated in expression\n");
+        /*get an input token for parsing*/
+        if (lexical(str, &input_token) == -1)
+            return ("unrecognized strings in expression\n");
 
-	/*else reduce it until we can't no more*/
-	while( reduce() );
+        /*check for an error*/
+        if (detect_error())
+            return ("grammar rule violated in expression\n");
 
-	/*push the now reduced input token onto the top of stack*/
-	stack[ ++st_pnt ]  = input_token;
+        /*else reduce it until we can't no more*/
+        while (reduce())
+            ;
 
-    } while ( input_token.type != EOI );
+        /*push the now reduced input token onto the top of stack*/
+        stack[++st_pnt] = input_token;
+
+    } while (input_token.type != EOI);
 
     /*make sure we were able to fully reduce it all*/
-    if ((st_pnt != 2) || (stack[0].type != TOPSTK) ||
-	(stack[1].type != EXPR) || (stack[2].type != EOI))
-	return("grammar rule violated in expression\n");
-    
+    if ((st_pnt != 2) || (stack[0].type != TOPSTK) || (stack[1].type != EXPR) ||
+        (stack[2].type != EOI))
+        return ("grammar rule violated in expression\n");
+
     /*set up the pointers*/
     out[0] = stack[1].value.bval;
-    return( NULL );
+    return (NULL);
 }

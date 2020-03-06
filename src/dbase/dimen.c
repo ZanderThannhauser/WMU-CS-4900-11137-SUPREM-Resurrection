@@ -16,11 +16,17 @@
 /*   dimen.c                Version 5.1     */
 /*   Last Modification : 7/3/91 08:20:41 */
 
-#include "global.h"
-#include "constant.h"
-#include "impurity.h"
-#include "geom.h"
+#include "./include/constant.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#include "./include/impurity.h"
 
+// 2020 includes:
+#include "dimen.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /************************************************************************
  *									*
@@ -29,21 +35,20 @@
  *  Original:	MEL	10/84						*
  *									*
  ************************************************************************/
-void set_dim( int dim)
-{
-    switch( dim ) {
-    case 1 :
-       mode = ONED;
-       nvrt = 2;
-       nedg = 2;
-       oxide_model = O_VERTICAL;
-       break;
-    case 2 :
-       mode = TWOD;
-       nvrt = 3;
-       nedg = 3;
-       break;
-    default :
-	panic("three dimensions are net yet supported");
+void set_dim(int dim) {
+    switch (dim) {
+    case 1:
+        mode = ONED;
+        nvrt = 2;
+        nedg = 2;
+        oxide_model = O_VERTICAL;
+        break;
+    case 2:
+        mode = TWOD;
+        nvrt = 3;
+        nedg = 3;
+        break;
+    default:
+        panic("three dimensions are net yet supported");
     }
 }

@@ -25,6 +25,20 @@ EXTERN char *IMP_FILE;
 #define HZ 60
 #endif
 
+// 2020: guess it's a good time to make a new platform!
+#ifdef UBUNTU
+// what is this #include used for? (I guess we don't need it?)
+/*#include <sys/file.h>*/
+#define PAGER "more"
+
+// we don't need these, ubuntu already has the right calls
+/*#define strchr index*/
+/*#define strrchr rindex*/
+/*#define strncmp strcmpn*/
+/*#define strncpy strcpyn*/
+
+#endif
+
 #ifdef BSD
 #include <sys/file.h>
 #define PAGER "more"
@@ -37,11 +51,11 @@ EXTERN char *IMP_FILE;
 #ifdef SYSV
 #include <fcntl.h>
 #define PAGER "more"
-#define index strchr 
-#define rindex strrchr 
-#define strcmpn strncmp 
-#define strcpyn strncpy 
-#define vfork fork 
+#define index strchr
+#define rindex strrchr
+#define strcmpn strncmp
+#define strcpyn strncpy
+#define vfork fork
 #endif
 
 #ifdef CONVEX
@@ -72,7 +86,7 @@ EXTERN char *IMP_FILE;
 #define strncpy strcpyn
 #define Snumfac(A, B, C, D, E, F, G) fnumfac_(&A, B, &C, D, E, &F, G)
 #define Snumbac(A, B, C, D, E) fnumbac_(&A, B, &C, D, E)
-#define mxv(A, B, C, N, D, E, F) fmxv_( &A, B, &C, &N, D, E, F )
+#define mxv(A, B, C, N, D, E, F) fmxv_(&A, B, &C, &N, D, E, F)
 #endif
 
 #ifdef CRAY
@@ -80,20 +94,20 @@ EXTERN char *IMP_FILE;
 #define PAGER "cat"
 #define Snumfac(A, B, C, D, E, F, G) SNUMFAC(&A, B, &C, D, E, &F, G)
 #define Snumbac(A, B, C, D, E) SNUMBAC(&A, B, &C, D, E)
-#define index strchr 
-#define rindex strrchr 
-#define strcmpn strncmp 
-#define strcpyn strncpy 
+#define index strchr
+#define rindex strrchr
+#define strcmpn strncmp
+#define strcpyn strncpy
 #define vfork fork
 #endif
 
 #ifdef AMDAHL
 #include <fcntl.h>
 #define PAGER "pg"
-#define index strchr 
-#define rindex strrchr 
-#define strcmpn strncmp 
-#define strcpyn strncpy 
+#define index strchr
+#define rindex strrchr
+#define strcmpn strncmp
+#define strcpyn strncpy
 #define vfork fork
 #endif
 

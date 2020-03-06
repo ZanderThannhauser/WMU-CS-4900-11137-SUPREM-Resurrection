@@ -15,9 +15,9 @@
 #define TRUE 1
 #define FALSE 0
 
-extern struct par_str **current;	/*current pointer into table*/
+extern struct par_str **current; /*current pointer into table*/
 
-extern struct par_str **pop();		/*routine to handle pops to stack*/
+extern struct par_str **pop(); /*routine to handle pops to stack*/
 extern struct par_str **push();
 extern struct bool_exp *node();
 

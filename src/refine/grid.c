@@ -17,45 +17,46 @@
 /*   Last Modification : 7/3/91 15:40:42 */
 
 #include <stdio.h>
-#include "global.h"
-#include "constant.h"
-#include "dbaccess.h"
-#include "skel.h"
+
+#include "./include/constant.h"
+#include "./include/dbaccess.h"
+#include "./include/global.h"
+#include "./include/skel.h"
+
+// 2020 includes:
+#include "./refine/triang.h"
+#include "grid.h"
+// end of includes
+
+// 2020 forward declarations
+void lineseg(int ir, int rbn);
+// end of declarations
 
 /*-----------------TRIANG-----------------------------------------------
  * Triangulate a region. The core routine.
  *----------------------------------------------------------------------*/
-grid(ir, rbn, bflag, spflag)
-int ir;
-int rbn;
-int bflag;
-int spflag;
-{
-    if ( mode == TWOD )
-	triang( ir, rbn, bflag, spflag );
-    else if ( mode == ONED )
-	lineseg(ir, rbn );
-    else 
-	panic("Three dimensional regrid is not yet supported");
+void grid(int ir, int rbn, int bflag, int spflag) {
+    if (mode == TWOD)
+        triang(ir, rbn, bflag, spflag);
+    else if (mode == ONED)
+        lineseg(ir, rbn);
+    else
+        panic("Three dimensional regrid is not yet supported");
 }
-
-
 
 /*
  * 	Generate the line segments on a skeleton into elements
  */
-lineseg( ir, rbn )
-int ir;
-int rbn;
+void lineseg(int ir, int rbn)
 {
     struct LLedge *bp;
     int i;
     int n[2];
 
-    for(i=1, bp=sreg[ir]->bnd; i || bp != sreg[ir]->bnd; i=0, bp = bp->next) {
-	n[0] = nd_edg(bp->edge,0);
-	n[1] = nd_edg(bp->edge,1);
-	(void)mk_ele_nd(2, n, rbn);
+    for (i = 1, bp = sreg[ir]->bnd; i || bp != sreg[ir]->bnd;
+         i = 0, bp = bp->next) {
+        n[0] = nd_edg(bp->edge, 0);
+        n[1] = nd_edg(bp->edge, 1);
+        (void)mk_ele_nd(2, n, rbn);
     }
 }
-

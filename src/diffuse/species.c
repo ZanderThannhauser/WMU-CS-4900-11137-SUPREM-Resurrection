@@ -10,13 +10,20 @@
 /*   Last Modification : 7/3/91  10:50:21 */
 
 #include <stdio.h>
-#include "global.h"
-#include "constant.h"
-#include "geom.h"
-#include "diffuse.h"
-#include "impurity.h"
-#include "matrix.h"
 
+#include "./include/constant.h"
+#include "./include/diffuse.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#include "./include/impurity.h"
+#include "./include/matrix.h"
+
+// 2020 includes:
+#include "species.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /************************************************************************
  *									*
@@ -27,8 +34,6 @@
  *									*
  ************************************************************************/
 
-
-
 /************************************************************************
  *									*
  *	clear_row(n, imp) - This zeroes the row for the node n.  	*
@@ -37,32 +42,30 @@
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void clear_row(int n, int sol)
-{
-    register int j,k;
+void clear_row(int n, int sol) {
+    register int j, k;
 
-    for(j = 0; j < n_imp; j++) {
-	
-	switch( blktype[sol][j] ) {
+    for (j = 0; j < n_imp; j++) {
 
-	case B_NONE :
-	    break;
+        switch (blktype[sol][j]) {
 
-	case B_DIAG :
-	    a[sol][j][n] = 0.0;
-	    for(k = irow_d[n]; k < irow_d[n+1]; k++) a[sol][j][jrow_d[k]] = 0.0;
-	    break;
+        case B_NONE:
+            break;
 
-	case B_TRI :
-	case B_BLCK :
-	    a[sol][j][n] = 0.0;
-	    for(k = irow[n]; k < irow[n+1]; k++) a[sol][j][jrow[k]] = 0.0;
-	    break;
-	}
+        case B_DIAG:
+            a[sol][j][n] = 0.0;
+            for (k = irow_d[n]; k < irow_d[n + 1]; k++)
+                a[sol][j][jrow_d[k]] = 0.0;
+            break;
+
+        case B_TRI:
+        case B_BLCK:
+            a[sol][j][n] = 0.0;
+            for (k = irow[n]; k < irow[n + 1]; k++)
+                a[sol][j][jrow[k]] = 0.0;
+            break;
+        }
     }
 
     newb[sol][n] = 0.0;
 }
-
-
-

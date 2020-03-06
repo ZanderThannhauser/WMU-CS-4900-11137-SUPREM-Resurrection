@@ -16,18 +16,31 @@
 /*   solve.c                Version 5.1     */
 /*   Last Modification : 7/3/91 10:50:15 */
 
-#include <stdio.h>
 #include <math.h>
-#include <sys/times.h>
+#include <stdio.h>
 #include <sys/param.h>
-#include "global.h"
-#include "constant.h"
-#include "geom.h"
-#include "diffuse.h"
-#include "impurity.h"
-#include "material.h"
-#include "matrix.h"
-#include "defect.h"
+#include <sys/times.h>
+
+#include "./include/constant.h"
+#include "./include/defect.h"
+#include "./include/diffuse.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#include "./include/impurity.h"
+#include "./include/material.h"
+#include "./include/matrix.h"
+
+// 2020 includes:
+#include "./diffuse/setup.h"
+#include "./math/solblk.h"
+#include "solve.h"
+// end of includes
+
+// 2020 forward declarations
+int update_vars(double* nm, int nsol, int* sol,
+	int nv, double** vars, double** update);
+// end of declarations
+
 
 /* HZ is 100 per Mike Eldredge on the Convex,
    which should be included in the file sys/param, above*/
@@ -48,9 +61,6 @@
 /*the amount of over solve needed for this inner loop*/
 #define NEWT 1.0
 
-extern do_setup();
-
-
 /************************************************************************
  *									*
  *	soldif_tr( del_t, temp, old, new, vel, iter ) -  This 		*
@@ -62,20 +72,14 @@ extern do_setup();
  *  Original:	MEL	12/84						*
  *									*
  ************************************************************************/
-soldif_tr( del_t, temp, old, new, olda, newa, oldarea, newarea, init)
-double del_t;		/*the amount of time step*/
-float temp;		/*the temperature of the solve*/
-double **old;		/*the answer of the previous timestep*/
-double **new;		/*the answer of this solution*/
-double **olda;		/*the answer of the previous timestep*/
-double **newa;		/*the answer of this solution*/
-double *oldarea;	/*the area of the previous timestep*/
-double *newarea;	/*the area of this solution*/
-int init;		/*whether or not to reuse the last factorization*/
+
+int soldif_tr(double del_t, float temp, double **old,
+	double **new, double **olda, double **newa,
+	double *oldarea, double *newarea, int init)
 {
 
     /*compute the appropriate boundary condition elements*/
-    bval_compute( temp, new, del_t );
+    bval_compute(temp, new, del_t);
 
     /*load the setup structure*/
     cs.old_del = 0.0;
@@ -96,9 +100,8 @@ int init;		/*whether or not to reuse the last factorization*/
     cs.loff = tm_loff;
 
     /*now call the real solve routine*/
-    return( soldif( init, "TR", do_setup ) );
+    return (soldif(init, "TR", do_setup));
 }
-
 
 /************************************************************************
  *									*
@@ -109,25 +112,15 @@ int init;		/*whether or not to reuse the last factorization*/
  *  Original:	MEL	1/86						*
  *									*
  ************************************************************************/
-soldif_bdf( del_t, old_t, temp, new, mid, old, newa, mida, olda,
-	    newarea, midarea, oldarea, init)
-double del_t;		/*the amount of time step*/
-double old_t;		/*last time step*/
-float temp;		/*the temperature of the solve*/
-double **new;		/*the answer of this solution*/
-double **mid;		/*the answer of the previous timestep*/
-double **old;		/*the answer of the really old timestep*/
-double **newa;		/*the answer of this solution*/
-double **mida;		/*the answer of the previous timestep*/
-double **olda;		/*the answer of the really old timestep*/
-double *newarea;	/*the area of this solution*/
-double *midarea;	/*the area of the previous timestep*/
-double *oldarea;	/*the area of the really old timestep*/
-int init;		/*whether or not a setup has been done*/
+int soldif_bdf(double del_t, double old_t, float temp,
+	double **new, double **mid, double **old,
+	double **newa, double **mida, double **olda,
+	double *newarea, double *midarea, double *oldarea,
+	int init)
 {
 
     /*compute the appropriate boundary condition elements*/
-    bval_compute( temp, new, del_t );
+    bval_compute(temp, new, del_t);
 
     /*load the setup structure*/
     cs.new_del = del_t;
@@ -151,11 +144,8 @@ int init;		/*whether or not a setup has been done*/
     cs.loff = tm_loff;
 
     /*now call the real solve routine*/
-    return( soldif( init , "BDF", do_setup) );
+    return (soldif(init, "BDF", do_setup));
 }
-
-
-
 
 /************************************************************************
  *									*
@@ -165,57 +155,55 @@ int init;		/*whether or not a setup has been done*/
  *  Original:	MEL	11/85						*
  *									*
  ************************************************************************/
-steady_state( temp, nsol, sol, new, newarea )
-float temp;
-int nsol;
-int *sol;
-double **new;
-double *newarea;
+void steady_state(float temp, int nsol, int *sol, double **new, double *newarea)
 {
     register int i, k, sk;
     int elim[MAXIMP];
 
-    if ( nsol == 0 ) return;
+    if (nsol == 0)
+        return;
 
-    for(i = 0; i < nsol; i++) {
-	if ( soltoimp[sol[i]] != Psi )
-	    elim[i] = FALSE;
-	else
-	    elim[i] = TRUE;
+    for (i = 0; i < nsol; i++) {
+        if (soltoimp[sol[i]] != Psi)
+            elim[i] = FALSE;
+        else
+            elim[i] = TRUE;
     }
 
     /*load up the solution variables*/
-    for(k = 0; k < nsol; k++) {
-	sk = sol[k];
-	for(i = 0; i < nn; i++) new[sk][i] = nd[i]->sol[sk];
+    for (k = 0; k < nsol; k++) {
+        sk = sol[k];
+        for (i = 0; i < nn; i++)
+            new[sk][i] = nd[i]->sol[sk];
     }
     /*load up concentration variables for potential solution*/
-    for(k = 0; k < n_imp; k++) {
-	sk = soltoimp[k];
-	switch( sk ) {
-	case As :
-	case B  :
-	case Sb :
-	case P  :
-	case I  :
-	case V  :
-	case Psi:
-	case iBe:
-	case iMg:
-	case iSe:
-	case iSi:
-	case iSn:
-	case iGe:
-	case iZn:
-	case iC :
-	case iG :
-	    for(i = 0; i < nn; i++) new[k][i] = nd[i]->sol[k];
-	    break;
-	}
+    for (k = 0; k < n_imp; k++) {
+        sk = soltoimp[k];
+        switch (sk) {
+        case As:
+        case B:
+        case Sb:
+        case P:
+        case I:
+        case V:
+        case Psi:
+        case iBe:
+        case iMg:
+        case iSe:
+        case iSi:
+        case iSn:
+        case iGe:
+        case iZn:
+        case iC:
+        case iG:
+            for (i = 0; i < nn; i++)
+                new[k][i] = nd[i]->sol[k];
+            break;
+        }
     }
 
     /*compute the appropriate boundary condition elements*/
-    bval_compute( temp, new, 0.0 );
+    bval_compute(temp, new, 0.0);
 
     /*load the setup structure*/
     cs.old_del = 0.0;
@@ -233,17 +221,15 @@ double *newarea;
     cs.loff = ss_loff;
 
     /*now call the real solve routine*/
-    k = soldif( TRUE , "SS", do_setup );
+    k = soldif(TRUE, "SS", do_setup);
 
     /*save away the calculated values*/
-    for(k = 0; k < nsol; k++) {
-	sk = sol[k];
-	for(i = 0; i < nn; i++) nd[i]->sol[sk] = new[sk][i];
+    for (k = 0; k < nsol; k++) {
+        sk = sol[k];
+        for (i = 0; i < nn; i++)
+            nd[i]->sol[sk] = new[sk][i];
     }
-
 }
-
-
 
 /************************************************************************
  *									*
@@ -254,113 +240,124 @@ double *newarea;
  *  Original:	MEL	5/88						*
  *									*
  ************************************************************************/
-soldif( init, label, do_setup )
-int init;
-char *label;
-PTR_FNC do_setup;
+int soldif(int init, char *label, void (*do_setup)(double*))
 {
-    register int i, si, j;			/*standard flame about indices*/
-    int converge = FALSE;		/*are we converged yet??*/
-    int count, blk;				/*loop count*/
-    struct tms before, after;		/*for the system time call*/
-    double nm[MAXIMP], maxnorm; 	/*norms for the newton iteration*/
-    float tset, tsol;			/*time for setup, time for solution*/
-    double rhsnm[MAXIMP], rhs2, maxrhs;	/*two norm of the right hand side*/
+    register int i, si, j;              /*standard flame about indices*/
+    int converge = FALSE;               /*are we converged yet??*/
+    int count, blk;                     /*loop count*/
+    struct tms before, after;           /*for the system time call*/
+    double nm[MAXIMP], maxnorm;         /*norms for the newton iteration*/
+    float tset, tsol;                   /*time for setup, time for solution*/
+    double rhsnm[MAXIMP], rhs2, maxrhs; /*two norm of the right hand side*/
     double scrhs, lstnm = 1.0e37;
     int negat = FALSE;
     int factor;
     double t1, norm2();
-    double absrhserr = (mode==ONED)?(1.0e5):(10);
+    double absrhserr = (mode == ONED) ? (1.0e5) : (10);
     char *ans = "  %c%-4d    %-11.5g  %-6.4g  %-6.4g  %-7.5g  %4d\n";
-    char *s1  = "   iter    newton       setup   solve   ln rhs   Blk   (%s)\n";
-    char *s2  = "           error        time    time    norm\n";
+    char *s1 = "   iter    newton       setup   solve   ln rhs   Blk   (%s)\n";
+    char *s2 = "           error        time    time    norm\n";
 
-    if (cs.nsol == 0 ) return(FALSE);
+    if (cs.nsol == 0)
+        return (FALSE);
 
     /*print the header if need be*/
-    if ( verbose >= V_NORMAL) { printf(s1, label); printf(s2); }
+    if (verbose >= V_NORMAL) {
+        printf(s1, label);
+        printf("%s", s2);
+    }
 
     /*compute the initial matrix terms*/
     times(&before);
-    do_setup( rhsnm );
-    for(rhs2=0.0, i = 0; i < cs.nsol; i++) rhs2 += rhsnm[cs.sol[i]];
-    rhs2 = sqrt( rhs2 );
+    do_setup(rhsnm);
+    for (rhs2 = 0.0, i = 0; i < cs.nsol; i++)
+        rhs2 += rhsnm[cs.sol[i]];
+    rhs2 = sqrt(rhs2);
     times(&after);
     tset = (after.tms_utime - before.tms_utime) / (HZ * 1.0);
 
     count = 0;
-    while ( (! converge) && (!negat) ) {
-	count++;
+    while ((!converge) && (!negat)) {
+        count++;
 
-	times(&before);
-	/*figure if we need to factor the matrix*/
-	switch ( methdata.factor ) {
-	case RF_ALL : factor = TRUE;
-		      break;
-	case RF_ERR : factor = lstnm < (rhs2 * 0.1);
-		      break;
-	case RF_TIM : factor = (count == 1) && init;
-		      break;
-	}
+        times(&before);
+        /*figure if we need to factor the matrix*/
+        switch (methdata.factor) {
+        case RF_ALL:
+            factor = TRUE;
+            break;
+        case RF_ERR:
+            factor = lstnm < (rhs2 * 0.1);
+            break;
+        case RF_TIM:
+            factor = (count == 1) && init;
+            break;
+        }
 
-	/*solve it with the appropriate method*/
-	solve_blocks(nn, cs.sol, cs.nsol, cs.elim, cs.il, cs.l, cs.loff, newb, factor );
-	times(&after);
+        /*solve it with the appropriate method*/
+        solve_blocks(nn, cs.sol, cs.nsol, cs.elim, cs.il, cs.l, cs.loff, newb,
+                     factor);
+        times(&after);
         tsol = (after.tms_utime - before.tms_utime) / (HZ * 1.0);
 
-	/*compute the update dot products*/
+        /*compute the update dot products*/
 
-	/*update the set of variables*/
-	negat = update_vars( nm, cs.nsol, cs.sol, nn, cs.new, newb );
+        /*update the set of variables*/
+        negat = update_vars(nm, cs.nsol, cs.sol, nn, cs.new, newb);
 
-	if ( negat ) continue;
+        if (negat)
+            continue;
 
-	/*compute the initial matrix terms*/
-	times(&before);
-	do_setup( rhsnm );
-	times(&after);
+        /*compute the initial matrix terms*/
+        times(&before);
+        do_setup(rhsnm);
+        times(&after);
         tset = (after.tms_utime - before.tms_utime) / (HZ * 1.0);
 
-	lstnm = rhs2;
-	for(scrhs = rhs2 = 0.0, maxrhs = maxnorm = -1.0, i = 0; i < cs.nsol; i++)  {
-	    si = cs.sol[i];
-	    if ( nm[si] > maxnorm ) maxnorm = nm[si];
-	    if ( rhsnm[si] > maxrhs ) {blk = soltoimp[si]; maxrhs = rhsnm[si]; }
-	    rhs2 += rhsnm[si];
-	    for(j = 0; j < nn; j++) {
-		t1 = rhs[si][j] / (cs.new[si][j] + 1.0);
-		scrhs += t1 * t1;
-	    }
-	}
-	rhs2 = sqrt( rhs2 );
-	scrhs = sqrt( scrhs );
+        lstnm = rhs2;
+        for (scrhs = rhs2 = 0.0, maxrhs = maxnorm = -1.0, i = 0; i < cs.nsol;
+             i++) {
+            si = cs.sol[i];
+            if (nm[si] > maxnorm)
+                maxnorm = nm[si];
+            if (rhsnm[si] > maxrhs) {
+                blk = soltoimp[si];
+                maxrhs = rhsnm[si];
+            }
+            rhs2 += rhsnm[si];
+            for (j = 0; j < nn; j++) {
+                t1 = rhs[si][j] / (cs.new[si][j] + 1.0);
+                scrhs += t1 * t1;
+            }
+        }
+        rhs2 = sqrt(rhs2);
+        scrhs = sqrt(scrhs);
 
-	if ( cs.type == SS )
-	    converge = maxnorm < 1.0e-3;
-	else
-	    converge = (rhs2 < absrhserr) || (maxnorm*NEWT < 1.0e-6) ;
+        if (cs.type == SS)
+            converge = maxnorm < 1.0e-3;
+        else
+            converge = (rhs2 < absrhserr) || (maxnorm * NEWT < 1.0e-6);
 
-	/*check to make sure we are making a least a little progress*/
-	if ( (count > 10) && (rhs2 / lstnm > 0.999) ) negat = TRUE;
-	if ( ( rhs2 / lstnm > 1.0e10 ) ) negat = TRUE;
-	if ( isnan( rhs2 ) ) negat = TRUE;
+        /*check to make sure we are making a least a little progress*/
+        if ((count > 10) && (rhs2 / lstnm > 0.999))
+            negat = TRUE;
+        if ((rhs2 / lstnm > 1.0e10))
+            negat = TRUE;
+        if (isnan(rhs2))
+            negat = TRUE;
 
-	/*print out the loop data*/
-	if ( verbose >= V_NORMAL) {
-	    if ( rhs2 == 0.0 )
-		printf(ans, ' ', count, maxnorm*NEWT, tset, tsol, -10.0, blk);
-	    else
-		printf(ans, ' ', count, maxnorm*NEWT, tset, tsol, log10(rhs2), blk);
-	    fflush(stdout);
-	}
-
+        /*print out the loop data*/
+        if (verbose >= V_NORMAL) {
+            if (rhs2 == 0.0)
+                printf(ans, ' ', count, maxnorm * NEWT, tset, tsol, -10.0, blk);
+            else
+                printf(ans, ' ', count, maxnorm * NEWT, tset, tsol, log10(rhs2),
+                       blk);
+            fflush(stdout);
+        }
     }
-    return( negat );
+    return (negat);
 }
-
-
-
-
 
 /************************************************************************
  *									*
@@ -372,77 +369,70 @@ PTR_FNC do_setup;
  *  Original:	MEL	11/85  (Older than this, subroutine date)	*
  *									*
  ************************************************************************/
-update_vars( nm, nsol, sol, nv, vars, update )
-double *nm;
-int nsol;
-int *sol;
-int nv;
-double **vars;
-double **update;
+int update_vars(double* nm, int nsol, int* sol,
+	int nv, double** vars, double** update)
 {
-    register int bi, si, j;		/*loop counters*/
+    register int bi, si, j; /*loop counters*/
     double tmp;
     int imp;
     int negat = FALSE;
 
-    for(bi = 0; bi < nsol; bi++) {
-	si = sol[bi];
-	nm[si] = 0.0;
-	imp = soltoimp[si];
+    for (bi = 0; bi < nsol; bi++) {
+        si = sol[bi];
+        nm[si] = 0.0;
+        imp = soltoimp[si];
 
-	if (imp != Psi ) {
-	    for(j = 0; j < nv; j++) {
+        if (imp != Psi) {
+            for (j = 0; j < nv; j++) {
 
-		/*calculate the value of the update*/
-		tmp = vars[si][j] + update[si][j];
+                /*calculate the value of the update*/
+                tmp = vars[si][j] + update[si][j];
 
-		/*check to see if the new conc will be negative*/
-		if ( tmp < 0.0 ) {
+                /*check to see if the new conc will be negative*/
+                if (tmp < 0.0) {
 
-		    /*only sweat non pseudo vars*/
-		    if ( ! IS_PSEUDO( imp ) ) negat++;
+                    /*only sweat non pseudo vars*/
+                    if (!IS_PSEUDO(imp))
+                        negat++;
 
-		    /*if the amount we are going negative is less than ABE*/
-		    if ( vars[si][j] > ABE[imp] )
-			vars[si][j] = LTE[imp] * ABE[imp];
-		    else
-			vars[si][j] = LTE[imp] * LTE[imp] * vars[si][j];
+                    /*if the amount we are going negative is less than ABE*/
+                    if (vars[si][j] > ABE[imp])
+                        vars[si][j] = LTE[imp] * ABE[imp];
+                    else
+                        vars[si][j] = LTE[imp] * LTE[imp] * vars[si][j];
 
-		    tmp = update[si][j] / (LTE[imp] * vars[si][j] + ABE[imp]);
-		}
-		else {
-		    /*normal updating*/
-		    vars[si][j] = tmp;
-		    tmp = update[si][j] / (LTE[imp] * vars[si][j] + ABE[imp]);
-		}
-		/*norm calculation*/
-		if ( tmp > nm[si] )
-		    nm[si] = tmp;
-		else if ( - tmp > nm[si])
-		    nm[si] = - tmp;
-	    }
-	}
-	else {
-	    /*damp the godammn poisson equations*/
-	    for(j = 0; j < nv; j++) {
-		tmp = vars[si][j] + update[si][j];
+                    tmp = update[si][j] / (LTE[imp] * vars[si][j] + ABE[imp]);
+                } else {
+                    /*normal updating*/
+                    vars[si][j] = tmp;
+                    tmp = update[si][j] / (LTE[imp] * vars[si][j] + ABE[imp]);
+                }
+                /*norm calculation*/
+                if (tmp > nm[si])
+                    nm[si] = tmp;
+                else if (-tmp > nm[si])
+                    nm[si] = -tmp;
+            }
+        } else {
+            /*damp the godammn poisson equations*/
+            for (j = 0; j < nv; j++) {
+                tmp = vars[si][j] + update[si][j];
 
-		if ( tmp < -1.0 ) tmp = -1.0;
-		if ( tmp > 1.0 ) tmp = 1.0;
+                if (tmp < -1.0)
+                    tmp = -1.0;
+                if (tmp > 1.0)
+                    tmp = 1.0;
 
-		vars[si][j] = tmp;
-		tmp = update[si][j] / (LTE[imp] * vars[si][j] + ABE[imp]);
+                vars[si][j] = tmp;
+                tmp = update[si][j] / (LTE[imp] * vars[si][j] + ABE[imp]);
 
-		/*norm calculation*/
-		if ( tmp > nm[si] )
-		    nm[si] = tmp;
-		else if ( - tmp > nm[si])
-		    nm[si] = - tmp;
-	    }
-	}
+                /*norm calculation*/
+                if (tmp > nm[si])
+                    nm[si] = tmp;
+                else if (-tmp > nm[si])
+                    nm[si] = -tmp;
+            }
+        }
     }
-    return( negat );
+    return (negat);
 }
-
-
-

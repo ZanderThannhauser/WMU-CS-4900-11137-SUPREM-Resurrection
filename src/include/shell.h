@@ -11,6 +11,7 @@
 /*   shell.h                Version 5.1     */
 /*   Last Modification : 7/3/91  08:55:21 */
 
+#include "./misc/get.h"
 
 #ifdef STATIC_ALLOCATION_TIME
 #define EXTERN
@@ -21,23 +22,22 @@
 EXTERN char *prompt;
 
 /*these variables are used for input processing*/
-EXTERN char *buffer;	/*the input buffer pointer*/
-EXTERN int bufptr;	/*the current input buffer pointer*/
-EXTERN int buflen;	/*the current amount of space buffer is decalared to*/
+EXTERN char *buffer; /*the input buffer pointer*/
+EXTERN int bufptr;   /*the current input buffer pointer*/
+EXTERN int buflen;   /*the current amount of space buffer is decalared to*/
 
 /*these are used in input munging as well*/
-EXTERN char *supbuf;	/*the input buffer pointer*/
-EXTERN int supbpt;	/*the current input buffer pointer*/
-EXTERN int supbln;	/*the current amount of space buffer is decalared to*/
+EXTERN char *supbuf; /*the input buffer pointer*/
+EXTERN int supbpt;   /*the current input buffer pointer*/
+EXTERN int supbln;   /*the current amount of space buffer is decalared to*/
 
-EXTERN char *echo_buffer;	/*the input buffer pointer*/
-EXTERN int echo_bufptr;		/*the current input buffer pointer*/
-EXTERN int echo_buflen;		/*the current amount of space buffer is decalared to*/
+EXTERN char *echo_buffer; /*the input buffer pointer*/
+EXTERN int echo_bufptr;   /*the current input buffer pointer*/
+EXTERN int echo_buflen;   /*the current amount of space buffer is decalared to*/
 
 /*return values for prompting*/
 #define BACKGROUND 1
 #define PROMPT 2
-
 
 /*define types of parameters that may be recieved*/
 #define IVAL 1
@@ -55,15 +55,15 @@ EXTERN int echo_buflen;		/*the current amount of space buffer is decalared to*/
 extern FILE *file_parse();
 
 /*this file is the standard input path for all input*/
-EXTERN FILE *in_file ;
+EXTERN FILE *in_file;
 
 /*this structure is for use in the macro preprocessor*/
 struct macro_table {
-    char *name;		/*the name of the macro*/
-    char *args;		/*the argument list if any for this macro*/
-    char *replace;	/*the replacement string*/
-    struct macro_table *next;	/*line pointer*/
-    };
+    char *name;               /*the name of the macro*/
+    char *args;               /*the argument list if any for this macro*/
+    char *replace;            /*the replacement string*/
+    struct macro_table *next; /*line pointer*/
+};
 
 EXTERN struct macro_table *macro;
 
@@ -82,9 +82,9 @@ EXTERN int depth;
 
 /*this structure and information is used to keep pointers to functions*/
 struct command_table {
-	char *name;
-	int (*func)(char*, int);
-	int param;
+    char *name;
+    void (*func)(char *, struct par_str *);
+    int param;
 };
 
 #define NUMCMD 50

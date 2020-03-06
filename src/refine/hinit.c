@@ -17,32 +17,38 @@
 /*   Last Modification : 7/3/91 15:40:43 */
 
 #include <math.h>
-#include "global.h"
-#include "constant.h"
-#include "skel.h"
-#include "dbaccess.h"
+
+#include "./include/constant.h"
+#include "./include/dbaccess.h"
+#include "./include/global.h"
+#include "./include/skel.h"
+
+// 2020 includes:
+#include "hinit.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /*-----------------HINIT------------------------------------------------
  * Initialize the local spacing for each node.
  *----------------------------------------------------------------------*/
-int hinit(ir, sp)
-int ir;
-double sp;
-{
+void hinit(int ir, double sp) {
     int f, p, i, n;
     struct LLedge *bp;
     double l_edge();
 
-#define min2(A,B) (A < B)?A:B
+#define min2(A, B) (A < B) ? A : B
 
-    for(f=1, bp = sreg[ir]->bnd; (bp != sreg[ir]->bnd)||f; f=0, bp = bp->next) {
-	n = nB(bp);
-	p = pt_nd(n);
+    for (f = 1, bp = sreg[ir]->bnd; (bp != sreg[ir]->bnd) || f;
+         f = 0, bp = bp->next) {
+        n = nB(bp);
+        p = pt_nd(n);
 
-	/*for each edge, spacing is set to sp*/
-	set_space( p, sp );
-	for(i = 0; i < num_edge_nd(n); i++) {
-	    set_space(p,min2(get_space(p),len_edg(edge_nd(n,i))));
-	}
+        /*for each edge, spacing is set to sp*/
+        set_space(p, sp);
+        for (i = 0; i < num_edge_nd(n); i++) {
+            set_space(p, min2(get_space(p), len_edg(edge_nd(n, i))));
+        }
     }
 }

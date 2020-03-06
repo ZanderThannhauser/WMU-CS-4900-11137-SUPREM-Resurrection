@@ -11,12 +11,20 @@
 /*   list.c                Version 5.1     */
 /*   Last Modification : 7/3/91  08:28:11 */
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <ctype.h>
-#include "global.h"
 
+#include "./include/global.h"
+
+// 2020 includes:
+#include "list.h"
+// end of includes
+
+// 2020 forward declarations
+void loop_check(char **str);
+// end of declarations
 
 /************************************************************************
  *									*
@@ -28,8 +36,7 @@
  *  Original:	MEL	2/85						*
  *									*
  ************************************************************************/
-char *list_parse( s, first )
-char **s;
+char *list_parse(s, first) char **s;
 int first;
 {
     char *value, *str;
@@ -37,44 +44,46 @@ int first;
 
     /*if we are on the first pass preprocess for stepping loops*/
     if (first)
-	loop_check(s);
+        loop_check(s);
 
     str = s[0];
 
     /*if str has zero length, return NULL*/
-    if ( strlen(str) == 0)
-	return(NULL);
+    if (strlen(str) == 0)
+        return (NULL);
 
     /*step over any leading parens*/
-    if ( *str == '(' )
-	strcpy(str, str+1);
+    if (*str == '(')
+        strcpy(str, str + 1);
 
-    while ( isspace( *str ) ) strcpy(str, str+1);
+    while (isspace(*str))
+        strcpy(str, str + 1);
 
-    if( *str == 0) return(NULL);
+    if (*str == 0)
+        return (NULL);
 
     /*find the end of the argument*/
-    for(count = 0;
-	     (str[count] != ' ') && (str[count] != ')') && (str[count] != ',');
-	count++);
+    for (count = 0;
+         (str[count] != ' ') && (str[count] != ')') && (str[count] != ',');
+         count++)
+        ;
 
     /*malloc off space to hold the result*/
-    value = salloc(char , strlen(str) + 1);
+    value = salloc(char, strlen(str) + 1);
 
     /*copy the string in*/
-    for(i = 0; i < count; i++) value[i] = str[i];
+    for (i = 0; i < count; i++)
+        value[i] = str[i];
     value[i] = '\0';
 
     /*update the list value*/
-    strcpy(str, (str + count + 1) );
+    strcpy(str, (str + count + 1));
 
-    if ( strlen(value) == 0)
-	return(NULL);
+    if (strlen(value) == 0)
+        return (NULL);
     else
-	return( value );
+        return (value);
 }
-
-
 
 /************************************************************************
  *									*
@@ -85,9 +94,7 @@ int first;
  *  Original:	MEL	4/85						*
  *									*
  ************************************************************************/
-loop_check(str)
-char **str;
-{
+void loop_check(char **str) {
     float start, stop, step;
     float index;
     int length;
@@ -96,29 +103,28 @@ char **str;
 
     /*check to see if we have float to float type of line*/
     if (sscanf(str[0], "(%e to %e", &start, &stop) != 2) {
-	/*the string does not look right at all*/
-	return;
+        /*the string does not look right at all*/
+        return;
     }
 
     /*if we got here, everything is all right*/
     if (sscanf(str[0], "(%e to %e step %e", &start, &stop, &step) != 3)
-	step = 1.0;
+        step = 1.0;
 
     /*build a new string*/
-    length = (stop - start) / step * SIZE + 2*SIZE;
-    if (length < SIZE) length = SIZE;
-    str[0] = sralloc(char , length, str[0] );
+    length = (stop - start) / step * SIZE + 2 * SIZE;
+    if (length < SIZE)
+        length = SIZE;
+    str[0] = sralloc(char, length, str[0]);
 
     strcpy(str[0], "(");
-    if ( step < 0 ) {
-	for(pos = 0, index = start; index >= stop; index += step, pos += SIZE)
-	    sprintf(&str[0][pos+1], "%16e ", index);
-    }
-    else {
-	for(pos = 0, index = start; index <= stop; index += step, pos += SIZE)
-	    sprintf(&str[0][pos+1], "%16e ", index);
+    if (step < 0) {
+        for (pos = 0, index = start; index >= stop; index += step, pos += SIZE)
+            sprintf(&str[0][pos + 1], "%16e ", index);
+    } else {
+        for (pos = 0, index = start; index <= stop; index += step, pos += SIZE)
+            sprintf(&str[0][pos + 1], "%16e ", index);
     }
 
     strcat(str[0], ")");
 }
-

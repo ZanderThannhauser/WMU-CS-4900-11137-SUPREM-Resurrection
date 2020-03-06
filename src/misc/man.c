@@ -11,11 +11,19 @@
 /*   man.c                Version 5.1     */
 /*   Last Modification : 7/3/91  08:41:09 */
 
+#include <ctype.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <ctype.h>
 #include <string.h>
-#include "sysdep.h"
+
+#include "./include/sysdep.h"
+
+// 2020 includes:
+#include "man.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /************************************************************************
  *									*
@@ -29,8 +37,7 @@
  *  systems.								*
  *									*
  ************************************************************************/
-int man(char *par, int param )
-{
+void man(char *par, struct par_str* param) {
     FILE *help, *more;
     char *s;
     char filename[80];
@@ -38,43 +45,41 @@ int man(char *par, int param )
     char *dir;
 
     /*figure out where to look for the manual directory*/
-    if (( dir = (char *)getenv("MANDIR") ) == NULL)
-	dir = MANDIR;
+    if ((dir = (char *)getenv("MANDIR")) == NULL)
+        dir = MANDIR;
 
     strcpy(filename, dir);
     strcat(filename, "/");
 
     if (par == NULL)
-	strcat(filename, "suprem.h");
+        strcat(filename, "suprem.h");
     else {
-	/*skip over leading white space*/
-	while ( isspace ( *par )) par++;
+        /*skip over leading white space*/
+        while (isspace(*par))
+            par++;
 
-	/*skip over non blanks*/
-	for( s = par; ( ! isspace( *s ) && ( *s != '\0' ) ); s++) ;
-	*s = '\0';
+        /*skip over non blanks*/
+        for (s = par; (!isspace(*s) && (*s != '\0')); s++)
+            ;
+        *s = '\0';
 
-	strcat(filename, par);
-	strcat(filename, ".h");
+        strcat(filename, par);
+        strcat(filename, ".h");
     }
 
     /*open a file to read from*/
-    if ((help = fopen( filename, "r" )) == NULL) {
-	fprintf(stderr, "can not find help for %s\n", par);
-	return(-1);
+    if ((help = fopen(filename, "r")) == NULL) {
+        fprintf(stderr, "can not find help for %s\n", par);
+        return;
     }
 
     /*open up the command more to write to*/
-    more = (FILE *)popen( PAGER, "w" );
+    more = (FILE *)popen(PAGER, "w");
 
     while ((c = getc(help)) != EOF)
-	putc(c, more);
+        putc(c, more);
 
     fclose(help);
     pclose(more);
-    return(0);
+    return;
 }
-
-
-
-

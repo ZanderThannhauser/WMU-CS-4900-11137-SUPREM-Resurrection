@@ -1,1 +1,1 @@
-int draw_lab( char *par, int param );
+void draw_lab(char *par, struct par_str *param);

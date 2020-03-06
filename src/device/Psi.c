@@ -10,26 +10,36 @@
 /*   Psi.c                Version 5.2     */
 /*   Last Modification : 7/3/91 15:44:14  */
 
-#include <stdio.h>
 #include <math.h>
-#include "global.h"
-#include "constant.h"
-#include "geom.h"
-#include "impurity.h"
-#include "material.h"
-#include "matrix.h"
-#include "diffuse.h"
-#include "device.h"
+#include <stdio.h>
 
-#   define fetch(N,V,S,A)\
-    if (is_specified (param, N)) V = S*get_float (param, N) + A
+#include "./include/constant.h"
+#include "./include/device.h"
+#include "./include/diffuse.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#include "./include/impurity.h"
+#include "./include/material.h"
+#include "./include/matrix.h"
+
+// 2020 includes:
+#include "./misc/get.h"
+#include "Psi.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
+
+
+#define fetch(N, V, S, A)                                                      \
+    if (is_specified(param, N))                                                \
+    V = S * get_float(param, N) + A
 
 /*definitions for impurity constants as a function of material*/
-#define eps(M)	impur[Psi].constant[M][1][0] /*material relative permitivitty*/
+#define eps(M) impur[Psi].constant[M][1][0] /*material relative permitivitty*/
 
 /*definitions of the segregation coefficients as a function of material*/
-#define Qss(M1, M2) 	impur[Psi].seg[SEG0][M1][M2]
-
+#define Qss(M1, M2) impur[Psi].seg[SEG0][M1][M2]
 
 /************************************************************************
  *									*
@@ -39,9 +49,7 @@
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-Psiboundary(bval)
-struct bound_str *bval;
-{
+void Psiboundary(struct bound_str *bval) {
     int mat0 = bval->mat[0];
     int mat1 = bval->mat[1];
     int row0 = bval->loc[0][0];
@@ -51,7 +59,8 @@ struct bound_str *bval;
     double f;
     int Ps = imptosol[Psi];
 
-    right_side( bval->loc[0][0], imptosol[Psi], bval->rhs, bval->cpl * Qss(mat0,mat1) );
+    right_side(bval->loc[0][0], imptosol[Psi], bval->rhs,
+               bval->cpl * Qss(mat0, mat1));
 
     /*make sure the values are the same across materials*/
     f = 1.0e20 * bval->cpl;
@@ -63,12 +72,7 @@ struct bound_str *bval;
     f *= (bval->conc[0] - bval->conc[1]);
     right_side(row0, Ps, bval->rhs, -f);
     right_side(row1, Ps, bval->rhs, f);
-
 }
-
-
-
-
 
 /************************************************************************
  *									*
@@ -78,46 +82,49 @@ struct bound_str *bval;
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-psi_card( par, param )
-char *par;
-int param;
-{ 
+void psi_card(char *par, struct par_str* param)
+{
     int mat;
     int mat2 = -1;
 
     /*get the material number specified*/
-    if ( get_bool( param, "silicon" ) )	mat = Si;
-    if ( get_bool( param, "oxide" ) )	mat = SiO2;
-    if ( get_bool( param, "oxynitride" ) )	mat = OxNi;
-    if ( get_bool( param, "poly" ) )	mat = Poly;
-    if ( get_bool( param, "nitride" ) )	mat = SiNi;
-    if ( get_bool( param, "gas" ) )	mat = GAS;
-    if ( get_bool( param, "aluminum" ) )	mat = Al;
-    if ( get_bool( param, "gaas" ) )	mat = GaAs;
+    if (get_bool(param, "silicon"))
+        mat = Si;
+    if (get_bool(param, "oxide"))
+        mat = SiO2;
+    if (get_bool(param, "oxynitride"))
+        mat = OxNi;
+    if (get_bool(param, "poly"))
+        mat = Poly;
+    if (get_bool(param, "nitride"))
+        mat = SiNi;
+    if (get_bool(param, "gas"))
+        mat = GAS;
+    if (get_bool(param, "aluminum"))
+        mat = Al;
+    if (get_bool(param, "gaas"))
+        mat = GaAs;
 
     /*fetch the values for each constant in this material*/
     fetch("eps", eps(mat), 8.85418e-14, 0.0);
 
     /*now fetch any segregation data that comes our way*/
-    if (get_bool( param, "/silicon" ) && ( is_specified( param, "/silicon" )) )
-	mat2 = Si;
-    if (get_bool( param, "/oxide" )   && ( is_specified( param, "/oxide" )) )
-	mat2 = SiO2;
-    if (get_bool( param, "/oxynitride" )   && ( is_specified( param, "/oxynitride" )) )
-	mat2 = OxNi;
-    if (get_bool( param, "/poly" )    && ( is_specified( param, "/poly" )) )
-	mat2 = Poly;
-    if (get_bool( param, "/nitride" ) && ( is_specified( param, "/nitride" )) )
-	mat2 = SiNi;
-    if (get_bool( param, "/gas" )     && ( is_specified( param, "/gas" )) )
-	mat2 = GAS;
-    if (get_bool( param, "/gaas" )    && ( is_specified( param, "/gaas" )) )
-	mat2 = GaAs;
-    
+    if (get_bool(param, "/silicon") && (is_specified(param, "/silicon")))
+        mat2 = Si;
+    if (get_bool(param, "/oxide") && (is_specified(param, "/oxide")))
+        mat2 = SiO2;
+    if (get_bool(param, "/oxynitride") && (is_specified(param, "/oxynitride")))
+        mat2 = OxNi;
+    if (get_bool(param, "/poly") && (is_specified(param, "/poly")))
+        mat2 = Poly;
+    if (get_bool(param, "/nitride") && (is_specified(param, "/nitride")))
+        mat2 = SiNi;
+    if (get_bool(param, "/gas") && (is_specified(param, "/gas")))
+        mat2 = GAS;
+    if (get_bool(param, "/gaas") && (is_specified(param, "/gaas")))
+        mat2 = GaAs;
+
     if (mat2 != -1) {
-	fetch("Qss", Qss(mat,mat2)=Qss(mat2,mat), 1.0, 0.0);
+        fetch("Qss", Qss(mat, mat2) = Qss(mat2, mat), 1.0, 0.0);
     }
 }
-
-
-

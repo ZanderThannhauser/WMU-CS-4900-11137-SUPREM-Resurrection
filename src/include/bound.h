@@ -1,7 +1,6 @@
 /*	bound.h		Version 5.1	*/
 /*	Last Modification:  7/3/91 08:54:55 */
 
-
 /*	bound.h		Version 1.2		*/
 /*	Last Modification:	12/11/89 13:44:42		*/
 
@@ -24,15 +23,14 @@
 #ifndef GlobalH
 /* Already defined in include/global.h - DClark 19Oct98 */
 #ifdef STATIC_ALLOCATION_TIME
-  #ifdef EXTERN
-  #undef EXTERN
-  #endif
-  #define EXTERN
+#ifdef EXTERN
+#undef EXTERN
+#endif
+#define EXTERN
 #else
-  #define EXTERN extern
+#define EXTERN extern
 #endif /* STATIC_ALLOCATION_TIME */
 #endif /* GlobalH */
-
 
 /* Global min and max specified by user if more than one frame exists */
 EXTERN float gmin;
@@ -50,4 +48,3 @@ EXTERN float max_y;
 #define MACMAXX 720
 #define MACMAXY 520
 #define ERROR -1
-

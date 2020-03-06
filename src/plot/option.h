@@ -1,1 +1,1 @@
-int option( char *par, int param );
+void option(char *par, struct par_str *param);

@@ -1,1 +1,2 @@
-int print_1d(char *par, int param );
+
+void print_1d(char *par, struct par_str *param);

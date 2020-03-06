@@ -16,17 +16,24 @@
 /*   sint.c                Version 5.1     */
 /*   Last Modification : 7/3/91 08:12:33 */
 
+#include <ctype.h>
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <math.h>
-extern double erf(), erfc();
-#include <ctype.h>
-#include "global.h"
-#include "constant.h"
-#include "dbaccess.h"
-#include "expr.h"
-#include "plot.h"
 
+#include "./include/constant.h"
+#include "./include/dbaccess.h"
+#include "./include/expr.h"
+#include "./include/global.h"
+#include "./include/plot.h"
+
+// 2020 includes:
+#include "./plot/do_1d.h"
+#include "sint.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /************************************************************************
  *									*
@@ -36,8 +43,7 @@ extern double erf(), erfc();
  *  Original:	MEL	8/85						*
  *									*
  ************************************************************************/
-float sol_interp( type, val1, val2 )
-int type;
+float sol_interp(type, val1, val2) int type;
 float val1;
 float val2;
 {
@@ -46,70 +52,76 @@ float val2;
     int count;
     float ret;
 
-    if ( mode == ONED )
-	data = salloc( struct d_str, 3*ned );
+    if (mode == ONED)
+        data = salloc(struct d_str, 3 * ned);
     else
-	data = salloc( struct d_str, 2*ne );
+        data = salloc(struct d_str, 2 * ne);
 
     /*get a one dimensional line profile*/
-    switch(mode) {
-    case TWOD :
-	switch( type ) {
-	case X :    count = do_1d( YSEC, val1*1.0e-4, data, -1, -1, 0 );
-		    break;
-	case Y :    count = do_1d( XSEC, val1*1.0e-4, data, -1, -1, 0 );
-		    break;
-	case Z :    count = do_1d( XSEC, val1*1.0e-4, data, -1, -1, 0 );
-		    break;
-	}
-	break;
+    switch (mode) {
+    case TWOD:
+        switch (type) {
+        case X:
+            count = do_1d(YSEC, val1 * 1.0e-4, data, -1, -1, 0);
+            break;
+        case Y:
+            count = do_1d(XSEC, val1 * 1.0e-4, data, -1, -1, 0);
+            break;
+        case Z:
+            count = do_1d(XSEC, val1 * 1.0e-4, data, -1, -1, 0);
+            break;
+        }
+        break;
     case ONED:
-	switch( type ) {
-	case X :    count = do_1d( YSEC, 0.0, data, -1, -1, 0 );
-		    break;
-	case Y :    count = do_1d( YSEC, 0.0, data, -1, -1, 0 );
-		    break;
-	case Z :    count = do_1d( YSEC, 0.0, data, -1, -1, 0 );
-		    break;
-	}
+        switch (type) {
+        case X:
+            count = do_1d(YSEC, 0.0, data, -1, -1, 0);
+            break;
+        case Y:
+            count = do_1d(YSEC, 0.0, data, -1, -1, 0);
+            break;
+        case Z:
+            count = do_1d(YSEC, 0.0, data, -1, -1, 0);
+            break;
+        }
     }
 
     /*x and y functions work similarly*/
-    if ( (type == X) || (type == Y) ) {
+    if ((type == X) || (type == Y)) {
 
-	/*run up the list and find the intersection*/
-	for(i = count-1; ((data[i].y > val2) == (data[i-1].y > val2)) && (i > 1); i--);
+        /*run up the list and find the intersection*/
+        for (i = count - 1;
+             ((data[i].y > val2) == (data[i - 1].y > val2)) && (i > 1); i--)
+            ;
 
-	/*interpolate to the answer*/
-	if ( data[i].y == data[i-1].y )
-	    ret = data[i].x;
-	else
-	    ret = (val2-data[i-1].y) * (data[i].x-data[i-1].x) / (data[i].y-data[i-1].y) +
-	      data[i-1].x;
+        /*interpolate to the answer*/
+        if (data[i].y == data[i - 1].y)
+            ret = data[i].x;
+        else
+            ret = (val2 - data[i - 1].y) * (data[i].x - data[i - 1].x) /
+                      (data[i].y - data[i - 1].y) +
+                  data[i - 1].x;
 
-	ret = ret * 1.0e4;
-    }
-    else {
-	val2 *= 1.0e-4;
+        ret = ret * 1.0e4;
+    } else {
+        val2 *= 1.0e-4;
 
-	/*run up the list and find the intersection*/
-	for(i = count-1; ((data[i].x > val2) == (data[i-1].x > val2)) && (i > 1); i--);
+        /*run up the list and find the intersection*/
+        for (i = count - 1;
+             ((data[i].x > val2) == (data[i - 1].x > val2)) && (i > 1); i--)
+            ;
 
-	/*interpolate to the answer*/
-	if ( data[i].x == data[i-1].x )
-	    ret = data[i].x;
-	else
-	    ret = (val2-data[i-1].x) * (data[i].y-data[i-1].y) / (data[i].x-data[i-1].x) +
-	      data[i-1].y;
-
+        /*interpolate to the answer*/
+        if (data[i].x == data[i - 1].x)
+            ret = data[i].x;
+        else
+            ret = (val2 - data[i - 1].x) * (data[i].y - data[i - 1].y) /
+                      (data[i].x - data[i - 1].x) +
+                  data[i - 1].y;
     }
     sfree(data);
-    return( ret );
+    return (ret);
 }
-
-
-
-
 
 /************************************************************************
  *									*
@@ -119,8 +131,7 @@ float val2;
  *  Original:	MEL	8/85						*
  *									*
  ************************************************************************/
-float interface( type, loc )
-int type;
+float interface(type, loc) int type;
 float loc;
 {
     register int i;
@@ -129,16 +140,16 @@ float loc;
     int mat1, mat2;
     float ret;
 
-    if ( mode == ONED )
-	data = salloc( struct d_str, 3*ned );
+    if (mode == ONED)
+        data = salloc(struct d_str, 3 * ned);
     else
-	data = salloc( struct d_str, 2*ne );
+        data = salloc(struct d_str, 2 * ne);
 
     /*get a one dimensional line profile*/
-    if ( mode == TWOD )
-	count = do_1d( XSEC, loc*1.0e-4, data, -1, -1, 0 );
+    if (mode == TWOD)
+        count = do_1d(XSEC, loc * 1.0e-4, data, -1, -1, 0);
     else
-	count = do_1d( YSEC, 0.0, data, -1, -1, 0 );
+        count = do_1d(YSEC, 0.0, data, -1, -1, 0);
 
     /*split out the material numbers*/
     type /= MAXMAT;
@@ -147,18 +158,18 @@ float loc;
     mat1 = (type - mat2) / MAXMAT;
 
     /*run up the data and find the intersection*/
-    for(match = i = 0; (i < count-1) && (!match); i++) {
-	if ( (data[i].mat == mat1) && (data[i+1].mat == mat2) ) match = i;
-	if ( (data[i].mat == mat2) && (data[i+1].mat == mat1) ) match = i+1;
+    for (match = i = 0; (i < count - 1) && (!match); i++) {
+        if ((data[i].mat == mat1) && (data[i + 1].mat == mat2))
+            match = i;
+        if ((data[i].mat == mat2) && (data[i + 1].mat == mat1))
+            match = i + 1;
     }
 
-
     if (match)
-	ret = data[match].x * 1.0e4;
+        ret = data[match].x * 1.0e4;
     else
-	ret =  -1.0;
+        ret = -1.0;
 
     sfree(data);
-    return(ret);
+    return (ret);
 }
-

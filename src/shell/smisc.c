@@ -1,4 +1,4 @@
-static char sccsid[]="smisc.c 5.1  7/3/91 08:28:18";
+
 /*----------------------------------------------------------------------
  *
  * smisc.c - easier interface to expression parser
@@ -13,65 +13,65 @@ static char sccsid[]="smisc.c 5.1  7/3/91 08:28:18";
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "global.h"
-#include "expr.h"
-#include "shell.h"
 
+#include "./include/expr.h"
+#include "./include/global.h"
+#include "./include/shell.h"
+
+// 2020 includes:
+#include "./shell/macro.h"
+#include "./check/eval.h"
+#include "smisc.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /*-----------------STRING_TO_REAL---------------------------------------
  * Hide everything from the innocent users
  *----------------------------------------------------------------------*/
-float string_to_real( expr, defval)
-     char *expr;
-     float defval;
+float string_to_real(expr, defval) char *expr;
+float defval;
 {
     char *parse_expr(), *eval_real(), *err, *dexpr;
-    struct vec_str *rexp; int len;
+    struct vec_str *rexp;
+    int len;
     float val;
 
     /* First make a copy that we can write all over */
-    len = 1 + strlen( expr);
-    dexpr = salloc(char , len);
-    strcpy( dexpr, expr);
+    len = 1 + strlen(expr);
+    dexpr = salloc(char, len);
+    strcpy(dexpr, expr);
 
     /* Expand macros */
-    (void)expand_macro( &dexpr, &len, macro);
+    (void)expand_macro(&dexpr, &len, macro);
 
     /* Try to parse */
-    if((err = parse_expr( dexpr, &rexp)) || (err = eval_real( rexp, &val))) {
-	fprintf( stderr, "bad expression: %s\n", err);
-	val = defval;
+    if ((err = parse_expr(dexpr, &rexp)) || (err = eval_real(rexp, &val))) {
+        fprintf(stderr, "bad expression: %s\n", err);
+        val = defval;
     }
-    free_expr( rexp);
-    sfree( dexpr);
-    return( val);
+    free_expr(rexp);
+    sfree(dexpr);
+    return (val);
 }
 
 /*-----------------SMACRO, FMACRO, UMACRO-------------------------------
  * Define and undefine macros without including the whole expression parser.
  *----------------------------------------------------------------------*/
 
-smacro( name, def)
-     char *name, *def;
-{
+void smacro(char *name, char *def) {
     char buffer[512];
-    sprintf( buffer, "%s %s", name, def);
-    define_macro( buffer, &macro);
+    sprintf(buffer, "%s %s", name, def);
+    define_macro(buffer, &macro);
 }
 
-fmacro( name, val, format)
-     char *name, *format;
-     float val;
-{
+void fmacro(char *name, float val, char *format) {
     char buffer[512], formbuf[512];
-    strcpy( formbuf, "%s ");
-    strcat( formbuf, format);
-    sprintf( buffer, formbuf, name, val);
-    define_macro( buffer, &macro);
+    strcpy(formbuf, "%s ");
+    strcat(formbuf, format);
+    sprintf(buffer, formbuf, name, val);
+    define_macro(buffer, &macro);
 }
 
-umacro( name)
-     char *name;
-{
-    (void)undef_macro( name, &macro);
-}
+void umacro(char *name) { (void)undef_macro(name, &macro); }

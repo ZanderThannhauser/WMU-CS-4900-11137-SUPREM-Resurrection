@@ -19,11 +19,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "global.h"
-#include "sysdep.h"
-#include "shell.h"
-#include "check.h"
 
+#include "./include/check.h"
+#include "./include/global.h"
+#include "./include/shell.h"
+#include "./include/sysdep.h"
+
+// 2020 includes:
+#include "./misc/reader.h"
+#include "./shell/proc.h"
+#include "read.h"
+// end of includes
 
 /************************************************************************
  *									*
@@ -36,8 +42,7 @@
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-int read_ukfile( name )
-char *name;
+int read_ukfile(char* name)
 {
     FILE *fd;
     char *file;
@@ -45,27 +50,27 @@ char *name;
     int i, j;
 
     /*try several places to get the key file name*/
-    if (( file = (char *)getenv("KEYFILE")) == NULL)
-	/*use the system wide one*/
-	file = name;
+    if ((file = (char *)getenv("KEYFILE")) == NULL)
+        /*use the system wide one*/
+        file = name;
 
     fd = fopen(file, "r");
     if (fd == NULL) {
-	fprintf(stderr, "where is the unformatted key file???\n");
-	return(-1);
+        fprintf(stderr, "where is the unformatted key file???\n");
+        return (-1);
     }
 
-    status = read_list( &(cards[-1]), fd);
+    status = read_list(&(cards[-1]), fd);
 
     /*now match up the command names with the card names*/
-    for(i = 0; cards[i] && strlen(cards[i]->name) != 0; i++) {
-	j = get_proc(cards[i]->name);
-	if ( j != -1 )
-	    command[j].param = i;
-	else
-	    fprintf(stderr, "no command defined for name %s\n", cards[i]->name);
+    for (i = 0; cards[i] && strlen(cards[i]->name) != 0; i++) {
+        j = get_proc(cards[i]->name);
+        if (j != -1)
+            command[j].param = i;
+        else
+            fprintf(stderr, "no command defined for name %s\n", cards[i]->name);
     }
 
-    fclose( fd);
-    return(status);
+    fclose(fd);
+    return (status);
 }

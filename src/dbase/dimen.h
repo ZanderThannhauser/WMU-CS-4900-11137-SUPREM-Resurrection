@@ -1,1 +1,1 @@
-void set_dim( int dim);
+void set_dim(int dim);

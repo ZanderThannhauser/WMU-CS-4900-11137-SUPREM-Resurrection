@@ -1,2 +1,1 @@
-
-int diffuse(char *par,int param);
+void diffuse(char *par, struct par_str *param);

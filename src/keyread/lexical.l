@@ -1,5 +1,7 @@
 %{
 
+#include <ctype.h>
+
 /*************************************************************************
  *									 *
  *   Original : MEL         Stanford University        Sept, 1984	 *
@@ -14,11 +16,15 @@
 /*   Last Modification : 8/18/89  16:35:44 */
 
 
-#undef input
-#define input() (((yytchar=yysptr>yysbuf?U(*--yysptr):getc(stdin))==10?(yylineno++,yytchar):yytchar)==EOF?1:yytchar)
+#include "./parser.h"
 
+#include "../include/check.h"
+#include "../include/key.h"
 
 %}
+
+%option nounput
+%option noinput
 
 %a 6000
 %o 4000

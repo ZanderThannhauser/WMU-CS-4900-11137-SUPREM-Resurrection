@@ -1,1 +1,1 @@
-int cpu(char *par, int param );
+void cpu(char *par, struct par_str *param);

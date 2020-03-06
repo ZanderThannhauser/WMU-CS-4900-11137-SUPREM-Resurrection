@@ -1,1 +1,1 @@
-int coeffox(char *par, int param);
+void coeffox(char *par, struct par_str *param);

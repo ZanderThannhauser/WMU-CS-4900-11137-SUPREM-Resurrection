@@ -18,49 +18,57 @@
 #include <stdio.h>
 #include <sys/times.h>
 
-#include <global.h>
-#include <constant.h>
-#include <geom.h>
-#include <material.h>
-#include <impurity.h>
-#include <matrix.h>
+#include "./include/constant.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#include "./include/impurity.h"
+#include "./include/material.h"
+#include "./include/matrix.h"
+
+// 2020 function includes
+#include "./oxide/oxide_vel.h"
+#include "./dbase/grid_loop.h"
+#include "./dbase/grid_upd.h"
+#include "./misc/print_time.h"
+#include "./dbase/locate.h"
+#include "oxgrow.h"
+// end of includes
+
+// 2020 forward declarations
+void point_vel();
+// end of declarations
 
 /*-----------------OXGROW-----------------------------------------------
  * Controller for oxide growth.
  * Remember: All nodes must be added before
  * computing velocities, otherwise new nodes won't have any.
  *----------------------------------------------------------------------*/
-oxgrow (temp, ornt, oxhow, dt )
-    float temp;		/* Processing temperature */
-    int ornt;		/* Orientation of substrate */
-    int oxhow;		/* Dry or wet oxidation */
-    double *dt;		/* Time increment */
-{
-    extern double total;	/* Total diffusion time */
+void oxgrow(float temp, int ornt, int oxhow, double *dt)
+ {
     struct tms before, after;
 
     times(&before);
 
     /* Compute the velocity vector using whatever oxide growth model */
-    oxide_vel (temp, ornt, oxhow, *dt);
+    oxide_vel(temp, ornt, oxhow, *dt);
 
     /* Check for boundary loops */
     /* Before grid_add to clean up boundary before decorating with new nodes*/
-    if(DetectLoop())
-	UpdateSymbolic++;
+    if (DetectLoop())
+        UpdateSymbolic++;
 
     /* Now drop in any new nodes. Velocities, concentrations as old ones */
     if (grid_add(*dt))
-	UpdateSymbolic++;
+        UpdateSymbolic++;
 
     /* Make a pointwise velocity list: do this AFTER np has been bumped */
-    point_vel( );
+    point_vel();
 
     /*cut the time step back */
-    back_pedal( dt );
+    back_pedal(dt);
 
     /* Mark nodes for later removal */
-    ChooseKillNodes( *dt);
+    ChooseKillNodes(*dt);
 
     /* some barfola statistics */
     times(&after);
@@ -73,8 +81,7 @@ oxgrow (temp, ornt, oxhow, dt )
  * Turns node velocities into point velocities
  *----------------------------------------------------------------------*/
 
-point_vel()
-{
+void point_vel() {
     int ip, nx, ix;
     int arr[3];
 
@@ -84,68 +91,67 @@ point_vel()
     /* Move the points */
     for (ip = 0; ip < np; ip++) {
 
-	/*
-	 * Well, displacement is a function of node and there are
-	 * several nodes at a point, so we have to make a decision.
-	 * For now we let the point move with its 0th node and
-	 * hope all the other nodes at that point wanted to go to the
-	 * same place. Except: when there is a silicon node there,
-	 * we make sure to go with it. This means the silicon/oxide
-	 * boundary moves into silicon, as wanted.
-	 */
-	if ( (nx = node_mat( nd_pt(ip,0), Si ) ) == -1 )
-	    if ( (nx = node_mat( nd_pt(ip,0), Poly ) ) == -1 )
-		    nx = nd_pt(ip, 0);
+        /*
+         * Well, displacement is a function of node and there are
+         * several nodes at a point, so we have to make a decision.
+         * For now we let the point move with its 0th node and
+         * hope all the other nodes at that point wanted to go to the
+         * same place. Except: when there is a silicon node there,
+         * we make sure to go with it. This means the silicon/oxide
+         * boundary moves into silicon, as wanted.
+         */
+        if ((nx = node_mat(nd_pt(ip, 0), Si)) == -1)
+            if ((nx = node_mat(nd_pt(ip, 0), Poly)) == -1)
+                nx = nd_pt(ip, 0);
 
-	for(ix = 0; ix < mode; ix++)
-	    pt[ip]->vel[ix] = nd[nx]->sol[arr[ix]];
+        for (ix = 0; ix < mode; ix++)
+            pt[ip]->vel[ix] = nd[nx]->sol[arr[ix]];
     }
 }
 
 /*------------------MOVE_POINT------------------------------------------
  * Turn point velocities into honest-to-god point displacements.
  *----------------------------------------------------------------------*/
-move_point( dt )
-     double dt;
+void move_point(double dt)
 {
     register int ip, ix;
 
     for (ip = 0; ip < np; ip++) {
-	for( ix = 0; ix < mode; ix++ )
-	    pt[ ip]->cord[ ix] += pt[ip]->vel[ix] * dt;
+        for (ix = 0; ix < mode; ix++)
+            pt[ip]->cord[ix] += pt[ip]->vel[ix] * dt;
     }
 }
 
 /*-----------------TOT_AREAS--------------------------------------------
  * Integrate the total area in each material (volume check)
  *----------------------------------------------------------------------*/
-tot_areas( oar, nar )
-double *oar, *nar;
-{
+void tot_areas(double *oar, double *nar) {
     double newa[MAXMAT], olda[MAXMAT], delta;
     int i;
 
-    for( i = 0; i < MAXMAT; i++) newa[i] = olda[i] = 0;
+    for (i = 0; i < MAXMAT; i++)
+        newa[i] = olda[i] = 0;
 
-    for( i = 0; i < nn; i++) {
-	newa[ nd[i]->mater ] += 1e8*nar[i];
-	olda[ nd[i]->mater ] += 1e8*oar[i];
+    for (i = 0; i < nn; i++) {
+        newa[nd[i]->mater] += 1e8 * nar[i];
+        olda[nd[i]->mater] += 1e8 * oar[i];
     }
 
-    if ( newa[Si] != olda[Si] )
-    printf("Silicon consumed %10.5f oxide grown %10.5f (%5.3f)\n", olda[Si] - newa[Si],
-	   newa[SiO2] - olda[SiO2], (newa[SiO2] - olda[SiO2])/(olda[Si] - newa[Si]));
+    if (newa[Si] != olda[Si])
+        printf("Silicon consumed %10.5f oxide grown %10.5f (%5.3f)\n",
+               olda[Si] - newa[Si], newa[SiO2] - olda[SiO2],
+               (newa[SiO2] - olda[SiO2]) / (olda[Si] - newa[Si]));
 
     for (i = 0; i < MAXMAT; i++) {
-	if (olda[i] != 0){
-	    delta = (newa[i] - olda[i])/olda[i];
-	    if (delta > 1e-6 || delta < -1e-6)
-		printf("change in %s area %8.5f%%\n", MatNames[i]+1, delta*100);
-	}
+        if (olda[i] != 0) {
+            delta = (newa[i] - olda[i]) / olda[i];
+            if (delta > 1e-6 || delta < -1e-6)
+                printf("change in %s area %8.5f%%\n", MatNames[i] + 1,
+                       delta * 100);
+        }
     }
     return;
 }
-
 
 /*-----------------ClockTri---------------------------------------------
  * Searches the grid for clockwise triangles and (optionally) fixes them.
@@ -154,29 +160,33 @@ double *oar, *nar;
  *----------------------------------------------------------------------*/
 #define X 0
 #define Y 1
-ClockTri( FixEm)
-    int FixEm;
-{
-    int ie, *n, swap, nclock=0, nzero=0;
+int ClockTri(int FixEm) {
+    int ie, *n, swap, nclock = 0, nzero = 0;
     float *c0, *c1, *c2, area, area_tri();
 
-    if ( mode == ONED ) return( 0 );
+    if (mode == ONED)
+        return (0);
 
     for (ie = 0; ie < ne; ie++) {
-	n = tri[ie]->nd;
-	c0 = pt[ nd[ *(n++)]->pt]->cord;
-	c1 = pt[ nd[ *(n++)]->pt]->cord;
-	c2 = pt[ nd[ *(n++)]->pt]->cord;
-	area = area_tri( c0[X], c0[Y], c1[X], c1[Y], c2[X], c2[Y]);
-	if( area == 0) nzero++;
-	if( area < 0 ) nclock++;
-	if (FixEm && area < 0) {
-		n = tri[ie]->nd;
-		swap = n[1]; n[1] = n[2]; n[2] = swap;
-		n = tri[ie]->nb;
-		swap = n[1]; n[1] = n[2]; n[2] = swap;
-	    }
+        n = tri[ie]->nd;
+        c0 = pt[nd[*(n++)]->pt]->cord;
+        c1 = pt[nd[*(n++)]->pt]->cord;
+        c2 = pt[nd[*(n++)]->pt]->cord;
+        area = area_tri(c0[X], c0[Y], c1[X], c1[Y], c2[X], c2[Y]);
+        if (area == 0)
+            nzero++;
+        if (area < 0)
+            nclock++;
+        if (FixEm && area < 0) {
+            n = tri[ie]->nd;
+            swap = n[1];
+            n[1] = n[2];
+            n[2] = swap;
+            n = tri[ie]->nb;
+            swap = n[1];
+            n[1] = n[2];
+            n[2] = swap;
+        }
     }
-    return( (nzero+nclock) * (nzero? -1 : 1));
+    return ((nzero + nclock) * (nzero ? -1 : 1));
 }
-

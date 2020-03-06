@@ -23,28 +23,32 @@
 
 #include <stdio.h>
 /* Need to know the offset into the constants array */
-#include "global.h"
-#include "constant.h"
-#include "implant.h"
+#include "./include/constant.h"
+#include "./include/global.h"
+#include "./include/implant.h"
 
-gtprs(rp, sigp, gam1, kurt, cvals)
-	double	 rp, sigp, gam1, kurt ;
-	struct imp_info	 *cvals;		/* Pearson-IV constants */
-	{
+// 2020 includes:
+#include "imp_gtprs.h"
+// end of includes
 
-	double	 ca, gam1sq;
-
-	/* ---- start of gtprs ---- */
-
-	 /* The 4th moment is in the tables, just get it.  */
+// 2020 forward declarations
+// end of declarations
 
 
-	/* now the Pearson coefficients.... */
-	gam1sq = gam1 * gam1;
-	ca = 10. * kurt - 12. * gam1sq - 18. ;		/* cap A.  */
+void gtprs(double rp, double sigp, double gam1, double kurt, struct imp_info *cvals)
+{
 
-	cvals->vert[PRS_A0] = -gam1 * sigp * (kurt + 3.) / ca ;
-	cvals->vert[PRS_B0] = -sigp * sigp * (4. * kurt - 3. * gam1sq) / ca ;
-	cvals->vert[PRS_B2] = -(2. * kurt - 3. * gam1sq - 6.)  / ca ;
+    double ca, gam1sq;
 
-	}
+    /* ---- start of gtprs ---- */
+
+    /* The 4th moment is in the tables, just get it.  */
+
+    /* now the Pearson coefficients.... */
+    gam1sq = gam1 * gam1;
+    ca = 10. * kurt - 12. * gam1sq - 18.; /* cap A.  */
+
+    cvals->vert[PRS_A0] = -gam1 * sigp * (kurt + 3.) / ca;
+    cvals->vert[PRS_B0] = -sigp * sigp * (4. * kurt - 3. * gam1sq) / ca;
+    cvals->vert[PRS_B2] = -(2. * kurt - 3. * gam1sq - 6.) / ca;
+}

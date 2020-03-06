@@ -30,30 +30,36 @@
 
 #include <stdio.h>
 
-static	 int r0 = -1 ;
-static	 int r1 = -1 ;
+// 2020 includes:
+#include "pa.h"
+// end of includes
 
-void
-par(first, last)
-	int	 first ;
-	int	 last ;
-	{
-	r0 = first ;
-	r1 = last ;
-	}
+// 2020 forward declarations
+// end of declarations
 
-void
-pa(dp, first, last)
-	double	*dp ;
-	int	 first, last ;
-	{
-	int	 i = 0 ;
-	if (i) par(i, i) ;
 
-	if (r0 >= 0) first = r0 ;
-	if (r1 >= 0) last = r1 ;
-	for (i = first ; i <= last ; i++) {
-		printf("**[%d] = %G\n", i, dp[i]) ;
-		}
-	}
+static int r0 = -1;
+static int r1 = -1;
 
+void par(first, last) int first;
+int last;
+{
+    r0 = first;
+    r1 = last;
+}
+
+void pa(dp, first, last) double *dp;
+int first, last;
+{
+    int i = 0;
+    if (i)
+        par(i, i);
+
+    if (r0 >= 0)
+        first = r0;
+    if (r1 >= 0)
+        last = r1;
+    for (i = first; i <= last; i++) {
+        printf("**[%d] = %G\n", i, dp[i]);
+    }
+}

@@ -9,35 +9,46 @@
 /*   viscous.c                Version 5.1     */
 /*   Last Modification : 7/3/91 10:52:44 */
 
-#include "global.h"
-#include "constant.h"
-#include "geom.h"
-#undef EXTERN
-#define EXTERN			/* FEgeom isn't included in main.c */
-#include "FEgeom.h"
-#undef EXTERN
-#define EXTERN extern
-#include "material.h"
-#include "FEmath.h"
 #include <assert.h>
 #include <stdio.h>
 
+#include "./include/constant.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#undef EXTERN
+#define EXTERN /* FEgeom isn't included in main.c */
+#include "./include/FEgeom.h"
+#undef EXTERN
+#define EXTERN extern
+#include "./include/FEmath.h"
+#include "./include/material.h"
+
+// 2020 includes:
+#include "./oxide/FEconvert.h"
+#include "./oxide/FEbc.h"
+#include "./finel/FEsolve.h"
+#include "./dbase/dispose.h"
+#include "./misc/get.h"
+#include "./oxide/Oxidant.h"
+#include "./oxide/triox.h"
+#include "./finel/tri6.h"
+#include "./oxide/oxide_vel.h"
+#include "./finel/tri7.h"
+#include "viscous.h"
+// end of includes
+
+// 2020 forward declarations
+void FEmathset(int flow);
+// end of declarations
+
 /* By arrangement with FEconvert.c */
-#define TRIOX	0
-#define ELAST6  1
-#define ELAST7  2
-#define DUMMY   3
+#define TRIOX 0
+#define ELAST6 1
+#define ELAST7 2
+#define DUMMY 3
 
 /* another hack by Zak */
 #define NEL 7
-extern int noop();
-extern int write_problem(), read_problem();
-extern int triox_stiff(), triox_bc(), triox_nodal_stress();
-extern int FE_oxbulk(), sup4_ecoeff();
-extern int tri6_stiff(), tri6_Snodal_stress();
-extern int tri7_stiff(), tri7_nodal_stress();
-extern int oxload();
-
 
 /************************************************************************
  *									*
@@ -46,39 +57,37 @@ extern int oxload();
  ************************************************************************/
 float proc_temp;
 
-visco_growth( temp, dt)
-    float temp;
-    double dt;
-{
+void visco_growth(float temp, double dt) {
     proc_temp = temp;
 
     /*Generate appropriate data structures for the FE method*/
-    if(FEconvert( TRIOX, 3) < 0) return;
+    if (FEconvert(TRIOX, 3) < 0)
+        return;
 
     /* Boundary conditions */
     FEoxbc();
 
     /* Call the FE solver on the oxide problem */
-    FEmathset( 1);
-    FEsolve( verbose>= V_CHAT );
+    FEmathset(1);
+    FEsolve(verbose >= V_CHAT);
 
     /* Store the displacements and stresses in S4's data structure */
     FE2s4ox();
 
-    if( SilStress) {
-	/* Postprocessing for fun and profit: do silicon stress calc */
-	/* New BC's */
-	FEdf = 2;
-	FEsilbc();
+    if (SilStress) {
+        /* Postprocessing for fun and profit: do silicon stress calc */
+        /* New BC's */
+        FEdf = 2;
+        FEsilbc();
 
-	/* New math */
-	FEmathset( 0);
+        /* New math */
+        FEmathset(0);
 
-	/* and away we go. */
-	FEsolve( verbose >= V_CHAT);
+        /* and away we go. */
+        FEsolve(verbose >= V_CHAT);
 
-	/* Store silicon stresses in S4 data structure. */
-	FE2s4sil();
+        /* Store silicon stresses in S4 data structure. */
+        FE2s4sil();
     }
 
     /* Later */
@@ -86,35 +95,40 @@ visco_growth( temp, dt)
     return;
 }
 
-
 /*-----------------Stress_Analysis--------------------------------------
  * Thermal elastic stresses.
  *----------------------------------------------------------------------*/
-int stress_analysis( char *par, int param)
+void stress_analysis(char *par, struct par_str *param)
 {
-    float temp1=1000, temp2=1000;
+    float temp1 = 1000, temp2 = 1000;
     int element;
 
-    if( InvalidMeshCheck()) return -1;
+    if (InvalidMeshCheck())
+        return; // -1;
 
-    if (is_specified( param, "temp1")) temp1 = 273+get_float( param, "temp1");
-    if (is_specified( param, "temp2")) temp2 = 273+get_float( param, "temp2");
+    if (is_specified(param, "temp1"))
+        temp1 = 273 + get_float(param, "temp1");
+    if (is_specified(param, "temp2"))
+        temp2 = 273 + get_float(param, "temp2");
 
-    ThermSig( temp1, temp2);
+    ThermSig(temp1, temp2);
     AddIntSig();
-    
-    if (!is_specified( param, "nel"))     element = ELAST6;
-    else if (get_int( param, "nel") == 6) element = ELAST6;
-    else if (get_int( param, "nel") == 7) element = ELAST7;
+
+    if (!is_specified(param, "nel"))
+        element = ELAST6;
+    else if (get_int(param, "nel") == 6)
+        element = ELAST6;
+    else if (get_int(param, "nel") == 7)
+        element = ELAST7;
     else {
-	fprintf( stderr, "Only know 6 & 7 noded elements\n");
-	return(-1);
+        fprintf(stderr, "Only know 6 & 7 noded elements\n");
+        return; // (-1);
     }
 
     /* fixed by Zak to ensure that data structures are initialized
      *  for the case of Stress calculations without any previous
      *  stress-dependent oxidation.
-     */    
+     */
     FEdesc[0].nel = NEL;
     FEdesc[0].gaussp = 3;
     FEdesc[0].stiff = triox_stiff;
@@ -151,48 +165,52 @@ int stress_analysis( char *par, int param)
     FEdesc[4].nodal_stress = tri7_nodal_stress;
 
     /* Generate appropriate data structures for the FE method */
-    if(FEconvert( element, 2)<0) return(-1);
+    if (FEconvert(element, 2) < 0)
+        return; // (-1);
 
     /*
      * Set up boundary conditions.
      */
-    FEbc( temp1, par, param);
-	
+    FEbc(temp1, par, param);
 
     /* Call the FE solver */
-    FEmathset( 0);
-    FEsolve( verbose >= V_CHAT );
+    FEmathset(0);
+    FEsolve(verbose >= V_CHAT);
 
     /*store the displacements and stresses somewhere permanent*/
     FE2s4all();
-    
+
     FEfree();
-    return(0);
+    return; // (0);
 }
 
-FEmathset( flow)
-    int flow;			/* Doing flow or stress calc? */
+void FEmathset(int flow) /* Doing flow or stress calc? */
 {
     float Oss(), Ovel();
-    static double dummy[]={0.0,1.0};
-    
+    static double dummy[] = {0.0, 1.0};
+
     /* Use B/A to scale velocities */
-    if( flow)
-	FEabe[0] = FEabe[1] = Ovel( proc_temp, gas_type, Oss( gas_type, SiO2), dummy, 1.0);
+    if (flow)
+        FEabe[0] = FEabe[1] =
+            Ovel(proc_temp, gas_type, Oss(gas_type, SiO2), dummy, 1.0);
     else
-	FEabe[0] = FEabe[1] = 1.0;
-    
+        FEabe[0] = FEabe[1] = 1.0;
+
     /* Use gas boundary condition to scale concentrations */
-    if( flow)
-	FEabe[2] = Oss( gas_type, SiO2);
-    
+    if (flow)
+        FEabe[2] = Oss(gas_type, SiO2);
+
     /* Boundary rows make flow problem asymmetric. */
-    if( !flow)	FEsymm = 1;
-    else	FEsymm = 0;
+    if (!flow)
+        FEsymm = 1;
+    else
+        FEsymm = 0;
 
     /* Force 1 loop solution for linear problems */
-    if( stress_dep) FEnonloop = 250;
-    else	    FEnonloop = 1;
+    if (stress_dep)
+        FEnonloop = 250;
+    else
+        FEnonloop = 1;
 
     /* Direct solution, no iterative nonsense. */
     FElinmeth = F_FULL;
@@ -203,5 +221,3 @@ FEmathset( flow)
     /* No accuracy checks on linear solution */
     FEcheck = 0;
 }
-
-

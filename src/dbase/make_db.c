@@ -17,11 +17,29 @@
 /*   Last Modification : 7/3/91 08:21:02 */
 
 #include <stdio.h>
-#include "global.h"
-#include "constant.h"
-#include "geom.h"
-#include "material.h"	/* For nmat mattyp GAS */
 
+#include "./include/constant.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#include "./include/material.h" /* For nmat mattyp GAS */
+
+// 2020 includes
+#include "./dbase/node.h"
+#include "./dbase/locate.h"
+#include "./dbase/element.h"
+#include "./dbase/point.h"
+#include "./refine/triang.h"
+#include "./dbase/dispose.h"
+#include "./dbase/clktri.h"
+#include "./dbase/edge.h"
+#include "./dbase/geometry.h"
+#include "./dbase/region.h"
+#include "./dbase/check.h"
+#include "make_db.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /************************************************************************
  *									*
@@ -43,40 +61,39 @@
  *  Original:	MEL	9/90						*
  *									*
  ************************************************************************/
-create_db( mk_nodes )
-int mk_nodes;
-{
+void create_db(int mk_nodes) {
     int i;
 
     /*make edge boundaries self-consistent with the points*/
-    bc_dirty = FALSE; 
+    bc_dirty = FALSE;
     make_bc();
 
     /*if we have no nodes read in*/
     if (mk_nodes) {
-	/*first order of business is to create the nodes*/
-	make_nodes();
-	/*next, change the triangle to point data to triangle to nodes*/
-	tripts = FALSE; 
-	tri_to_node();
-    }
-    else {
-	/*make Gas nodes for points if they need them and don't have them*/
-	for(i = 0; i < np; i++)
-	    if ( is_surf(i) && (node_mat(nd_pt(i,0), GAS)==-1) ) mk_nd(i, GAS);
+        /*first order of business is to create the nodes*/
+        make_nodes();
+        /*next, change the triangle to point data to triangle to nodes*/
+        tripts = FALSE;
+        tri_to_node();
+    } else {
+        /*make Gas nodes for points if they need them and don't have them*/
+        for (i = 0; i < np; i++)
+            if (is_surf(i) && (node_mat(nd_pt(i, 0), GAS) == -1))
+                mk_nd(i, GAS);
 
-	/*get the point to node lists set up*/
-	pt_to_node();
+        /*get the point to node lists set up*/
+        pt_to_node();
     }
 
     /*next, change the triangle to point data to triangle to nodes*/
-    if (tripts) {tripts = FALSE; tri_to_node();}
+    if (tripts) {
+        tripts = FALSE;
+        tri_to_node();
+    }
 
     /*next build the connectivity pieces that are not fundamental*/
     bd_connect("Mesh Creation");
 }
-
-
 
 /************************************************************************
  *									*
@@ -85,36 +102,45 @@ int mk_nodes;
  *  Original:	MEL	9/90						*
  *									*
  ************************************************************************/
-bd_connect(when)
-char *when;
-{
+void bd_connect(char *when) {
 
     int r;
 
     /*free all existing skeletons*/
-    while( nsreg > 0 ) free_skel(0);
+    while (nsreg > 0)
+        free_skel(0);
 
     /*clean up any dead stuff first*/
-    if ( need_waste ) {need_waste = FALSE; waste();}
+    if (need_waste) {
+        need_waste = FALSE;
+        waste();
+    }
 
     /*make sure the damn triangles are clockwise ordered*/
-    if (clkws_dirty) {clkws_dirty = FALSE; clock_tri();}
+    if (clkws_dirty) {
+        clkws_dirty = FALSE;
+        clock_tri();
+    }
 
     /*next, generate the node to triangle lists*/
     node_to_tri();
 
     /*finally, generate the neighbor lists*/
-    if (neigh_dirty) {neigh_dirty = FALSE; nxtel();}
+    if (neigh_dirty) {
+        neigh_dirty = FALSE;
+        nxtel();
+    }
 
     /*generate edges*/
     build_edg();
 
     /*build geometry*/
-    geom( when );
+    geom(when);
     geom_dirty = FALSE;
 
     /*generate regions*/
-    for(r = 0; r < nreg; r++) build_reg(r);
+    for (r = 0; r < nreg; r++)
+        build_reg(r);
 
     /*check for consistency*/
     mtest1(when);

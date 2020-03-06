@@ -1,1 +1,1 @@
-int structure( char *par, int param );
+void structure(char *par, struct par_str *param);

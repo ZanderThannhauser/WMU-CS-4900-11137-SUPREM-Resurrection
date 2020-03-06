@@ -1,1 +1,1 @@
-int trap(char *par, int param);
+void trap(char *par, struct par_str *param);

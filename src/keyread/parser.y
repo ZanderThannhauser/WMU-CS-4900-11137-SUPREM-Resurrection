@@ -16,8 +16,22 @@
 #include <stdio.h>
 #include <string.h>
 #include <ctype.h>
-#include "check.h"
-#include "key.h"
+
+#include "../include/check.h"
+#include "../include/key.h"
+
+
+// 2020 includes:
+// end of includes
+
+// 2020 forward declarations
+int yylex();
+int yywrap(void);
+int yylook();
+int yyerror();
+// end of declarations
+
+
 
 #ifdef MEMDEB
 #define malloc MALLOC
@@ -291,9 +305,6 @@ term
     ;
 
 %%
-
-#include "lexical.c"
-
 
 
 /************************************************************************

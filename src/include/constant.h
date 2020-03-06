@@ -33,23 +33,23 @@
 #define MAXIMP 50
 
 /*a useful boltzmann constant value*/
-#define KB  8.61738e-5
-#define kb  8.61738e-5
+#define KB 8.61738e-5
+#define kb 8.61738e-5
 
 #ifndef MAXFLOAT
-#define MAXFLOAT        1.0e38		/* Maximum floating point on Vax. */
+#define MAXFLOAT 1.0e38 /* Maximum floating point on Vax. */
 #endif
-#define LARGE		1.0e19		/* Large but can be manipulated.  */
-#define EPS             1.0e-6		/* Typical roundoff for unity.    */
-#define PREC            1.0e-12		/* Precision around unity.	  */
-#define MAYBE           -1
-#define PI              3.1415926535897932
-#define LOG2            0.6931471805599453
+#define LARGE 1.0e19 /* Large but can be manipulated.  */
+#define EPS 1.0e-6   /* Typical roundoff for unity.    */
+#define PREC 1.0e-12 /* Precision around unity.	  */
+#define MAYBE -1
+#define PI 3.1415926535897932
+#define LOG2 0.6931471805599453
 
-#define NIL		(char *) 0	/* avoid conflict with sdtio */
+#define NIL (char *)0 /* avoid conflict with sdtio */
 
 /*define the maximum dimensionality*/
-#define MAXDIM 3		/*three d is max....*/
+#define MAXDIM 3 /*three d is max....*/
 
 /*define the maximum number of vertices/edges of the elements*/
 #define MAXVRT 3

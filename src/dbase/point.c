@@ -18,12 +18,18 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <global.h>
-#include <constant.h>
-#include <geom.h>
-#include <material.h>	/* So we can set nmat to 0 - want this? */
-#include "impurity.h"	/* So we can set n_imp to 0 */
-#include "diffuse.h"	/* for the time of creation */
+
+#include "./include/constant.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#include "./include/material.h" /* So we can set nmat to 0 - want this? */
+
+#include "./include/impurity.h" /* So we can set n_imp to 0 */
+#include "./include/diffuse.h"  /* for the time of creation */
+
+// 2020 includes
+#include "point.h"
+// end of includes
 
 static int maxpt = 0;
 
@@ -31,22 +37,21 @@ static int maxpt = 0;
  * Dumb routines to allocate storage and bump np, nn.
  * A good place to put malloc smarts.
  *---------------------------------------------------------------------*/
-char *alloc_pt()
-{
+char *alloc_pt() {
     int j;
 
     if (np + 1 >= maxpt) {
-	if ( maxpt == 0 ) {
-	    maxpt = 3000;
-	    pt = salloc( pt_typ *, maxpt );
-	}
-	else {
-	    maxpt += 1000;
-	    pt = sralloc( pt_typ *, maxpt, pt );
-	}
+        if (maxpt == 0) {
+            maxpt = 3000;
+            pt = salloc(pt_typ *, maxpt);
+        } else {
+            maxpt += 1000;
+            pt = sralloc(pt_typ *, maxpt, pt);
+        }
     }
-    pt[np] = (pt_typ *) malloc (sizeof (pt_typ));
-    if (!pt[np]) return ("Out of storage in alloc_pt");
+    pt[np] = (pt_typ *)malloc(sizeof(pt_typ));
+    if (!pt[np])
+        return ("Out of storage in alloc_pt");
 
     pt[np]->cord[0] = pt[np]->cordo[0] = MAXFLOAT;
     pt[np]->cord[1] = pt[np]->cordo[1] = MAXFLOAT;
@@ -57,64 +62,54 @@ char *alloc_pt()
     pt[np]->vel[2] = pt[np]->ovel[2] = 0.0;
 
     set_space(np, MAXFLOAT);
-    pt[ np ]->flags = 0;
-    pt[ np ]->nn = 0;
+    pt[np]->flags = 0;
+    pt[np]->nn = 0;
 
     for (j = 0; j < MAXMAT; j++)
-	pt[ np]->nd[ j] = -1;
+        pt[np]->nd[j] = -1;
 
     np++;
-    return(0);
+    return (0);
 }
-
 
 /*
  *  Create a point out of the minimal information required for it.
  */
-mk_pt( nc, cord )
-int nc;
+int mk_pt(nc, cord) int nc;
 float *cord;
 {
     char *err;
     int i;
 
-    if ((err = alloc_pt()) != NULL) panic( err );
+    if ((err = alloc_pt()) != NULL)
+        panic(err);
 
-    for(i = 0; i < nc; i++) pt[np-1]->cord[i] = cord[i];
+    for (i = 0; i < nc; i++)
+        pt[np - 1]->cord[i] = cord[i];
 
-    return( np-1 );
+    return (np - 1);
 }
-
-
-
 
 /*
  * destroy all points
  */
-dis_pt()
-{
+void dis_pt() {
     int i;
-    for (i=0; i < np; i++)
-	dis_1pt(&(pt[i]));
+    for (i = 0; i < np; i++)
+        dis_1pt(&(pt[i]));
     np = 0;
 }
-
 
 /*
  * destroy a single pooint
  */
-dis_1pt (p)
-    struct pt_str **p;
-{
-	/*free the rest of the structure*/
-	free(p[0]);
+void dis_1pt(struct pt_str **p) {
+    /*free the rest of the structure*/
+    free(p[0]);
 
-	/*null the pointer so that we have no future problems*/
-	p[0] = NULL;
+    /*null the pointer so that we have no future problems*/
+    p[0] = NULL;
 }
-
-
-
 
 /************************************************************************
  *									*
@@ -124,14 +119,14 @@ dis_1pt (p)
  *  Original:	MEL	4/86						*
  *									*
  ************************************************************************/
-pt_to_node()
-{
+void pt_to_node() {
     int i;
 
     /*clear the number of nodes list*/
-    for(i = 0; i < np; i++) pt[i]->nn = 0;
+    for (i = 0; i < np; i++)
+        pt[i]->nn = 0;
 
     /*step through the node list and build the pt to node stuff*/
-    for(i = 0; i < nn; i++) add_nd_pt( pt_nd(i), i );
+    for (i = 0; i < nn; i++)
+        add_nd_pt(pt_nd(i), i);
 }
-

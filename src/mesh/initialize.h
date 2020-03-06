@@ -1,1 +1,1 @@
-int initialize( char *par, int param );
+void initialize(char *par, struct par_str *param);

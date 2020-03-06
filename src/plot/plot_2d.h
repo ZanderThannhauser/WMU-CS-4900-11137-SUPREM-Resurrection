@@ -1,1 +1,1 @@
-int plot_2d( char *par, int param );
+void plot_2d(char *par, struct par_str *param);

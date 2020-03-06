@@ -14,19 +14,30 @@
 
 #include <stdio.h>
 #include <stdlib.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+
 
 #define STATIC_ALLOCATION_TIME
-#include "sysdep.h"
-#include "check.h"
-#include "key.h"
+#include "../include/check.h"
+#include "../include/key.h"
+#include "../include/sysdep.h"
+
+// 2020 includes:
+#include "./parser.h"
+#include "./expand.h"
+#include "./write.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 struct par_str **current;
 struct par_str **stack[10];
-int depth ;
+int depth;
 int cardnum;
 char depthstr[20];
-
-
 
 /************************************************************************
  *									*
@@ -36,25 +47,24 @@ char depthstr[20];
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-struct par_str **push(par)
-struct par_str **par;
+struct par_str **push(par) struct par_str **par;
 {
     int i;
 
-    stack[ depth++ ] = par;
+    stack[depth++] = par;
 
     /*we really want to set this up at the previous command*/
     par--;
-    par[0]->param = (struct par_str **)malloc((NUMPAR + 1)*sizeof(struct par_str *) );
+    par[0]->param =
+        (struct par_str **)malloc((NUMPAR + 1) * sizeof(struct par_str *));
 
     /*malloc off the space for the sub params*/
     for (i = 0; i < NUMPAR; i++)
-	par[0]->param[i] = (struct par_str *)calloc(1, sizeof(struct par_str));
+        par[0]->param[i] = (struct par_str *)calloc(1, sizeof(struct par_str));
     par[0]->param[NUMPAR] = NULL;
 
-    return( (par[0]->param) );
+    return ((par[0]->param));
 }
-
 
 /************************************************************************
  *									*
@@ -63,15 +73,12 @@ struct par_str **par;
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-struct par_str **pop()
-{
+struct par_str **pop() {
     depth--;
-    return( stack[ depth ] );
+    return (stack[depth]);
 }
 
-
-main(argc, argv)
-int argc;
+int main(argc, argv) int argc;
 char **argv;
 {
     int i;
@@ -79,48 +86,45 @@ char **argv;
 
     /*malloc off the space for the sub params*/
     for (i = 0; i < NUMPAR; i++)
-	cards[i] = (struct par_str *)calloc(1, sizeof( struct par_str ) );
+        cards[i] = (struct par_str *)calloc(1, sizeof(struct par_str));
     cards[NUMPAR] = NULL;
     current = cards;
-    stack[ depth++ ] = NULL;
+    stack[depth++] = NULL;
     yyparse();
 
     /*make the parameter value of all params = the depth string used in bools*/
     depth = 0;
     depthstr[0] = '\001';
     depthstr[1] = '\000';
-    make_depth( cards );
+    make_depth(cards);
 
     /*now expand the parameter references in the boolean expressions*/
     depth = 0;
     cardnum = 0;
-    expand( cards );
+    expand(cards);
 
     /*open a file, test it, and then write the unformatted key file*/
     if (argc >= 2) {
-	/*open the file and try to write it*/
-	fd = open(argv[1], O_WRONLY | O_TRUNC | O_CREAT, 0666);
-	if (fd == -1) {
-	    fprintf(stderr, "unable to open unformatted keyfile %s\n", argv[1]);
-	    exit(-1);
-	}
-	depth = 0;
-	if (write_list( cards, fd ) == -1)
-	    fprintf(stderr, "unsuccessful write of unformatted key file\n");
-    }
-    else {
-	/*try to open a default*/
-	fd = open("suprem.uk", O_WRONLY | O_TRUNC | O_CREAT, 0666);
-	if (fd == -1) {
-	    fprintf(stderr, "unable to open unformatted keyfile %s\n", argv[1]);
-	    exit(-1);
-	}
-	depth = 0;
-	if (write_list( cards, fd ) == -1)
-	    fprintf(stderr, "unsuccessful write of unformatted key file\n");
+        /*open the file and try to write it*/
+        fd = open(argv[1], O_WRONLY | O_TRUNC | O_CREAT, 0666);
+        if (fd == -1) {
+            fprintf(stderr, "unable to open unformatted keyfile %s\n", argv[1]);
+            exit(-1);
+        }
+        depth = 0;
+        if (write_list(cards, fd) == -1)
+            fprintf(stderr, "unsuccessful write of unformatted key file\n");
+    } else {
+        /*try to open a default*/
+        fd = open("suprem.uk", O_WRONLY | O_TRUNC | O_CREAT, 0666);
+        if (fd == -1) {
+            fprintf(stderr, "unable to open unformatted keyfile %s\n", argv[1]);
+            exit(-1);
+        }
+        depth = 0;
+        if (write_list(cards, fd) == -1)
+            fprintf(stderr, "unsuccessful write of unformatted key file\n");
     }
 
-    return(0);
-
+    return (0);
 }
-

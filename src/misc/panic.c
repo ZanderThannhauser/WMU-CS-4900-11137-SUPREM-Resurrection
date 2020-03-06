@@ -1,4 +1,4 @@
-static char sccsid[]="panic.c 5.1  7/3/91 08:41:10";
+
 /*----------------------------------------------------------------------
  *
  * panic - remedial action attempted
@@ -13,44 +13,55 @@ static char sccsid[]="panic.c 5.1  7/3/91 08:41:10";
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "global.h"
-#include "constant.h"
-#include "geom.h"
-#include "material.h"
-#include "impurity.h"
-#include "diffuse.h"
-#include "shell.h"
-#include "sysdep.h"
+#include <string.h>
 
-void panic (char *s)
-{
-    fprintf(stderr,"suprem4 panic: %s\n",s);
-    if( (!strcmp( s, "nocore")) || (!strcmp( s, "Out of memory")))
-	goto outtahere;
+#include "./include/constant.h"
+#include "./include/diffuse.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#include "./include/impurity.h"
+#include "./include/material.h"
+#include "./include/shell.h"
+#include "./include/sysdep.h"
 
-    fprintf( stderr, "Writing structure to panic.str..."); fflush(stderr);
-    if( (ig2_write("panic.str", 0, 1.0)) < 0)
-	fprintf(stderr, "Failed\n");
+// 2020 includes:
+#include "./mesh/ig2_meshio.h"
+#include "panic.h"
+// end of includes
+
+void panic(char *s) {
+    fprintf(stderr, "suprem4 panic: %s\n", s);
+    if ((!strcmp(s, "nocore")) || (!strcmp(s, "Out of memory")))
+        goto outtahere;
+
+    fprintf(stderr, "Writing structure to panic.str...");
+    fflush(stderr);
+    if ((ig2_write("panic.str", 0, 1.0)) < 0)
+        fprintf(stderr, "Failed\n");
     else
-	fprintf(stderr, "Succeeded\n");
+        fprintf(stderr, "Succeeded\n");
 
 #ifdef SUPPORT
-    fprintf( stderr, "Submitting bug report..."); fflush(stderr);
+    fprintf(stderr, "Submitting bug report...");
+    fflush(stderr);
 
     /* Let's try not to confuse the shell too badly. */
     /* People who run csh here lose big because it balks at quoted newlines */
-    for (t=s; *t; t++)
-	if (*t == '\'' || *t=='\\')
-	    *t = '#';
-    sprintf( cmdbuf, "mail -s 'suprem4 panic: %s\nExecuting command: %s\nTotal time: %e' %s %s&",
-	    s, buffer, total, SUPPORT, (ier<0)? "</dev/null": "<panic.str");
+    for (t = s; *t; t++)
+        if (*t == '\'' || *t == '\\')
+            *t = '#';
+    sprintf(
+        cmdbuf,
+        "mail -s 'suprem4 panic: %s\nExecuting command: %s\nTotal time: %e' "
+        "%s %s&",
+        s, buffer, total, SUPPORT, (ier < 0) ? "</dev/null" : "<panic.str");
 
-    if(system( cmdbuf))
-	fprintf( stderr, "Failed\n");
+    if (system(cmdbuf))
+        fprintf(stderr, "Failed\n");
     else
-	fprintf( stderr, "Succeeded\n");
+        fprintf(stderr, "Succeeded\n");
 #endif
-    outtahere:
+outtahere:
 
     fprintf(stderr, "Better luck next time.\n");
     fflush(stdout);
@@ -58,11 +69,7 @@ void panic (char *s)
     abort();
 }
 
-
 /*-----------------GridSave---------------------------------------------
  * Store a valid grid before anything bad happens.
  *----------------------------------------------------------------------*/
-void GridSave ()
-{
-}
-
+void GridSave() {}

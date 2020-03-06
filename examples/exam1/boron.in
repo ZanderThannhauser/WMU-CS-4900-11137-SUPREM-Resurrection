@@ -31,7 +31,7 @@ plot.1d x.ma=2.0 y.mi=14.0 y.max=20.0
 diffuse time=30 temp=1100 
 
 #save the data
-structure out=boron.str
+structure out=/tmp/boron.str
 
 #plot the final profile
 select z=log10(bor)

@@ -18,36 +18,42 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include <global.h>
-#include <constant.h>
-#include <dbaccess.h>
 
-#define MIN2( A, B ) ( (A)<(B) )?(A):(B)
+#include "./include/constant.h"
+#include "./include/dbaccess.h"
+#include "./include/global.h"
+
+// 2020 includes:
+#include "./dbase/list.h"
+#include "./dbase/locate.h"
+#include "edge.h"
+// end of includes
+
+#define MIN2(A, B) ((A) < (B)) ? (A) : (B)
 
 static int maxedg = 0;
 
 /*
  * Create an edge from scratch
  */
-int mk_edg(int n1, int n2)
-{
+int mk_edg(int n1, int n2) {
     if (ned + 1 >= maxedg) {
-	if ( maxedg == 0 ) {
-	    maxedg = 3000;
-	    edg = salloc( edg_typ *, maxedg );
-	}
-	else {
-	    maxedg += 1000;
-	    edg = sralloc( edg_typ *, maxedg, edg );
-	}
+        if (maxedg == 0) {
+            maxedg = 3000;
+            edg = salloc(edg_typ *, maxedg);
+        } else {
+            maxedg += 1000;
+            edg = sralloc(edg_typ *, maxedg, edg);
+        }
     }
-    edg[ned] = (edg_typ *) malloc (sizeof (edg_typ));
-    if (!edg[ned]) panic ("Out of storage in alloc_edge");
+    edg[ned] = (edg_typ *)malloc(sizeof(edg_typ));
+    if (!edg[ned])
+        panic("Out of storage in alloc_edge");
 
     edg[ned]->nd[0] = n1;
     edg[ned]->nd[1] = n2;
 
-    edg[ned]->len = ndist(n1,n2);
+    edg[ned]->len = ndist(n1, n2);
 
     edg[ned]->cpl = MAXFLOAT;
     edg[ned]->flags = 0;
@@ -60,115 +66,102 @@ int mk_edg(int n1, int n2)
     edg[ned]->ele.num = 0;
     edg[ned]->ele.list = NULL;
 
-    add_edge_nd( n1, ned );
-    add_edge_nd( n2, ned );
+    add_edge_nd(n1, ned);
+    add_edge_nd(n2, ned);
 
     clr(edg[ned], GEOMDN);
     ned++;
-    return(ned-1);
+    return (ned - 1);
 }
-
 
 /*
  * This routine printy prints an edge
  */
-pr_edg(e)
-int e;
+void pr_edg(e) int e;
 {
-    printf("Nodes\t%d\t%d\n", nd_edg(e,0), nd_edg(e,1) );
+    printf("Nodes\t%d\t%d\n", nd_edg(e, 0), nd_edg(e, 1));
     printf("Elements=\n");
-    pr_list( &(edg[e]->ele) );
+    pr_list(&(edg[e]->ele));
     printf("Coupling\t%e\n", cpl_edg(e));
     printf("Length\t%e\n", len_edg(e));
-    if (ask(edg[e], GEOMDN)) printf("Geometry Done\n");
+    if (ask(edg[e], GEOMDN))
+        printf("Geometry Done\n");
 }
 
-
-
-dis_edg()
-{
+void dis_edg() {
     int i;
 
-    for(i = 0; i < ned; i++) {
-	dis_1edg(&(edg[i]));
+    for (i = 0; i < ned; i++) {
+        dis_1edg(&(edg[i]));
     }
     ned = 0;
 }
 
+void dis_1edg(struct edg_str **e) {
+    /*free the rest of the structure*/
+    dis_list(&(e[0]->ele));
+    free(e[0]);
 
-dis_1edg (e)
-    struct edg_str **e;
-{
-	/*free the rest of the structure*/
-	dis_list(&(e[0]->ele));
-	free(e[0]);
-
-	/*null the pointer so that we have no future problems*/
-	e[0] = NULL;
+    /*null the pointer so that we have no future problems*/
+    e[0] = NULL;
 }
 
-
-
-
 /*this will not work in three dimensions, I need connectivity data*/
-build_edg()
-{
+void build_edg() {
     register int ie, n1, n2, en, nb, nnb, i;
 
     dis_edg();
-    for(i = 0; i < nn; i++) dis_list(&(nd[i]->edg));
+    for (i = 0; i < nn; i++)
+        dis_list(&(nd[i]->edg));
     ned = 0;
     geom_dirty = TRUE;
 
     /*now the hard part, getting elements to point in*/
-    switch(mode) {
-    case ONED :
-	ie = 0;
-	while( done_tri(ie) ) {
-	    n1 = vert_tri(ie, 0);
-	    n2 = vert_tri(ie, 1);
-	    en = mk_edg(n1, n2);
-	    set_edg_ele(ie, 0, en);
-	    add_ele_edg(en, ie);
-	    next_tri(ie);
-	}
-	break;
+    switch (mode) {
+    case ONED:
+        ie = 0;
+        while (done_tri(ie)) {
+            n1 = vert_tri(ie, 0);
+            n2 = vert_tri(ie, 1);
+            en = mk_edg(n1, n2);
+            set_edg_ele(ie, 0, en);
+            add_ele_edg(en, ie);
+            next_tri(ie);
+        }
+        break;
 
-    case TWOD :
-	ie = 0;
-	while( done_tri(ie) ) {
-	    nnb = num_face(ie);
-	    for(i = 0; i < nnb; i++) {
-		n1 = nd_face_ele(ie,i,0);
-		n2 = nd_face_ele(ie,i,1);
-		nb = neigh_fc(ie, i);
-		if ( nb >= 0 ) {
-		    if ( same_mat(nb, ie) && (ie < nb)) {
-			en = mk_edg(n1, n2);
-			set_edg_ele(ie, i, en);
-			add_ele_edg(en, ie);
-			set_edg_ele(nb, twhich(nb, ie), en);
-			add_ele_edg(en, nb);
-		    }
-		    else if ( !same_mat(nb, ie) ) {
-			en = mk_edg(n1, n2);
-			set_edg_ele(ie, i, en);
-			add_ele_edg(en, ie);
-		    }
-		}
-		else {
-		    en = mk_edg(n1, n2);
-		    set_edg_ele(ie, i, en);
-		    add_ele_edg(en, ie);
-		    if ( nb == EXPOSED ) set(edg[en], ESURF );
-		    if ( nb == BACKSID ) set(edg[en], EBACK );
-		}
-	    }
-	    next_tri(ie);
-	}
-	break;
+    case TWOD:
+        ie = 0;
+        while (done_tri(ie)) {
+            nnb = num_face(ie);
+            for (i = 0; i < nnb; i++) {
+                n1 = nd_face_ele(ie, i, 0);
+                n2 = nd_face_ele(ie, i, 1);
+                nb = neigh_fc(ie, i);
+                if (nb >= 0) {
+                    if (same_mat(nb, ie) && (ie < nb)) {
+                        en = mk_edg(n1, n2);
+                        set_edg_ele(ie, i, en);
+                        add_ele_edg(en, ie);
+                        set_edg_ele(nb, twhich(nb, ie), en);
+                        add_ele_edg(en, nb);
+                    } else if (!same_mat(nb, ie)) {
+                        en = mk_edg(n1, n2);
+                        set_edg_ele(ie, i, en);
+                        add_ele_edg(en, ie);
+                    }
+                } else {
+                    en = mk_edg(n1, n2);
+                    set_edg_ele(ie, i, en);
+                    add_ele_edg(en, ie);
+                    if (nb == EXPOSED)
+                        set(edg[en], ESURF);
+                    if (nb == BACKSID)
+                        set(edg[en], EBACK);
+                }
+            }
+            next_tri(ie);
+        }
+        break;
     }
 }
-
-
-

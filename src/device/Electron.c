@@ -10,17 +10,28 @@
 /*   Electron.c                Version 5.2     */
 /*   Last Modification : 7/3/91 15:44:10  */
 
-
-#include <stdio.h>
 #include <math.h>
-#include "global.h"
-#include "constant.h"
-#include "geom.h"
-#include "impurity.h"
-#include "material.h"
-#include "device.h"
-#include "matrix.h"
-#include "diffuse.h"
+#include <stdio.h>
+
+#include "./include/constant.h"
+#include "./include/device.h"
+#include "./include/diffuse.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#include "./include/impurity.h"
+#include "./include/material.h"
+#include "./include/matrix.h"
+
+
+
+// 2020 includes:
+#include "./misc/get.h"
+#include "Electron.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
+
 
 
 /************************************************************************
@@ -32,12 +43,7 @@
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-double Nmobil()
-{
-    return(0.0);
-}
-
-
+double Nmobil() { return (0.0); }
 
 /************************************************************************
  *									*
@@ -47,17 +53,8 @@ double Nmobil()
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-Ncoupling( temp, area, new, equil, dequ, rhs )
-float temp;
-double *area;		/*the nodal areas*/
-double **new;		/*all the concentrations*/
-double **equil;		/*the equilibrium concentration*/
-double **dequ;		/*the derivitive of equilibrium concentration*/
-double **rhs;		/*the current right hand side*/
-{
-}
-
-
+void Ncoupling(float temp, double *area, double **new, double **equil,
+               double **dequ, double **rhs) {}
 
 /************************************************************************
  *									*
@@ -69,45 +66,35 @@ double **rhs;		/*the current right hand side*/
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-Nboundary( bval )
-struct bound_str *bval;
-{
-}
+void Nboundary(struct bound_str *bval) {}
 
-
-	
 /************************************************************************
  *									*
  *	Phi_n( ) - This routine computes the quasi-fermi level and	*
- *  derivatives given the potential, material, and electron 		*	
+ *  derivatives given the potential, material, and electron 		*
  *  concentration							*
  *									*
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-double Phi_n( elec, psi, ec, mat, dqdp, dqde )
-double elec, psi, ec;
+double Phi_n(elec, psi, ec, mat, dqdp, dqde) double elec, psi, ec;
 int mat;
 double *dqdp, *dqde;
 {
     double qfn;
 
-    if ( IS_SEMI( mat ) ) {
-	qfn = - log( elec / Ncon(mat) ) * devVt + psi - ec;
-	*dqdp = 1.0;
-	*dqde = - devVt / elec;
-    }
-    else {
-	qfn = 0.0;
-	*dqdp = 0.0; 
-	*dqde = 0.0;
+    if (IS_SEMI(mat)) {
+        qfn = -log(elec / Ncon(mat)) * devVt + psi - ec;
+        *dqdp = 1.0;
+        *dqde = -devVt / elec;
+    } else {
+        qfn = 0.0;
+        *dqdp = 0.0;
+        *dqde = 0.0;
     }
 
-    return( qfn );
+    return (qfn);
 }
-
-
-
 
 /************************************************************************
  *									*
@@ -117,23 +104,30 @@ double *dqdp, *dqde;
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-electron( par, param )
-char *par;
-int param;
-{ 
+void electron(char *par, struct par_str* param)
+{
     int mat, mat2 = -1;
 
-#   define fetch( V, S, F ) if (is_specified(param,S)) V=F*get_float(param, S)
-#   define listed( S ) ( get_bool(param,S) && is_specified(param,S) )
+#define fetch(V, S, F)                                                         \
+    if (is_specified(param, S))                                                \
+    V = F * get_float(param, S)
+#define listed(S) (get_bool(param, S) && is_specified(param, S))
 
     /*get the material number specified*/
-    if ( get_bool( param, "silicon" ) )	mat = Si;
-    if ( get_bool( param, "oxide" ) )	mat = SiO2;
-    if ( get_bool( param, "oxynitride" ) )	mat = OxNi;
-    if ( get_bool( param, "poly" ) )	mat = Poly;
-    if ( get_bool( param, "nitride" ) )	mat = SiNi;
-    if ( get_bool( param, "gaas" ) )	mat = GaAs;
-    if ( get_bool( param, "gas" ) )	mat = GAS;
+    if (get_bool(param, "silicon"))
+        mat = Si;
+    if (get_bool(param, "oxide"))
+        mat = SiO2;
+    if (get_bool(param, "oxynitride"))
+        mat = OxNi;
+    if (get_bool(param, "poly"))
+        mat = Poly;
+    if (get_bool(param, "nitride"))
+        mat = SiNi;
+    if (get_bool(param, "gaas"))
+        mat = GaAs;
+    if (get_bool(param, "gas"))
+        mat = GAS;
 
     /*get the interface material if given*/
     /*
@@ -146,12 +140,10 @@ int param;
     if ( listed( "/gas" ) )		mat2 = GAS;
     */
 
-    fetch( Econ(mat), "Ec", 1.0 );
-    fetch( Ncon(mat), "Nc", 1.0 );
+    fetch(Econ(mat), "Ec", 1.0);
+    fetch(Ncon(mat), "Nc", 1.0);
 
     /*if no second material listed, no interfce parameters can be*/
-    if ( mat2 != -1 ) {
+    if (mat2 != -1) {
     }
 }
-
-

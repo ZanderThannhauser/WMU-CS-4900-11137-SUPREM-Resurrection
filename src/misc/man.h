@@ -1,1 +1,4 @@
-int man(char *par, int param );
+
+#include "./misc/get.h"
+
+void man(char *par, struct par_str *param);

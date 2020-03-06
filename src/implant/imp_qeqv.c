@@ -18,38 +18,43 @@
  */
 
 #include <math.h>
-#define  abs(V) ((V) < 0.? -(V) : (V))
+#define abs(V) ((V) < 0. ? -(V) : (V))
 
 /* Offsets to the Pearson-IV constants array */
-#include "global.h"
-#include "constant.h"
-#include "implant.h"
+#include "./include/constant.h"
+#include "./include/global.h"
+#include "./include/implant.h"
 
-double
-qeqv(xst, xen, qtot, dx, data)
-double	 xst, xen ;
-double	 qtot ;		/* total possible dose */
-double	 dx ;
-struct imp_info	 *data ;
+// 2020 includes:
+#include "imp_qeqv.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
+
+double qeqv(xst, xen, qtot, dx, data) double xst, xen;
+double qtot; /* total possible dose */
+double dx;
+struct imp_info *data;
 {
 
-    double	 x , val, ov ;
-    double	 q = 0.0;
+    double x, val, ov;
+    double q = 0.0;
 
     /*integrate from x = 0 until we get the correct dose*/
     ov = imp_vert(xst, data);
     for (x = xst + dx; (x < xen - dx) && (x < data->maxz); x += dx) {
-	val = imp_vert( x, data );
-	q += 0.5 * (val + ov) * dx ;
-	ov = val;
+        val = imp_vert(x, data);
+        q += 0.5 * (val + ov) * dx;
+        ov = val;
     }
 
     /*add the excess for the last bit*/
-    if ( x > (xen - dx) ) {
-	val = imp_vert( xen, data );
-	q += 0.5 * (val + ov) * (xen - x);
+    if (x > (xen - dx)) {
+        val = imp_vert(xen, data);
+        q += 0.5 * (val + ov) * (xen - x);
     }
 
-    q =  q  * 1e-4 ;
-    return ( q * qtot / data->area ) ;
+    q = q * 1e-4;
+    return (q * qtot / data->area);
 }

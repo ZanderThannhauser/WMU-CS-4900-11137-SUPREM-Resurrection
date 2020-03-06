@@ -1,1 +1,1 @@
-int implant( char * par, int param );
+void implant(char *par, struct par_str *param);

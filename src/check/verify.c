@@ -16,16 +16,29 @@
 /*   verify.c                Version 5.1     */
 /*   Last Modification : 7/3/91 08:12:38 */
 
-#include <stdio.h>
-#include <string.h>
-#include <stdlib.h>
 #include <ctype.h>
-#include "global.h"
-#include "sysdep.h"
-#include "check.h"
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#include "./include/check.h"
+#include "./include/global.h"
+#include "./include/sysdep.h"
+
+// 2020 includes:
+#include "./shell/proc.h"
+#include "./check/eval.h"
+#include "./check/split.h"
+#include "./check/check.h"
+#include "verify.h"
+// end of includes
+
+// 2020 forward declarations
+void unspecify(struct par_str **par);
+// end of declarations
+
 extern val_str bool_check();
 extern char *parse_expr(), *eval_real();
-
 
 /************************************************************************
  *									*
@@ -37,8 +50,7 @@ extern char *parse_expr(), *eval_real();
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-char *parse_real(str, dval)
-char *str;
+char *parse_real(str, dval) char *str;
 float *dval;
 {
     char *s;
@@ -47,44 +59,46 @@ float *dval;
     s = str;
 
     if (s == NULL)
-	return(NULL);
+        return (NULL);
 
     /*skip over leading spaces*/
-    while ( isspace( *s ) ) s++;
+    while (isspace(*s))
+        s++;
 
     /*handle any leading + or -*/
-    if (( *s == '+' ) || ( *s == '-' ))
-	s++;
+    if ((*s == '+') || (*s == '-'))
+        s++;
 
     /*check off any leading digits*/
-    for ( leading = isdigit( *s ); isdigit( *s ); s++);
+    for (leading = isdigit(*s); isdigit(*s); s++)
+        ;
 
     /*following any leading digits can be a decimal place*/
-    if ( *s == '.' ) {
-	s++;	/*skip over the decimal place*/
-	/*skip over any decimal place digits*/
-	for ( decimal = isdigit( *s ); isdigit( *s ); s++);
+    if (*s == '.') {
+        s++; /*skip over the decimal place*/
+        /*skip over any decimal place digits*/
+        for (decimal = isdigit(*s); isdigit(*s); s++)
+            ;
     }
 
     /*if we do not have either leading digits or decimal digits, error*/
-    if ( ! (leading || decimal) )
-	return( NULL );
+    if (!(leading || decimal))
+        return (NULL);
 
     /*if the next char is an e, we have an exponential portion*/
-    if ( *s == 'e' ) {
-	s++;	/*skip over the exponent character*/
-	/*skip over the exponent sign, if any*/
-	if ( (*s == '+') || (*s == '-') ) s++;
-	/*skip over the exponent digits*/
-	while ( isdigit( *s ) ) s++;
+    if (*s == 'e') {
+        s++; /*skip over the exponent character*/
+        /*skip over the exponent sign, if any*/
+        if ((*s == '+') || (*s == '-'))
+            s++;
+        /*skip over the exponent digits*/
+        while (isdigit(*s))
+            s++;
     }
 
     sscanf(str, "%e", dval);
-    return( s );
+    return (s);
 }
-
-
-
 
 /************************************************************************
  *									*
@@ -95,40 +109,37 @@ float *dval;
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-#define Substring(X,Y) ((*(X)==*(Y)) && (substring(X,Y)))
-name_check(pars, name, ret)
-struct par_str **pars, **ret;
+#define Substring(X, Y) ((*(X) == *(Y)) && (substring(X, Y)))
+int name_check(pars, name, ret) struct par_str **pars, **ret;
 char *name;
 {
     int ambig;
 
-    for( ; *pars != NULL; pars++ ) {
+    for (; *pars != NULL; pars++) {
 
-	/*check the name in this parameter*/
+        /*check the name in this parameter*/
         if (Substring(pars[0]->name, name)) {
-	    if (ret[0] != NULL) {
-		fprintf(stderr, "ambiguous parameter - %s\n", name);
-		return( -2 );
-	    }
-	    ret[0] = pars[0];
-	}
-	/*if there are sub params, check them now*/
-	if (pars[0]->param != NULL) {
-	    if ((ambig = name_check(pars[0]->param, name, ret)) == -2) {
-		return( ambig );
-	    }
-	}
+            if (ret[0] != NULL) {
+                fprintf(stderr, "ambiguous parameter - %s\n", name);
+                return (-2);
+            }
+            ret[0] = pars[0];
+        }
+        /*if there are sub params, check them now*/
+        if (pars[0]->param != NULL) {
+            if ((ambig = name_check(pars[0]->param, name, ret)) == -2) {
+                return (ambig);
+            }
+        }
     }
     /*return no match found*/
     if (ret[0] == NULL)
-	return(-1);
+        return (-1);
     else
-	return(0);
+        return (0);
 }
 
-
-
-#include "expr.h"
+#include "./include/expr.h"
 
 /************************************************************************
  *									*
@@ -139,8 +150,7 @@ char *name;
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-int verify(name, pars, value, parloc)
-char *name;
+int verify(name, pars, value, parloc) char *name;
 struct par_str **pars;
 val_str *value;
 struct par_str **parloc;
@@ -151,85 +161,87 @@ struct par_str **parloc;
     struct vec_str *rexp;
 
     /*split the name into its halves*/
-    loc = (char *)index( name, '=' );
-    if ( loc != NULL ) {
-	*loc = '\0';
-	par_name = name;
-	par_value = loc + 1;
-    }
-    else {
-	par_name = name;
-	par_value = NULL;
+    loc = (char *)index(name, '=');
+    if (loc != NULL) {
+        *loc = '\0';
+        par_name = name;
+        par_value = loc + 1;
+    } else {
+        par_name = name;
+        par_value = NULL;
     }
     parloc[0] = NULL;
 
     /*see if we can find the name in the list of names*/
-    if ((err = name_check( pars, par_name, parloc)) < 0) {
-	if (err == -1)
-	    fprintf(stderr, "parameter %s does not exist for this command\n", par_name);
-	return(-1);
+    if ((err = name_check(pars, par_name, parloc)) < 0) {
+        if (err == -1)
+            fprintf(stderr, "parameter %s does not exist for this command\n",
+                    par_name);
+        return (-1);
     }
 
     /*make sure the par_value is cool for the type of parameter*/
-    switch(parloc[0]->type & ~MASK) {
-    case REAL : if ( (s = parse_expr(par_value, &rexp)) != NULL ) {
-		    free_expr( rexp );
-		    fprintf(stderr, "%s", s);
-		    return( -1 );
-		}
-		else if ( (s = eval_real( rexp, &(value->dval))) != NULL) {
-		    free_expr( rexp );
-		    fprintf(stderr, "%s", s);
-		    return(-1);
-		}
-		free_expr( rexp );
-		break;
-    case INT  : if (par_value == NULL) {
-		    fprintf(stderr, "%s is not a legal integer\n", par_value);
-		    return(-1);
-		}
-		s = par_value;
-		if ( *s == '-' ) s++;
-		for( ; isdigit(*s); s++);
-		if ( *s != '\0' ) {
-		    fprintf(stderr, "%s is not a legal integer\n", par_value);
-		    return(-1);
-		}
-		sscanf(par_value, "%d", &(value->ival));
-		break;
-    case STR  : if (par_value == NULL) {
-		    fprintf(stderr, "no character string given for %s\n", par_name);
-		    return(-1);
-		}
-		value->sval = (char *)malloc( strlen(par_value) + 1);
-		strcpy(value->sval, par_value);
-		break;
-    case BOOL : /*several conditions*/
-		/*lowercase par_value for ease*/
-		if (par_value != NULL)
-		    for(s = par_value; *s != '\0'; s++)
-			*s = isupper(*s)?tolower(*s):(*s);
+    switch (parloc[0]->type & ~MASK) {
+    case REAL:
+        if ((s = parse_expr(par_value, &rexp)) != NULL) {
+            free_expr(rexp);
+            fprintf(stderr, "%s", s);
+            return (-1);
+        } else if ((s = eval_real(rexp, &(value->dval))) != NULL) {
+            free_expr(rexp);
+            fprintf(stderr, "%s", s);
+            return (-1);
+        }
+        free_expr(rexp);
+        break;
+    case INT:
+        if (par_value == NULL) {
+            fprintf(stderr, "%s is not a legal integer\n", par_value);
+            return (-1);
+        }
+        s = par_value;
+        if (*s == '-')
+            s++;
+        for (; isdigit(*s); s++)
+            ;
+        if (*s != '\0') {
+            fprintf(stderr, "%s is not a legal integer\n", par_value);
+            return (-1);
+        }
+        sscanf(par_value, "%d", &(value->ival));
+        break;
+    case STR:
+        if (par_value == NULL) {
+            fprintf(stderr, "no character string given for %s\n", par_name);
+            return (-1);
+        }
+        value->sval = (char *)malloc(strlen(par_value) + 1);
+        strcpy(value->sval, par_value);
+        break;
+    case BOOL: /*several conditions*/
+        /*lowercase par_value for ease*/
+        if (par_value != NULL)
+            for (s = par_value; *s != '\0'; s++)
+                *s = isupper(*s) ? tolower(*s) : (*s);
 
-		if (par_value == NULL)
-		    value->ival = TRUE;
-		else if (substring("on", par_value))
-			 value->ival = TRUE;
-		else if (substring("off", par_value))
-			 value->ival = FALSE;
-		else if (substring("true", par_value))
-			 value->ival = TRUE;
-		else if (substring("false", par_value))
-			 value->ival = FALSE;
-		else {
-		    fprintf(stderr, "%s is not a legal boolean\n", par_value);
-		    return(-1);
-		    }
-		break;
+        if (par_value == NULL)
+            value->ival = TRUE;
+        else if (substring("on", par_value))
+            value->ival = TRUE;
+        else if (substring("off", par_value))
+            value->ival = FALSE;
+        else if (substring("true", par_value))
+            value->ival = TRUE;
+        else if (substring("false", par_value))
+            value->ival = FALSE;
+        else {
+            fprintf(stderr, "%s is not a legal boolean\n", par_value);
+            return (-1);
+        }
+        break;
     }
-    return(0);
+    return (0);
 }
-
-
 
 /************************************************************************
  *									*
@@ -240,70 +252,71 @@ struct par_str **parloc;
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-check(str, par)
-char *str;
-struct par_str *par;
+int check(char *str, struct par_str *par)
 {
-    char *argv[ NUMPAR ];
+    char *argv[NUMPAR];
     struct par_str *indx;
     val_str value;
     int err_ret;
     int i;
 
     err_ret = 0;
-    for(i = 0; i < NUMPAR; i++)
-	argv[i] = NULL;
+    for (i = 0; i < NUMPAR; i++)
+        argv[i] = NULL;
 
     /*make sure card can be specified at this point*/
-    if ( par->bexp != NULL ) {
-	value = bool_check( par->bexp, NULL );
-	if (value.ival) {
-	    fprintf(stderr, "%s\n", par->err_msg);
-	    err_ret = -1;
-	}
+    if (par->bexp != NULL) {
+        value = bool_check(par->bexp, NULL);
+        if (value.ival) {
+            fprintf(stderr, "%s\n", par->err_msg);
+            err_ret = -1;
+        }
     }
 
     /*make sure all card params are unspecified at this point*/
-    if (par->param != NULL) unspecify( par->param );
+    if (par->param != NULL)
+        unspecify(par->param);
 
     /*ship everything off*/
-    if ( str != NULL ) if (split(str, argv, TRUE) == -1) return( -1 );
+    if (str != NULL)
+        if (split(str, argv, TRUE) == -1)
+            return (-1);
 
     /*check out the results with respect to the param list*/
-    if ( par->param != NULL ) {
-	for(i = 0; argv[i] != NULL; i++) {
-	    if (verify(argv[i], par->param, &value, &indx) == -1)
-		err_ret = -1;
-	    else  {
-		indx->type = indx->type | SPECIFIED;
-		indx->value = value;
-	    }
-	}
+    if (par->param != NULL) {
+        for (i = 0; argv[i] != NULL; i++) {
+            if (verify(argv[i], par->param, &value, &indx) == -1)
+                err_ret = -1;
+            else {
+                indx->type = indx->type | SPECIFIED;
+                indx->value = value;
+            }
+        }
     }
 
     /*now check non-specified params and use defaults if appropriate*/
-    if ( par->param != NULL ) {
-	assign_deflt( par->param );
-	deflt_check(par->param);
+    if (par->param != NULL) {
+        assign_deflt(par->param);
+        deflt_check(par->param);
     }
 
     /*now we need to check the parameter error trees*/
     /*do this for specified parameters first*/
-    if ( par->param != NULL )
-	if (error_check(par->param, TRUE) == -1) err_ret = -1;
+    if (par->param != NULL)
+        if (error_check(par->param, TRUE) == -1)
+            err_ret = -1;
 
     /*set the top card to zero*/
     if (err_ret == 0) {
-	par->value.ival = TRUE;
-	par->type = par->type & ~ SPECIFIED;
+        par->value.ival = TRUE;
+        par->type = par->type & ~SPECIFIED;
     }
-    for(i = 0; argv[i] != NULL; i++) sfree(argv[i]);
+    for (i = 0; argv[i] != NULL; i++)
+        sfree(argv[i]);
 
     /*return error status*/
-    return( err_ret );
+    return (err_ret);
 }
-
-
 
 /************************************************************************
  *									*
@@ -313,15 +326,13 @@ struct par_str *par;
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-unspecify( par )
-struct par_str **par;
-{
-    for(; par[0] != NULL; par++) {
+void unspecify(struct par_str **par) {
+    for (; par[0] != NULL; par++) {
 
-	par[0]->type = par[0]->type & ~ SPECIFIED;
+        par[0]->type = par[0]->type & ~SPECIFIED;
 
-	/*if sub parameters, recursively handle them*/
-	if (par[0]->param != NULL)
-	    unspecify( par[0]->param );
+        /*if sub parameters, recursively handle them*/
+        if (par[0]->param != NULL)
+            unspecify(par[0]->param);
     }
 }

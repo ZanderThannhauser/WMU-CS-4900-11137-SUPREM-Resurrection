@@ -17,30 +17,29 @@
 /*   Last Modification : 7/3/91 08:20:34 */
 
 #include <stdio.h>
-#include <global.h>
-#include <constant.h>
-#include "dbaccess.h"	/* So we can set n_imp to 0 */
-#include "impurity.h"	/* So we can set n_imp to 0 */
-#include "diffuse.h"	/* for the time of creation */
+
+#include "./include/constant.h"
+#include "./include/global.h"
+#include "./include/dbaccess.h" /* So we can set n_imp to 0 */
+#include "./include/diffuse.h"  /* for the time of creation */
+#include "./include/impurity.h" /* So we can set n_imp to 0 */
+
+// 2020 includes
+#include "./alloc.h"
+// end of includes
 
 /*-----------------ADD_IMPURITY-----------------------------------------
  * Adds a new impurity to the solution set...
  *----------------------------------------------------------------------*/
-add_impurity( imp, background, mat)
-     int imp;			/* The impurity number */
-     float background;		/* A default value to give nodes */
-     int mat;			/* If default is only to be given to some */
-{
+void add_impurity(int imp, float background, int mat) {
     int i, sol;
-    
-    if ( imptosol[ imp ] == -1) {
-	soltoimp[ n_imp ] = imp;
-	imptosol[ imp ] = n_imp;
-	sol = n_imp++;
-	for( i = 0; i < nn; i++ )
-	    if( mat < 0 || nd[ i ]->mater == mat)
-		nd[ i ] -> sol[ sol ] = background;
+
+    if (imptosol[imp] == -1) {
+        soltoimp[n_imp] = imp;
+        imptosol[imp] = n_imp;
+        sol = n_imp++;
+        for (i = 0; i < nn; i++)
+            if (mat < 0 || nd[i]->mater == mat)
+                nd[i]->sol[sol] = background;
     }
 }
-
-

@@ -16,9 +16,15 @@
 /*   option.c                Version 5.1     */
 /*   Last Modification : 7/3/91 08:38:58 */
 
-#include <stdio.h>
 #include <math.h>
-#include "global.h"
+#include <stdio.h>
+
+#include "./include/global.h"
+
+// 2020 includes
+#include "./misc/get.h"
+#include "option.h"
+// end of includes
 
 /************************************************************************
  *									*
@@ -30,8 +36,6 @@
  *									*
  ************************************************************************/
 
-
-
 /************************************************************************
  *									*
  *	option( par, param ) - this card handles config	parameters for 	*
@@ -40,15 +44,17 @@
  *  Original:	MEL	10/84						*
  *									*
  ************************************************************************/
-int option( char *par, int param )
-{
+void option(char *par, struct par_str *param) {
 
-#   define CHOSEN(x) (is_specified( param, x) && get_bool( param, x))
+#define CHOSEN(x) (is_specified(param, x) && get_bool(param, x))
     /*how much barfola the user wants*/
-    if( CHOSEN("quiet")) verbose = V_QUIET;
-    if( CHOSEN("normal")) verbose = V_NORMAL;
-    if( CHOSEN("chat")) verbose = V_CHAT;
-    if( CHOSEN("barf")) verbose = V_BARF;
-    
-    return(0);
+    if (CHOSEN("quiet"))
+        verbose = V_QUIET;
+    if (CHOSEN("normal"))
+        verbose = V_NORMAL;
+    if (CHOSEN("chat"))
+        verbose = V_CHAT;
+    if (CHOSEN("barf"))
+        verbose = V_BARF;
+
 }

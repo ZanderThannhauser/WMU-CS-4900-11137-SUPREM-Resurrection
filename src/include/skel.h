@@ -16,25 +16,27 @@
 /*   skel.h                Version 5.1     */
 /*   Last Modification : 7/3/91 08:55:22 */
 
-/* Data base for skeletons 
+/* Data base for skeletons
    based on the tri - triangle generator data base */
 #ifndef SKELDB
 #define SKELDB
 
-#define BEFORE             1
-#define AFTER              0
-#define OFFSET_ELEC     -1024	/* Distinguish BC from triangles by offset*/
+#include "./include/constant.h"
+
+#define BEFORE 1
+#define AFTER 0
+#define OFFSET_ELEC -1024 /* Distinguish BC from triangles by offset*/
 
 /***************************************************
  *                                                 *
  *            Macros                               *
  *                                                 *
  ***************************************************/
-#define nF(E)    (E->iscc ? edg[E->edge]->nd[1] : edg[E->edge]->nd[0])
-#define nB(E)    (E->iscc ? edg[E->edge]->nd[0] : edg[E->edge]->nd[1])
-#define WALK(START,F,B) for (B=0, F=START;  F!=B; F=F->next, B=START)
-#define ined(N,E) ((N)==edge[E]->n[0] || (N)==edge[E]->n[1])
-#define ELEC(N)  (node[N]->elec != NO_ELEC)
+#define nF(E) (E->iscc ? edg[E->edge]->nd[1] : edg[E->edge]->nd[0])
+#define nB(E) (E->iscc ? edg[E->edge]->nd[0] : edg[E->edge]->nd[1])
+#define WALK(START, F, B) for (B = 0, F = START; F != B; F = F->next, B = START)
+#define ined(N, E) ((N) == edge[E]->n[0] || (N) == edge[E]->n[1])
+#define ELEC(N) (node[N]->elec != NO_ELEC)
 
 /***************************************************
  *                                                 *
@@ -42,41 +44,39 @@
  *                                                 *
  ***************************************************/
 
-struct slink_str    {
-		int i;			/* objects being linked. */
-		struct Slink *next;	
-		};
+struct slink_str {
+    int i; /* objects being linked. */
+    struct Slink *next;
+};
 
-struct  LLedge 	{ 
-		int edge;		/* Index of edge */
-		int iscc;               /* Is the edge c-c in the region*/
-		struct LLedge *next;	/* Next edge in the linked list */
-		struct LLedge *prev;	/* Last " */
-		double ang;		/* Angle between this & prev edge. */
-		struct LLedge *gt;	/* Edge with greater angle. */
-		struct LLedge *lt;	/* Edge with lesser  angle. */
-		};
+struct LLedge {
+    int edge;            /* Index of edge */
+    int iscc;            /* Is the edge c-c in the region*/
+    struct LLedge *next; /* Next edge in the linked list */
+    struct LLedge *prev; /* Last " */
+    double ang;          /* Angle between this & prev edge. */
+    struct LLedge *gt;   /* Edge with greater angle. */
+    struct LLedge *lt;   /* Edge with lesser  angle. */
+};
 
 /*skeleton region structure*/
-struct  sreg_str  	{ 
-		int len;		/* length of region. */
-		int mat;		/* Material index of this region. */
-		struct LLedge *bnd; 	/* Pointer to linked list for region. */
-		struct LLedge *maxa;	/* Pointer to edge of max angle. */
-		struct LLedge *mina;	/* Pointer to edge of min angle. */
-		int reg;		/* the full region structure */
-		};
+struct sreg_str {
+    int len;             /* length of region. */
+    int mat;             /* Material index of this region. */
+    struct LLedge *bnd;  /* Pointer to linked list for region. */
+    struct LLedge *maxa; /* Pointer to edge of max angle. */
+    struct LLedge *mina; /* Pointer to edge of min angle. */
+    int reg;             /* the full region structure */
+};
 
-#define mat_skl(A)	sreg[A]->mat
-#define len_skl(A)	sreg[A]->len
-
+#define mat_skl(A) sreg[A]->mat
+#define len_skl(A) sreg[A]->len
 
 /***************************************************
  *                                                 *
  *            Variables.                           *
  *                                                 *
  ***************************************************/
-
 
 /****
    Use the following trick to declare the structure
@@ -90,21 +90,20 @@ struct  sreg_str  	{
 #endif
 
 /*number of, and skeleton region data*/
-EXT int nsreg;			
+EXT int nsreg;
 EXT struct sreg_str *sreg[MAXREG];
 
-EXT int debug1,debug2;
+EXT int debug1, debug2;
 
-EXT double mr;				/* Maximum spacing ratio. */
-EXT double mgeom;			/* Minimum triangle geometry. */
+EXT double mr;    /* Maximum spacing ratio. */
+EXT double mgeom; /* Minimum triangle geometry. */
 
 /***************************************************
  *                                                 *
  *            Functions.                           *
  *                                                 *
  ***************************************************/
-struct LLedge * eindex ();
-
+struct LLedge *eindex();
 
 double dist();
 double intang();

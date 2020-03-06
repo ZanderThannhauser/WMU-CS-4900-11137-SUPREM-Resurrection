@@ -15,8 +15,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "check.h"
-#include "key.h"
+
+#include "../include/check.h"
+#include "../include/key.h"
+
+// 2020 includes:
+#include "expand.h"
+// end of includes
+
+// 2020 forward declarations
+void bool_expand(struct bool_exp *bexp);
+int par_expand(struct bool_exp *bexp);
+int check_list(char* s,
+	struct par_str **pars,
+	int* best,
+	struct par_str **match,
+	int recurs);
+// end of declarations
 
 /************************************************************************
  *									*
@@ -33,7 +48,6 @@
  *									*
  ************************************************************************/
 
-
 /************************************************************************
  *									*
  *	expand( par ) - This routine recursivly travels throughout the  *
@@ -42,29 +56,26 @@
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-expand(param)
-struct par_str **param;
+void expand(struct par_str **param)
 {
 
-    while ( param[0]->name[0] != '\0' ) {
-	/*process this parameter*/
-	if ( param[0]->bexp != NULL )
-	    bool_expand( param[0]->bexp );
+    while (param[0]->name[0] != '\0') {
+        /*process this parameter*/
+        if (param[0]->bexp != NULL)
+            bool_expand(param[0]->bexp);
 
-	/*does this sucker have sub parameters??*/
-	if (param[0]->param != NULL) {
-	    depth++;
-	    expand( param[0]->param );
-	    depth--;
-	}
+        /*does this sucker have sub parameters??*/
+        if (param[0]->param != NULL) {
+            depth++;
+            expand(param[0]->param);
+            depth--;
+        }
 
-	param++;
-	if (depth == 0)
-	    cardnum++;
+        param++;
+        if (depth == 0)
+            cardnum++;
     }
 }
-
-
 
 /************************************************************************
  *									*
@@ -75,23 +86,20 @@ struct par_str **param;
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-bool_expand( bexp )
-struct bool_exp *bexp;
+void bool_expand(struct bool_exp *bexp)
 {
     /*check the type to see if it needs expansion*/
-    if ( bexp->type == PARVAL )
-	if (par_expand( bexp ) == -1) {
-	    fprintf(stderr, "can not expand parameter %s\n", bexp->value.sval);
-	}
+    if (bexp->type == PARVAL)
+        if (par_expand(bexp) == -1) {
+            fprintf(stderr, "can not expand parameter %s\n", bexp->value.sval);
+        }
 
     /*do the sons and daughters*/
-    if ( bexp->left != NULL )
-	bool_expand( bexp->left );
-    if ( bexp->right != NULL )
-	bool_expand( bexp->right );
+    if (bexp->left != NULL)
+        bool_expand(bexp->left);
+    if (bexp->right != NULL)
+        bool_expand(bexp->right);
 }
-
-
 
 /************************************************************************
  *									*
@@ -101,15 +109,14 @@ struct bool_exp *bexp;
  *	Original	Mark E. Law		Sept, 1984		*
  *									*
  ************************************************************************/
-compare(s1, s2)
-char *s1, *s2;
+int compare(s1, s2) char *s1, *s2;
 {
     int i;
 
-    for(i = 0;  (*s1 == *s2) && (*s1) && (*s2); s1++, s2++, i++);
-    return(i);
+    for (i = 0; (*s1 == *s2) && (*s1) && (*s2); s1++, s2++, i++)
+        ;
+    return (i);
 }
-
 
 /************************************************************************
  *									*
@@ -122,53 +129,49 @@ char *s1, *s2;
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-par_expand(bexp)
-struct bool_exp *bexp;
+int par_expand(struct bool_exp *bexp)
 {
     char *s;
-    struct par_str *temp;
     int best;
     struct par_str *match;
 
     /*check to see if there is a . in the name*/
-    for ( s = bexp->value.sval; ( *s != '%' ) && ( *s ); s++ );
+    for (s = bexp->value.sval; (*s != '%') && (*s); s++)
+        ;
 
     /*if there is no period, handle by checking locals*/
-    if ( *s == '\0' ) {
-	/*check all of the cards below this one*/
-	best = compare( bexp->value.sval, cards[ cardnum ]);
-	match = (best > 0) ? cards[ cardnum ] : NULL;
-	/*check all the sub pointers*/
-	s = bexp->value.sval;
-	if (check_list(s, cards[cardnum]->param, &best, &match, TRUE)==-1)
-	    return(-1);
-	/*match is a pointer to the fit*/
-	strcpy( bexp->value.sval, match->value.sval );
+    if (*s == '\0') {
+        /*check all of the cards below this one*/
+        best = compare(bexp->value.sval, cards[cardnum]);
+        match = (best > 0) ? cards[cardnum] : NULL;
+        /*check all the sub pointers*/
+        s = bexp->value.sval;
+        if (check_list(s, cards[cardnum]->param, &best, &match, TRUE) == -1)
+            return (-1);
+        /*match is a pointer to the fit*/
+        strcpy(bexp->value.sval, match->value.sval);
+    } else {
+        /*check all the top cards for the first part, etc*/
+        match = NULL;
+        s = (char *)strtok(bexp->value.sval, "%");
+        do {
+            best = 0;
+            if (match == NULL) {
+                /*search the top levels*/
+                if (check_list(s, cards, &best, &match, FALSE) == -1)
+                    return (-1);
+            } else {
+                if (check_list(s, match->param, &best, &match, FALSE) == -1)
+                    return (-1);
+            }
+        } while ((match != NULL) && ((s = (char *)strtok(NULL, ".")) != NULL));
+        if (match == NULL)
+            return (-1);
+        /*match is a pointer to the fit*/
+        strcpy(bexp->value.sval, match->value.sval);
     }
-    else {
-	/*check all the top cards for the first part, etc*/
-	match = NULL;
-	s = (char *)strtok(bexp->value.sval, "%");
-	do {
-	    best = 0;
-	    if ( match == NULL ) {
-		/*search the top levels*/
-		if ( check_list (s, cards, &best, &match, FALSE ) == -1)
-		    return( -1 );
-	    }
-	    else {
-		if ( check_list(s, match->param, &best, &match, FALSE ) == -1)
-		    return( -1 );
-	    }
-	} while ((match != NULL) && (( s = (char *)strtok(NULL,".")) != NULL));
-	if (match == NULL)
-	    return(-1);
-	/*match is a pointer to the fit*/
-	strcpy( bexp->value.sval, match->value.sval );
-    }
-    return( 0 );
+    return (0);
 }
-
 
 /************************************************************************
  *									*
@@ -179,42 +182,35 @@ struct bool_exp *bexp;
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-check_list(s, pars, best, match, recurs)
-char *s;		/*pattern to be matched*/
-struct par_str **pars;  /*parameters to check*/
-int *best;		/*length of the match*/
-struct par_str **match; /*the best fit pointer*/
-int recurs;
+int check_list(char* s,
+	struct par_str **pars,
+	int* best,
+	struct par_str **match,
+	int recurs)
 {
     int temp;
     static int ambig;
 
     /*loop through all the parameters*/
-    for( ; pars[0]->name[0] != '\0'; pars++) {
+    for (; pars[0]->name[0] != '\0'; pars++) {
 
-	temp = compare( s, pars[0]->name );
-	if (temp > *best) {
-	    match[0] = pars[0];
-	    *best = temp;
-	    ambig = FALSE;
-	}
-	else if (temp == *best)
-		ambig = TRUE;
+        temp = compare(s, pars[0]->name);
+        if (temp > *best) {
+            match[0] = pars[0];
+            *best = temp;
+            ambig = FALSE;
+        } else if (temp == *best)
+            ambig = TRUE;
 
-	/*does this sucker have sub params?*/
-	if (recurs)
-	    if (pars[0]->param != NULL)
-		check_list(s, pars[0]->param, best, match, TRUE);
+        /*does this sucker have sub params?*/
+        if (recurs)
+            if (pars[0]->param != NULL)
+                check_list(s, pars[0]->param, best, match, TRUE);
     }
     if ((ambig == TRUE) || (*best == 0))
-	return( -1 );
-    return(0);
+        return (-1);
+    return (0);
 }
-
-
-
-
-
 
 /************************************************************************
  *									*
@@ -224,27 +220,25 @@ int recurs;
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-make_depth(param)
-struct par_str **param;
+void make_depth(struct par_str **param)
 {
 
-    while ( param[0]->name[0] != '\0' ) {
-	/*process this parameter*/
-	param[0]->value.sval = (char *)malloc( 20 );
-	strcpy( param[0]->value.sval, depthstr);
+    while (param[0]->name[0] != '\0') {
+        /*process this parameter*/
+        param[0]->value.sval = (char *)malloc(20);
+        strcpy(param[0]->value.sval, depthstr);
 
-	/*does this sucker have sub parameters??*/
-	if (param[0]->param != NULL) {
-	    depth++;
-	    *(depthstr + depth) = '\001';
-	    make_depth( param[0]->param );
-	    *(depthstr + depth) = '\000';
-	    depth--;
-	}
+        /*does this sucker have sub parameters??*/
+        if (param[0]->param != NULL) {
+            depth++;
+            *(depthstr + depth) = '\001';
+            make_depth(param[0]->param);
+            *(depthstr + depth) = '\000';
+            depth--;
+        }
 
-	/*increment the depthstr characters along*/
-	(*(depthstr + depth))++;
-	param++;
+        /*increment the depthstr characters along*/
+        (*(depthstr + depth))++;
+        param++;
     }
 }
-

@@ -16,6 +16,9 @@
 /*   plot.h                Version 5.1     */
 /*   Last Modification : 7/3/91 08:55:16 */
 
+#ifndef INCLUDE_PLOT_2020_GUARD
+#define INCLUDE_PLOT_2020_GUARD
+
 #ifdef STATIC_ALLOCATION_TIME
 #define EXTERN
 #else
@@ -32,7 +35,7 @@ EXTERN float *z;
 /*following stuff is all used in the three dimensional code*/
 /*definitions of the corners we are looking at*/
 #define RIGHT 0x01
-#define LEFT  0x02
+#define LEFT 0x02
 #define UPPER 0x04
 #define LOWER 0x08
 
@@ -47,7 +50,7 @@ struct d_str {
 #define XSEC 1
 #define YSEC 2
 #define ZSEC 3
-#define BND  4
+#define BND 4
 
 /*plot mins and maxs*/
 EXTERN float xmin, xmax;
@@ -60,3 +63,5 @@ EXTERN float vxmin, vxmax, vymin, vymax;
 EXTERN int yflip;
 
 EXTERN int pl_debug;
+
+#endif

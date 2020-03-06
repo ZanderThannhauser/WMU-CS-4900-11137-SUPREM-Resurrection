@@ -10,10 +10,17 @@
 /*   Last Modification : 7/3/91  08:34:04 */
 
 #include <stdio.h>
-#include "global.h"
-#include "constant.h"
-#include "geom.h"
 
+#include "./include/constant.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+
+// 2020 includes:
+#include "limits.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /************************************************************************
  *									*
@@ -24,9 +31,7 @@
  *    Revision : MEL	       (C translation)		  Oct, 1984	*
  *									*
  ************************************************************************/
-dev_lmts(dxmin, dxmax, dymin, dymax)
-float *dxmin, *dxmax, *dymin, *dymax;
-{
+void dev_lmts(float *dxmin, float *dxmax, float *dymin, float *dymax) {
     register float *val;
     register struct pt_str **p;
 
@@ -35,14 +40,12 @@ float *dxmin, *dxmax, *dymin, *dymax;
     *dymin = *dymax = pt[0]->cord[1];
 
     /*loop through all the points*/
-    for(p = pt; *p != NULL; p++) {
-	val = p[0]->cord;
-	*dxmin = (*dxmin < *val) ? *dxmin : *val;
-	*dxmax = (*dxmax > *val) ? *dxmax : *val;
-	val++;	/*advance to y coordinate*/
-	*dymin = (*dymin < *val) ? *dymin : *val;
-	*dymax = (*dymax > *val) ? *dymax : *val;
+    for (p = pt; *p != NULL; p++) {
+        val = p[0]->cord;
+        *dxmin = (*dxmin < *val) ? *dxmin : *val;
+        *dxmax = (*dxmax > *val) ? *dxmax : *val;
+        val++; /*advance to y coordinate*/
+        *dymin = (*dymin < *val) ? *dymin : *val;
+        *dymax = (*dymax > *val) ? *dymax : *val;
     }
 }
-
-

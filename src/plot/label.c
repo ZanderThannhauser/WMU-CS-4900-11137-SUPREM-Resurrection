@@ -16,14 +16,19 @@
 /*   label.c                Version 5.1     */
 /*   Last Modification : 7/3/91 08:38:53 */
 
-#include <stdio.h>
 #include <math.h>
-#include "gplot.h"
-#include "global.h"
-#include "constant.h"
-#include "geom.h"
-#include "plot.h"
-#include "material.h"
+#include <stdio.h>
+
+#include "./include/constant.h"
+#include "./include/geom.h"
+#include "./include/global.h"
+#include "./include/material.h"
+#include "./include/plot.h"
+
+// 2020 includes:
+#include "./misc/get.h"
+#include "label.h"
+// end of 2020 includes
 
 /************************************************************************
  *									*
@@ -34,19 +39,4 @@
  *									*
  ************************************************************************/
 
-int draw_lab( char *par, int param )
-{
-    char *label;
-    float x,y;
-
-    /*get the card parameters*/
-    label = get_string(param, "label");
-    
-    if( is_specified( param, "x") && is_specified( param, "y")) {
-	x = get_float(param, "x");
-	y = get_float(param, "y");
-
-	xgLabel(label, x, y);
-    }
-    xgUpdate(FALSE);
-}
+void draw_lab(char *par, struct par_str *param) {}

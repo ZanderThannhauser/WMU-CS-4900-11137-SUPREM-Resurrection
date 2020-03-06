@@ -22,39 +22,45 @@
  */
 
 #include <math.h>
-#define  abs(V) ((V) < 0.? -(V) : (V))
+
+#define abs(V) ((V) < 0. ? -(V) : (V))
 
 /* Offsets to the Pearson-IV constants array */
-#include "global.h"
-#include "constant.h"
-#include "implant.h"
+#include "./include/constant.h"
+#include "./include/global.h"
+#include "./include/implant.h"
 
-double
-zeqv(dose, qtot, dx, bt, data)
-	double	 dose ;
-	double	 qtot ;
-	double	 dx ;
-	double bt;
-	struct imp_info	 *data ;
-	{
+// 2020 includes:
+#include "imp_zeqv.h"
+// end of includes
 
-	double	 x , val, ov ;
-	double	 q = 0.0 ;	/* Accumulating dose */
-	double	 qtarg ;	/* target dose */
+// 2020 forward declarations
+// end of declarations
 
-	qtarg = (dose / qtot) * data->area / dx * 1e4 ;
+double zeqv(dose, qtot, dx, bt, data) double dose;
+double qtot;
+double dx;
+double bt;
+struct imp_info *data;
+{
 
-	ov = imp_vert(0.0, data);
-	for (x = dx ; x < data->maxz ; x += dx) {
-		val = imp_vert( x , data );
+    double x, val, ov;
+    double q = 0.0; /* Accumulating dose */
+    double qtarg;   /* target dose */
 
-		q += 0.5 * (val + ov) ;
-		if (q >= qtarg) {
-		    x -= dx * (q - qtarg) / val ;
-			break ;
-			}
-		ov = val;
-		}
+    qtarg = (dose / qtot) * data->area / dx * 1e4;
 
-	return ( x ) ;
-	}
+    ov = imp_vert(0.0, data);
+    for (x = dx; x < data->maxz; x += dx) {
+        val = imp_vert(x, data);
+
+        q += 0.5 * (val + ov);
+        if (q >= qtarg) {
+            x -= dx * (q - qtarg) / val;
+            break;
+        }
+        ov = val;
+    }
+
+    return (x);
+}

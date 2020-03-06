@@ -33,7 +33,7 @@ method init=1.0e-3 two.d
 diffuse time=30 temp=1100 dry
 
 #save the data
-structure out=oed.str
+structure out=/tmp/oed.str
 
 #plot the final profile
 select z=log10(bor)

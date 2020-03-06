@@ -15,14 +15,22 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "check.h"
-#include "constant.h"
-#include "dbaccess.h"
-#include "global.h"
-#include "key.h"
-#include "shell.h"
-#include "sysdep.h"
-#include "expr.h"
+#include "./include/check.h"
+#include "./include/constant.h"
+#include "./include/dbaccess.h"
+#include "./include/expr.h"
+#include "./include/global.h"
+#include "./include/key.h"
+#include "./include/shell.h"
+#include "./include/sysdep.h"
+
+// 2020 includes:
+#include "./misc/read.h"
+#include "parser_boot.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /************************************************************************
  *									*
@@ -30,19 +38,18 @@
  *			parser going					*
  *	Orignal: CSR Thu Jan 15 17:07:46 PST 1987			*
  ************************************************************************/
-void parser_boot(char *Pkeyfile, char *Pprompt)
-{
+void parser_boot(char *Pkeyfile, char *Pprompt) {
     int i;
 
     /*set up the input buffer*/
     buflen = 160;
-    buffer = scalloc(char , buflen);
+    buffer = scalloc(char, buflen);
     bufptr = 0;
     echo_buflen = 160;
-    echo_buffer = scalloc(char , echo_buflen);
+    echo_buffer = scalloc(char, echo_buflen);
     echo_bufptr = 0;
     supbln = 160;
-    supbuf = scalloc(char , echo_buflen);
+    supbuf = scalloc(char, echo_buflen);
     supbpt = 0;
 
     /*initialize shell variables*/
@@ -51,16 +58,17 @@ void parser_boot(char *Pkeyfile, char *Pprompt)
     depth = -1;
 
     /*read the unformatted key file*/
-    if ( read_ukfile( Pkeyfile ) == -1 ) {
-	fprintf(stderr, "unable to read or open the unformatted key file %s\n",			Pkeyfile);
-	exit( -1 );
+    if (read_ukfile(Pkeyfile) == -1) {
+        fprintf(stderr, "unable to read or open the unformatted key file %s\n",
+                Pkeyfile);
+        exit(-1);
     }
 
     /*set up the prompt*/
-    prompt = salloc(char , strlen(Pprompt) +1);
+    prompt = salloc(char, strlen(Pprompt) + 1);
     strcpy(prompt, Pprompt);
 
     in_file = stdin;
-    for(i = 0; i < 10; i++) store[i] = NULL;
-
+    for (i = 0; i < 10; i++)
+        store[i] = NULL;
 }

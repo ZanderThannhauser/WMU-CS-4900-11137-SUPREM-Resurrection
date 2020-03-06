@@ -33,8 +33,10 @@
 #include <string.h>
 #include <ctype.h>
 #include <unistd.h>
-#include "sysdep.h"
+#include <sys/types.h>
+#include <sys/wait.h>
 
+#include "./include/sysdep.h"
 
 static char *tp[10];
 static int te[10];
@@ -43,7 +45,23 @@ static int te[10];
 #define malloc MALLOC
 #endif
 
-#include "shell.h"
+#include "./include/shell.h"
+
+
+// 2020 includes:
+#include "./shell/lex.h"
+#include "./shell/do_action.h"
+#include "./shell/help.h"
+#include "./shell/macro.h"
+#include "./shell/set.h"
+// end of includes
+
+// 2020 forward declarations
+int yylex();
+int yyerror();
+// end of declarations
+
+
 
 #define YYRETURN(A)        { return(A); }
 
@@ -213,7 +231,7 @@ line
 
 		/*exec a shell to handle the request*/
 		if ((pid = vfork()) == 0) {
-		    if (execl("/bin/sh", "sh", "-c", str, 0) == -1)
+		    if (execl("/bin/sh", "sh", "-c", str, NULL) == -1)
 			printf("error number %d\n", 127);
 		    _exit(127);
 		}

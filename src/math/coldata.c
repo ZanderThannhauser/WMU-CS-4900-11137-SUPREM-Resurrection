@@ -16,18 +16,23 @@
 /*   coldata.c                Version 5.1     */
 /*   Last Modification : 7/3/91 10:44:11 */
 
-#include <stdio.h>
+#include <assert.h>
 #include <math.h>
+#include <stdio.h>
 #ifdef ALLIANT
 #include <cncall.h>
 #endif
-#include <assert.h>
-#include "global.h"
-#include "constant.h"
-#include "matrix.h"
 
+#include "./include/constant.h"
+#include "./include/global.h"
+#include "./include/matrix.h"
 
+// 2020 includes:
+#include "coldata.h"
+// end of includes
 
+// 2020 forward declarations
+// end of declarations
 
 /************************************************************************
  *									*
@@ -36,51 +41,43 @@
  *  Original:	MEL	6/88						*
  *									*
  ************************************************************************/
-get_coldata( vi, bi, nsol, sol, ia, aoff, col, row )
-int vi;		/*variable index*/
-int bi;		/*block index*/
-int nsol;	/*number of solution blocks*/
-int *sol;	/*solution blocks*/
-int *ia;	/*the a matrix indeices*/
-int aoff;	/*the upper a offset*/
-double *col;	/*the column variables*/
-double *row;	/*the row variables*/
-{
+void get_coldata(int vi, int bi, int nsol, int *sol, int *ia, int aoff,
+                 double *col, double *row) {
     register int si, bj, sj;
     register int j;
     register int tloc;
     register int *tia, tao;
 
     si = sol[bi];
-    for( bj = 0; bj < nsol; bj++ ) {
-	sj = sol[bj];
-	if ( ! facblk[si][sj] ) continue;
+    for (bj = 0; bj < nsol; bj++) {
+        sj = sol[bj];
+        if (!facblk[si][sj])
+            continue;
 
-	if ( blktype[si][sj] != B_NONE ) {
-	    tia = bia[si][sj];
-	    tao = baoff[si][sj];
+        if (blktype[si][sj] != B_NONE) {
+            tia = bia[si][sj];
+            tao = baoff[si][sj];
 
-	    tloc = vi * nsol + bj;
-	    row[ tloc ] = a[si][sj][vi];
+            tloc = vi * nsol + bj;
+            row[tloc] = a[si][sj][vi];
 
-	    /*$dir no_recurrence*/
-	    for( j = tia[vi]; j < tia[vi+1]; j++ ) 
-		row[ tia[j] * nsol + bj ] = a[si][sj][j+tao];
-	}
+            /*$dir no_recurrence*/
+            for (j = tia[vi]; j < tia[vi + 1]; j++)
+                row[tia[j] * nsol + bj] = a[si][sj][j + tao];
+        }
 
-	if ( blktype[sj][si] != B_NONE ) {
-	    tia = bia[sj][si];
+        if (blktype[sj][si] != B_NONE) {
+            tia = bia[sj][si];
 
-	    tloc = vi * nsol + bj;
-	    col[ tloc ] = a[sj][si][vi];
+            tloc = vi * nsol + bj;
+            col[tloc] = a[sj][si][vi];
 
-	    /*$dir no_recurrence*/
-	    for( j = tia[vi]; j < tia[vi+1]; j++ ) 
-	    col[ tia[j] * nsol + bj ] = a[sj][si][j];
-	}
+            /*$dir no_recurrence*/
+            for (j = tia[vi]; j < tia[vi + 1]; j++)
+                col[tia[j] * nsol + bj] = a[sj][si][j];
+        }
     }
 }
-
 
 /************************************************************************
  *									*
@@ -89,15 +86,7 @@ double *row;	/*the row variables*/
  *  Original:	MEL	6/88						*
  *									*
  ************************************************************************/
-get_locs( vi, bi, nsol, sol, ia, aoff, icol )
-int vi;		/*variable index*/
-int bi;		/*block index*/
-int nsol;	/*number of solution blocks*/
-int *sol;	/*solution blocks*/
-int *ia;	/*the a matrix indeices*/
-int aoff;	/*the upper a offset*/
-int *icol;	/*the column locations*/
-{
+int get_locs(int vi, int bi, int nsol, int *sol, int *ia, int aoff, int *icol) {
     register int si, bj, sj;
     register int j;
     register int tloc;
@@ -106,20 +95,25 @@ int *icol;	/*the column locations*/
 
     si = sol[bi];
     /*figure the positions in the matrix*/
-    for( bj = 0; bj < nsol; bj++ ) {
-	sj = sol[bj];
-	if (! facblk[si][sj] ) continue;
-	tia = bia[sj][si];
-	if ( blktype[sj][si] != blktype[si][sj] ) panic("must be symmetry");
-	if ( tia != NULL ) {
-	    tloc = vi * nsol + bj;
-	    icol[ tloc ] = 1;
-	    if ( tloc > last_nbr ) last_nbr = tloc;
-	    /*$dir no_recurrence*/
-	    for( j = tia[vi]; j < tia[vi+1]; j++ ) icol[tia[j]*nsol+bj] = 1;
-	    tloc = tia[j-1] * nsol + bj;
-	    if ( (tloc > last_nbr) && (tia[vi] != tia[vi+1]) ) last_nbr = tloc;
-	}
+    for (bj = 0; bj < nsol; bj++) {
+        sj = sol[bj];
+        if (!facblk[si][sj])
+            continue;
+        tia = bia[sj][si];
+        if (blktype[sj][si] != blktype[si][sj])
+            panic("must be symmetry");
+        if (tia != NULL) {
+            tloc = vi * nsol + bj;
+            icol[tloc] = 1;
+            if (tloc > last_nbr)
+                last_nbr = tloc;
+            /*$dir no_recurrence*/
+            for (j = tia[vi]; j < tia[vi + 1]; j++)
+                icol[tia[j] * nsol + bj] = 1;
+            tloc = tia[j - 1] * nsol + bj;
+            if ((tloc > last_nbr) && (tia[vi] != tia[vi + 1]))
+                last_nbr = tloc;
+        }
     }
-    return( last_nbr );
+    return (last_nbr);
 }

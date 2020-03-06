@@ -9,8 +9,16 @@
 /*   norm.c                Version 5.1     */
 /*   Last Modification : 7/3/91  10:50:07 */
 
-#include <stdio.h>
 #include <math.h>
+#include <stdio.h>
+
+// 2020 includes:
+#include "norm.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
+
 
 /************************************************************************
  *									*
@@ -22,8 +30,7 @@
  *  Original:	MEL	12/84						*
  *									*
  ************************************************************************/
-double norm( arr, n )
-double *arr;
+double norm(arr, n) double *arr;
 int n;
 {
     double f;
@@ -31,12 +38,10 @@ int n;
 
     f = 0.0;
 
-    for(i = 0; i < n; i++)  {
-	f += arr[i] * arr[i];
+    for (i = 0; i < n; i++) {
+        f += arr[i] * arr[i];
     }
 
-    f = sqrt( f / n );
-    return( f );
+    f = sqrt(f / n);
+    return (f);
 }
-    
-

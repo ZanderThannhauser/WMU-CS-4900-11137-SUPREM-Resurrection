@@ -16,11 +16,19 @@
 /*   imp_lat.c                Version 5.1     */
 /*   Last Modification : 7/3/91 12:08:37 */
 
-#include <stdio.h>
 #include <math.h>
-#include "global.h"
-#include "constant.h"
-#include "implant.h"
+#include <stdio.h>
+
+#include "./include/constant.h"
+#include "./include/global.h"
+#include "./include/implant.h"
+
+// 2020 includes:
+#include "imp_lat.h"
+// end of includes
+
+// 2020 forward declarations
+// end of declarations
 
 /************************************************************************
  *									*
@@ -31,13 +39,12 @@
  *  Original:	MEL	1/87						*
  *									*
  ************************************************************************/
-double imp_latr(pos, data)
-double pos;
+double imp_latr(pos, data) double pos;
 struct imp_info *data;
 {
-    double siglat, val;
+    double val;
 
-    val = exp( - (pos * pos) / (2.0 * data->lat[LATSIG] * data->lat[LATSIG]) );
-	val /= data->lat[LATAREA] * 1.0e-4;
-	return(val);
+    val = exp(-(pos * pos) / (2.0 * data->lat[LATSIG] * data->lat[LATSIG]));
+    val /= data->lat[LATAREA] * 1.0e-4;
+    return (val);
 }
