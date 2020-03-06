@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "parser.y" /* yacc.c:339  */
+#line 1 "src/keyread/parser.y" /* yacc.c:339  */
 
 
 /*************************************************************************
@@ -202,7 +202,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 47 "parser.y" /* yacc.c:355  */
+#line 47 "src/keyread/parser.y" /* yacc.c:355  */
 
     int ival;
     float dval;
@@ -1340,7 +1340,7 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 84 "parser.y" /* yacc.c:1646  */
+#line 84 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    /*add the pointer to the top of the boolean tree*/
 	    current[0]->bexp = (yyvsp[-1].bval);
@@ -1352,7 +1352,7 @@ yyreduce:
     break;
 
   case 5:
-#line 92 "parser.y" /* yacc.c:1646  */
+#line 92 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    /*ignore the sucker*/
 	}
@@ -1360,7 +1360,7 @@ yyreduce:
     break;
 
   case 6:
-#line 96 "parser.y" /* yacc.c:1646  */
+#line 96 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    /*push everything down on the stack*/
 	    current = (struct par_str **)push(current);
@@ -1369,7 +1369,7 @@ yyreduce:
     break;
 
   case 7:
-#line 101 "parser.y" /* yacc.c:1646  */
+#line 101 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    /*pop a layer off and finish off the pointer list*/
 	    current = (struct par_str **)pop();
@@ -1381,7 +1381,7 @@ yyreduce:
     break;
 
   case 8:
-#line 109 "parser.y" /* yacc.c:1646  */
+#line 109 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    /*ignore the line in error*/
 	    fprintf(stderr, "error in parsing the input key file\n");
@@ -1390,7 +1390,7 @@ yyreduce:
     break;
 
   case 9:
-#line 119 "parser.y" /* yacc.c:1646  */
+#line 119 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    if (strlen((yyvsp[-1].sval)) >= 12)
 		*((yyvsp[-1].sval) + 11) = '\0';
@@ -1402,7 +1402,7 @@ yyreduce:
     break;
 
   case 10:
-#line 127 "parser.y" /* yacc.c:1646  */
+#line 127 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    if (strlen((yyvsp[-2].sval)) >= 12)
 		*((yyvsp[-2].sval) + 11) = '\0';
@@ -1414,7 +1414,7 @@ yyreduce:
     break;
 
   case 11:
-#line 135 "parser.y" /* yacc.c:1646  */
+#line 135 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    if (strlen((yyvsp[-2].sval)) >= 12)
 		*((yyvsp[-2].sval) + 11) = '\0';
@@ -1426,7 +1426,7 @@ yyreduce:
     break;
 
   case 12:
-#line 143 "parser.y" /* yacc.c:1646  */
+#line 143 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    if (strlen((yyvsp[-3].sval)) >= 12)
 		*((yyvsp[-3].sval) + 11) = '\0';
@@ -1438,7 +1438,7 @@ yyreduce:
     break;
 
   case 13:
-#line 155 "parser.y" /* yacc.c:1646  */
+#line 155 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    (yyval.ival) = COMM;
 	}
@@ -1446,7 +1446,7 @@ yyreduce:
     break;
 
   case 14:
-#line 159 "parser.y" /* yacc.c:1646  */
+#line 159 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    (yyval.ival) = (yyvsp[0].ival);
 	}
@@ -1454,7 +1454,7 @@ yyreduce:
     break;
 
   case 15:
-#line 167 "parser.y" /* yacc.c:1646  */
+#line 167 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    current[0]->def.dval = (yyvsp[0].dval);
 	}
@@ -1462,7 +1462,7 @@ yyreduce:
     break;
 
   case 16:
-#line 171 "parser.y" /* yacc.c:1646  */
+#line 171 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    current[0]->def.sval = (yyvsp[0].sval);
 	}
@@ -1470,7 +1470,7 @@ yyreduce:
     break;
 
   case 17:
-#line 175 "parser.y" /* yacc.c:1646  */
+#line 175 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    current[0]->def.ival = (yyvsp[0].ival);
 	}
@@ -1478,7 +1478,7 @@ yyreduce:
     break;
 
   case 18:
-#line 179 "parser.y" /* yacc.c:1646  */
+#line 179 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    current[0]->def.ival = 0;
 	}
@@ -1486,7 +1486,7 @@ yyreduce:
     break;
 
   case 19:
-#line 187 "parser.y" /* yacc.c:1646  */
+#line 187 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    current[0]->err_msg = (yyvsp[0].sval);
 	}
@@ -1494,7 +1494,7 @@ yyreduce:
     break;
 
   case 20:
-#line 191 "parser.y" /* yacc.c:1646  */
+#line 191 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    current[0]->err_msg = NULL;
 	}
@@ -1502,7 +1502,7 @@ yyreduce:
     break;
 
   case 21:
-#line 198 "parser.y" /* yacc.c:1646  */
+#line 198 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    (yyval.bval) = (yyvsp[0].bval);
 	}
@@ -1510,7 +1510,7 @@ yyreduce:
     break;
 
   case 22:
-#line 202 "parser.y" /* yacc.c:1646  */
+#line 202 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    (yyval.bval) = NULL;
 	}
@@ -1518,7 +1518,7 @@ yyreduce:
     break;
 
   case 23:
-#line 210 "parser.y" /* yacc.c:1646  */
+#line 210 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    (yyval.bval) = (yyvsp[-1].bval);
 	}
@@ -1526,7 +1526,7 @@ yyreduce:
     break;
 
   case 24:
-#line 214 "parser.y" /* yacc.c:1646  */
+#line 214 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '>';
@@ -1536,7 +1536,7 @@ yyreduce:
     break;
 
   case 25:
-#line 220 "parser.y" /* yacc.c:1646  */
+#line 220 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '<';
@@ -1546,7 +1546,7 @@ yyreduce:
     break;
 
   case 26:
-#line 226 "parser.y" /* yacc.c:1646  */
+#line 226 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = 'g';
@@ -1556,7 +1556,7 @@ yyreduce:
     break;
 
   case 27:
-#line 232 "parser.y" /* yacc.c:1646  */
+#line 232 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = 'l';
@@ -1566,7 +1566,7 @@ yyreduce:
     break;
 
   case 28:
-#line 238 "parser.y" /* yacc.c:1646  */
+#line 238 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '|';
@@ -1576,7 +1576,7 @@ yyreduce:
     break;
 
   case 29:
-#line 244 "parser.y" /* yacc.c:1646  */
+#line 244 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '&';
@@ -1586,7 +1586,7 @@ yyreduce:
     break;
 
   case 30:
-#line 250 "parser.y" /* yacc.c:1646  */
+#line 250 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '=';
@@ -1596,7 +1596,7 @@ yyreduce:
     break;
 
   case 31:
-#line 256 "parser.y" /* yacc.c:1646  */
+#line 256 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = 'n';
@@ -1606,7 +1606,7 @@ yyreduce:
     break;
 
   case 32:
-#line 262 "parser.y" /* yacc.c:1646  */
+#line 262 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '!';
@@ -1616,7 +1616,7 @@ yyreduce:
     break;
 
   case 33:
-#line 268 "parser.y" /* yacc.c:1646  */
+#line 268 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '+';
@@ -1626,7 +1626,7 @@ yyreduce:
     break;
 
   case 34:
-#line 274 "parser.y" /* yacc.c:1646  */
+#line 274 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '*';
@@ -1636,7 +1636,7 @@ yyreduce:
     break;
 
   case 35:
-#line 280 "parser.y" /* yacc.c:1646  */
+#line 280 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    (yyval.bval) = (yyvsp[0].bval);
 	}
@@ -1644,7 +1644,7 @@ yyreduce:
     break;
 
   case 36:
-#line 288 "parser.y" /* yacc.c:1646  */
+#line 288 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.dval = (yyvsp[0].dval);
@@ -1654,7 +1654,7 @@ yyreduce:
     break;
 
   case 37:
-#line 294 "parser.y" /* yacc.c:1646  */
+#line 294 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.sval = (yyvsp[0].sval);
@@ -1664,7 +1664,7 @@ yyreduce:
     break;
 
   case 38:
-#line 300 "parser.y" /* yacc.c:1646  */
+#line 300 "src/keyread/parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.dval = (float)(yyvsp[0].ival);
@@ -1902,7 +1902,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 307 "parser.y" /* yacc.c:1906  */
+#line 307 "src/keyread/parser.y" /* yacc.c:1906  */
 
 
 

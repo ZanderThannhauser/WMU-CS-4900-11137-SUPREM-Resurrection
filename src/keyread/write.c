@@ -16,6 +16,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <unistd.h>
+#include <assert.h>
 
 #include "../include/check.h"
 #include "../include/key.h"
@@ -81,7 +82,7 @@ int write_boolean(struct bool_exp *bexp, int fd)
 {
 
     /*first write out the current structure*/
-    write(fd, &(bexp->type), sizeof(int));
+    assert(write(fd, &(bexp->type), sizeof(int)) == sizeof(int));
 
     /*write out the value based on the type of data stored*/
     switch (bexp->type) {

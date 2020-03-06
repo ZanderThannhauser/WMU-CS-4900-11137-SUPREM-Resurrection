@@ -87,7 +87,7 @@ char **argv;
     /*malloc off the space for the sub params*/
     for (i = 0; i < NUMPAR; i++)
         cards[i] = (struct par_str *)calloc(1, sizeof(struct par_str));
-    cards[NUMPAR] = NULL;
+    // cards[NUMPAR] = NULL; // 2020: 'array subscript is above array bounds'
     current = cards;
     stack[depth++] = NULL;
     yyparse();

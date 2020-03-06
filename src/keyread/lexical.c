@@ -588,8 +588,8 @@ int yy_flex_debug = 0;
 #define YY_MORE_ADJ 0
 #define YY_RESTORE_YY_MORE_OFFSET
 char *yytext;
-#line 1 "lexical.l"
-#line 2 "lexical.l"
+#line 1 "src/keyread/lexical.l"
+#line 2 "src/keyread/lexical.l"
 
 #include <ctype.h>
 
@@ -832,7 +832,7 @@ YY_DECL
 		}
 
 	{
-#line 46 "lexical.l"
+#line 46 "src/keyread/lexical.l"
 
 
 #line 839 "<stdout>"
@@ -894,7 +894,7 @@ do_action:	/* This label is used only to access EOF actions. */
 
 case 1:
 YY_RULE_SETUP
-#line 48 "lexical.l"
+#line 48 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning begin group char\n");
@@ -905,7 +905,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 2:
 YY_RULE_SETUP
-#line 56 "lexical.l"
+#line 56 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning end group char\n");
@@ -917,14 +917,14 @@ YY_RULE_SETUP
 case 3:
 /* rule 3 can match eol */
 YY_RULE_SETUP
-#line 64 "lexical.l"
+#line 64 "src/keyread/lexical.l"
 {
 	/*do nothing*/
 	}
 	YY_BREAK
 case 4:
 YY_RULE_SETUP
-#line 68 "lexical.l"
+#line 68 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning comment\n");
@@ -934,7 +934,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 5:
 YY_RULE_SETUP
-#line 75 "lexical.l"
+#line 75 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning semi colon\n");
@@ -945,7 +945,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 6:
 YY_RULE_SETUP
-#line 83 "lexical.l"
+#line 83 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning card id\n");
@@ -956,7 +956,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 7:
 YY_RULE_SETUP
-#line 91 "lexical.l"
+#line 91 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning integer type parameter\n");
@@ -968,7 +968,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 8:
 YY_RULE_SETUP
-#line 100 "lexical.l"
+#line 100 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning choice type parameter\n");
@@ -980,7 +980,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 9:
 YY_RULE_SETUP
-#line 109 "lexical.l"
+#line 109 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning real number parameter type\n");
@@ -992,7 +992,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 10:
 YY_RULE_SETUP
-#line 118 "lexical.l"
+#line 118 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning string parameter type\n");
@@ -1004,7 +1004,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 11:
 YY_RULE_SETUP
-#line 127 "lexical.l"
+#line 127 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning boolean parameter type\n");
@@ -1017,7 +1017,7 @@ YY_RULE_SETUP
 case 12:
 /* rule 12 can match eol */
 YY_RULE_SETUP
-#line 136 "lexical.l"
+#line 136 "src/keyread/lexical.l"
 {
 	char *s;
 
@@ -1036,7 +1036,7 @@ YY_RULE_SETUP
 case 13:
 /* rule 13 can match eol */
 YY_RULE_SETUP
-#line 151 "lexical.l"
+#line 151 "src/keyread/lexical.l"
 {
 	char *s;
 	/*eat this to get the string portion*/
@@ -1058,7 +1058,7 @@ YY_RULE_SETUP
 case 14:
 /* rule 14 can match eol */
 YY_RULE_SETUP
-#line 169 "lexical.l"
+#line 169 "src/keyread/lexical.l"
 {
 	char *s;
 	s = yytext;
@@ -1078,7 +1078,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 15:
 YY_RULE_SETUP
-#line 186 "lexical.l"
+#line 186 "src/keyread/lexical.l"
 {
 	sscanf(yytext, "%d", &yylval.ival);
 #ifdef DEBUG
@@ -1089,7 +1089,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 16:
 YY_RULE_SETUP
-#line 194 "lexical.l"
+#line 194 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("boolean true value found\n");
@@ -1100,7 +1100,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 17:
 YY_RULE_SETUP
-#line 202 "lexical.l"
+#line 202 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("boolean false value found\n");
@@ -1110,12 +1110,12 @@ YY_RULE_SETUP
 	}
 	YY_BREAK
 case 18:
-#line 211 "lexical.l"
+#line 211 "src/keyread/lexical.l"
 case 19:
-#line 212 "lexical.l"
+#line 212 "src/keyread/lexical.l"
 case 20:
 YY_RULE_SETUP
-#line 212 "lexical.l"
+#line 212 "src/keyread/lexical.l"
 {
 	    sscanf(yytext, "%f", &yylval.dval);
 #ifdef DEBUG
@@ -1127,7 +1127,7 @@ YY_RULE_SETUP
 case 21:
 /* rule 21 can match eol */
 YY_RULE_SETUP
-#line 220 "lexical.l"
+#line 220 "src/keyread/lexical.l"
 {
 	/*send into boolean mode, ignore*/
 #ifdef DEBUG
@@ -1139,7 +1139,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 22:
 YY_RULE_SETUP
-#line 229 "lexical.l"
+#line 229 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning equal sign in default mode\n");
@@ -1149,7 +1149,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 23:
 YY_RULE_SETUP
-#line 236 "lexical.l"
+#line 236 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning paran %c\n", yytext[0]);
@@ -1159,7 +1159,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 24:
 YY_RULE_SETUP
-#line 243 "lexical.l"
+#line 243 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning greater than\n");
@@ -1169,7 +1169,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 25:
 YY_RULE_SETUP
-#line 250 "lexical.l"
+#line 250 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning less than\n");
@@ -1179,7 +1179,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 26:
 YY_RULE_SETUP
-#line 257 "lexical.l"
+#line 257 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning greater than or equal\n");
@@ -1189,7 +1189,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 27:
 YY_RULE_SETUP
-#line 264 "lexical.l"
+#line 264 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning less than or equal\n");
@@ -1199,7 +1199,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 28:
 YY_RULE_SETUP
-#line 271 "lexical.l"
+#line 271 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning or\n");
@@ -1209,7 +1209,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 29:
 YY_RULE_SETUP
-#line 278 "lexical.l"
+#line 278 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning and\n");
@@ -1219,7 +1219,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 30:
 YY_RULE_SETUP
-#line 285 "lexical.l"
+#line 285 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning equal\n");
@@ -1229,7 +1229,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 31:
 YY_RULE_SETUP
-#line 292 "lexical.l"
+#line 292 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning not equal\n");
@@ -1239,7 +1239,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 32:
 YY_RULE_SETUP
-#line 299 "lexical.l"
+#line 299 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning not\n");
@@ -1249,7 +1249,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 33:
 YY_RULE_SETUP
-#line 306 "lexical.l"
+#line 306 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning plus\n");
@@ -1259,7 +1259,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 34:
 YY_RULE_SETUP
-#line 313 "lexical.l"
+#line 313 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning times\n");
@@ -1269,7 +1269,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 35:
 YY_RULE_SETUP
-#line 320 "lexical.l"
+#line 320 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning par name %s\n", yytext);
@@ -1281,7 +1281,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 36:
 YY_RULE_SETUP
-#line 330 "lexical.l"
+#line 330 "src/keyread/lexical.l"
 {
 #ifdef DEBUG
 	printf("returning Name %s\n", yytext);
@@ -1294,7 +1294,7 @@ YY_RULE_SETUP
 	YY_BREAK
 case 37:
 YY_RULE_SETUP
-#line 340 "lexical.l"
+#line 340 "src/keyread/lexical.l"
 ECHO;
 	YY_BREAK
 #line 1301 "<stdout>"
@@ -2267,4 +2267,4 @@ void yyfree (void * ptr )
 
 #define YYTABLES_NAME "yytables"
 
-#line 340 "lexical.l"
+#line 340 "src/keyread/lexical.l"
