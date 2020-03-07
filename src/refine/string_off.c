@@ -18,11 +18,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/refine.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/refine.h"
 
 // 2020 includes:
+#include "./src/misc/panic.h"
 #include "string_off.h"
 // end of includes
 

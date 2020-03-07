@@ -24,76 +24,80 @@
 #include <signal.h>
 
 #define STATIC_ALLOCATION_TIME
-#include "./include/check.h"
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/defect.h"
-#include "./include/diffuse.h"
-#include "./include/expr.h"
-#include "./include/global.h"
-#include "./include/implant.h"
-#include "./include/impurity.h"
-#include "./include/key.h"
-#include "./include/material.h"
-#include "./include/matrix.h"
-#include "./include/plot.h"
-#include "./include/poly.h"
-#include "./include/refine.h"
-#include "./include/regrid.h"
-#include "./include/shell.h"
-#include "./include/sysdep.h"
+#include "./src/include/check.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/defect.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/expr.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
+#include "./src/include/impurity.h"
+#include "./src/include/key.h"
+#include "./src/include/material.h"
+#include "./src/include/matrix.h"
+#include "./src/include/plot.h"
+#include "./src/include/poly.h"
+#include "./src/include/refine.h"
+#include "./src/include/regrid.h"
+#include "./src/include/shell.h"
+#include "./src/include/sysdep.h"
 #ifdef DEVICE
-#include "./include/device.h"
+#include "./src/include/device.h"
 #endif
 
 // 2020 includes:
-#include "./dbase/dimen.h"
-#include "./device/device.h"
-#include "./diffuse/Antimony.h"
-#include "./diffuse/Arsenic.h"
-#include "./diffuse/Beryllium.h"
-#include "./diffuse/Boron.h"
-#include "./diffuse/Carbon.h"
-#include "./diffuse/Cesium.h"
-#include "./diffuse/Generic.h"
-#include "./diffuse/Germanium.h"
-#include "./diffuse/Gold.h"
-#include "./diffuse/Interst.h"
-#include "./diffuse/Magnesium.h"
-#include "./diffuse/Phosphorus.h"
-#include "./diffuse/Selenium.h"
-#include "./diffuse/Silicon.h"
-#include "./diffuse/Tin.h"
-#include "./diffuse/Trap.h"
-#include "./diffuse/Vacancy.h"
-#include "./diffuse/Zinc.h"
-#include "./diffuse/diff_init.h"
-#include "./diffuse/diffuse.h"
-#include "./implant/implant.h"
-#include "./math/symb.h"
-#include "./mesh/initialize.h"
-#include "./mesh/profile.h"
-#include "./mesh/rect.h"
-#include "./mesh/structure.h"
-#include "./misc/cpu.h"
-#include "./misc/echo.h"
-#include "./misc/get.h"
-#include "./misc/man.h"
-#include "./oxide/coeffox.h"
-#include "./oxide/mater.h"
-#include "./oxide/viscous.h"
-#include "./plot/contour.h"
-#include "./plot/label.h"
-#include "./plot/option.h"
-#include "./plot/plot_1d.h"
-#include "./plot/plot_2d.h"
-#include "./plot/print_1d.h"
-#include "./plot/select.h"
-#include "./refine/deposit.h"
-#include "./refine/etch.h"
-#include "./shell/do_action.h"
-#include "./shell/parser_boot.h"
+#include "./src/dbase/dimen.h"
+#include "./src/device/device.h"
+#include "./src/diffuse/Antimony.h"
+#include "./src/diffuse/Arsenic.h"
+#include "./src/diffuse/Beryllium.h"
+#include "./src/diffuse/Boron.h"
+#include "./src/diffuse/Carbon.h"
+#include "./src/diffuse/Cesium.h"
+#include "./src/diffuse/Generic.h"
+#include "./src/diffuse/Germanium.h"
+#include "./src/diffuse/Gold.h"
+#include "./src/diffuse/Interst.h"
+#include "./src/diffuse/Magnesium.h"
+#include "./src/diffuse/Phosphorus.h"
+#include "./src/diffuse/Selenium.h"
+#include "./src/diffuse/Silicon.h"
+#include "./src/diffuse/Tin.h"
+#include "./src/diffuse/Trap.h"
+#include "./src/diffuse/Vacancy.h"
+#include "./src/diffuse/Zinc.h"
+#include "./src/diffuse/diff_init.h"
+#include "./src/diffuse/diffuse.h"
+#include "./src/implant/implant.h"
+#include "./src/math/symb.h"
+#include "./src/mesh/initialize.h"
+#include "./src/mesh/profile.h"
+#include "./src/mesh/rect.h"
+#include "./src/mesh/structure.h"
+#include "./src/misc/cpu.h"
+#include "./src/misc/echo.h"
+#include "./src/misc/get.h"
+#include "./src/misc/man.h"
+#include "./src/oxide/coeffox.h"
+#include "./src/oxide/mater.h"
+#include "./src/oxide/viscous.h"
+#include "./src/plot/contour.h"
+#include "./src/plot/label.h"
+#include "./src/plot/option.h"
+#include "./src/plot/plot_1d.h"
+#include "./src/plot/plot_2d.h"
+#include "./src/plot/print_1d.h"
+#include "./src/plot/select.h"
+#include "./src/refine/deposit.h"
+#include "./src/refine/etch.h"
+#include "./src/shell/do_action.h"
+#include "./src/shell/parser_boot.h"
 // end of includes
+
+#ifdef DEBUGGING_2020
+int debugging_depth_2020;
+#endif
 
 
 // 2020: These used be set on the command line, but let's not:
@@ -101,7 +105,6 @@
 #define KEYLOC		"./data/suprem.uk"
 #define MODELLOC	"./data/modelrc"
 #define IMPLOC		"./data/sup4gs.imp"
-
 
 
 void mode_cmd(char *par, struct par_str* param) {
@@ -143,13 +146,6 @@ struct command_table command[NUMCMD] = {
 int main(int argc, char **argv) {
     int i;
     char dot_name[80], *t;
-
-    /* this is for debugging only */
-    if (0) {
-        double x;
-        void pa();
-        pa(&x, 0, 0);
-    }
 
     /*line at a time buffering*/
 #ifdef BSD

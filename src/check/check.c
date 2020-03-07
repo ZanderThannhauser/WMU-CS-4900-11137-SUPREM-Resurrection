@@ -18,10 +18,11 @@
 
 #include <stdio.h>
 
-#include "./include/check.h"
-#include "./include/global.h"
+#include "./src/include/check.h"
+#include "./src/include/global.h"
 
 // 2020 includes:
+#include "./src/misc/panic.h"
 #include "check.h"
 // end of includes
 
@@ -43,8 +44,7 @@
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-val_str bool_check(bexp, typ) struct bool_exp *bexp;
-int *typ;
+val_str bool_check(struct bool_exp *bexp, int* typ)
 {
 
     val_str left, right;
@@ -52,6 +52,13 @@ int *typ;
     int ltyp, rtyp;
     struct par_str *par;
     char *s;
+
+    // 2020: I can set these to 0, because I know that they will always be
+    // initialized, if the input is good.
+    left.ival = 0; // 2020: fixing 'error: ‘left.ival’ may be used uninitialized...
+    right.ival = 0; // 2020: fixing 'error: ‘right.ival’ may be used uninitialized...
+    ltyp = 0; // 2020: fixing 'error: ‘ltyp’ may be used uninitialized in this function'
+    rtyp = 0; // 2020: fixing 'error: ‘rtyp’ may be used uninitialized in this function'
 
     /*if this node has a left child, evaluate it*/
     if (bexp->left != NULL)

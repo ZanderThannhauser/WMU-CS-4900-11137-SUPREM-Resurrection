@@ -20,29 +20,30 @@
 #include <stdio.h>
 #include <sys/times.h>
 
-#include "./include/constant.h"
-#include "./include/defect.h"
-#include "./include/diffuse.h"
-#include "./include/expr.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/matrix.h"
+#include "./src/include/constant.h"
+#include "./src/include/defect.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/expr.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/matrix.h"
 
 
 // 2020 includes:
-#include "./dbase/alloc.h"
-#include "./dbase/geometry.h"
-#include "./dbase/new_layer.h"
-#include "./diffuse/solve_time.h"
-#include "./diffuse/prepare.h"
-#include "./dbase/dispose.h"
-#include "./diffuse/predep.h"
-#include "./diffuse/defect.h"
-#include "./oxide/mater.h"
-#include "./misc/print_time.h"
-#include "./misc/get.h"
+#include "./src/debug.h"
+#include "./src/dbase/alloc.h"
+#include "./src/dbase/geometry.h"
+#include "./src/dbase/new_layer.h"
+#include "./src/diffuse/solve_time.h"
+#include "./src/diffuse/prepare.h"
+#include "./src/dbase/dispose.h"
+#include "./src/diffuse/predep.h"
+#include "./src/diffuse/defect.h"
+#include "./src/oxide/mater.h"
+#include "./src/misc/print_time.h"
+#include "./src/misc/get.h"
 #include "diffuse.h"
 // end of includes
 
@@ -60,6 +61,7 @@
  ************************************************************************/
 void diffuse(char *par, struct par_str* param)
 {
+    ENTER;
     float time, temp, cs;
     struct tms before, after;
     int cont;
@@ -205,5 +207,6 @@ void diffuse(char *par, struct par_str* param)
     print_time("total diffusion time", &before, &after);
     damage_read = FALSE;
 
+    EXIT;
     return;
 }

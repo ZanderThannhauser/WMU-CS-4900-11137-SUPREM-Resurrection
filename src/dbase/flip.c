@@ -21,16 +21,16 @@
 #include <stdlib.h>
 #include <sys/times.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
 
 // 2020 includes:
-#include "./dbase/geometry.h"
-#include "./misc/print_time.h"
-#include "./dbase/clktri.h"
-#include "./dbase/locate.h"
-#include "./dbase/list.h"
+#include "./src/dbase/geometry.h"
+#include "./src/misc/print_time.h"
+#include "./src/dbase/clktri.h"
+#include "./src/dbase/locate.h"
+#include "./src/dbase/list.h"
 #include "flip.h"
 // end of includes
 

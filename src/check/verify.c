@@ -21,24 +21,22 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/check.h"
-#include "./include/global.h"
-#include "./include/sysdep.h"
+#include "./src/include/check.h"
+#include "./src/include/global.h"
+#include "./src/include/sysdep.h"
 
 // 2020 includes:
-#include "./shell/proc.h"
-#include "./check/eval.h"
-#include "./check/split.h"
-#include "./check/check.h"
+#include "./src/shell/proc.h"
+#include "./src/check/eval.h"
+#include "./src/check/split.h"
+#include "./src/check/check.h"
+#include "./src/check/parse.h"
 #include "verify.h"
 // end of includes
 
 // 2020 forward declarations
 void unspecify(struct par_str **par);
 // end of declarations
-
-extern val_str bool_check();
-extern char *parse_expr(), *eval_real();
 
 /************************************************************************
  *									*
@@ -139,7 +137,7 @@ char *name;
         return (0);
 }
 
-#include "./include/expr.h"
+#include "./src/include/expr.h"
 
 /************************************************************************
  *									*

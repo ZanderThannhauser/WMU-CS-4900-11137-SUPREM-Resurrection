@@ -15,17 +15,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/constant.h"
-#include "./include/FEgeom.h"
-#include "./include/geom.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/FEgeom.h"
+#include "./src/include/geom.h"
+#include "./src/include/material.h"
 
 // 2020 function includes
-#include "./oxide/FEconvert.h"
-#include "./shell/smisc.h"
-#include "./dbase/locate.h"
-#include "./dbase/new_layer.h"
-#include "./FEbc.h"
+#include "./src/oxide/FEconvert.h"
+#include "./src/shell/smisc.h"
+#include "./src/dbase/locate.h"
+#include "./src/dbase/new_layer.h"
+#include "FEbc.h"
 // end of includes
 
 // 2020 forward declarations

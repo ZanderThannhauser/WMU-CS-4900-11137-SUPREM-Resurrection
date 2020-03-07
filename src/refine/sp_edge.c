@@ -19,19 +19,20 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/skel.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/skel.h"
 
 // 2020 includes:
-#include "./dbase/locate.h"
-#include "./dbase/list.h"
-#include "./refine/dbase.h"
-#include "./dbase/clktri.h"
-#include "./dbase/geometry.h"
+#include "./src/dbase/locate.h"
+#include "./src/dbase/list.h"
+#include "./src/refine/dbase.h"
+#include "./src/dbase/clktri.h"
+#include "./src/dbase/geometry.h"
+#include "./src/misc/panic.h"
 #include "sp_edge.h"
 // end of includes
 

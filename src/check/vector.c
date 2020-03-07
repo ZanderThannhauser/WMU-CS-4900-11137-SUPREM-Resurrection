@@ -22,25 +22,25 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/diffuse.h"
-#include "./include/expr.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/expr.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 #ifdef DEVICE
-#include "./include/device.h"
+#include "./src/include/device.h"
 #endif
 
 // 2020 includes:
-#include "./diffuse/defect.h"
-#include "./oxide/mater.h"
-#include "./diffuse/Interst.h"
-#include "./diffuse/Vacancy.h"
-#include "./diffuse/active.h"
-#include "./mesh/profile.h"
-#include "./shell/proc.h"
+#include "./src/diffuse/defect.h"
+#include "./src/oxide/mater.h"
+#include "./src/diffuse/Interst.h"
+#include "./src/diffuse/Vacancy.h"
+#include "./src/diffuse/active.h"
+#include "./src/mesh/profile.h"
+#include "./src/shell/proc.h"
 #include "vector.h"
 // end of includes
 

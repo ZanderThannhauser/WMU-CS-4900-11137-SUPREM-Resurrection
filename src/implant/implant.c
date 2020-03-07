@@ -20,23 +20,24 @@
 #include <stdio.h>
 #include <sys/times.h>
 
-#include "./include/constant.h"
-#include "./include/defect.h"
-#include "./include/expr.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/implant.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/matrix.h"
+#include "./src/include/constant.h"
+#include "./src/include/defect.h"
+#include "./src/include/expr.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/matrix.h"
 
 // 2020 includes:
-#include "./dbase/dispose.h"
-#include "./diffuse/defect.h"
-#include "./misc/get.h"
-#include "./implant/pearson.h"
-#include "./misc/print_time.h"
-#include "./dbase/alloc.h"
+#include "./src/debug.h"
+#include "./src/dbase/dispose.h"
+#include "./src/diffuse/defect.h"
+#include "./src/misc/get.h"
+#include "./src/implant/pearson.h"
+#include "./src/misc/print_time.h"
+#include "./src/dbase/alloc.h"
 #include "implant.h"
 // end of includes
 
@@ -60,13 +61,20 @@ void implant(char *par, struct par_str* param) {
     double dose, energy;
     struct tms before, after;
     double ang;
+    ENTER;
 
     if (InvalidMeshCheck())
+    {
+    EXIT;
         return;
+     }   
 
     /*get the impurity number of the place to put the implant*/
     if (imp_select(param, &imp, &ion) == -1)
+    {
+    EXIT;
         return;
+        }
     sol = imptosol[imp];
 
     /*get the main descriptive values for the implant*/
@@ -177,6 +185,7 @@ void implant(char *par, struct par_str* param) {
     }
 
     /*clean up the malloc space*/
+    EXIT;
     return;
 }
 
@@ -191,7 +200,7 @@ void implant(char *par, struct par_str* param) {
  ************************************************************************/
 int imp_select(struct par_str* param, int *imp, int *ion)
 {
-
+ENTER;
     if (get_bool(param, "silicon")) {
         *ion = *imp = I;
     } else if (get_bool(param, "arsenic")) {
@@ -229,6 +238,6 @@ int imp_select(struct par_str* param, int *imp, int *ion)
 
     /*then add a new one*/
     add_impurity(*imp, 1.0e+5, -1);
-
+EXIT;
     return (0);
 }

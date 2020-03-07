@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "shell/parser.y" /* yacc.c:339  */
+#line 1 "src/shell/parser.y" /* yacc.c:339  */
 
 
 /*************************************************************************
@@ -101,7 +101,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "./include/sysdep.h"
+#include "./src/include/sysdep.h"
 
 static char *tp[10];
 static int te[10];
@@ -110,15 +110,16 @@ static int te[10];
 #define malloc MALLOC
 #endif
 
-#include "./include/shell.h"
+#include "./src/include/shell.h"
+#include "./src/shell/proc.h"
 
 
 // 2020 includes:
-#include "./shell/lex.h"
-#include "./shell/do_action.h"
-#include "./shell/help.h"
-#include "./shell/macro.h"
-#include "./shell/set.h"
+#include "./src/shell/lex.h"
+#include "./src/shell/do_action.h"
+#include "./src/shell/help.h"
+#include "./src/shell/macro.h"
+#include "./src/shell/set.h"
 // end of includes
 
 // 2020 forward declarations
@@ -131,7 +132,7 @@ int yyerror();
 #define YYRETURN(A)        { return(A); }
 
 
-#line 135 "y.tab.c" /* yacc.c:339  */
+#line 136 "y.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -221,13 +222,13 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 74 "shell/parser.y" /* yacc.c:355  */
+#line 75 "src/shell/parser.y" /* yacc.c:355  */
 
     int ival;
     char *sval;
     
 
-#line 231 "y.tab.c" /* yacc.c:355  */
+#line 232 "y.tab.c" /* yacc.c:355  */
 };
 
 typedef union YYSTYPE YYSTYPE;
@@ -244,7 +245,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 248 "y.tab.c" /* yacc.c:358  */
+#line 249 "y.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -544,10 +545,10 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint16 yyrline[] =
 {
-       0,    91,    91,   116,   135,   163,   181,   201,   246,   305,
-     337,   345,   359,   373,   400,   407,   414,   421,   433,   434,
-     439,   441,   443,   445,   450,   455,   460,   466,   471,   480,
-     504
+       0,    92,    92,   117,   136,   164,   182,   202,   247,   306,
+     338,   346,   360,   374,   401,   408,   415,   422,   434,   435,
+     440,   442,   444,   446,   451,   456,   461,   467,   472,   481,
+     505
 };
 #endif
 
@@ -1368,7 +1369,7 @@ yyreduce:
   switch (yyn)
     {
         case 2:
-#line 92 "shell/parser.y" /* yacc.c:1646  */
+#line 93 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *cmd = (yyvsp[-3].sval), *par = (yyvsp[-2].sval), *red = (yyvsp[-1].sval);
 	    int back = (yyvsp[0].ival);
@@ -1393,11 +1394,11 @@ yyreduce:
 		YYRETURN( back & PROMPT );
 	    }
 	}
-#line 1397 "y.tab.c" /* yacc.c:1646  */
+#line 1398 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 3:
-#line 117 "shell/parser.y" /* yacc.c:1646  */
+#line 118 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *par = (yyvsp[-2].sval), *red = (yyvsp[-1].sval);
 	    int back = (yyvsp[0].ival);
@@ -1416,11 +1417,11 @@ yyreduce:
 		}
 	    }
 	}
-#line 1420 "y.tab.c" /* yacc.c:1646  */
+#line 1421 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 4:
-#line 136 "shell/parser.y" /* yacc.c:1646  */
+#line 137 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *par = (yyvsp[-2].sval), *red = (yyvsp[-1].sval);
 	    int back = (yyvsp[0].ival);
@@ -1448,11 +1449,11 @@ yyreduce:
 
 	    if (depth == -1) YYRETURN( back & PROMPT );
 	}
-#line 1452 "y.tab.c" /* yacc.c:1646  */
+#line 1453 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 5:
-#line 164 "shell/parser.y" /* yacc.c:1646  */
+#line 165 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *par = (yyvsp[-1].sval);
 	    int back = (yyvsp[0].ival);
@@ -1470,11 +1471,11 @@ yyreduce:
 	    if (depth == -1)
 		YYRETURN( back & PROMPT );
 	}
-#line 1474 "y.tab.c" /* yacc.c:1646  */
+#line 1475 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 6:
-#line 182 "shell/parser.y" /* yacc.c:1646  */
+#line 183 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *par = (yyvsp[-1].sval);
 	    int back = (yyvsp[0].ival);
@@ -1494,11 +1495,11 @@ yyreduce:
 	    if (depth == -1)
 		YYRETURN( back & PROMPT );
 	}
-#line 1498 "y.tab.c" /* yacc.c:1646  */
+#line 1499 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 7:
-#line 202 "shell/parser.y" /* yacc.c:1646  */
+#line 203 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *par = (yyvsp[-2].sval), *red = (yyvsp[-1].sval);
 	    int back = (yyvsp[0].ival);
@@ -1543,11 +1544,11 @@ yyreduce:
 	    if (depth == -1)
 		YYRETURN( PROMPT );
 	}
-#line 1547 "y.tab.c" /* yacc.c:1646  */
+#line 1548 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 8:
-#line 247 "shell/parser.y" /* yacc.c:1646  */
+#line 248 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *body;
 	    char *list;
@@ -1606,11 +1607,11 @@ yyreduce:
 		}
 	    }
 	}
-#line 1610 "y.tab.c" /* yacc.c:1646  */
+#line 1611 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 9:
-#line 306 "shell/parser.y" /* yacc.c:1646  */
+#line 307 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *body = (yyvsp[-2].sval), *red = (yyvsp[-1].sval);
 	    int back = (yyvsp[0].ival);
@@ -1642,11 +1643,11 @@ yyreduce:
 		}
 	    }
 	}
-#line 1646 "y.tab.c" /* yacc.c:1646  */
+#line 1647 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 10:
-#line 338 "shell/parser.y" /* yacc.c:1646  */
+#line 339 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    int back = (yyvsp[0].ival);
 	    do_echo();
@@ -1654,11 +1655,11 @@ yyreduce:
 	    if (depth == -1)
 		YYRETURN( back & PROMPT );
 	}
-#line 1658 "y.tab.c" /* yacc.c:1646  */
+#line 1659 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 11:
-#line 346 "shell/parser.y" /* yacc.c:1646  */
+#line 347 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *par = (yyvsp[-1].sval);
 	    int back = (yyvsp[0].ival);
@@ -1672,11 +1673,11 @@ yyreduce:
 	    if (depth == -1)
 		YYRETURN( back & PROMPT );
 	}
-#line 1676 "y.tab.c" /* yacc.c:1646  */
+#line 1677 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 12:
-#line 360 "shell/parser.y" /* yacc.c:1646  */
+#line 361 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *par = (yyvsp[-1].sval);
 	    int back = (yyvsp[0].ival);
@@ -1690,11 +1691,11 @@ yyreduce:
 	    if (depth == -1)
 		YYRETURN( back & PROMPT );
 	}
-#line 1694 "y.tab.c" /* yacc.c:1646  */
+#line 1695 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 13:
-#line 374 "shell/parser.y" /* yacc.c:1646  */
+#line 375 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *par = (yyvsp[-1].sval);
 	    int back = (yyvsp[0].ival);
@@ -1721,44 +1722,44 @@ yyreduce:
 	    if (depth == -1)
 		YYRETURN( back & PROMPT );
 	}
-#line 1725 "y.tab.c" /* yacc.c:1646  */
+#line 1726 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 14:
-#line 401 "shell/parser.y" /* yacc.c:1646  */
+#line 402 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    echo_bufptr = 0;
 
 	    if (depth == -1)
 		YYRETURN( (yyvsp[0].ival) );
 	}
-#line 1736 "y.tab.c" /* yacc.c:1646  */
+#line 1737 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 15:
-#line 408 "shell/parser.y" /* yacc.c:1646  */
+#line 409 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    echo_bufptr = 0;
 
 	    if (depth == -1)
 		YYRETURN(-1);
 	}
-#line 1747 "y.tab.c" /* yacc.c:1646  */
+#line 1748 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 16:
-#line 415 "shell/parser.y" /* yacc.c:1646  */
+#line 416 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    do_echo();
 
 	    if (depth == -1)
 		YYRETURN(-1);
 	}
-#line 1758 "y.tab.c" /* yacc.c:1646  */
+#line 1759 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 17:
-#line 422 "shell/parser.y" /* yacc.c:1646  */
+#line 423 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    do_echo();
 
@@ -1766,76 +1767,76 @@ yyreduce:
 	    if (depth == -1)
 		YYRETURN( (yyvsp[0].ival) & PROMPT );
 	}
-#line 1770 "y.tab.c" /* yacc.c:1646  */
+#line 1771 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 20:
-#line 440 "shell/parser.y" /* yacc.c:1646  */
+#line 441 "src/shell/parser.y" /* yacc.c:1646  */
     {  (yyval.ival) = ~BACKGROUND & PROMPT; }
-#line 1776 "y.tab.c" /* yacc.c:1646  */
+#line 1777 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 21:
-#line 442 "shell/parser.y" /* yacc.c:1646  */
+#line 443 "src/shell/parser.y" /* yacc.c:1646  */
     {  (yyval.ival) = BACKGROUND | PROMPT; }
-#line 1782 "y.tab.c" /* yacc.c:1646  */
+#line 1783 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 22:
-#line 444 "shell/parser.y" /* yacc.c:1646  */
+#line 445 "src/shell/parser.y" /* yacc.c:1646  */
     {  (yyval.ival) = 0; }
-#line 1788 "y.tab.c" /* yacc.c:1646  */
+#line 1789 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 23:
-#line 446 "shell/parser.y" /* yacc.c:1646  */
+#line 447 "src/shell/parser.y" /* yacc.c:1646  */
     {  (yyval.ival) = BACKGROUND; }
-#line 1794 "y.tab.c" /* yacc.c:1646  */
+#line 1795 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 24:
-#line 451 "shell/parser.y" /* yacc.c:1646  */
+#line 452 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    fprintf(stderr, "no file for redirection!\n");
 	    (yyval.sval) = NULL;
 	}
-#line 1803 "y.tab.c" /* yacc.c:1646  */
+#line 1804 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 25:
-#line 456 "shell/parser.y" /* yacc.c:1646  */
+#line 457 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    (yyval.sval) = (yyvsp[0].sval);
 	}
-#line 1811 "y.tab.c" /* yacc.c:1646  */
+#line 1812 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 26:
-#line 460 "shell/parser.y" /* yacc.c:1646  */
+#line 461 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    (yyval.sval) = NULL;
 	}
-#line 1819 "y.tab.c" /* yacc.c:1646  */
+#line 1820 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 27:
-#line 467 "shell/parser.y" /* yacc.c:1646  */
+#line 468 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    (yyval.sval) = (yyvsp[0].sval);
 	}
-#line 1827 "y.tab.c" /* yacc.c:1646  */
+#line 1828 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 28:
-#line 471 "shell/parser.y" /* yacc.c:1646  */
+#line 472 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    (yyval.sval) = NULL;
 	}
-#line 1835 "y.tab.c" /* yacc.c:1646  */
+#line 1836 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 29:
-#line 480 "shell/parser.y" /* yacc.c:1646  */
+#line 481 "src/shell/parser.y" /* yacc.c:1646  */
     {
 
 	    /*increment the nesting depth for storage*/
@@ -1855,11 +1856,11 @@ yyreduce:
 	    echoall = FALSE;
 
 	}
-#line 1859 "y.tab.c" /* yacc.c:1646  */
+#line 1860 "y.tab.c" /* yacc.c:1646  */
     break;
 
   case 30:
-#line 504 "shell/parser.y" /* yacc.c:1646  */
+#line 505 "src/shell/parser.y" /* yacc.c:1646  */
     {
 	    char *s;
 
@@ -1870,11 +1871,11 @@ yyreduce:
 
 	    (yyval.sval) = s;
 	}
-#line 1874 "y.tab.c" /* yacc.c:1646  */
+#line 1875 "y.tab.c" /* yacc.c:1646  */
     break;
 
 
-#line 1878 "y.tab.c" /* yacc.c:1646  */
+#line 1879 "y.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -2102,7 +2103,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 517 "shell/parser.y" /* yacc.c:1906  */
+#line 518 "src/shell/parser.y" /* yacc.c:1906  */
 
 
 

@@ -11,12 +11,12 @@
 
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/diffuse.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/matrix.h"
+#include "./src/include/constant.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/matrix.h"
 
 // 2020 includes:
 #include "species.h"

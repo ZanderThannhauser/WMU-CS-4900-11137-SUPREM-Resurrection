@@ -15,17 +15,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/constant.h"
-#include "./include/diffuse.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/shell.h"
-#include "./include/sysdep.h"
+#include "./src/include/constant.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/shell.h"
+#include "./src/include/sysdep.h"
 
 // 2020 includes:
-#include "./mesh/ig2_meshio.h"
+#include "./src/mesh/ig2_meshio.h"
 #include "panic.h"
 // end of includes
 

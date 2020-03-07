@@ -25,17 +25,17 @@
 #include <cncall.h>
 #endif
 
-#include "./include/constant.h"
-#include "./include/diffuse.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/matrix.h"
-#include "./include/sysdep.h"
+#include "./src/include/constant.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/matrix.h"
+#include "./src/include/sysdep.h"
 
 // 2020 header includes:
-#include "./math/mxv.h"
-#include "./math/coldata.h"
-#include "./math/blklu.h"
+#include "./src/math/mxv.h"
+#include "./src/math/coldata.h"
+#include "./src/math/blklu.h"
 #include "blklu.h"
 // end of 2020 includes
 

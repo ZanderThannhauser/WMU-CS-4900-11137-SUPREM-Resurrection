@@ -11,7 +11,7 @@
 /*   shell.h                Version 5.1     */
 /*   Last Modification : 7/3/91  08:55:21 */
 
-#include "./misc/get.h"
+#include "./src/misc/get.h"
 
 #ifdef STATIC_ALLOCATION_TIME
 #define EXTERN
@@ -50,9 +50,6 @@ EXTERN int echo_buflen;   /*the current amount of space buffer is decalared to*/
 #ifndef TRUE
 #define TRUE 1
 #endif
-
-/*declare a function to parse a string and return a stream*/
-extern FILE *file_parse();
 
 /*this file is the standard input path for all input*/
 EXTERN FILE *in_file;

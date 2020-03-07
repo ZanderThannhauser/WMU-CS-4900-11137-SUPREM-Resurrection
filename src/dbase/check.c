@@ -20,13 +20,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h"
 
 // 2020 includes:
-#include "./geom/tnabor.h"
+#include "./src/geom/tnabor.h"
+#include "./src/misc/panic.h"
 #include "check.h"
 // end of includes
 

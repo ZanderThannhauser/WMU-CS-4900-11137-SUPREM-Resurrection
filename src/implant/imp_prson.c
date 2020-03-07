@@ -44,9 +44,9 @@
 #define min2(A, B) ((A) >= (B) ? (B) : (A))
 #define max2(A, B) ((A) >= (B) ? (A) : (B))
 
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/implant.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
 
 // 2020 includes:
 #include "imp_prson.h"
@@ -56,8 +56,7 @@
 // end of declarations
 
 
-double prson(x, pc) double x;
-struct imp_info *pc; /* Pearson-IV constants */
+double prson(double x, struct imp_info *pc)
 {
 
     double b1, disc, f1, f2, f3, f4, f5;

@@ -18,13 +18,14 @@
 
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h"
-#include "./include/skel.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h"
+#include "./src/include/skel.h"
 
 // 2020 includes:
-#include "./refine/triang.h"
+#include "./src/refine/triang.h"
+#include "./src/misc/panic.h"
 #include "grid.h"
 // end of includes
 

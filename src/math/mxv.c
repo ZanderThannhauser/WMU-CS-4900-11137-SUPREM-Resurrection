@@ -19,11 +19,11 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/matrix.h"
-#include "./include/sysdep.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/matrix.h"
+#include "./src/include/sysdep.h"
 
 // 2020 includes:
 #include "mxv.h"

@@ -24,20 +24,20 @@
 #include <string.h>
 #endif
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
 
 // 2020 includes:
-#include "./misc/get.h"
-#include "./mesh/ig2_meshio.h"
-#include "./dbase/make_db.h"
-#include "./mesh/newbackside.h"
-#include "./mesh/pi_meshio.h"
-#include "./shell/do_action.h"
-#include "./imagetool/image_write.h"
-#include "./mesh/save_simpl.h"
+#include "./src/misc/get.h"
+#include "./src/mesh/ig2_meshio.h"
+#include "./src/dbase/make_db.h"
+#include "./src/mesh/newbackside.h"
+#include "./src/mesh/pi_meshio.h"
+#include "./src/shell/do_action.h"
+#include "./src/imagetool/image_write.h"
+#include "./src/mesh/save_simpl.h"
 #include "structure.h"
 // end of includes
 

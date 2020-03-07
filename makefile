@@ -4,7 +4,7 @@ default: bin/suprem
 
 CC = gcc
 
-CPPFLAGS = -I ./src/
+CPPFLAGS = -I .
 
 # I don't understand the need for these, I just know the original makefile had
 # them:
@@ -17,7 +17,7 @@ CPPFLAGS += -D UBUNTU
 CFLAGS += -Wall
 CFLAGS += -Werror
 CFLAGS += -Wfatal-errors
-CFLAGS += -O3 # Might have to comment this out
+#CFLAGS += -O3 # Might have to comment this out
 
 DFLAGS += -g
 DFLAGS += -D DEBUGGING_2020
@@ -42,6 +42,8 @@ KROBJS = $(KRSRCS:.c=.o)
 KRDOBJS = $(KRSRCS:.c=.d.o)
 KRDEPENDS = $(KRSRCS:.c=.mk)
 
+# --gen-suppressions=yes
+
 run: bin/suprem data/suprem.uk
 	./bin/suprem
 
@@ -53,6 +55,9 @@ test-exam2: bin/suprem data/suprem.uk
 
 test-exam3: bin/suprem data/suprem.uk
 	valgrind ./bin/suprem < ./examples/exam3/oed.in
+
+test-exam4: bin/suprem data/suprem.uk
+	valgrind ./bin/suprem < ./examples/exam4/oed.in
 
 bin/suprem: $(SUPOBJS)
 	$(CC) $(LDFLAGS) $(SUPOBJS) $(LOADLIBES) $(LDLIBS) -o $@

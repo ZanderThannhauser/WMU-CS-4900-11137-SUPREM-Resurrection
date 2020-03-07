@@ -20,18 +20,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/implant.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 
 // 2020 includes:
-#include "./implant/surf.h"
-#include "./implant/imp_setprs.h"
-#include "./implant/damage.h"
-#include "./implant/imp_vert.h"
+#include "./src/debug.h"
+#include "./src/implant/surf.h"
+#include "./src/implant/imp_setprs.h"
+#include "./src/implant/damage.h"
+#include "./src/implant/imp_vert.h"
+#include "./src/implant/imp_zeqv.h"
+#include "./src/implant/imp_qeqv.h"
 #include "pearson.h"
 // end of includes
 
@@ -63,6 +66,7 @@ void do_implant(int ion, double angle, double dose,
     double depth, tp, bt;
     double l[MAXDIM];
     double maxlat = 0;
+    ENTER;
 
     /* for all used materials, get the implant data */
     for (r = 0; r < nreg; r++) {
@@ -71,6 +75,7 @@ void do_implant(int ion, double angle, double dose,
             fprintf(stderr, "setprs failed: ion %d, mat %d, energy %g\n", ion,
                     mat, energy);
             fprintf(stderr, "Couldn't find ion and energy in tables\n");
+            EXIT;
             return;
         }
 
@@ -101,8 +106,13 @@ void do_implant(int ion, double angle, double dose,
     /* For each vertical slice, compute the contribution */
     for (cur = surf; cur != NULL; cur = cur->next) {
 
+        HERE;
+        
         /*work out the material by material offsets*/
         bias = cur->top[0]; /*location of material top*/
+        HERE;
+        verpv(bias);
+        HERE;
         dosofar = 0.0;
 
         /*each slice adds a contribution to each node just once*/
@@ -110,6 +120,8 @@ void do_implant(int ion, double angle, double dose,
             node_done[i] = FALSE;
 
         for (rm = 0; rm < cur->nmat; rm++) {
+
+            HERE;
             r = cur->mat[rm];
 
             /*if into silicon, and calculating damage get it set up*/
@@ -126,10 +138,23 @@ void do_implant(int ion, double angle, double dose,
                        zeqv(dosofar, dose, PRS_DX, depth, data) * 1e-4;
             }
 
+            HERE;
+            verpv(cur->top[rm]);
+            HERE;
+            verpv(bias);
+            HERE;
+            
             tp = (cur->top[rm] - bias) * 1.0e4;
             bt = (cur->bot[rm] - bias) * 1.0e4;
+            
+            HERE;
+            verpv(tp);
+            HERE;
+            
             dosofar += qeqv(tp, bt, dose, PRS_DX, data);
 
+            HERE;
+            
             /*for all the nodes*/
             /*Here we assume ions make right turns in the substrate...
               They go straight down in this material, but go laterally
@@ -189,6 +214,6 @@ void do_implant(int ion, double angle, double dose,
 
     free_surf(&surf);
     free(node_done);
-
+EXIT;
     return; /* all ok */
 }

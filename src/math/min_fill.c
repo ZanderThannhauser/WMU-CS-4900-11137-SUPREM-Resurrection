@@ -21,10 +21,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h"
 
 struct d_sort {
     float x;
@@ -35,7 +35,7 @@ int o_compar(struct d_sort *f1, struct d_sort *f2);
 void new_storage();
 
 // 2020 function header includes:
-#include "./dbase/locate.h"
+#include "./src/dbase/locate.h"
 #include "min_fill.h"
 // end of 2020 includes
 

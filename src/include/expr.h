@@ -111,9 +111,6 @@ EXTERN int st_pnt;
 /*the next input token read*/
 EXTERN struct tok_str input_token;
 
-extern char *parse_expr(), *eval_real(), *eval_vec();
-extern float sol_interp();
-
 /*diffuse stores this away for use in the selection of variables*/
 EXTERN double last_temp;
 

@@ -12,12 +12,12 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/global.h"
-#include "./include/shell.h"
+#include "./src/include/global.h"
+#include "./src/include/shell.h"
 
 // 2020 includes:
-#include "./shell/macro.h"
-#include "./shell/do_action.h"
+#include "./src/shell/macro.h"
+#include "./src/shell/do_action.h"
 #include "movie.h"
 // end of includes
 

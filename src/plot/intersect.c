@@ -16,8 +16,8 @@
 /*   intersect.c                Version 5.1     */
 /*   Last Modification : 7/3/91 08:38:52 */
 
-#include "./include/constant.h"
-#include "./include/global.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
 
 // 2020 includes:
 #include "intersect.h"

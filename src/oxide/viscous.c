@@ -12,28 +12,28 @@
 #include <assert.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
 #undef EXTERN
 #define EXTERN /* FEgeom isn't included in main.c */
-#include "./include/FEgeom.h"
+#include "./src/include/FEgeom.h"
 #undef EXTERN
 #define EXTERN extern
-#include "./include/FEmath.h"
-#include "./include/material.h"
+#include "./src/include/FEmath.h"
+#include "./src/include/material.h"
 
 // 2020 includes:
-#include "./oxide/FEconvert.h"
-#include "./oxide/FEbc.h"
-#include "./finel/FEsolve.h"
-#include "./dbase/dispose.h"
-#include "./misc/get.h"
-#include "./oxide/Oxidant.h"
-#include "./oxide/triox.h"
-#include "./finel/tri6.h"
-#include "./oxide/oxide_vel.h"
-#include "./finel/tri7.h"
+#include "./src/oxide/FEconvert.h"
+#include "./src/oxide/FEbc.h"
+#include "./src/finel/FEsolve.h"
+#include "./src/dbase/dispose.h"
+#include "./src/misc/get.h"
+#include "./src/oxide/Oxidant.h"
+#include "./src/oxide/triox.h"
+#include "./src/finel/tri6.h"
+#include "./src/oxide/oxide_vel.h"
+#include "./src/finel/tri7.h"
 #include "viscous.h"
 // end of includes
 

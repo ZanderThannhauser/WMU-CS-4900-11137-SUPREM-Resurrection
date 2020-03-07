@@ -22,15 +22,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/constant.h"
-#include "./include/expr.h"
-#include "./include/global.h"
-#include "./include/material.h"
-#include "./include/sysdep.h"
+#include "./src/include/constant.h"
+#include "./src/include/expr.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h"
+#include "./src/include/sysdep.h"
 
 // 2020 includes:
-#include "./shell/proc.h"
-#include "./check/vector.h"
+#include "./src/shell/proc.h"
+#include "./src/check/vector.h"
 #include "lexical.h"
 // end of includes
 

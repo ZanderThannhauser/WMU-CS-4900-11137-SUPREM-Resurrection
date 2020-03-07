@@ -1,5 +1,5 @@
 
-#include "./misc/get.h"
+#include "./src/misc/get.h"
 
 void rregion(char *par, struct par_str *param);
 void redge(char *par, struct par_str *param);

@@ -148,8 +148,6 @@ EXTERN struct tri_str **tri;
 EXTERN struct edg_str **edg;
 EXTERN struct reg_str *reg[MAXREG];
 
-extern float area_tri();
-
 /*should be in the geom stuff*/
 EXTERN int nreg; /*the number of regions*/
 EXTERN int ned;  /*the number of edges*/

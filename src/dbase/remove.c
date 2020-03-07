@@ -19,16 +19,17 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 
 // 2020 includes:
-#include "./dbase/list.h"
-#include "./dbase/locate.h"
-#include "./dbase/kill_node.h"
+#include "./src/dbase/list.h"
+#include "./src/dbase/locate.h"
+#include "./src/dbase/kill_node.h"
+#include "./src/misc/panic.h"
 #include "remove.h"
 // end of includes
 

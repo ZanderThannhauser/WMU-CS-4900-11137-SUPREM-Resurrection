@@ -17,10 +17,10 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "./include/shell.h"
+#include "./src/include/shell.h"
 
 // 2020 includes:
-#include "./shell/macro.h"
+#include "./src/shell/macro.h"
 #include "input.h"
 // end of includes
 

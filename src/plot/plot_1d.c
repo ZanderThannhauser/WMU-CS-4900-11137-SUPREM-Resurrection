@@ -19,21 +19,22 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/material.h"
-#include "./include/plot.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h"
+#include "./src/include/plot.h"
 
 // 2020 includes:
-#include "debug.h"
-#include "./misc/get.h"
-#include "./dbase/dispose.h"
-#include "./oxide/mater.h"
-#include "./plot/do_1d.h"
-#include "./geom/limits.h"
-#include "./include/plot.h"
+#include "./src/debug.h"
+#include "./src/misc/get.h"
+#include "./src/dbase/dispose.h"
+#include "./src/oxide/mater.h"
+#include "./src/plot/do_1d.h"
+#include "./src/geom/limits.h"
+#include "./src/include/plot.h"
 #include "plot_1d.h"
 // end of includes
 

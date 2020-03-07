@@ -16,12 +16,13 @@
 /*   dimen.c                Version 5.1     */
 /*   Last Modification : 7/3/91 08:20:41 */
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
 
 // 2020 includes:
+#include "./src/misc/panic.h"
 #include "dimen.h"
 // end of includes
 

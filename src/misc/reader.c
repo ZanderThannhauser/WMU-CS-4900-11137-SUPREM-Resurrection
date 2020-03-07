@@ -17,9 +17,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/check.h"
-#include "./include/global.h"
-#include "./include/key.h"
+#include "./src/include/check.h"
+#include "./src/include/global.h"
+#include "./src/include/key.h"
 
 // 2020 includes:
 #include "reader.h"

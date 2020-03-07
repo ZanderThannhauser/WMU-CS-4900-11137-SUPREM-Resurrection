@@ -104,13 +104,4 @@ EXTERN int imp_model;
 #define X_VAL 0      /* cord[X_VAL] is an X value */
 #define Y_VAL 1      /*   .... similar idea .... */
 
-/*various double functions*/
-extern double imp_vert();
-extern double prson();
-extern double zeqv();
-extern double qeqv();
-extern double dam_vert();
-extern double imp_latr();
-extern double dam_lat();
-
 #define IMP_LAT(A, B, C) (0.5 * (erf((B) / (A)) - erf((C) / (A))))

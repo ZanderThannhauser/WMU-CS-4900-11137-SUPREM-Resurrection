@@ -1,4 +1,5 @@
-#include "./misc/get.h"
+
+#include "./src/misc/get.h"
 
 void device(char *par, struct par_str *param);
 void device_init();

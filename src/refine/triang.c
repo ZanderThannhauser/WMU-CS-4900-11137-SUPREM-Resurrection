@@ -19,18 +19,19 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h"
 
 
 // 2020 includes:
-#include "./refine/tridata.h"
-#include "./refine/rect_tri.h"
-#include "./refine/bfill.h"
-#include "./plot/plot.h"
-#include "./dbase/list.h"
-#include "./refine/dbase.h"
+#include "./src/refine/tridata.h"
+#include "./src/refine/rect_tri.h"
+#include "./src/refine/bfill.h"
+#include "./src/plot/plot.h"
+#include "./src/dbase/list.h"
+#include "./src/refine/dbase.h"
+#include "./src/misc/panic.h"
 #include "triang.h"
 // end of includes
 

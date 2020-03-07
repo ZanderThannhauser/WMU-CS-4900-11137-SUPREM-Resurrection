@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/sysdep.h"
+#include "./src/include/sysdep.h"
 
 // 2020 includes:
 #include "fgtmom.h"

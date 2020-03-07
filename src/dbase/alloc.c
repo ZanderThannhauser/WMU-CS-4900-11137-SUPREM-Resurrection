@@ -18,14 +18,14 @@
 
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/dbaccess.h" /* So we can set n_imp to 0 */
-#include "./include/diffuse.h"  /* for the time of creation */
-#include "./include/impurity.h" /* So we can set n_imp to 0 */
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/dbaccess.h" /* So we can set n_imp to 0 */
+#include "./src/include/diffuse.h"  /* for the time of creation */
+#include "./src/include/impurity.h" /* So we can set n_imp to 0 */
 
 // 2020 includes
-#include "./alloc.h"
+#include "alloc.h"
 // end of includes
 
 /*-----------------ADD_IMPURITY-----------------------------------------

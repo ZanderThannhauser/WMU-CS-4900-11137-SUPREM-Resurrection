@@ -19,15 +19,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h"
-#include "./include/skel.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h"
+#include "./src/include/skel.h"
 
 // 2020 includes:
-#include "./plot/plot.h"
-#include "./refine/dbase.h"
-#include "./refine/triang.h"
+#include "./src/plot/plot.h"
+#include "./src/refine/dbase.h"
+#include "./src/refine/triang.h"
 #include "tridata.h"
 // end of includes
 

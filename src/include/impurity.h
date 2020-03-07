@@ -24,7 +24,7 @@
 #ifndef INCLUDE_IMPURITY_H
 #define INCLUDE_IMPURITY_H
 
-#include "./include/diffuse.h"
+#include "./src/include/diffuse.h"
 
 #ifdef STATIC_ALLOCATION_TIME
 #define EXTERN

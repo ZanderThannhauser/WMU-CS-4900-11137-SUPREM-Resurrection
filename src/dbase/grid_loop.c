@@ -19,19 +19,20 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/matrix.h" /* For the old, new areas */
-#include "./include/regrid.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/matrix.h" /* For the old, new areas */
+#include "./src/include/regrid.h"
 
 // 2020 includes:
-#include "./dbase/kill_node.h"
-#include "./dbase/make_db.h"
-#include "./dbase/locate.h"
-#include "./dbase/remove.h"
+#include "./src/dbase/kill_node.h"
+#include "./src/dbase/make_db.h"
+#include "./src/dbase/locate.h"
+#include "./src/dbase/remove.h"
+#include "./src/misc/panic.h"
 #include "grid_loop.h"
 // end of includes
 

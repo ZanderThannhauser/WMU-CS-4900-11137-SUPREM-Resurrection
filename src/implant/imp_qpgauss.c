@@ -11,11 +11,12 @@
 
 #define abs(V) ((V) < 0. ? -(V) : (V))
 
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/implant.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
 
 // 2020 includes:
+#include "./src/implant/imp_vert.h"
 #include "imp_qpgauss.h"
 // end of includes
 

@@ -22,17 +22,18 @@
 #include <string.h>
 #endif
 
-#include "./include/bound.h"
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/implant.h"
-#include "./include/material.h"
-#include "./include/plot.h"
+#include "./src/include/bound.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
+#include "./src/include/material.h"
+#include "./src/include/plot.h"
 
 // 2020 includes:
-#include "./geom/limits.h"
-#include "./mesh/simpl.h"
+#include "./src/geom/limits.h"
+#include "./src/mesh/simpl.h"
+#include "./src/misc/panic.h"
 #include "save_simpl.h"
 // end of includes
 

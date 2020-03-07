@@ -18,43 +18,77 @@
  */
 
 #include <math.h>
+
 #define abs(V) ((V) < 0. ? -(V) : (V))
 
 /* Offsets to the Pearson-IV constants array */
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/implant.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
 
 // 2020 includes:
+#include "./src/debug.h"
+#include "./src/implant/imp_vert.h"
 #include "imp_qeqv.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
 
-double qeqv(xst, xen, qtot, dx, data) double xst, xen;
-double qtot; /* total possible dose */
-double dx;
-struct imp_info *data;
+double qeqv(double xst, double xen, double qtot, double dx, struct imp_info *data)
 {
-
     double x, val, ov;
     double q = 0.0;
+    ENTER;
+    
+    HERE;
+    verpv(xst);
+    HERE;
 
     /*integrate from x = 0 until we get the correct dose*/
+    HERE;
     ov = imp_vert(xst, data);
+    HERE;
+    
     for (x = xst + dx; (x < xen - dx) && (x < data->maxz); x += dx) {
+    	HERE;
         val = imp_vert(x, data);
+        HERE;
         q += 0.5 * (val + ov) * dx;
         ov = val;
     }
 
     /*add the excess for the last bit*/
     if (x > (xen - dx)) {
+    	HERE;
         val = imp_vert(xen, data);
+        HERE;
         q += 0.5 * (val + ov) * (xen - x);
     }
 
     q = q * 1e-4;
+    EXIT;
     return (q * qtot / data->area);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -22,19 +22,19 @@
 #include <string.h>
 #endif
 
-#include "./include/bound.h"
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/implant.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/plot.h"
+#include "./src/include/bound.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/plot.h"
 
 // 2020 includes:
-#include "./imagetool/window.h"
-#include "./imagetool/make_grid.h"
-#include "./geom/misc.h"
+#include "./src/imagetool/window.h"
+#include "./src/imagetool/make_grid.h"
+#include "./src/geom/misc.h"
 #include "fill_grid.h"
 // end of includes
 

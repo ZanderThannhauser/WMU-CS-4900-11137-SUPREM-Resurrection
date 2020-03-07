@@ -19,16 +19,17 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/material.h" /* So we can set nmat to 0 - want this? */
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h" /* So we can set nmat to 0 - want this? */
 
 // 2020 includes:
-#include "./refine/skel.h"
-#include "./dbase/region.h"
-#include "./dbase/list.h"
-#include "./refine/triang.h"
+#include "./src/refine/skel.h"
+#include "./src/dbase/region.h"
+#include "./src/dbase/list.h"
+#include "./src/refine/triang.h"
+#include "./src/misc/panic.h"
 #include "region.h"
 // endof includes
 

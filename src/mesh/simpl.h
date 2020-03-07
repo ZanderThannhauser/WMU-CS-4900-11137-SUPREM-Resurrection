@@ -25,7 +25,7 @@
  * Profile polygon structure.
  */
 
-#include "./mesh/simpl-dix.h"
+#include "./src/mesh/simpl-dix.h"
 
 typedef struct simpl_polygon {
     char name[NAME_SIZE];       /* Polygon layer name. */

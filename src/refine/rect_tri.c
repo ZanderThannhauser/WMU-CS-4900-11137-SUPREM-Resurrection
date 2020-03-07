@@ -20,17 +20,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h"
-#include "./include/skel.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h"
+#include "./src/include/skel.h"
 
 // 2020 includes:
-#include "./refine/triheur.h"
-#include "./refine/sp_edge.h"
-#include "./refine/tridata.h"
-#include "./refine/dbase.h"
-#include "./refine/triang.h"
+#include "./src/refine/triheur.h"
+#include "./src/refine/sp_edge.h"
+#include "./src/refine/tridata.h"
+#include "./src/refine/dbase.h"
+#include "./src/refine/triang.h"
+#include "./src/misc/panic.h"
 #include "rect_tri.h"
 // end of includes
 

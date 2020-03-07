@@ -19,9 +19,9 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/implant.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
 
 // 2020 includes:
 #include "imp_lat.h"
@@ -39,8 +39,7 @@
  *  Original:	MEL	1/87						*
  *									*
  ************************************************************************/
-double imp_latr(pos, data) double pos;
-struct imp_info *data;
+double imp_latr(double pos, struct imp_info *data)
 {
     double val;
 

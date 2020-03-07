@@ -21,21 +21,18 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/material.h"
-#include "./include/plot.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h"
+#include "./src/include/plot.h"
 
 // 2020 includes:
-#include "./plot/intersect.h"
-#include "./dbase/kill_node.h"
+#include "./src/debug.h"
+#include "./src/plot/intersect.h"
+#include "./src/dbase/kill_node.h"
 #include "do_1d.h"
 // end of 2020 includes
-
-// 2020 forward decalarations
-int d_compar(struct d_str *f1, struct d_str *f2);
-// end of decalarations
 
 #define ABS(x) (((x) > 0.0) ? (x) : (-(x)))
 
@@ -44,6 +41,11 @@ typedef struct b_str {
     struct b_str *left, *right;
     int ie, j;
 } b_typ;
+
+// 2020 forward decalarations
+int d_compar(struct d_str *f1, struct d_str *f2);
+b_typ **FindItf(int mat1, int mat2);
+// end of decalarations
 
 /************************************************************************
  *									*
@@ -55,9 +57,142 @@ typedef struct b_str {
  * Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-int do_1d(int ptype, float val, struct d_str data[], int mat1, int mat2,
-          int byarc) {
-    return -1; // 2020: Took out all this code
+int do_1d( int ptype, float val, struct d_str data[],
+	int mat1, int mat2, int byarc)
+{
+    register int t, i, j, nx, px;
+    int num, in, count = 0, l[3];
+    int vmax;
+    float arr[MAXVRT][3];  /*coordinates of the surface/volume*/
+    float p[2][3];	  /*coordinates of the line*/
+    float sign;
+    float tmp, xo, xn, yo, yn;
+    char a[80], b[80];
+    b_typ **seeds, *ttt;
+    ENTER;
+    verpv(ptype);
+    verpv(val);
+    verpv(data);
+    verpv(mat1);
+    verpv(mat2);
+    verpv(byarc);
+    verpv(z);
+
+    /* Looking for x-y cross-sections */
+    if ( (ptype == XSEC) || (ptype == YSEC) || (ptype == ZSEC) ) {
+	/*initialize for small dimension case*/
+	for(i = 0; i < MAXVRT; i++) arr[i][0] = arr[i][1] = arr[i][2] = val;
+
+	/*initialize the storage locations*/
+	switch( ptype ) {
+	case XSEC : l[0] = 2; l[1] = 0; l[2] = 1; break;
+	case YSEC : l[0] = 0; l[1] = 2; l[2] = 1; break;
+	case ZSEC : l[0] = 0; l[1] = 1; l[2] = 2; break;
+	}
+
+	/*step through all the triangles*/
+	for( t = 0; t < ne; t++ ) {
+	    if (!leaf (tri[t])) continue;
+
+	    /*step through each triangle index*/
+	    for( i = 0; i < nvrt; i++ ) {
+		nx = tri[t]->nd[i];
+		px = nd[ nx ]->pt;
+
+		for(j = 0; j < mode; j++)
+		    arr[i][l[j]] = pt[ px ]->cord[j];
+		for(j = mode; j < 2; j++)
+		    arr[i][l[j]] = pt[ px ]->cord[j];
+		arr[i][l[2]] = z[ nx ];
+	    }
+
+	    /*now that we have all that done, calculate the line*/
+	    num = intersect(arr, val, p);
+	    for(j = 0; j < num; j++) {
+		/*should probably save and sort these guys*/
+		data[count].x = p[j][0];
+		data[count].y = p[j][1];
+		data[count].mat = reg_tri(t);
+		count++;
+	    }
+	}
+
+        /*sort the data*/
+        qsort(data, count, sizeof(struct d_str), (__compar_fn_t) d_compar);
+
+	/*eliminate the duplicates*/
+	sprintf(a, "%16e\t%16e", data[0].x, data[0].y);
+
+	for(vmax = count, i = count = 1; i < vmax; i++) {
+	    sprintf(b, "%16e\t%16e", data[i].x, data[i].y);
+
+	    if ( (strcmp(a, b) != 0) || (data[count-1].mat != data[i].mat) ) {
+		data[count].x = data[i].x;
+		data[count].y = data[i].y;
+		data[count].mat = data[i].mat;
+		count++;
+		strcpy(a, b);
+	    }
+	}
+
+        /*check to make sure the materials are contiguous*/
+        for(i = 1; i < count - 1; i++) {
+	    if ( fabs(data[i].x - data[i-1].x) < 1.0e-10 ) {
+		if ( data[i].mat != data[i+1].mat ) {
+		    tmp = data[i-1].mat; data[i-1].mat = data[i].mat; data[i].mat = tmp;
+		    tmp = data[i-1].y; data[i-1].y = data[i].y; data[i].y = tmp;
+		    tmp = data[i-1].x; data[i-1].x = data[i].x; data[i].x = tmp;
+		}
+	    }
+	}
+
+	/*convert regions back into materials*/
+	for(i = 0; i < count; i++) data[i].mat = mat_reg(data[i].mat);
+    }
+
+    /* Looking for material interfaces */
+    else if ( ptype == BND ) {
+	seeds = FindItf( mat1, mat2);
+
+	/* Set up the data array by accumulating distance */
+	count = 0;
+	for (i = 0; seeds[i]; i++) {
+
+	    /* Leftmost point is special */
+	    in = tri[ seeds[ i]->ie]->nd[ (seeds[i]->j+2)%3];
+	    xo = pt[ nd[ in]->pt]->cord[0];
+	    yo = pt[ nd[ in]->pt]->cord[1];
+	    data[ count].x = xo;
+	    data[ count].y = z[ in];
+	    data[ count].mat = nd[ in]->mater;
+	    count++;
+
+	    /* A heuristic to make both sides of an interface look the same */
+	    sign = 1;
+	    in = tri[ seeds[ i]->ie]->nd[ (seeds[ i]->j+1)%3];
+	    if( pt[ nd[ in]->pt]->cord[0] < xo) sign = -1;
+
+	    /* Then all the right points */
+	    for(ttt = seeds[ i]; ttt; ttt = ttt->right) {
+		in = tri[ ttt->ie]->nd[ (ttt->j+1)%3];
+		xn = pt[ nd[ in]->pt]->cord[0];
+		yn = pt[ nd[ in]->pt]->cord[1];
+		if( byarc)
+		    data[ count].x = data[ count-1].x + sign * hypot( xn-xo, yn-yo);
+		else
+		    data[ count].x = xn;
+		data[ count].y = z[ in];
+		data[ count].mat = nd[ in]->mater;
+		count++;
+		xo = xn; yo = yn;
+	    }
+	}
+	free( seeds);
+    }
+
+    /*return the number of data points*/
+    EXIT;
+    return( count );
 }
 
 int d_compar(struct d_str *f1, struct d_str *f2) {
@@ -78,7 +213,7 @@ int d_compar(struct d_str *f1, struct d_str *f2) {
  * two materials.
  * Orientation is such that leftmost node is first for mat1=Si, mat2=Ox.
  *----------------------------------------------------------------------*/
-b_typ **FindItf(mat1, mat2) int mat1, mat2;
+b_typ **FindItf(int mat1, int mat2)
 {
     int i, ns = 0, ie, j, Ms = 10;
     b_typ *ttt, **seeds, *AddItfEdge(), **touched;

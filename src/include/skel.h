@@ -21,7 +21,7 @@
 #ifndef SKELDB
 #define SKELDB
 
-#include "./include/constant.h"
+#include "./src/include/constant.h"
 
 #define BEFORE 1
 #define AFTER 0

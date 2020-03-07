@@ -16,7 +16,7 @@
  *									*
  ************************************************************************/
 
-#include "./include/constant.h"
+#include "./src/include/constant.h"
 
 #ifndef INCLUDE_DIFFUSE_2020_H
 #define INCLUDE_DIFFUSE_2020_H

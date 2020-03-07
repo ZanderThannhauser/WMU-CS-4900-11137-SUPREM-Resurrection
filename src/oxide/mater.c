@@ -14,14 +14,15 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h"
 
 // 2020 includes:
-#include "./misc/get.h"
-#include "./oxide/mater.h"
+#include "./src/misc/get.h"
+#include "./src/oxide/mater.h"
+#include "./src/misc/panic.h"
 #include "mater.h"
 // end of includes
 

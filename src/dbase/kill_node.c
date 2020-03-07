@@ -20,20 +20,21 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h"
-#include "./include/material.h"
-#include "./include/skel.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h"
+#include "./src/include/skel.h"
 
 // 2020 includes
-#include "./refine/grid.h"
-#include "./refine/triang.h"
-#include "./dbase/locate.h"
-#include "./refine/hinit.h"
-#include "./refine/dbase.h"
-#include "./dbase/remove.h"
-#include "./diffuse/poly.h"
+#include "./src/refine/grid.h"
+#include "./src/refine/triang.h"
+#include "./src/dbase/locate.h"
+#include "./src/refine/hinit.h"
+#include "./src/refine/dbase.h"
+#include "./src/dbase/remove.h"
+#include "./src/diffuse/poly.h"
+#include "./src/misc/panic.h"
 #include "kill_node.h"
 // end of includes
 

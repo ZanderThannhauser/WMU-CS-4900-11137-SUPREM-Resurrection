@@ -20,12 +20,12 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/expr.h"
-#include "./include/global.h"
+#include "./src/include/expr.h"
+#include "./src/include/global.h"
 
 // 2020 includes:
-#include "./check/lexical.h"
-#include "./check/reduce.h"
+#include "./src/check/lexical.h"
+#include "./src/check/reduce.h"
 #include "parse.h"
 // end of includes
 
@@ -111,8 +111,7 @@ int detect_error() {
  *  Original:	MEL	2/85						*
  *									*
  ************************************************************************/
-char *parse_expr(str, out) char *str;
-struct vec_str **out;
+char *parse_expr(char *str, struct vec_str **out)
 {
 
     /*make the return null to handle error conditions*/

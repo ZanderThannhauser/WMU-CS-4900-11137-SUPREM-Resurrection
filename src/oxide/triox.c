@@ -22,10 +22,10 @@
 #include <stdio.h>
 
 // 2020 includes:
-#include "./math/blklu.h"
-#include "./finel/FEassmb.h"
-#include "./oxide/Oxidant.h"
-#include "./include/impurity.h"
+#include "./src/math/blklu.h"
+#include "./src/finel/FEassmb.h"
+#include "./src/oxide/Oxidant.h"
+#include "./src/include/impurity.h"
 #include "triox.h"
 // end of includes
 
@@ -270,10 +270,10 @@ void obfix(double Cord[NEL][2], double cord[NEL][2]) {
     }
 }
 
-#include "./include/constant.h"
-#include "./include/FEgeom.h" /* for MAXDOF */
-#include "./include/FEmath.h" /* for lambda, noderiv */
-#include "./include/global.h" /* for SAT */
+#include "./src/include/constant.h"
+#include "./src/include/FEgeom.h" /* for MAXDOF */
+#include "./src/include/FEmath.h" /* for lambda, noderiv */
+#include "./src/include/global.h" /* for SAT */
 
 /************************************************************************
  *									*
@@ -393,8 +393,10 @@ int triox_stiff(double stiff[3 * NEL][3 * NEL], double wrhs[NEL][3],
  *code doesn't pass around neighbor information which therefore must
  *be extracted out of the data structure.
  */
-#include "./include/constant.h"
-#include "./include/material.h"
+
+#include "./src/include/constant.h"
+#include "./src/include/material.h"
+
 static double simpson[3] = {1 / 6., 1 / 6., 4 / 6.};
 static int edges[3][3] = {{1, 2, 3}, {2, 0, 4}, {0, 1, 5}};
 static double locg[3][2] = {{0.5, 0.5}, {0, 0.5}, {0.5, 0}};

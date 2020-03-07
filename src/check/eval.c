@@ -21,14 +21,16 @@
 #include <stdlib.h>
 #include <ctype.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h" /*for the number of nodes for vector functions*/
-#include "./include/expr.h"
-#include "./include/global.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h" /*for the number of nodes for vector functions*/
+#include "./src/include/expr.h"
+#include "./src/include/global.h"
 
 // 2020 includes:
-#include "./check/check.h"
-#include "./check/vector.h"
+#include "./src/debug.h"
+#include "./src/check/check.h"
+#include "./src/check/vector.h"
+#include "./src/check/sint.h"
 #include "eval.h"
 // end of includes
 
@@ -66,21 +68,27 @@
  *  Original:	MEL	8/85						*
  *									*
  ************************************************************************/
-char *eval_real(expr, val) struct vec_str *expr;
-float *val;
+char *eval_real(struct vec_str *expr, float* val)
 {
     float lval, rval;
     float interface();
     char *err;
+    ENTER;
 
     /*evaluate the kids*/
     if (expr->left != NULL)
         if ((err = eval_real(expr->left, &lval)) != NULL)
+        {
+        EXIT;
             return (err);
+            }
 
     if (expr->right != NULL)
         if ((err = eval_real(expr->right, &rval)) != NULL)
+        {
+        EXIT;
             return (err);
+            }
 
     /*switch on the type of value contained in the passed argument*/
     switch (expr->type) {
@@ -143,8 +151,10 @@ float *val;
         case Y:
         case Z:
             if ((expr->left == NULL) || (expr->right == NULL))
+            {
+    EXIT;
                 return ("x,y,and z functions require two arguments\n");
-            else
+            }else
                 *val = sol_interp(expr->value.ival, lval, rval);
             break;
         default:
@@ -156,12 +166,15 @@ float *val;
         break;
     case VFN:
     case SOLVAL:
+    EXIT;
         return ("a vector solution value is illegal here\n");
         break;
     case STRING:
+    EXIT;
         return ("string not allowed in expression\n");
         break;
     }
+    EXIT;
     return (NULL);
 }
 
@@ -174,8 +187,7 @@ float *val;
  *  Original:	MEL	8/85						*
  *									*
  ************************************************************************/
-char *eval_vec(expr, val) struct vec_str *expr;
-float *val;
+char *eval_vec(struct vec_str *expr, float *val)
 {
     float *lval, *rval;
     float tmp;
@@ -320,7 +332,7 @@ float *val;
  *  Original:	MEL	12/85						*
  *									*
  ************************************************************************/
-int islogexp(expr) struct vec_str *expr;
+int islogexp(struct vec_str *expr)
 { return ((expr->type == FN) && (expr->value.ival == LOG10)); }
 
 /************************************************************************

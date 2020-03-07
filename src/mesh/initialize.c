@@ -18,18 +18,18 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/impurity.h" /* For B, P, Sb, As */
-#include "./include/material.h" /* For B, P, Sb, As */
-#include "./include/dbaccess.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h" /* For B, P, Sb, As */
+#include "./src/include/material.h" /* For B, P, Sb, As */
+#include "./src/include/dbaccess.h"
 
 // 2020 includes:
-#include "./misc/get.h"
-#include "./mesh/ig2_meshio.h"
-#include "./mesh/rect.h"
-#include "./dbase/make_db.h"
-#include "./dbase/alloc.h"
+#include "./src/misc/get.h"
+#include "./src/mesh/ig2_meshio.h"
+#include "./src/mesh/rect.h"
+#include "./src/dbase/make_db.h"
+#include "./src/dbase/alloc.h"
 #include "initialize.h"
 // end of includes
 

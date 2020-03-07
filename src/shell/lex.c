@@ -16,16 +16,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/global.h"
+#include "./src/include/global.h"
 #undef FOR
 
-#include "./include/constant.h"
-#include "./include/shell.h"
-#include "./include/sysdep.h"
+#include "./src/include/constant.h"
+#include "./src/include/shell.h"
+#include "./src/include/sysdep.h"
 
 // 2020 includes:
-#include "./shell/parser.h"
-#include "./shell/input.h"
+#include "./src/debug.h"
+#include "./src/shell/parser.h"
+#include "./src/shell/input.h"
 #include "lex.h"
 // end of includes
 
@@ -220,6 +221,7 @@ int yylex() {
  *									*
  ************************************************************************/
 int lex_command() {
+    ENTER;
     char c;
     char *s;
 
@@ -228,37 +230,47 @@ int lex_command() {
         switch (c) {
         case '#': /*return the comment*/
             ylstate = READ_STATE;
+            EXIT;
             return (COMMENT);
             break;
         case '!': /*return the shell escape*/
             ylstate = READ_STATE;
+            EXIT;
             return (BANG);
             break;
         case '\n': /*return the end of line*/
+            EXIT;
             return (EOL);
             break;
         case '\01':      /*return the end of file characted*/
             pushc('\n'); /*get yacc all resynced*/
+            EXIT;
             return (ENDFILE);
             break;
         case '>': /*return redirection request*/
             ylstate = PAR_STATE;
+            EXIT;
             return (REDIRECT);
             break;
         case '&': /*return background*/
+            EXIT;
             return (BACK);
             break;
         case '{': /*this is the beginning of the grouping stuff*/
+            EXIT;
             return (BG_GRP);
             break;
         case '}': /*this is the end of the grouping stuff*/
+            EXIT;
             return (END_GRP);
             break;
         case ';': /*command delimiter*/
+            EXIT;
             return (DELIMIT);
             break;
         case '?': /*help command*/
             ylstate = PAR_STATE;
+            EXIT;
             return (HELP);
             break;
         default: /*ignore any other bizarre characters*/
@@ -275,50 +287,67 @@ int lex_command() {
     s = (char *)read_until(";&>{} \t\n");
 
     /*now parse this string with respect to all the builtins*/
-    if (strcmp(s, "quit") == 0)
+    if (strcmp(s, "quit") == 0) {
+        EXIT;
         return (QUIT);
-    else if (strcmp(s, "exit") == 0)
+   } else if (strcmp(s, "exit") == 0) {
+        EXIT;
         return (QUIT);
-    else if (strcmp(s, "bye") == 0)
+    } else if (strcmp(s, "bye") == 0) {
+        EXIT;
         return (QUIT);
-    else if (strcmp(s, "logout") == 0)
+  }  else if (strcmp(s, "logout") == 0) {
+        EXIT;
         return (QUIT);
-    else if (strcmp(s, "end") == 0)
+   } else if (strcmp(s, "end") == 0) {
+        EXIT;
         return (END);
-    else if (strcmp(s, "source") == 0) {
+  }  else if (strcmp(s, "source") == 0) {
         ylstate = PAR_STATE;
+        EXIT;
         return (SOURCE);
     } else if (strcmp(s, "for") == 0) {
         ylstate = FOR_STATE;
+        EXIT;
         return (FOR);
     } else if (strcmp(s, "foreach") == 0) {
         ylstate = FOR_STATE;
+        EXIT;
         return (FOR);
-    } else if (strcmp(s, "end") == 0)
+    } else if (strcmp(s, "end") == 0) {
+        EXIT;
         return (END);
-    else if (strcmp(s, "undef") == 0) {
+    } else if (strcmp(s, "undef") == 0) {
         ylstate = READ_STATE;
+        EXIT;
         return (UNDEF);
     } else if (strcmp(s, "define") == 0) {
         ylstate = READ_STATE;
+        EXIT;
         return (DEFINE);
     } else if (strcmp(s, "set") == 0) {
         ylstate = PAR_STATE;
+        EXIT;
         return (SET);
     } else if (strcmp(s, "unset") == 0) {
         ylstate = PAR_STATE;
+        EXIT;
         return (UNSET);
     } else if (strcmp(s, "cd") == 0) {
         ylstate = PAR_STATE;
+        EXIT;
         return (CHDIR);
     } else if (strcmp(s, "help") == 0) {
         ylstate = PAR_STATE;
+        EXIT;
         return (HELP);
     } else { /*other non built in command*/
         ylstate = PAR_STATE;
         yylval.sval = s;
+        EXIT;
         return (COMMAND);
     }
+    EXIT;
     return (-1);
 }
 

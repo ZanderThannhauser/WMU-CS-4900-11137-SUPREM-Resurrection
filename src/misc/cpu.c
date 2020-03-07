@@ -13,8 +13,8 @@
 #include <stdio.h>
 #include <time.h>
 
-#include "./include/global.h"
-#include "./include/shell.h"
+#include "./src/include/global.h"
+#include "./src/include/shell.h"
 
 
 // 2020 includes:

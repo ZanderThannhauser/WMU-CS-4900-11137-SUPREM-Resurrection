@@ -26,22 +26,20 @@
 #define abs(V) ((V) < 0. ? -(V) : (V))
 
 /* Offsets to the Pearson-IV constants array */
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/implant.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
 
 // 2020 includes:
+#include "./src/implant/imp_vert.h"
 #include "imp_zeqv.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
 
-double zeqv(dose, qtot, dx, bt, data) double dose;
-double qtot;
-double dx;
-double bt;
-struct imp_info *data;
+double zeqv(double dose, double qtot,
+	double dx, double bt, struct imp_info *data)
 {
 
     double x, val, ov;

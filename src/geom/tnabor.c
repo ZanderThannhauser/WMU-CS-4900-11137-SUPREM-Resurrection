@@ -13,12 +13,13 @@
  * Original: CSR Nov 83
  *---------------------------------------------------------------------*/
  
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/regrid.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/regrid.h"
 
 // 2020 includes:
+#include "./src/misc/panic.h"
 #include "tnabor.h"
 // end of includes
 

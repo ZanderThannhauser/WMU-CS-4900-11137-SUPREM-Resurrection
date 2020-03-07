@@ -20,16 +20,16 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 
 // 2020 includes
-#include "./dbase/locate.h"
-#include "./dbase/make_db.h"
-#include "./refine/sp_edge.h"
+#include "./src/dbase/locate.h"
+#include "./src/dbase/make_db.h"
+#include "./src/refine/sp_edge.h"
 #include "new_layer.h"
 // end of includes
 

@@ -25,16 +25,17 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "./include/sysdep.h"
+#include "./src/include/sysdep.h"
 
-#include "./include/check.h"
-#include "./include/global.h"
-#include "./include/shell.h"
+#include "./src/include/check.h"
+#include "./src/include/global.h"
+#include "./src/include/shell.h"
 
 // 2020 includes:
-#include "./shell/yyparse.h"
-#include "./shell/proc.h"
-#include "./check/verify.h"
+#include "./src/debug.h"
+#include "./src/shell/yyparse.h"
+#include "./src/shell/proc.h"
+#include "./src/check/verify.h"
 #include "do_action.h"
 // end of includes
 
@@ -61,12 +62,19 @@ void do_source(char *file,  /*the file to be sourced*/
     FILE tout, *t1;
     char *redirect;
     char *oldbuf;
+    ENTER;
+    
+    verpv(file);
+    verpv(redir);
+    verpv(back);
+    verpv(reperr);
 
     redirect = NULL;
 
     /*if we have not been given a file, save a lot of hassle*/
     if (file == NULL) {
         fprintf(stderr, "must specify a file to source\n");
+        EXIT;
         return;
     }
 
@@ -102,8 +110,9 @@ void do_source(char *file,  /*the file to be sourced*/
                 exit(0);
             }
         } else {
-            while (yyparse() != -1)
-                ;
+            HERE;
+            while (yyparse() != -1) ;
+            HERE;
         }
         fclose(tsrc);
         in_file = tinf;
@@ -122,6 +131,7 @@ void do_source(char *file,  /*the file to be sourced*/
         *stdout = tout;
         sfree(redirect);
     }
+    EXIT;
     return;
 }
 
@@ -134,10 +144,13 @@ void do_source(char *file,  /*the file to be sourced*/
  *									*
  ************************************************************************/
 void do_string(char *instr, char *redir, int back) {
+    
     FILE tout, *t1;
     int len;
     char *redirect;
     char *oldbuf;
+    
+    ENTER;
 
     redirect = NULL;
 
@@ -200,6 +213,8 @@ void do_string(char *instr, char *redir, int back) {
         *stdout = tout;
         sfree(redirect);
     }
+    
+    EXIT;
 }
 
 /* for the perennially broken dbx */
@@ -222,6 +237,7 @@ void do_command(char *name, char *param, int intr, char *file, int back) {
 
     FILE tout, *t1;
     int index;
+    ENTER;
 
     /*get proc parses the string associated with command*/
     index = get_proc(name);
@@ -293,6 +309,7 @@ void do_command(char *name, char *param, int intr, char *file, int back) {
         while ((w = wait(&status)) != pid && w != -1)
             ;
     }
+    EXIT;
 }
 
 /************************************************************************
@@ -308,8 +325,10 @@ void do_command(char *name, char *param, int intr, char *file, int back) {
 void do_exec(char* par, int intr, int index, int no_exec) 
 {
 
+    ENTER;
     if (check(par, cards[command[index].param]) == -1) {
         fprintf(stderr, "errors detected on command input\n");
+        EXIT;
         return;
     } else if (no_exec)
         fprintf(stderr, "no error in %s command input\n", command[index].name);
@@ -321,5 +340,6 @@ void do_exec(char* par, int intr, int index, int no_exec)
     if (!no_exec) {
         command[index].func(par, cards[command[index].param]);
     }
+    EXIT;
     return;
 }

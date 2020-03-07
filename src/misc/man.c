@@ -16,7 +16,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/sysdep.h"
+#include "./src/include/sysdep.h"
 
 // 2020 includes:
 #include "man.h"

@@ -15,18 +15,18 @@
 
 #include <math.h>
 
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/implant.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 
 
 // 2020 includes:
-#include "./implant/fgtmom.h"
-#include "./implant/imp_gtprs.h"
-#include "./implant/imp_qpprs.h"
-#include "./implant/imp_qpgauss.h"
+#include "./src/implant/fgtmom.h"
+#include "./src/implant/imp_gtprs.h"
+#include "./src/implant/imp_qpprs.h"
+#include "./src/implant/imp_qpgauss.h"
 #include "imp_setprs.h"
 // end of includes
 

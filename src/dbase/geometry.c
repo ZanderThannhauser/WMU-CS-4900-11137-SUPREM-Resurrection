@@ -19,15 +19,16 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/material.h" /* For nmat, mattyp, SiO2 etc */
-#include "./include/matrix.h"   /* For UpdateSymbolic */
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h" /* For nmat, mattyp, SiO2 etc */
+#include "./src/include/matrix.h"   /* For UpdateSymbolic */
 
 // 2020 includes:
-#include "./dbase/flip.h"
-#include "./dbase/locate.h"
+#include "./src/dbase/flip.h"
+#include "./src/dbase/locate.h"
+#include "./src/misc/panic.h"
 #include "geometry.h"
 // end of includes
 

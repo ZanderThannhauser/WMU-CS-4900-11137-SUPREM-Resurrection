@@ -11,16 +11,16 @@
 
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/diffuse.h" /* for noni */
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/diffuse.h" /* for noni */
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 
 // 2020 function includes:
-#include "./dbase/locate.h"
-#include "./oxide/oxide_vel.h"
+#include "./src/dbase/locate.h"
+#include "./src/oxide/oxide_vel.h"
 #include "vert.h"
 // end of 2020 includes
 

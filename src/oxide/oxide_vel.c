@@ -12,25 +12,25 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/FEgeom.h"
-#include "./include/diffuse.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/FEgeom.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 
 // 2020 includes
-#include "./oxide/triox.h"
-#include "./oxide/Oxidant.h"
-#include "./finel/tri6.h"
-#include "./finel/tri7.h"
-#include "./oxide/erfit.h"
-#include "./oxide/vert.h"
-#include "./oxide/elast.h"
-#include "./oxide/viscous.h"
-#include "./dbase/locate.h"
-#include "./dbase/new_layer.h"
+#include "./src/oxide/triox.h"
+#include "./src/oxide/Oxidant.h"
+#include "./src/finel/tri6.h"
+#include "./src/finel/tri7.h"
+#include "./src/oxide/erfit.h"
+#include "./src/oxide/vert.h"
+#include "./src/oxide/elast.h"
+#include "./src/oxide/viscous.h"
+#include "./src/dbase/locate.h"
+#include "./src/dbase/new_layer.h"
 #include "oxide_vel.h"
 // end of includes
 

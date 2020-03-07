@@ -15,8 +15,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/check.h"
-#include "./include/global.h"
+#include "./src/include/check.h"
+#include "./src/include/global.h"
 
 // 2020 includes:
 #include "get.h"

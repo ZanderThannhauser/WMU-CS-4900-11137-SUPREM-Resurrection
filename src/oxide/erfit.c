@@ -12,16 +12,16 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 
 // 2020 includes
-#include "./oxide/oxrate.h"
-#include "./dbase/locate.h"
-#include "./shell/smisc.h"
+#include "./src/oxide/oxrate.h"
+#include "./src/dbase/locate.h"
+#include "./src/shell/smisc.h"
 #include "erfit.h"
 // end of includes
 

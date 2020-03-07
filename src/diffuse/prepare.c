@@ -20,24 +20,25 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/defect.h"
-#include "./include/diffuse.h"
-#include "./include/expr.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/matrix.h"
+#include "./src/include/constant.h"
+#include "./src/include/defect.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/expr.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/matrix.h"
 
 // 2020 includes:
-#include "./oxide/oxgrow.h"
-#include "./dbase/geometry.h"
-#include "./dbase/couple.h"
-#include "./math/generate.h"
-#include "./math/min_fill.h"
-#include "./math/genrow.h"
-#include "./math/symb.h"
+#include "./src/oxide/oxgrow.h"
+#include "./src/dbase/geometry.h"
+#include "./src/dbase/couple.h"
+#include "./src/math/generate.h"
+#include "./src/math/min_fill.h"
+#include "./src/math/genrow.h"
+#include "./src/math/symb.h"
+#include "./src/misc/panic.h"
 #include "prepare.h"
 // end of includes
 

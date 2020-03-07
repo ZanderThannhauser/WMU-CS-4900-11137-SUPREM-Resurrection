@@ -22,16 +22,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/sysdep.h"
+#include "./src/include/sysdep.h"
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h" /* For min() */
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h" /* For min() */
+#include "./src/include/material.h"
 
 // 2020 includes:
-#include "./dbase/dispose.h"
-#include "./misc/get.h"
+#include "./src/dbase/dispose.h"
+#include "./src/misc/get.h"
 #include "rect.h"
 // end of includes
 

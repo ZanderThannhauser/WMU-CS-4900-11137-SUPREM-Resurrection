@@ -19,10 +19,10 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/global.h"
+#include "./src/include/global.h"
 
 // 2020 includes
-#include "./misc/get.h"
+#include "./src/misc/get.h"
 #include "option.h"
 // end of includes
 

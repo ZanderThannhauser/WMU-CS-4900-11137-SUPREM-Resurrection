@@ -18,14 +18,14 @@
 
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h"
-#include "./include/skel.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h"
+#include "./src/include/skel.h"
 
 // 2020 includes:
-#include "./refine/sp_edge.h"
-#include "./mesh/rect.h"
+#include "./src/refine/sp_edge.h"
+#include "./src/mesh/rect.h"
 #include "bfill.h"
 // end of includes
 

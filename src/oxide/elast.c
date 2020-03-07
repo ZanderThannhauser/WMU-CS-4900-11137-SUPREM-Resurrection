@@ -20,20 +20,20 @@
 #include <stdlib.h>
 #include <sys/times.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 
 // 2020 function includes
-#include "./math/generate.h"
-#include "./math/blklu.h"
-#include "./misc/print_time.h"
-#include "./dbase/locate.h"
-#include "./oxide/oxide_vel.h"
-#include "./math/blklu.h"
-#include "./math/symb.h"
+#include "./src/math/generate.h"
+#include "./src/math/blklu.h"
+#include "./src/misc/print_time.h"
+#include "./src/dbase/locate.h"
+#include "./src/oxide/oxide_vel.h"
+#include "./src/math/blklu.h"
+#include "./src/math/symb.h"
 #include "elast.h"
 // end of includes
 

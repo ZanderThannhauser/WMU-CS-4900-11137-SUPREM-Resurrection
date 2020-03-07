@@ -21,16 +21,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/refine.h"
-#include "./include/regrid.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/refine.h"
+#include "./src/include/regrid.h"
 
 // 2020 includes:
-#include "./refine/deloop.h"
+#include "./src/refine/deloop.h"
 #include "offset.h"
 // end of includes
 

@@ -22,36 +22,37 @@
 #include <stdlib.h>
 #include <sys/times.h>
 
-#include "./include/constant.h"
-#include "./include/defect.h"
-#include "./include/device.h"
-#include "./include/diffuse.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h" /* for the substrate orientation */
-#include "./include/matrix.h"
-#include "./include/poly.h"
-#include "./include/sysdep.h"
+#include "./src/include/constant.h"
+#include "./src/include/defect.h"
+#include "./src/include/device.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h" /* for the substrate orientation */
+#include "./src/include/matrix.h"
+#include "./src/include/poly.h"
+#include "./src/include/sysdep.h"
 
 // 2020 includes:
-#include "./diffuse/poly.h"
-#include "./diffuse/time.h"
-#include "./mesh/ig2_meshio.h"
-#include "./diffuse/movie.h"
-#include "./shell/smisc.h"
-#include "./dbase/couple.h"
-#include "./diffuse/solve.h"
-#include "./diffuse/defect.h"
-#include "./oxide/oxide_vel.h"
-#include "./dbase/locate.h"
-#include "./dbase/new_layer.h"
-#include "./diffuse/setup.h"
-#include "./misc/panic.h"
-#include "./oxide/oxgrow.h"
-#include "./dbase/grid_upd.h"
-#include "./misc/print_time.h"
-#include "./device/device.h"
+#include "./src/debug.h"
+#include "./src/diffuse/poly.h"
+#include "./src/diffuse/time.h"
+#include "./src/mesh/ig2_meshio.h"
+#include "./src/diffuse/movie.h"
+#include "./src/shell/smisc.h"
+#include "./src/dbase/couple.h"
+#include "./src/diffuse/solve.h"
+#include "./src/diffuse/defect.h"
+#include "./src/oxide/oxide_vel.h"
+#include "./src/dbase/locate.h"
+#include "./src/dbase/new_layer.h"
+#include "./src/diffuse/setup.h"
+#include "./src/misc/panic.h"
+#include "./src/oxide/oxgrow.h"
+#include "./src/dbase/grid_upd.h"
+#include "./src/misc/print_time.h"
+#include "./src/device/device.h"
 #include "solve_time.h"
 // end of includes
 
@@ -81,6 +82,7 @@ void solve_time(
     int dump, char *movie,
     int cont)
 {
+    ENTER;
     double t;             /*the current time, total*/
     static double del_df; /*the next delta for the diffusion*/
     double last_ddf;      /* the last delta for the diffusion */
@@ -174,6 +176,7 @@ void solve_time(
         /* Flush those buffers, you sucker! */
         flushbuf();
     }
+    EXIT;
 }
 
 void flushbuf() {
@@ -326,6 +329,7 @@ double solstep(double del_df, float temp, int timemeth, int compute)
  ************************************************************************/
 void dump_data(double total, int dump, char *movie, int *cnt)
 {
+    ENTER;
     char barfname[20];
 
     *cnt += 1;
@@ -337,6 +341,7 @@ void dump_data(double total, int dump, char *movie, int *cnt)
 
     if (movie)
         make_movie(movie, total);
+    EXIT;
 }
 
 /************************************************************************
@@ -344,7 +349,7 @@ void dump_data(double total, int dump, char *movie, int *cnt)
  *	time_form()	- Let the user specify a time step.		*
  *									*
  ************************************************************************/
-#include "./include/expr.h"
+#include "./src/include/expr.h"
 
 float time_form(expr, total, dt) char *expr;
 float total;

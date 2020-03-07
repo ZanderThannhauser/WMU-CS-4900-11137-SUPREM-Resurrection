@@ -9,11 +9,11 @@
 #include <fcntl.h>
 #include <unistd.h>
 
-#include "./include/bound.h"
-#include "./include/sysdep.h"
+#include "./src/include/bound.h"
+#include "./src/include/sysdep.h"
 
 #ifdef CONVEX
-#include "./include/constant.h"
+#include "./src/include/constant.h"
 #endif
 
 

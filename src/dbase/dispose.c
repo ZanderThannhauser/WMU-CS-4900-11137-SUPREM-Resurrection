@@ -19,21 +19,22 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h"
 
-#include "./include/impurity.h" /* So we can set n_imp to 0 */
-#include "./include/diffuse.h"  /* for the time of creation */
+#include "./src/include/impurity.h" /* So we can set n_imp to 0 */
+#include "./src/include/diffuse.h"  /* for the time of creation */
 
 // 2020 includes:
-#include "./refine/triang.h"
-#include "./dbase/point.h"
-#include "./dbase/node.h"
-#include "./dbase/element.h"
-#include "./dbase/edge.h"
-#include "./dbase/region.h"
+#include "./src/refine/triang.h"
+#include "./src/dbase/point.h"
+#include "./src/dbase/node.h"
+#include "./src/dbase/element.h"
+#include "./src/dbase/edge.h"
+#include "./src/dbase/region.h"
+#include "./src/misc/panic.h"
 #include "dispose.h"
 // end of 2020 includes
 
@@ -62,7 +63,7 @@ void dis_all() {
     MeshInvalidate();
 }
 
-#include "./include/regrid.h" /* Until we move the macros from regrid.h to geom.h */
+#include "./src/include/regrid.h" /* Until we move the macros from regrid.h to geom.h */
 
 /*-----------------WASTE------------------------------------------------
  * To standardize global grid removals

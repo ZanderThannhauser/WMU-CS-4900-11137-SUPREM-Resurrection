@@ -12,14 +12,15 @@
 
 #include <math.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 
 // 2020 function includes:
-#include "./oxide/mater.h"
+#include "./src/oxide/mater.h"
+#include "./src/misc/panic.h"
 #include "oxrate.h"
 // end of includes
 

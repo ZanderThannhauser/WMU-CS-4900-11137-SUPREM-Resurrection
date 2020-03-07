@@ -20,18 +20,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/defect.h"
-#include "./include/expr.h"
-#include "./include/global.h"
-#include "./include/impurity.h" /* For B, P, Sb, As */
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/defect.h"
+#include "./src/include/expr.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h" /* For B, P, Sb, As */
+#include "./src/include/material.h"
 
 // 2020 includes:
-#include "./misc/get.h"
-#include "./diffuse/defect.h"
-#include "./dbase/alloc.h"
+#include "./src/misc/get.h"
+#include "./src/diffuse/defect.h"
+#include "./src/dbase/alloc.h"
 #include "profile.h"
 // end of includes
 

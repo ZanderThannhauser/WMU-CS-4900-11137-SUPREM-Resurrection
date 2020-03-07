@@ -19,12 +19,15 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/implant.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
 
 
 // 2020 includes:
+#include "./src/debug.h"
+#include "./src/implant/imp_prson.h"
+#include "./src/implant/imp_lat.h"
 #include "imp_vert.h"
 // end of includes
 
@@ -41,23 +44,40 @@
  *  Original:	MEL	1/87						*
  *									*
  ************************************************************************/
-double imp_vert(depth, dat) double depth;
-struct imp_info *dat;
+double imp_vert(double depth, struct imp_info *dat)
 {
     double val;
+    ENTER;
 
     if (imp_model == PEARS) {
-        if (depth < dat->maxz) {
+        
+        HERE;
+        verpv(dat->maxz);
+        HERE;
+        verpv(depth);
+        HERE;
+        
+        if (depth < dat->maxz)
+        {
+            HERE;
             val = prson(depth - dat->vert[PRS_RP], dat);
-        } else
+            HERE;
+        }
+        else
+        {
+        HERE;
             val = 0.0;
+         }
     } else if (imp_model == GAUSS) {
         if (depth < dat->maxz) {
             val = (depth - dat->vert[GUS_RP]) / dat->vert[GUS_SIG];
             val = exp(-val * val * 0.5);
         } else
+        {
             val = 0.0;
+           }
     }
+    EXIT;
     return (val);
 }
 

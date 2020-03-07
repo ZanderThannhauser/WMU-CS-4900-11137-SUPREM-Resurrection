@@ -36,7 +36,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "./include/sysdep.h"
+#include "./src/include/sysdep.h"
 
 static char *tp[10];
 static int te[10];
@@ -45,15 +45,16 @@ static int te[10];
 #define malloc MALLOC
 #endif
 
-#include "./include/shell.h"
+#include "./src/include/shell.h"
+#include "./src/shell/proc.h"
 
 
 // 2020 includes:
-#include "./shell/lex.h"
-#include "./shell/do_action.h"
-#include "./shell/help.h"
-#include "./shell/macro.h"
-#include "./shell/set.h"
+#include "./src/shell/lex.h"
+#include "./src/shell/do_action.h"
+#include "./src/shell/help.h"
+#include "./src/shell/macro.h"
+#include "./src/shell/set.h"
 // end of includes
 
 // 2020 forward declarations

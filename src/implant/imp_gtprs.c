@@ -23,9 +23,9 @@
 
 #include <stdio.h>
 /* Need to know the offset into the constants array */
-#include "./include/constant.h"
-#include "./include/global.h"
-#include "./include/implant.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
 
 // 2020 includes:
 #include "imp_gtprs.h"

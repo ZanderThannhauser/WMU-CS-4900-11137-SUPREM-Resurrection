@@ -14,13 +14,13 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/expr.h"
-#include "./include/global.h"
-#include "./include/shell.h"
+#include "./src/include/expr.h"
+#include "./src/include/global.h"
+#include "./src/include/shell.h"
 
 // 2020 includes:
-#include "./shell/macro.h"
-#include "./check/eval.h"
+#include "./src/shell/macro.h"
+#include "./src/check/eval.h"
 #include "smisc.h"
 // end of includes
 

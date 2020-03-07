@@ -18,23 +18,23 @@
 
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/material.h" /* For nmat mattyp GAS */
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h" /* For nmat mattyp GAS */
 
 // 2020 includes
-#include "./dbase/node.h"
-#include "./dbase/locate.h"
-#include "./dbase/element.h"
-#include "./dbase/point.h"
-#include "./refine/triang.h"
-#include "./dbase/dispose.h"
-#include "./dbase/clktri.h"
-#include "./dbase/edge.h"
-#include "./dbase/geometry.h"
-#include "./dbase/region.h"
-#include "./dbase/check.h"
+#include "./src/dbase/node.h"
+#include "./src/dbase/locate.h"
+#include "./src/dbase/element.h"
+#include "./src/dbase/point.h"
+#include "./src/refine/triang.h"
+#include "./src/dbase/dispose.h"
+#include "./src/dbase/clktri.h"
+#include "./src/dbase/edge.h"
+#include "./src/dbase/geometry.h"
+#include "./src/dbase/region.h"
+#include "./src/dbase/check.h"
 #include "make_db.h"
 // end of includes
 

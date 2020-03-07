@@ -18,9 +18,9 @@
 
 #include <stdio.h>
 
-#include "./include/global.h"
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
+#include "./src/include/global.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
 
 // 2020 includes:
 #include "material.h"

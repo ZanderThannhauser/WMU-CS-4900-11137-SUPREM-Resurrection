@@ -22,24 +22,24 @@
 #include <string.h>
 #include <sys/times.h>
 
-#include "./include/constant.h"
-#include "./include/diffuse.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/matrix.h"
+#include "./src/include/constant.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/matrix.h"
 
 #define MAXDOF 3    /* too painful to do right */
-#include "./include/FEmath.h" /* for FErel */
-#include "./include/poly.h"   /* for FErel */
+#include "./src/include/FEmath.h" /* for FErel */
+#include "./src/include/poly.h"   /* for FErel */
 
 // 2020: header file includes:
-#include "./include/check.h"
-#include "./include/impurity.h"
-#include "./math/blklu.h"
-#include "./misc/get.h"
-#include "./misc/print_time.h"
+#include "./src/include/check.h"
+#include "./src/include/impurity.h"
+#include "./src/math/blklu.h"
+#include "./src/misc/get.h"
+#include "./src/misc/print_time.h"
 #include "symb.h"
 // end of 2020 includes
 

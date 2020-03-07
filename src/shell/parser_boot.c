@@ -15,17 +15,17 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/check.h"
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/expr.h"
-#include "./include/global.h"
-#include "./include/key.h"
-#include "./include/shell.h"
-#include "./include/sysdep.h"
+#include "./src/include/check.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/expr.h"
+#include "./src/include/global.h"
+#include "./src/include/key.h"
+#include "./src/include/shell.h"
+#include "./src/include/sysdep.h"
 
 // 2020 includes:
-#include "./misc/read.h"
+#include "./src/misc/read.h"
 #include "parser_boot.h"
 // end of includes
 

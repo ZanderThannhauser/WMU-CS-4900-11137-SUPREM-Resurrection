@@ -19,13 +19,14 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h"
 
 // 2020 includes:
-#include "./dbase/list.h"
-#include "./dbase/locate.h"
+#include "./src/dbase/list.h"
+#include "./src/dbase/locate.h"
+#include "./src/misc/panic.h"
 #include "edge.h"
 // end of includes
 

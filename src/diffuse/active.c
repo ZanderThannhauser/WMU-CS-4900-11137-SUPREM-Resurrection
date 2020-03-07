@@ -24,19 +24,19 @@
 #include <fastmath.h>
 #endif
 
-#include "./include/constant.h"
-#include "./include/defect.h"
-#include "./include/device.h"
-#include "./include/diffuse.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/plot.h"
+#include "./src/include/constant.h"
+#include "./src/include/defect.h"
+#include "./src/include/device.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/plot.h"
 
 // 2020 includes:
-#include "./diffuse/defect.h"
-#include "./shell/smisc.h"
+#include "./src/diffuse/defect.h"
+#include "./src/shell/smisc.h"
 #include "active.h"
 // end of includes
 

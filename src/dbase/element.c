@@ -19,14 +19,15 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/global.h"
-#include "./include/material.h" /* So we can set nmat to 0 - want this? */
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h" /* So we can set nmat to 0 - want this? */
 
 // 2020 includes:
-#include "./dbase/list.h"
-#include "./geom/tnabor.h"
+#include "./src/dbase/list.h"
+#include "./src/geom/tnabor.h"
+#include "./src/misc/panic.h"
 #include "element.h"
 // end of includes
 

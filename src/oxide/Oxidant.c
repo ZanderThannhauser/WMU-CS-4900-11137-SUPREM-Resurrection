@@ -12,19 +12,19 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/diffuse.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/matrix.h" /* where Odiff, Obc put things */
+#include "./src/include/constant.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/matrix.h" /* where Odiff, Obc put things */
 
 // 2020 function includes:
-#include "./oxide/oxrate.h"
-#include "./dbase/new_layer.h"
-#include "./oxide/mater.h"
-#include "./shell/smisc.h"
+#include "./src/oxide/oxrate.h"
+#include "./src/dbase/new_layer.h"
+#include "./src/oxide/mater.h"
+#include "./src/shell/smisc.h"
 #include "Oxidant.h"
 // end of includes
 
@@ -359,8 +359,8 @@ double KsFermiDep(noni, temp) double noni, temp;
     return (Kratio);
 }
 
-#include "./include/FEgeom.h" /* for maxdof... */
-#include "./include/FEmath.h" /* for lambda */
+#include "./src/include/FEgeom.h" /* for maxdof... */
+#include "./src/include/FEmath.h" /* for lambda */
 
 /*
  * Turn on stress dependences one by one or all together?

@@ -26,19 +26,20 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
 
 #define STATIC_ALLOCATION_TIME
-#include "./include/bound.h"
+#include "./src/include/bound.h"
 
 // 2020 includes:
-#include "./misc/get.h"
-#include "./geom/limits.h"
-#include "./imagetool/make_grid.h"
-#include "./imagetool/fill_grid.h"
-#include "./imagetool/makeframe.h"
+#include "./src/misc/get.h"
+#include "./src/geom/limits.h"
+#include "./src/imagetool/make_grid.h"
+#include "./src/imagetool/fill_grid.h"
+#include "./src/imagetool/makeframe.h"
+#include "./src/include/plot.h"
 #include "image_write.h"
 // end of includes
 
@@ -77,8 +78,6 @@ int image_write(char *filename, char *par, struct par_str *param) {
     int nxfac;
     int nyfac;
     int mode;
-
-    extern float *z;
 
     /* Defaults for these are set up in the key file */
     pixelx = get_int(param, "pixelx");

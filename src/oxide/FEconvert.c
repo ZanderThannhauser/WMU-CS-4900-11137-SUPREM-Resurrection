@@ -14,17 +14,18 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/FEgeom.h"
-#include "./include/diffuse.h" /* for noni */
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/FEgeom.h"
+#include "./src/include/diffuse.h" /* for noni */
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 
 // 2020 includes
-#include "./dbase/alloc.h"
-#include "./dbase/locate.h"
+#include "./src/dbase/alloc.h"
+#include "./src/dbase/locate.h"
+#include "./src/misc/panic.h"
 #include "FEconvert.h"
 // end of includes
 

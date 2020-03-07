@@ -6,13 +6,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/implant.h"
-#include "./include/shell.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/implant.h"
+#include "./src/include/shell.h"
 
 // 2020 includes:
-#include "./shell/do_action.h"
+#include "./src/shell/do_action.h"
 #include "newbackside.h"
 // end of includes
 

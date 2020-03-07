@@ -20,21 +20,21 @@
 #include <stdlib.h>
 #include <math.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/regrid.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/regrid.h"
 
 // 2020 includes:
-#include "./refine/dbase.h"
-#include "./refine/hinit.h"
-#include "./plot/plot.h"
-#include "./refine/triang.h"
-#include "./refine/sp_edge.h"
-#include "./dbase/locate.h"
-#include "./dbase/geom.h"
+#include "./src/refine/dbase.h"
+#include "./src/refine/hinit.h"
+#include "./src/plot/plot.h"
+#include "./src/refine/triang.h"
+#include "./src/refine/sp_edge.h"
+#include "./src/dbase/locate.h"
+#include "./src/dbase/geom.h"
 #include "skel.h"
 // end of includes
 

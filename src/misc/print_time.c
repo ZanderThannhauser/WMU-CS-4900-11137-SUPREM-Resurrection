@@ -12,8 +12,8 @@
 #include <stdio.h>
 #include <sys/times.h>
 
-#include "./include/global.h"
-#include "./include/shell.h"
+#include "./src/include/global.h"
+#include "./src/include/shell.h"
 
 // 2020 includes:
 #include "print_time.h"

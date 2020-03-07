@@ -18,17 +18,19 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <assert.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/implant.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/sysdep.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/implant.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/sysdep.h"
 
 
 // 2020 includes:
+#include "./src/debug.h"
 #include "damage.h"
 // end of includes
 
@@ -98,6 +100,10 @@ void setdam(int imp, double energy, double* damstat)
     case Sb:
         in = 3;
         break;
+    default:
+    	// 2020: I hope this never happends
+    	NOPE;
+    	break;
     }
 
     /*compute the a1 term*/
@@ -182,6 +188,11 @@ void setdam(int imp, double energy, double* damstat)
         c1 = c2 * exp(-z1 / a1);
         wt = 1.0;
     }
+    // 2020: I hope this never happends:
+    else
+    {
+    	NOPE;
+    }
     /*convert from microns-1 to centi-1*/
     c1 *= 1.0e4;
     c2 *= 1.0e4;
@@ -234,6 +245,10 @@ double *damstat;
     } else if (damstat[DAM_WT] == 2.0) {
         val = (depth - damstat[DAM_A2]) / damstat[DAM_A3];
         val = damstat[DAM_C2] * exp(-val * val / 2.0);
+    } else
+    {
+    	// 2020: I hope this never happends
+    	NOPE;
     }
 
     /*scale by the damage amounts*/

@@ -28,6 +28,7 @@ method init=1.0e-3 two.d
 %define oldbci 1.0
 %define totfci 0.0
 %define totbci 0.0
+
 %diffuse time=240 temp=1100 dry movie="
     select z=(inter/ci.star);
     %define newfci zfn(0.0,sil@oxi(0.0)+1.0e-6)

@@ -14,16 +14,16 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/constant.h"
-#include "./include/diffuse.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
 
 // 2020 function includes:
-#include "./misc/get.h"
-#include "./oxide/mater.h"
+#include "./src/misc/get.h"
+#include "./src/oxide/mater.h"
 #include "coeffox.h"
 // endof 2020 includes
 

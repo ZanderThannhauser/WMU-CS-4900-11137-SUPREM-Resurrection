@@ -13,12 +13,12 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
+#include "./src/include/constant.h"
 #define WANT_STATIC
-#include "./include/FEgeom.h"
+#include "./src/include/FEgeom.h"
 
 // 2020 includes
-#include "./math/blklu.h"
+#include "./src/math/blklu.h"
 #include "FEassmb.h"
 // end of includes
 

@@ -16,12 +16,14 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/expr.h"
-#include "./include/global.h"
-#include "./include/shell.h"
+#include "./src/include/expr.h"
+#include "./src/include/global.h"
+#include "./src/include/shell.h"
 
 // 2020 includes:
-#include "./check/eval.h"
+#include "./src/debug.h"
+#include "./src/check/eval.h"
+#include "./src/check/parse.h"
 #include "macro.h"
 // end of includes
 
@@ -66,6 +68,7 @@ void define_macro(char *str, struct macro_table **macro) {
     struct vec_str *out;
     char *t, *m;
     float val;
+    ENTER;
 
     /*eat any white space at the start of the string*/
     while (isspace(*str))
@@ -83,6 +86,7 @@ void define_macro(char *str, struct macro_table **macro) {
             dump_macro(*macro);
         else {
             fprintf(stderr, "macro names have to consist of alphanumerics\n");
+            EXIT;
             return;
         }
     }
@@ -105,6 +109,7 @@ void define_macro(char *str, struct macro_table **macro) {
         /*make sure we found that closing paren*/
         if (!*t) {
             fprintf(stderr, "The macro argument list is not closed\n");
+            EXIT;
             return;
         }
         /*copy the argument portion away*/
@@ -124,6 +129,7 @@ void define_macro(char *str, struct macro_table **macro) {
     if (*t == '\0') {
         /*error!!!*/
         fprintf(stderr, "There is no macro body for %s\n", name);
+        EXIT;
         return;
     }
 
@@ -163,6 +169,7 @@ void define_macro(char *str, struct macro_table **macro) {
     strcpy(temp->replace, body);
 
     sfree(body);
+    EXIT;
 }
 
 /************************************************************************

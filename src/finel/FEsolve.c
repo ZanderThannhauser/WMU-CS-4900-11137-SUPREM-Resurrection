@@ -16,21 +16,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/global.h"
+#include "./src/include/constant.h"
+#include "./src/include/global.h"
 
 #undef EXTERN
 #define EXTERN
 
-#include "./include/FEgeom.h"
-#include "./include/FEmath.h"
+#include "./src/include/FEgeom.h"
+#include "./src/include/FEmath.h"
 
 // 2020 includes
-#include "./finel/FEassmb.h"
-#include "./math/blklu.h"
-#include "./finel/tomcal.h"
-#include "./math/min_fill.h"
-#include "./math/generate.h"
+#include "./src/finel/FEassmb.h"
+#include "./src/math/blklu.h"
+#include "./src/finel/tomcal.h"
+#include "./src/math/min_fill.h"
+#include "./src/math/generate.h"
 #include "FEsolve.h"
 // end of includes
 

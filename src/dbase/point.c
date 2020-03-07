@@ -19,15 +19,16 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/material.h" /* So we can set nmat to 0 - want this? */
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h" /* So we can set nmat to 0 - want this? */
 
-#include "./include/impurity.h" /* So we can set n_imp to 0 */
-#include "./include/diffuse.h"  /* for the time of creation */
+#include "./src/include/impurity.h" /* So we can set n_imp to 0 */
+#include "./src/include/diffuse.h"  /* for the time of creation */
 
 // 2020 includes
+#include "./src/misc/panic.h"
 #include "point.h"
 // end of includes
 

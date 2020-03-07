@@ -15,21 +15,22 @@
 #include <stdlib.h>
 #include <sys/times.h>
 
-#include "./include/constant.h"
-#include "./include/device.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/matrix.h"
+#include "./src/include/constant.h"
+#include "./src/include/device.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/matrix.h"
 
 // 2020 includes:
-#include "./math/generate.h"
-#include "./math/symb.h"
-#include "./diffuse/prepare.h"
-#include "./misc/print_time.h"
-#include "./math/min_fill.h"
-#include "./dbase/couple.h"
+#include "./src/math/generate.h"
+#include "./src/math/symb.h"
+#include "./src/diffuse/prepare.h"
+#include "./src/misc/print_time.h"
+#include "./src/math/min_fill.h"
+#include "./src/dbase/couple.h"
+#include "./src/misc/panic.h"
 #include "dev_prep.h"
 // end of includes
 

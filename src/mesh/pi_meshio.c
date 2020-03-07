@@ -26,23 +26,23 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/constant.h"
-#include "./include/dbaccess.h"
-#include "./include/diffuse.h"
-#include "./include/expr.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/plot.h"
-#include "./include/regrid.h"
-#include "./include/sysdep.h"
+#include "./src/include/constant.h"
+#include "./src/include/dbaccess.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/expr.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/plot.h"
+#include "./src/include/regrid.h"
+#include "./src/include/sysdep.h"
 
 // 2020 includes:
-#include "./geom/limits.h"
-#include "./shell/do_action.h"
-#include "./dbase/locate.h"
-#include "./dbase/dispose.h"
-#include "./dbase/make_db.h"
+#include "./src/geom/limits.h"
+#include "./src/shell/do_action.h"
+#include "./src/dbase/locate.h"
+#include "./src/dbase/dispose.h"
+#include "./src/dbase/make_db.h"
 #include "pi_meshio.h"
 // end of includes
 

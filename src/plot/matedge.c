@@ -19,12 +19,13 @@
 #include <math.h>
 #include <stdio.h>
 
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/material.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h"
 
 // 2020 includes:
+#include "./src/debug.h"
 #include "matedge.h"
 // end of includes
 
@@ -65,6 +66,7 @@ void get_edge(float mval[], int mat[], int *mnum, int dir, float value)
     float c2[3];
     float tf, mn, mx;
     int dup_cnt;
+    ENTER;
 
     /*search each region, one by one*/
     for (*mnum = 0, i = 0; i < nreg; i++) {
@@ -201,4 +203,23 @@ void get_edge(float mval[], int mat[], int *mnum, int dir, float value)
             }
         }
     }
+    
+    #ifdef DEBUGGING_2020
+    
+    HERE;
+    verpv(mval[0]);
+    verpv(*mnum);
+    HERE;
+    
+    #endif
+    
+    EXIT;
 }
+
+
+
+
+
+
+
+

@@ -17,13 +17,14 @@
 #include <string.h>
 #include <unistd.h>
 
-#include "./include/expr.h"
-#include "./include/global.h"
+#include "./src/include/expr.h"
+#include "./src/include/global.h"
 
 // 2020 includes:
-#include "./check/eval.h"
-#include "./shell/do_action.h"
-#include "./check/split.h"
+#include "./src/check/eval.h"
+#include "./src/shell/do_action.h"
+#include "./src/check/split.h"
+#include "./src/check/parse.h"
 #include "echo.h"
 // end of includes
 

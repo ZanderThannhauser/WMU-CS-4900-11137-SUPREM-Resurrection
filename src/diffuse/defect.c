@@ -13,21 +13,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#include "./include/constant.h"
-#include "./include/defect.h"
-#include "./include/diffuse.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/matrix.h"
+#include "./src/include/constant.h"
+#include "./src/include/defect.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/matrix.h"
 
 
 
 // 2020 includes:
-#include "./diffuse/Interst.h"
-#include "./diffuse/Vacancy.h"
-#include "./dbase/alloc.h"
+#include "./src/diffuse/Interst.h"
+#include "./src/diffuse/Vacancy.h"
+#include "./src/dbase/alloc.h"
 #include "defect.h"
 // end of includes
 

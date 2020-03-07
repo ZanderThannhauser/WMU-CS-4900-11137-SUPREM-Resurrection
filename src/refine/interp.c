@@ -21,18 +21,19 @@
 #include <stdlib.h>
 #include <sys/times.h>
 
-#include "./include/refine.h"
-#include "./include/skel.h"
-#include "./include/constant.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/impurity.h"
-#include "./include/material.h"
-#include "./include/regrid.h"
+#include "./src/include/refine.h"
+#include "./src/include/skel.h"
+#include "./src/include/constant.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/impurity.h"
+#include "./src/include/material.h"
+#include "./src/include/regrid.h"
 
 // 2020 includes:
-#include "./geom/misc.h"
-#include "./misc/print_time.h"
+#include "./src/geom/misc.h"
+#include "./src/misc/print_time.h"
+#include "./src/misc/panic.h"
 #include "interp.h"
 // end of includes
 

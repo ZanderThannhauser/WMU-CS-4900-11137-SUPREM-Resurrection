@@ -14,9 +14,10 @@
 #include <stdio.h>
 #include <string.h>
 
-#include "./include/shell.h"
+#include "./src/include/shell.h"
 
 // 2020 includes:
+#include "./src/debug.h"
 #include "proc.h"
 // end of includes
 
@@ -103,9 +104,9 @@ int substring(char *s, char *ss) {
  *	Original	Mark E. Law		Sept, 1984		*
  *									*
  ************************************************************************/
-FILE *file_parse(name, type) char *name;
-char *type;
+FILE *file_parse(char *name, char *type)
 {
+    ENTER;
     char *end_str;
 
     /*strip off leading blanks*/
@@ -121,7 +122,7 @@ char *type;
             ;
         *(end_str + 1) = '\0';
     }
-
+    EXIT;
     /*open the file and return*/
     return (fopen(name, type));
 }

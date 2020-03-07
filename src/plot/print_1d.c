@@ -21,22 +21,22 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "./include/constant.h"
-#include "./include/diffuse.h"
-#include "./include/geom.h"
-#include "./include/global.h"
-#include "./include/material.h"
-#include "./include/plot.h"
+#include "./src/include/constant.h"
+#include "./src/include/diffuse.h"
+#include "./src/include/geom.h"
+#include "./src/include/global.h"
+#include "./src/include/material.h"
+#include "./src/include/plot.h"
 
 // 2020 includes:
-#include "./include/material.h"
-#include "./misc/get.h"
-#include "./dbase/dispose.h"
-#include "./include/plot.h"
-#include "./oxide/mater.h"
-#include "./plot/do_1d.h"
-#include "./geom/limits.h"
-#include "./plot/plot_1d.h"
+#include "./src/include/material.h"
+#include "./src/misc/get.h"
+#include "./src/dbase/dispose.h"
+#include "./src/include/plot.h"
+#include "./src/oxide/mater.h"
+#include "./src/plot/do_1d.h"
+#include "./src/geom/limits.h"
+#include "./src/plot/plot_1d.h"
 #include "print_1d.h"
 // end of includes
 
