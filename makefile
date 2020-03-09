@@ -26,30 +26,35 @@ DFLAGS += -D DEBUGGING_2020
 
 LDLIBS += -lm
 
-srclist-suprem.mk:
-	find ./src -name '*.c' ! -path './src/keyread/*' \
-		| sort | sed 's/^/SUPSRCS += /' > srclist-suprem.mk
+keyread.mk:
+	find ./src/keyread -name '*.c' | sort | sed 's/^/KR_SRCS += /' > keyread.mk
 
-srclist-keyread.mk:
-	find ./src/keyread -name '*.c' \
-		| sort | sed 's/^/KRSRCS += /' > srclist-keyread.mk
+scraper.mk:
+	find ./src/scraper -name '*.c' | sort | sed 's/^/SCPR_SRCS += /' > scraper.mk
 
-include srclist-suprem.mk srclist-keyread.mk
+suprem.mk:
+	find ./src/suprem -name '*.c' | sort | sed 's/^/SUP_SRCS += /' > suprem.mk
 
-SUPOBJS = $(SUPSRCS:.c=.o)
-SUPDOBJS = $(SUPSRCS:.c=.d.o)
-SUPDEPENDS = $(SUPSRCS:.c=.mk)
+include keyread.mk scraper.mk suprem.mk
 
-KROBJS = $(KRSRCS:.c=.o)
-KRDOBJS = $(KRSRCS:.c=.d.o)
-KRDEPENDS = $(KRSRCS:.c=.mk)
+KR_OBJS = $(KR_SRCS:.c=.o)
+KR_DOBJS = $(KR_SRCS:.c=.d.o)
+KR_DEPENDS = $(KR_SRCS:.c=.mk)
+
+SCPR_OBJS = $(SCPR_SRCS:.c=.o)
+SCPR_DOBJS = $(SCPR_SRCS:.c=.d.o)
+SCPR_DEPENDS = $(SCPR_SRCS:.c=.mk)
+
+SUP_OBJS = $(SUP_SRCS:.c=.o)
+SUP_DOBJS = $(SUP_SRCS:.c=.d.o)
+SUP_DEPENDS = $(SUP_SRCS:.c=.mk)
 
 # --gen-suppressions=yes
 
-#ARGS = ./examples/exam1/boron.in # seems to work
+ARGS = ./examples/exam1/boron.in # seems to work
 #ARGS = ./examples/exam2/oed.in # seems to work
 #ARGS = ./examples/exam3/oed.in # seems to work?
-ARGS = ./examples/exam4/oed.in # aborts
+#ARGS = ./examples/exam4/oed.in # aborts
 #ARGS = ./examples/exam5/whole.s4 # aborts
 #ARGS = ./examples/exam6/oxcalib.s4 # aborts
 #ARGS = ./examples/exam7/fullrox.s4 # aborts
@@ -63,7 +68,6 @@ ARGS = ./examples/exam4/oed.in # aborts
 #ARGS = ./examples/exam15/example15.in # seems to work
 #ARGS = ./examples/exam16/example16.in # seems to work
 #ARGS = ./examples/exam17/example17.in # seems to work
-
 #ARGS = ./examples/gaas/example1 # seems to work
 #ARGS = ./examples/gaas/example2 # aborts
 #ARGS = ./examples/gaas/example3 # seems to work
@@ -82,17 +86,23 @@ run.d: bin/suprem.d data/suprem.uk
 valrun: bin/suprem.d data/suprem.uk
 	valgrind --gen-suppressions=yes ./bin/suprem.d $(ARGS)
 
-bin/suprem: $(SUPOBJS)
-	$(CC) $(LDFLAGS) $(SUPOBJS) $(LOADLIBES) $(LDLIBS) -o $@
+bin/keyread: $(KR_OBJS) 
+	$(CC) $(LDFLAGS) $(KR_OBJS) $(LOADLIBES) $(LDLIBS) -o $@
 
-bin/suprem.d: $(SUPDOBJS)
-	$(CC) $(LDFLAGS) $(SUPDOBJS) $(LOADLIBES) $(LDLIBS) -o $@
+bin/keyread.d: $(KR_DOBJS) 
+	$(CC) $(LDFLAGS) $(KR_DOBJS) $(LOADLIBES) $(LDLIBS) -o $@
 
-bin/keyread: $(KROBJS) 
-	$(CC) $(LDFLAGS) $(KROBJS) $(LOADLIBES) $(LDLIBS) -o $@
+bin/scraper: $(SCPR_OBJS) 
+	$(CC) $(LDFLAGS) $(SCPR_OBJS) $(LOADLIBES) $(LDLIBS) -o $@
 
-bin/keyread.d: $(KRDOBJS) 
-	$(CC) $(LDFLAGS) $(KRDOBJS) $(LOADLIBES) $(LDLIBS) -o $@
+bin/scraper.d: $(SCPR_DOBJS) 
+	$(CC) $(LDFLAGS) $(SCPR_DOBJS) $(LOADLIBES) $(LDLIBS) -o $@
+
+bin/suprem: $(SUP_OBJS)
+	$(CC) $(LDFLAGS) $(SUP_OBJS) $(LOADLIBES) $(LDLIBS) -o $@
+
+bin/suprem.d: $(SUP_DOBJS)
+	$(CC) $(LDFLAGS) $(SUP_DOBJS) $(LOADLIBES) $(LDLIBS) -o $@
 
 data/suprem.uk: bin/keyread
 	./bin/keyread data/suprem.uk < data/suprem.key
@@ -122,7 +132,7 @@ clean:
 	find -name '*.mk' -exec 'rm' '-v' '{}' \;
 	find ! -name '*.sh' -a -executable -a -type f -exec 'rm' '-v' '{}' \;
 
-include $(SUPDEPENDS) $(KRDEPENDS)
+include  $(KR_DEPENDS) $(SCPR_DEPENDS) $(SUP_DEPENDS)
 
 
 
