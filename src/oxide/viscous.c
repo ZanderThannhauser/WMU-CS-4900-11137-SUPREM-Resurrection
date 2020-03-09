@@ -98,8 +98,7 @@ void visco_growth(float temp, double dt) {
 /*-----------------Stress_Analysis--------------------------------------
  * Thermal elastic stresses.
  *----------------------------------------------------------------------*/
-void stress_analysis(char *par, struct par_str *param)
-{
+void stress_analysis(char *par, struct par_str *param) {
     float temp1 = 1000, temp2 = 1000;
     int element;
 
@@ -186,7 +185,6 @@ void stress_analysis(char *par, struct par_str *param)
 
 void FEmathset(int flow) /* Doing flow or stress calc? */
 {
-    float Oss(), Ovel();
     static double dummy[] = {0.0, 1.0};
 
     /* Use B/A to scale velocities */

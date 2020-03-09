@@ -30,12 +30,9 @@
 // 2020 forward declarations
 // end of declarations
 
-
 #define BUFFERSIZE 80
 
-int string_offset(char *infile, struct line **poffset_array)
-{
-    extern char *fgets();
+int string_offset(char *infile, struct line **poffset_array) {
     char *buffer;
     int nump;
     float xcord;

@@ -24,16 +24,19 @@
 #include "vert.h"
 // end of 2020 includes
 
+// 2020 forward declarations
+int dofxcmp(float *a, float *b);
+// end of declarations
+
 /*-----------------VERT_GROWTH------------------------------------------
  * Try the assumption of vertical growth.
  * CSR Mar 86
  *----------------------------------------------------------------------*/
 void vert_growth(float temp) /* Processing temperature */
 {
-    float *dofx;   /* List of dx(x) */
-    float vel[2];  /* velocity at a point */
-    int dofxcmp(); /* Routine to compare two elements */
-    int nrec = 1;  /* Number of interface nodes recorded */
+    float *dofx;  /* List of dx(x) */
+    float vel[2]; /* velocity at a point */
+    int nrec = 1; /* Number of interface nodes recorded */
     int n, p, jn, i, j;
     int vs = (mode == ONED) ? (imptosol[XVEL]) : (imptosol[YVEL]);
     float x, xl, xh, vl, vh, dx1, dx2, dxdt;
@@ -66,7 +69,7 @@ void vert_growth(float temp) /* Processing temperature */
 
     /* Sort the vector for interpolation */
     if (nrec > 2)
-        qsort(&dofx[2], nrec - 1, 2 * sizeof(float), dofxcmp);
+        qsort(&dofx[2], nrec - 1, 2 * sizeof(float), (__compar_fn_t)dofxcmp);
 
     /* Add two extra elements to handle the edges in a simple way */
     dofx[2 * 0 + 0] = -MAXFLOAT;

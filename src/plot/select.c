@@ -48,64 +48,65 @@
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void sel_var(char *par, struct par_str* param)
-{
+void sel_var(char *par, struct par_str *param) {
     char *zstr;
     struct vec_str *zexp;
     char *err;
     char *tmp;
 
-    zstr = get_string( param, "z" );
+    zstr = get_string(param, "z");
     znn = nn;
-    z = salloc( float, nn );
+    z = salloc(float, nn);
 
-    if ( is_specified( param, "label" ) ) {
-	if ( label != NULL ) free( label );
-	tmp = get_string( param, "label" );
-	label = (char *)malloc( strlen(tmp) + 1 );
-	strcpy( label, tmp );
-    }
-    else {
-	if ( label != NULL ) free( label );
-	label = (char *)malloc( strlen( zstr ) + 1 );
-	strcpy( label, zstr );
-    }
-
-    if ( is_specified( param, "title" ) ) {
-	if ( title != NULL ) free( title );
-	tmp = get_string( param, "title" );
-	title = (char *)malloc(strlen(tmp) + strlen(VERSION) + strlen(" - ") + 1);
-	strcpy(title, tmp );
-	strcat(title, " - ");
-	strcat(title, VERSION );
-    }
-    else {
-	if ( title != NULL ) free( title );
-	title = (char *)malloc(strlen(VERSION) + 1);
-	strcpy(title, VERSION );
+    if (is_specified(param, "label")) {
+        if (label != NULL)
+            free(label);
+        tmp = get_string(param, "label");
+        label = (char *)malloc(strlen(tmp) + 1);
+        strcpy(label, tmp);
+    } else {
+        if (label != NULL)
+            free(label);
+        label = (char *)malloc(strlen(zstr) + 1);
+        strcpy(label, zstr);
     }
 
-    if ( is_specified( param, "temp" ) ) {
-	last_temp = get_float( param, "temp" ) + 273.0;
-	/*compute the sislicon material constants*/
-	comp_mat( last_temp );
+    if (is_specified(param, "title")) {
+        if (title != NULL)
+            free(title);
+        tmp = get_string(param, "title");
+        title =
+            (char *)malloc(strlen(tmp) + strlen(VERSION) + strlen(" - ") + 1);
+        strcpy(title, tmp);
+        strcat(title, " - ");
+        strcat(title, VERSION);
+    } else {
+        if (title != NULL)
+            free(title);
+        title = (char *)malloc(strlen(VERSION) + 1);
+        strcpy(title, VERSION);
     }
 
+    if (is_specified(param, "temp")) {
+        last_temp = get_float(param, "temp") + 273.0;
+        /*compute the sislicon material constants*/
+        comp_mat(last_temp);
+    }
 
     /*attempt to parse the string*/
-    if ( (err = (char *)parse_expr(zstr, &zexp)) != NULL) {
-	fprintf(stderr, "%s\n", err);
-	return; //(-1);
+    if ((err = (char *)parse_expr(zstr, &zexp)) != NULL) {
+        fprintf(stderr, "%s\n", err);
+        return; //(-1);
     }
 
     /*evaluate the vector expression*/
-    if ( (err = (char *)eval_vec( zexp, z )) != NULL) {
-	fprintf(stderr, "%s\n", err);
-	return; //(-1);
+    if ((err = (char *)eval_vec(zexp, z)) != NULL) {
+        fprintf(stderr, "%s\n", err);
+        return; //(-1);
     }
 
-    sel_log = islogexp( zexp );
+    sel_log = islogexp(zexp);
 
-    free_expr( zexp );
+    free_expr(zexp);
     return; //(0);
 }

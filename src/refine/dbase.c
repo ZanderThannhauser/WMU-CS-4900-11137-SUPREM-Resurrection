@@ -28,6 +28,7 @@
 // 2020 includes:
 #include "./src/dbase/list.h"
 #include "./src/misc/panic.h"
+#include "./src/dbase/element.h"
 #include "dbase.h"
 // end of includes
 
@@ -57,8 +58,7 @@ int cr_sreg(int mat) /* Material number of region. */
 /*-----------------CR_TRI-----------------------------------------------
  * Create a new triangle.
  *----------------------------------------------------------------------*/
-int cr_tri(int rn, int ir)
-{
+int cr_tri(int rn, int ir) {
     struct LLedge *bnd = sreg[ir]->bnd;
     int nv[3];
     int nb[3];
@@ -138,9 +138,7 @@ void ad_edge(int ir, int ie, struct LLedge *lep, int iscc, int pos) {
  * Returns 0    (bad region or couldn't find it)
  *         pointer (usually)
  *----------------------------------------------------------------------*/
-struct LLedge *eindex(ir, ie) int ir; /* Region to search */
-int ie;                               /* Edge to find. */
-{
+struct LLedge *eindex(int ir, int ie) {
     struct LLedge *bp;
 
     bp = sreg[ir]->bnd;
@@ -157,8 +155,7 @@ int ie;                               /* Edge to find. */
  * Add new value to sorted list of region angles.
  * If the new angle is smaller than all previous, no search is done.
  *----------------------------------------------------------------------*/
-void add_ang(struct sreg_str *r, struct LLedge *lep)
-{
+void add_ang(struct sreg_str *r, struct LLedge *lep) {
     struct LLedge *mina, *ep, *less, *greater;
     int f;
 
@@ -196,8 +193,7 @@ void add_ang(struct sreg_str *r, struct LLedge *lep)
  * for a given triple point.						*
  *									*
  ************************************************************************/
-void trip_tri(int p, int* t1, int* m1, int* t2, int* m2)
-{
+void trip_tri(int p, int *t1, int *m1, int *t2, int *m2) {
     int i, j, m[2], n[2], mat, t, ft, nb;
 
     /*find the two non-gas materials*/
@@ -245,8 +241,7 @@ void trip_tri(int p, int* t1, int* m1, int* t2, int* m2)
  *  Original:  MEL	5/88						*
  *									*
  ************************************************************************/
-void triple_fix(int p, int p2)
-{}
+void triple_fix(int p, int p2) {}
 
 #ifdef foo
 register int i, j, k, lj, n, t, lt;

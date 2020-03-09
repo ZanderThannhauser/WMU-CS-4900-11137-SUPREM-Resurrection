@@ -14,6 +14,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/times.h>
+#include <assert.h>
 
 #include "./src/include/constant.h"
 #include "./src/include/device.h"
@@ -38,7 +39,6 @@
 void dev_net();
 // end of declarations
 
-
 #define Alloc(P, O, N)                                                         \
     if (P)                                                                     \
         free(P);                                                               \
@@ -59,7 +59,6 @@ void dev_net();
  ************************************************************************/
 void dev_prep(double *area) {
     int i;
-    int get_connect();
     int *reorder;
     struct tms before, after;
     int nc[MAXIMP];
@@ -112,8 +111,7 @@ void dev_prep(double *area) {
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-void dev_net()
-{
+void dev_net() {
     register int Psol, Nsol, Hsol;
     register int i, j, si, sj;
 
@@ -178,8 +176,7 @@ void dev_net()
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-int ckt_scram(int *reorder)
-{
+int ckt_scram(int *reorder) {
     int i, j;
 
     for (i = 0; i < nn; i++)
@@ -208,6 +205,10 @@ void ckt_ia_bld() {
     register int i, j, k, ij, c, p, row;
     short *taken;
     int num;
+
+    // 2020: this value will be overwritten before it is used:
+    row = 0;
+    // 2020: This is just to remove the GCC error
 
     /*first assign the current and voltage numbers to the contacts*/
     for (i = 0; i < n_con; i++) {

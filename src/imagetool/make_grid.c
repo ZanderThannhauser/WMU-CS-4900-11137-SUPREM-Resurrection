@@ -16,22 +16,14 @@
 // 2020 forward declarations
 float Fmax(float x, float y);
 float Fmin(float x, float y);
-void shiftwindow(
-	float* array,
-	int size,
-	float min,
-	float max,
-	int min_index,
-	int max_index);
+void shiftwindow(float *array, int size, float min, float max, int min_index,
+                 int max_index);
 // end of declarations
 
-int make_grid(
-	int xsize, int ysize,
-	float** xd, float** yd,
-	float win_xmin, float win_xmax, float win_ymin, float win_ymax,
-	int* win_xmin_index, int* win_xmax_index, int* win_ymin_index,
-	int * win_ymax_index)
-{
+int make_grid(int xsize, int ysize, float **xd, float **yd, float win_xmin,
+              float win_xmax, float win_ymin, float win_ymax,
+              int *win_xmin_index, int *win_xmax_index, int *win_ymin_index,
+              int *win_ymax_index) {
     int index;
     int redox = 0;
     int redoy = 0;
@@ -118,14 +110,8 @@ int make_grid(
     return (0);
 }
 
-void shiftwindow(
-	float* array,
-	int size,
-	float min,
-	float max,
-	int min_index,
-	int max_index)
-{
+void shiftwindow(float *array, int size, float min, float max, int min_index,
+                 int max_index) {
     float loc;
     float *ptr;
     float spacing;
@@ -143,8 +129,6 @@ void shiftwindow(
     }
 }
 
-float Fmax(float x, float y)
-{ return (x > y) ? x : y; }
+float Fmax(float x, float y) { return (x > y) ? x : y; }
 
-float Fmin(float x, float y)
-{ return (x < y) ? x : y; }
+float Fmin(float x, float y) { return (x < y) ? x : y; }

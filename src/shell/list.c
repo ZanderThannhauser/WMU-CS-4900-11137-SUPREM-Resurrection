@@ -36,9 +36,7 @@ void loop_check(char **str);
  *  Original:	MEL	2/85						*
  *									*
  ************************************************************************/
-char *list_parse(s, first) char **s;
-int first;
-{
+char *list_parse(char **s, int first) {
     char *value, *str;
     int count, i;
 

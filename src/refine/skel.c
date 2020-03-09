@@ -35,17 +35,20 @@
 #include "./src/refine/sp_edge.h"
 #include "./src/dbase/locate.h"
 #include "./src/dbase/geom.h"
+#include "./src/dbase/node.h"
+#include "./src/geom/misc.h"
+#include "./src/dbase/edge.h"
 #include "skel.h"
 // end of includes
 
 // 2020 forward declarations
 int on_bound(int p, int sr);
+struct LLedge *edg_crs(int e, int s2, float c[MAXDIM]);
 int pt_in_skel(float c[3], int sr);
-int sub_2dskel(int s1, int s2, int* s, int* inside);
-int sub_1dskel(int s1, int s2, int* s, int * inside);
-void check_in(int s1, int s2, int* inside, int * ai, int *ao);
+int sub_2dskel(int s1, int s2, int *s, int *inside);
+int sub_1dskel(int s1, int s2, int *s, int *inside);
+void check_in(int s1, int s2, int *inside, int *ai, int *ao);
 // end of declarations
-
 
 #define endpt(A) ((dir) ? (nF(A)) : (nB(A)))
 #define begpt(A) ((dir) ? (nB(A)) : (nF(A)))
@@ -59,7 +62,6 @@ int skel_reg(int r) {
     register int i, ind, j;
     register int e1, el, e, sr;
     int t, f, n, done, fnd;
-    double l_edge();
 
     /*create the skel*/
     sr = cr_sreg(mat_reg(r));
@@ -136,8 +138,7 @@ int skel_reg(int r) {
  *  routine can possible make new resulting regions.  The first passed
  *  region is returned modified, a new region number can also be returned.
  */
-int sub_skel(int s1, int s2, int *s)
-{
+int sub_skel(int s1, int s2, int *s) {
     int nr, *inside;
     int allin, allout;
 
@@ -166,9 +167,8 @@ int sub_skel(int s1, int s2, int *s)
     return (nr);
 }
 
-int sub_1dskel(int s1, int s2, int* s, int * inside)
-{
-    struct LLedge *bp, *bq, *bnd, *edg_crs();
+int sub_1dskel(int s1, int s2, int *s, int *inside) {
+    struct LLedge *bp, *bq, *bnd;
     int num = -1, e, enew;
     int g, ip;
     float c[MAXDIM];
@@ -224,16 +224,15 @@ int sub_1dskel(int s1, int s2, int* s, int * inside)
 
 #define min2(A, B) ((A) < (B)) ? (A) : (B)
 
-int sub_2dskel(int s1, int s2, int* s, int* inside)
-{
+int sub_2dskel(int s1, int s2, int *s, int *inside) {
     int i, e, e1, enew, eadd;
     int first_node, last_node, out_node;
     int num = -1;
     int g, ip, in1;
     int dir;
     float c[3], len;
-    struct LLedge *bnd, *bp, *bq, *bts, *bte, *edg_crs();
-    double ha, hb, hsp, l_edge();
+    struct LLedge *bnd, *bp, *bq, *bts, *bte;
+    double ha, hb, hsp;
 
     /*walk the original region and find edges of the form in/on to out*/
     bnd = sreg[s1]->bnd;
@@ -372,8 +371,7 @@ int sub_2dskel(int s1, int s2, int* s, int* inside)
     return (num + 1);
 }
 
-void check_in(int s1, int s2, int* inside, int * ai, int *ao)
-{
+void check_in(int s1, int s2, int *inside, int *ai, int *ao) {
     struct LLedge *bp, *bnd;
     int allin, allout, cnt;
     int g;
@@ -419,8 +417,7 @@ void check_in(int s1, int s2, int* inside, int * ai, int *ao)
     *ao = allout == cnt;
 }
 
-int on_bound(int p, int sr)
-{
+int on_bound(int p, int sr) {
     int f;
     float len, alph[MAXDIM];
     struct LLedge *bp, *bnd;
@@ -464,8 +461,7 @@ int *inside;
  * 112 from CACM. This little gem works for clockwise, anticlockwise,
  * or even self-crossing regions.
  *----------------------------------------------------------------------*/
-int pt_in_skel(float c[3], int sr)
-{
+int pt_in_skel(float c[3], int sr) {
     int flag, f;
     double xi, yi, xin, yin;
     struct LLedge *bp, *bnd;
@@ -502,10 +498,7 @@ int pt_in_skel(float c[3], int sr)
 /*
  * calculate the point at which edge e crosses region s2
  */
-struct LLedge *edg_crs(e, s2, c) int e;
-int s2;
-float c[MAXDIM];
-{
+struct LLedge *edg_crs(int e, int s2, float c[MAXDIM]) {
     int e1, g;
     struct LLedge *bp, *bnd;
     float p[MAXDIM], dp[MAXDIM], q[MAXDIM], dq[MAXDIM];

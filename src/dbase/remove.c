@@ -30,6 +30,8 @@
 #include "./src/dbase/locate.h"
 #include "./src/dbase/kill_node.h"
 #include "./src/misc/panic.h"
+#include "./src/dbase/node.h"
+#include "./src/geom/misc.h"
 #include "remove.h"
 // end of includes
 
@@ -135,8 +137,7 @@ void rem_ele(int t, int expos) {
  * Original:	MEL	8/90						*
  *									*
  ************************************************************************/
-void rem_reg(int r)
-{
+void rem_reg(int r) {
     /*eliminate all the triangles*/
     while (num_tri_reg(r) > 0)
         rem_ele(tri_reg(r, 0), TRUE);

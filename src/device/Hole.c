@@ -20,8 +20,6 @@
 #include "./src/include/impurity.h"
 #include "./src/include/material.h"
 
-
-
 // 2020 includes:
 #include "./src/misc/get.h"
 #include "Hole.h"
@@ -29,8 +27,6 @@
 
 // 2020 forward declarations
 // end of declarations
-
-
 
 /************************************************************************
  *									*
@@ -75,10 +71,8 @@ void Hboundary(struct bound_str *bval) {}
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-double Phi_p(hole, psi, ev, mat, dqdp, dqdh) double hole, psi, ev;
-int mat;
-double *dqdp, *dqdh;
-{
+double Phi_p(double hole, double psi, double ev, int mat, double *dqdp,
+             double *dqdh) {
     double qfn;
 
     if (IS_SEMI(mat)) {
@@ -102,8 +96,7 @@ double *dqdp, *dqdh;
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-void hole(char *par, struct par_str* param)
-{
+void hole(char *par, struct par_str *param) {
     int mat, mat2 = -1;
 
 #define fetch(V, S, F)                                                         \

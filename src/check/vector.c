@@ -41,6 +41,8 @@
 #include "./src/diffuse/active.h"
 #include "./src/mesh/profile.h"
 #include "./src/shell/proc.h"
+#include "./src/device/Electron.h"
+#include "./src/device/Hole.h"
 #include "vector.h"
 // end of includes
 

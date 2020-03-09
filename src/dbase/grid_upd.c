@@ -40,6 +40,7 @@
 // 2020 forward declarations
 int CknMcObt(double dt, double sepTol, double obTol);
 int CknMcLen(double dt, double sepTol, double obTol, double abstol);
+float BadObtuse(float x, float y, float x1, float y1, float x2, float y2);
 // end of declarations
 
 #define assert(x)                                                              \
@@ -238,8 +239,7 @@ void back_pedal(double *dt) {
  * This routine kills the nodes marked by ChooseKillNodes.
  * Then it cleans up the data structure as necessary.
  *----------------------------------------------------------------------*/
-void grid_sub(double dt)
-{
+void grid_sub(double dt) {
     int ie, ip;
     int test = FALSE;
 
@@ -292,7 +292,6 @@ int CknMcLen(double dt, double sepTol, double obTol, double abstol) {
     int t, e, n;
     int pl[2];
     float lrel[MAXDIM];
-    float BadObtuse();
 
 #define pvel(A, B) pt[A]->vel[B]
 
@@ -355,7 +354,7 @@ int CknMcLen(double dt, double sepTol, double obTol, double abstol) {
 int CknMcObt(double dt, double sepTol, double obTol) {
     int ie, j, skip, Kills = 0;
     int ip, ip1, ip2;
-    float BadObtuse(), tt;
+    float tt;
 
     /*
      * Go: Look for nodes with approachment problems.
@@ -420,10 +419,8 @@ int CknMcObt(double dt, double sepTol, double obTol) {
 /*-----------------BadObtuse--------------------------------------------
  * Look for a bad obtuse angle at ip subtented by ip1, ip2
  *----------------------------------------------------------------------*/
-float BadObtuse(x, y, x1, y1, x2, y2) float x, y, x1, y1, x2, y2;
-{
+float BadObtuse(float x, float y, float x1, float y1, float x2, float y2) {
     float d1[2], d2[2], len0, len1, len2, area2, pheight, bad;
-    extern double fmin(), fmax();
 
     if (mode == ONED)
         return (1.0);

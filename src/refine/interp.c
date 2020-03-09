@@ -44,7 +44,6 @@ void fac3x3(double a[3][3], int pvt[3]);
 void sol3x3(double a[3][3], int pvt[3], double ans[3]);
 // end of declarations
 
-
 /*
  * interpolate the solutions found in r2 onto those found in r1
  */
@@ -105,8 +104,7 @@ void interp(int r1, int r2) {
     print_time("total interpolation time", &before, &after);
 }
 
-void interp_1d(int in, int ie2)
-{
+void interp_1d(int in, int ie2) {
     register int i;
     double r, ir;
     double ans[3], new;
@@ -159,8 +157,7 @@ void interp_1d(int in, int ie2)
     }
 }
 
-void interp_2d(int in, int ie2)
-{
+void interp_2d(int in, int ie2) {
     register int i, k;
     int pvt[3];
     double b[3][3], ans[3], new;
@@ -229,8 +226,7 @@ void interp_2d(int in, int ie2)
 #define p1 pvt[1]
 #define p2 pvt[2]
 
-void fac3x3(double a[3][3], int pvt[3])
-{
+void fac3x3(double a[3][3], int pvt[3]) {
     register int i, i1, i2;
     double am;
 
@@ -270,8 +266,7 @@ void fac3x3(double a[3][3], int pvt[3])
     a[p2][2] -= a[p2][1] * a[p1][2];
 }
 
-void sol3x3(double a[3][3], int pvt[3], double ans[3])
-{
+void sol3x3(double a[3][3], int pvt[3], double ans[3]) {
     double temp[3];
 
     /*first do the the for solve*/

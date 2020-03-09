@@ -27,6 +27,7 @@
 #include "./src/dbase/list.h"
 #include "./src/dbase/locate.h"
 #include "./src/misc/panic.h"
+#include "./src/geom/misc.h"
 #include "edge.h"
 // end of includes
 

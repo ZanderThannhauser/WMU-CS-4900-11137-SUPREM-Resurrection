@@ -20,17 +20,14 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
-
 // 2020 includes:
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
 #include "Arsenic.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
-
-
 
 /*definitions for impurity constants as a function of material*/
 /*pre exp constant with neutral V*/
@@ -86,10 +83,8 @@ static double Assstemp = 0.0;
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void Asdiff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf,
-	double *iprt, double *vprt)
-{
+void Asdiff_coeff(float temp, double **new, double **equil, double *noni,
+                  double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     double Dix[MAXMAT];
@@ -126,9 +121,8 @@ void Asdiff_coeff(float temp, double **new, double **equil,
  *  Original:	MEL	3/85						*
  *									*
  ************************************************************************/
-void Asactive(int simple, int nn, float temp,
-	double **conc, double **act, double **equil, double *noni)
-{
+void Asactive(int simple, int nn, float temp, double **conc, double **act,
+              double **equil, double *noni) {
     static double Ctn[MAXMAT];
     static double screen[MAXMAT];
     double tmp, der2, der, npow, np2;
@@ -294,8 +288,7 @@ void Asactive(int simple, int nn, float temp,
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void Asboundary(struct bound_str *bval)
-{
+void Asboundary(struct bound_str *bval) {
     double f;
     double h, m;
     int sol; /*the solution location of antimony*/
@@ -364,8 +357,7 @@ void Asboundary(struct bound_str *bval)
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void arsenic(char *par, struct par_str* param)
-{
+void arsenic(char *par, struct par_str *param) {
     int mat;
     int mat2 = -1;
     register int i, j;

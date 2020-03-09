@@ -85,13 +85,6 @@ EXTERN int need_waste;
 /*DATA BASE Status Variables*/
 EXTERN int dbi;
 
-/*POINT related functions*/
-/*no arguments, returns error message*/
-extern char *alloc_pt();
-
-/* number of cords, cord array, return created p number */
-extern int mk_pt();
-
 #define num_nd(A) pt[A]->nn
 #define nd_pt(A, B) pt[A]->nd[B]
 #define cord_arr(A) pt[A]->cord
@@ -112,10 +105,6 @@ extern int mk_pt();
  * an overall analysis of how these are used and where should improve
  * performance
  */
-/*this returns the length between two points*/
-extern double dist();
-/*this return the total coupling between two nodes*/
-extern float gimme_ehed();
 
 #define add_nd_pt(A, B) pt[A]->nd[(pt[A]->nn)++] = B
 
@@ -135,11 +124,6 @@ extern float gimme_ehed();
             (void)mk_nd(A, GAS);                                               \
     }
 
-/*returns the number of neighbors to a point*/
-extern int num_neigh_pt();
-/*returns the specific neighbor of a point*/
-extern int neigh_pt();
-
 /*spacing operations*/
 #define get_space(A) pt[A]->spac
 #define set_space(A, B) pt[A]->spac = B
@@ -150,13 +134,6 @@ extern int neigh_pt();
     need_waste = TRUE
 
 #define pdist(A, B) dist(cord_arr(A), cord_arr(B))
-
-/*NODE related functions*/
-/*no arguments, returns error message*/
-extern char *alloc_nd();
-
-/*parent point, material, returns created node number*/
-extern int mk_nd();
 
 #define pt_nd(A) nd[A]->pt
 #define mat_nd(A) nd[A]->mater
@@ -184,12 +161,6 @@ extern int mk_nd();
 #define set_edge_nd(A, B, C) nd[A]->edg.list[B] = C
 #define sub_edge_nd(A, B) sub_list(&(nd[A]->edg), B)
 
-/*these two are messy, we need a better way to do them*/
-/*returns the number of neighbors to a node*/
-extern int num_neigh_nd();
-/*returns the specific neighbor of a node*/
-extern int neigh_nd();
-
 #define dead_nd(N) ask(nd[N], KILL_ME)
 #define fing_nd(N)                                                             \
     set(nd[N], KILL_ME);                                                       \
@@ -197,15 +168,6 @@ extern int neigh_nd();
 
 /*returns the distance between two nodes*/
 #define ndist(A, B) dist(cord_arr(pt_nd(A)), cord_arr(pt_nd(B)))
-
-/*TRIANGLE related functions*/
-extern char *alloc_tri(); /*no arguments*/
-/*num vert, verts, num edges, edges, region, pts or nds?, return tri */
-extern int mk_ele();
-
-/*num vert, verts, region, return tri */
-extern int mk_ele_nd();
-extern int mk_ele_pt();
 
 /*for looping....*/
 #define done_tri(A) A < ne
@@ -253,21 +215,11 @@ extern int mk_ele_pt();
 #define set_father(X, B) tri[X]->fath = B
 #define set_offspr(X, B) tri[X]->son = B
 
-/*coupling stuff*/
-extern float ehed_tri();
-extern float vol_ele();
-
-/*this takes three coordinate pairs*/
-extern float area_tri();
-
 #define dead_tri(N) ask(tri[N], KILL_ME)
 #define fing_tri(N)                                                            \
     set(tri[N], KILL_ME);                                                      \
     need_waste = TRUE
 
-/*EDGE STUFF*/
-/*n1, n2 returns edge number*/
-int mk_edg(int n1, int n2);
 #define nd_edg(A, B) edg[A]->nd[B]
 #define pt_edg(A, B) pt_nd(edg[A]->nd[B])
 #define num_tri_edg(A) edg[A]->ele.num
@@ -293,11 +245,9 @@ int mk_edg(int n1, int n2);
     set(edg[N], KILL_ME);                                                      \
     need_waste = TRUE;                                                         \
     edge_dirty = TRUE
-extern double l_edge();
 
 /*REGION STUFF*/
 #define num_reg nreg
-int mk_reg(int mat);
 #define mat_reg(A) reg[A]->mater
 
 #define num_edg_reg(A) reg[A]->edg.num

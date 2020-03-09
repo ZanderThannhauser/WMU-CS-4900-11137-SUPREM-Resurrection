@@ -175,8 +175,7 @@ void waste() {
     free(new_reg);
 }
 
-void lose_impurity(int imp)
-{
+void lose_impurity(int imp) {
     int i, j, sol = imptosol[imp];
 
     if (sol != -1) {

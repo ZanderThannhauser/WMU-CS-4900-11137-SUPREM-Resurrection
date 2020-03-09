@@ -25,15 +25,14 @@
 #include "./src/include/global.h"
 #include "./src/include/refine.h"
 
-
 // 2020 includes:
 #include "./src/refine/offset.h"
+#include "./src/dbase/geom.h"
 #include "deloop.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
-
 
 /************************************************************************
  *									*
@@ -42,8 +41,7 @@
  *  Original:	MEL	10/90						*
  *									*
  ************************************************************************/
-int de_loop(int *nop, struct line* op, double eps)
-{
+int de_loop(int *nop, struct line *op, double eps) {
     register int bp1, bp2;
     register int i;
     int numop = *nop;

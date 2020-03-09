@@ -40,7 +40,7 @@
 // end of includes
 
 // 2020 forward declarations
-void do_exec(char* par, int intr, int index, int no_exec);
+void do_exec(char *par, int intr, int index, int no_exec);
 // end of declarations
 
 /************************************************************************
@@ -63,7 +63,7 @@ void do_source(char *file,  /*the file to be sourced*/
     char *redirect;
     char *oldbuf;
     ENTER;
-    
+
     verpv(file);
     verpv(redir);
     verpv(back);
@@ -111,7 +111,8 @@ void do_source(char *file,  /*the file to be sourced*/
             }
         } else {
             HERE;
-            while (yyparse() != -1) ;
+            while (yyparse() != -1)
+                ;
             HERE;
         }
         fclose(tsrc);
@@ -144,12 +145,12 @@ void do_source(char *file,  /*the file to be sourced*/
  *									*
  ************************************************************************/
 void do_string(char *instr, char *redir, int back) {
-    
+
     FILE tout, *t1;
     int len;
     char *redirect;
     char *oldbuf;
-    
+
     ENTER;
 
     redirect = NULL;
@@ -213,7 +214,7 @@ void do_string(char *instr, char *redir, int back) {
         *stdout = tout;
         sfree(redirect);
     }
-    
+
     EXIT;
 }
 
@@ -322,8 +323,7 @@ void do_command(char *name, char *param, int intr, char *file, int back) {
  *  Original:	MEL	3/85	(gearing up for Pisces2)		*
  *									*
  ************************************************************************/
-void do_exec(char* par, int intr, int index, int no_exec) 
-{
+void do_exec(char *par, int intr, int index, int no_exec) {
 
     ENTER;
     if (check(par, cards[command[index].param]) == -1) {

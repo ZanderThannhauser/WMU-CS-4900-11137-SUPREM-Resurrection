@@ -27,12 +27,13 @@
 // 2020 includes:
 #include "./src/mesh/rect.h"
 #include "./src/dbase/geom.h"
+#include "./src/geom/misc.h"
+#include "./src/refine/triang.h"
 #include "triheur.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
-
 
 /*-----------------CHOP-------------------------------------------------
  * try to cut a triangle off a region.
@@ -40,13 +41,10 @@
  * chop, the second time taking whatever we must.
  * Returns answer in the form of a pointer to the middle edge of the tri.
  *----------------------------------------------------------------------*/
-struct LLedge *chop(r, must) struct sreg_str *r; /* Region to split. */
-int must;                                        /* Is some split necessary? */
-{
+struct LLedge *chop(struct sreg_str *r, int must) {
     struct LLedge *bestp, *bp, *mina, *bq;
     int f, i, j, k, l, triok;
-    double h, h1, h2, lej, m, g, best, mgeo, angM, sk_cross(), good_tri(),
-        dmin();
+    double h, h1, h2, lej, m, g, best, mgeo, angM;
     float p[MAXDIM], dp[MAXDIM], q[MAXDIM], dq[MAXDIM], alp[MAXDIM];
 
     bestp = 0;
@@ -134,11 +132,9 @@ int must;                                        /* Is some split necessary? */
  * Choose good ways to cut a region in half.
  * Returns pointers to the edge following each end of the cut.
  *----------------------------------------------------------------------*/
-int divide(r, lep1, lep2) struct sreg_str *r;
-struct LLedge **lep1, **lep2;
-{
+int divide(struct sreg_str *r, struct LLedge **lep1, struct LLedge **lep2) {
     struct LLedge *bp1, *bp2, *maxa;
-    double piby2, piby4, ang1, ang2, intang(), sk_cross();
+    double piby2, piby4, ang1, ang2;
     int f1, f2;
 
     piby2 = PI / 2;
@@ -186,12 +182,8 @@ struct LLedge **lep1, **lep2;
  * spacing. The bigger this value, the better.
  * -1 means crossing.
  *----------------------------------------------------------------------*/
-double sk_cross(
-	struct sreg_str *r,
-	struct LLedge* lp1,
-	struct LLedge* lp2,
-	int rect)
-{
+double sk_cross(struct sreg_str *r, struct LLedge *lp1, struct LLedge *lp2,
+                int rect) {
     struct LLedge *bp, *end; /* Walks around the region. */
     struct edg_str split;    /* Line joining nB(lp1) and nB(lp2) */
     float alph[MAXDIM],
@@ -251,8 +243,7 @@ double sk_cross(
 /*-----------------QUAD-------------------------------------------------
  * choose Vornoi partition of a quadrilateral.
  *----------------------------------------------------------------------*/
-struct LLedge *quadsplit(rg) struct sreg_str *rg; /* Region to split */
-{
+struct LLedge *quadsplit(struct sreg_str *rg) {
     int i, j, k, l;
     float f1, f2;
     float alph[MAXDIM];

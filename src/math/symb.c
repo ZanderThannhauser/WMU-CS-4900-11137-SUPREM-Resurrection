@@ -30,7 +30,7 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-#define MAXDOF 3    /* too painful to do right */
+#define MAXDOF 3                  /* too painful to do right */
 #include "./src/include/FEmath.h" /* for FErel */
 #include "./src/include/poly.h"   /* for FErel */
 
@@ -40,6 +40,7 @@
 #include "./src/math/blklu.h"
 #include "./src/misc/get.h"
 #include "./src/misc/print_time.h"
+#include "./src/dbase/neigh.h"
 #include "symb.h"
 // end of 2020 includes
 
@@ -326,9 +327,7 @@ void method(char *par, struct par_str *param) {
  *  Original:	MEL	7/85						*
  *									*
  ************************************************************************/
-void do_symb(int nsol, int *sol, int **il,
-	double **l,  int *loff)
-{
+void do_symb(int nsol, int *sol, int **il, double **l, int *loff) {
     register int si, i, j;
     struct tms before, after; /*arrays for timing of the algorithms*/
     int byte, cnt;
@@ -419,8 +418,7 @@ void do_symb(int nsol, int *sol, int **il,
  *  Original:	CSR	09/86						*
  *									*
  ************************************************************************/
-void scramble(int *reorder)
-{
+void scramble(int *reorder) {
     int t, i, p, e, r;
     struct nd_str **newnd;
 
@@ -475,10 +473,7 @@ void scramble(int *reorder)
  *									*
  ************************************************************************/
 
-int get_connect(ind, taken, num) int ind; /*the node index*/
-short *taken;                             /*the result matrix*/
-int *num; /*the number of neighbors found: initially max.*/
-{
+int get_connect(int ind, short *taken, int *num) {
     int i;
 
     *num = 0;

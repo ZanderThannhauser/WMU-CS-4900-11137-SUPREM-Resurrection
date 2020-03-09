@@ -44,19 +44,16 @@
 #include "./src/dbase/make_db.h"
 #include "./src/dbase/alloc.h"
 #include "./src/dbase/check.h"
+#include "./src/dbase/region.h"
+#include "./src/dbase/edge.h"
+#include "./src/dbase/point.h"
+#include "./src/dbase/node.h"
 #include "deposit.h"
 // end of includes
 
 // 2020 forward declarations
-int build_skel(
-	int nump,
-	struct line* p,
-	int numop,
-	struct line* op,
-	int div,
-	int rn,
-	double sp,
-	int square);
+int build_skel(int nump, struct line *p, int numop, struct line *op, int div,
+               int rn, double sp, int square);
 // end of declarations
 
 /************************************************************************
@@ -68,7 +65,7 @@ int build_skel(
  *		MEL	4/87   rewrote the work portion			*
  *		LCC     4/90   add 1-D mode				*
  ************************************************************************/
-void user_deposit(char *par, struct par_str* param) {
+void user_deposit(char *par, struct par_str *param) {
     register int mater, ndiv, i;
     double thick;
     struct line *p;
@@ -284,16 +281,8 @@ void user_deposit(char *par, struct par_str* param) {
  *  Original:	MEL	4/87						*
  *									*
  ************************************************************************/
-int build_skel(
-	int nump,
-	struct line* p,
-	int numop,
-	struct line* op,
-	int div,
-	int rn,
-	double sp,
-	int square)
-{
+int build_skel(int nump, struct line *p, int numop, struct line *op, int div,
+               int rn, double sp, int square) {
     register int i, j;
     int ir;
     int mat = mat_reg(rn);

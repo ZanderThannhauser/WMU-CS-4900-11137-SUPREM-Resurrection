@@ -27,7 +27,6 @@
 #include "./src/include/impurity.h"
 #include "./src/include/matrix.h"
 
-
 // 2020 includes:
 #include "./src/diffuse/prepare.h"
 #include "./src/diffuse/setup.h"
@@ -53,8 +52,7 @@
  *  Original:	MEL	1/86						*
  *									*
  ************************************************************************/
-double timed_trbdf(double delta, float temp, int compute)
-{
+double timed_trbdf(double delta, float temp, int compute) {
     double del_t, old_t; /*temp holder of the timestep*/
     double Kt;           /*the constant in the error term*/
     int xv = imptosol[XVEL], yv = imptosol[YVEL];
@@ -289,8 +287,7 @@ double timed_trbdf(double delta, float temp, int compute)
 /*
  * update the velocities
  */
-void do_vel(double delta, double gam)
-{
+void do_vel(double delta, double gam) {
     register int i;
     int xvst = MAXIMP - 5, yvst = MAXIMP - 6;
     int xv = imptosol[XVEL], yv = imptosol[YVEL];

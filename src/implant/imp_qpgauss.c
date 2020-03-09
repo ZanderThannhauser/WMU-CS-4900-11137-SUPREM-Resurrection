@@ -23,9 +23,7 @@
 // 2020 forward declarations
 // end of declarations
 
-
-void qpgauss(double dx, struct imp_info *cvals)
-{
+void qpgauss(double dx, struct imp_info *cvals) {
 
     double x;
     double val = 1, v0;

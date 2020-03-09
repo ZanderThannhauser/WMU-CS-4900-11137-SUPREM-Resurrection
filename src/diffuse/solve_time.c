@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/times.h>
+#include <strings.h>
 
 #include "./src/include/constant.h"
 #include "./src/include/defect.h"
@@ -58,12 +59,10 @@
 
 // 2020 forward declarations
 double start_step(float temp, int cont);
-double grid_dt();
 double solstep(double del_df, float temp, int timemeth, int compute);
 double do_oxide(float temp, int ornt, int oxhow, double *dt);
 void dump_data(double total, int dump, char *movie, int *cnt);
 // end of declarations
-
 
 #define DAMP 0.9
 
@@ -77,17 +76,13 @@ void dump_data(double total, int dump, char *movie, int *cnt);
  *  Original:	MEL	12/84						*
  *									*
  ************************************************************************/
-void solve_time(
-    float time, float temp, double itime, int timemeth,
-    int dump, char *movie,
-    int cont)
-{
+void solve_time(float time, float temp, double itime, int timemeth, int dump,
+                char *movie, int cont) {
     ENTER;
     double t;             /*the current time, total*/
     static double del_df; /*the next delta for the diffusion*/
     double last_ddf;      /* the last delta for the diffusion */
     double Ktd, Kto, Ktp;
-    float time_form();
     struct tms before, after;
     int wrcnt = 1;
     register int i;
@@ -190,8 +185,7 @@ void flushbuf() {
  *  boundary set up.							*
  *								 	*
  ************************************************************************/
-double do_oxide(float temp, int ornt, int oxhow, double *dt)
-{
+double do_oxide(float temp, int ornt, int oxhow, double *dt) {
     int xv = imptosol[XVEL];
     int yv = imptosol[YVEL];
     int xvst = MAXIMP - 5, yvst = MAXIMP - 6;
@@ -222,8 +216,7 @@ double do_oxide(float temp, int ornt, int oxhow, double *dt)
  *  Original:	MEL	7/87						*
  *									*
  ************************************************************************/
-double solstep(double del_df, float temp, int timemeth, int compute)
-{
+double solstep(double del_df, float temp, int timemeth, int compute) {
     double Kt;
     double scale;
     int xv = imptosol[XVEL];
@@ -327,8 +320,7 @@ double solstep(double del_df, float temp, int timemeth, int compute)
  *	dump_data() - Write out stuff at each time step.		*
  *									*
  ************************************************************************/
-void dump_data(double total, int dump, char *movie, int *cnt)
-{
+void dump_data(double total, int dump, char *movie, int *cnt) {
     ENTER;
     char barfname[20];
 
@@ -351,13 +343,9 @@ void dump_data(double total, int dump, char *movie, int *cnt)
  ************************************************************************/
 #include "./src/include/expr.h"
 
-float time_form(expr, total, dt) char *expr;
-float total;
-float dt;
-{
-    float string_to_real();
+float time_form(char *expr, float total, float dt) {
     double gdt, val;
-    char *s, *index();
+    char *s;
 
     /*Calculate the grid-motion-limited time step*/
     if ((s = index(expr, 'g')) != 0 && s[1] == 'd' && s[2] == 't') {
@@ -393,8 +381,7 @@ float dt;
  *  Original:	MEL	10/86						*
  *									*
  ************************************************************************/
-double start_step(float temp, int cont)
-{
+double start_step(float temp, int cont) {
     double *oarea;
     register int j;
     register int i;

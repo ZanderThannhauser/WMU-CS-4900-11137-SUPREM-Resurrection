@@ -48,9 +48,7 @@ void unspecify(struct par_str **par);
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-char *parse_real(str, dval) char *str;
-float *dval;
-{
+char *parse_real(char *str, float *dval) {
     char *s;
     int leading = FALSE, decimal = FALSE;
 
@@ -250,8 +248,7 @@ struct par_str **parloc;
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-int check(char *str, struct par_str *par)
-{
+int check(char *str, struct par_str *par) {
     char *argv[NUMPAR];
     struct par_str *indx;
     val_str value;

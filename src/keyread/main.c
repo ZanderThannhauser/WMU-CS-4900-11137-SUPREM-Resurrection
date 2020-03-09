@@ -18,7 +18,6 @@
 #include <sys/stat.h>
 #include <fcntl.h>
 
-
 #define STATIC_ALLOCATION_TIME
 #include "../include/check.h"
 #include "../include/key.h"
@@ -28,6 +27,7 @@
 #include "./parser.h"
 #include "./expand.h"
 #include "./write.h"
+#include "main.h"
 // end of includes
 
 // 2020 forward declarations
@@ -47,8 +47,7 @@ char depthstr[20];
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-struct par_str **push(par) struct par_str **par;
-{
+struct par_str **push(struct par_str **par) {
     int i;
 
     stack[depth++] = par;

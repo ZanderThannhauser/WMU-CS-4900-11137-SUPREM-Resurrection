@@ -25,7 +25,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 /************************************************************************
  *									*
  *	This file contains routines which, for one reason or another	*

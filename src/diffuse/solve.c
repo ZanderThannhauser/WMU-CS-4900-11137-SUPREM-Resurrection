@@ -19,6 +19,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <sys/param.h>
+#include <assert.h>
 #include <sys/times.h>
 
 #include "./src/include/constant.h"
@@ -31,16 +32,16 @@
 #include "./src/include/matrix.h"
 
 // 2020 includes:
+#include "./src/debug.h"
 #include "./src/diffuse/setup.h"
 #include "./src/math/solblk.h"
 #include "solve.h"
 // end of includes
 
 // 2020 forward declarations
-int update_vars(double* nm, int nsol, int* sol,
-	int nv, double** vars, double** update);
+int update_vars(double *nm, int nsol, int *sol, int nv, double **vars,
+                double **update);
 // end of declarations
-
 
 /* HZ is 100 per Mike Eldredge on the Convex,
    which should be included in the file sys/param, above*/
@@ -73,10 +74,9 @@ int update_vars(double* nm, int nsol, int* sol,
  *									*
  ************************************************************************/
 
-int soldif_tr(double del_t, float temp, double **old,
-	double **new, double **olda, double **newa,
-	double *oldarea, double *newarea, int init)
-{
+int soldif_tr(double del_t, float temp, double **old, double **new,
+              double **olda, double **newa, double *oldarea, double *newarea,
+              int init) {
 
     /*compute the appropriate boundary condition elements*/
     bval_compute(temp, new, del_t);
@@ -112,12 +112,10 @@ int soldif_tr(double del_t, float temp, double **old,
  *  Original:	MEL	1/86						*
  *									*
  ************************************************************************/
-int soldif_bdf(double del_t, double old_t, float temp,
-	double **new, double **mid, double **old,
-	double **newa, double **mida, double **olda,
-	double *newarea, double *midarea, double *oldarea,
-	int init)
-{
+int soldif_bdf(double del_t, double old_t, float temp, double **new,
+               double **mid, double **old, double **newa, double **mida,
+               double **olda, double *newarea, double *midarea, double *oldarea,
+               int init) {
 
     /*compute the appropriate boundary condition elements*/
     bval_compute(temp, new, del_t);
@@ -155,8 +153,8 @@ int soldif_bdf(double del_t, double old_t, float temp,
  *  Original:	MEL	11/85						*
  *									*
  ************************************************************************/
-void steady_state(float temp, int nsol, int *sol, double **new, double *newarea)
-{
+void steady_state(float temp, int nsol, int *sol, double **new,
+                  double *newarea) {
     register int i, k, sk;
     int elim[MAXIMP];
 
@@ -240,8 +238,7 @@ void steady_state(float temp, int nsol, int *sol, double **new, double *newarea)
  *  Original:	MEL	5/88						*
  *									*
  ************************************************************************/
-int soldif(int init, char *label, void (*do_setup)(double*))
-{
+int soldif(int init, char *label, void (*do_setup)(double *)) {
     register int i, si, j;              /*standard flame about indices*/
     int converge = FALSE;               /*are we converged yet??*/
     int count, blk;                     /*loop count*/
@@ -252,7 +249,7 @@ int soldif(int init, char *label, void (*do_setup)(double*))
     double scrhs, lstnm = 1.0e37;
     int negat = FALSE;
     int factor;
-    double t1, norm2();
+    double t1;
     double absrhserr = (mode == ONED) ? (1.0e5) : (10);
     char *ans = "  %c%-4d    %-11.5g  %-6.4g  %-6.4g  %-7.5g  %4d\n";
     char *s1 = "   iter    newton       setup   solve   ln rhs   Blk   (%s)\n";
@@ -292,6 +289,8 @@ int soldif(int init, char *label, void (*do_setup)(double*))
         case RF_TIM:
             factor = (count == 1) && init;
             break;
+        default:
+            NOPE;
         }
 
         /*solve it with the appropriate method*/
@@ -369,9 +368,8 @@ int soldif(int init, char *label, void (*do_setup)(double*))
  *  Original:	MEL	11/85  (Older than this, subroutine date)	*
  *									*
  ************************************************************************/
-int update_vars(double* nm, int nsol, int* sol,
-	int nv, double** vars, double** update)
-{
+int update_vars(double *nm, int nsol, int *sol, int nv, double **vars,
+                double **update) {
     register int bi, si, j; /*loop counters*/
     double tmp;
     int imp;

@@ -28,6 +28,8 @@
 #include "./src/plot/plot.h"
 #include "./src/refine/dbase.h"
 #include "./src/refine/triang.h"
+#include "./src/dbase/edge.h"
+#include "./src/dbase/geom.h"
 #include "tridata.h"
 // end of includes
 
@@ -40,15 +42,10 @@
  * bp_edge is non-null.  Then the region which contains that
  * edge is left on top.
  *----------------------------------------------------------------------*/
-int sp_reg(
-	struct LLedge* lep1,
-	struct LLedge* lep2,
-	struct LLedge* bp_look)
-{
+int sp_reg(struct LLedge *lep1, struct LLedge *lep2, struct LLedge *bp_look) {
     int ie, ir, iR, f, enew, ltmp, llen, slen, lnreg, shreg, i;
     struct LLedge *bp, *bnd, *plep1, *plep2, *maxa, *less;
     struct sreg_str *parent;
-    double intang();
     int fnd;
 
     /*...Make lep2-lep1 the shorter path. */
@@ -168,8 +165,7 @@ int sp_reg(
  * triangulation recursively breaks whatever region it's working on into
  * smaller pieces, and we want the user regions to remain after we're done.
  *----------------------------------------------------------------------*/
-void dupl(int ir)
-{
+void dupl(int ir) {
 
     int rnew, f;
     struct LLedge *bnd, *bp;

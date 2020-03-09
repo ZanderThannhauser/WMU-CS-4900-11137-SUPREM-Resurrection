@@ -25,6 +25,7 @@
 #include "./src/include/dbaccess.h"
 
 // 2020 includes:
+#include "./src/debug.h"
 #include "./src/misc/get.h"
 #include "./src/mesh/ig2_meshio.h"
 #include "./src/mesh/rect.h"
@@ -53,6 +54,7 @@ void initialize(char *par, struct par_str *param) {
     double conc, ivratio;
     int imp = -1;
     char *infile;
+    ENTER;
 
     /*get the type of mesh to be read, and the filename*/
     infile = get_string(param, "infile");
@@ -109,15 +111,23 @@ void initialize(char *par, struct par_str *param) {
 
     /*do we have an structure file input? */
     if (infile) {
-        if ((ier = ig2_read(infile, lflip, scale)) < 0)
+        HERE;
+        if ((ier = ig2_read(infile, lflip, scale)) < 0) {
+            EXIT;
             return; // (ier);
+        }
         by_nd = nn == 0;
     } else {
+        HERE;
         /* At this point we must already have the lines, regions, bounds .*/
-        if ((ier = squares(ivratio)) < 0)
+        if ((ier = squares(ivratio)) < 0) {
+            EXIT;
             return; // (ier);
+        }
         by_nd = TRUE;
     }
+    
+    HERE;
     create_db(by_nd);
 
     /* create the pointers for the new impurity */
@@ -173,5 +183,6 @@ void initialize(char *par, struct par_str *param) {
             SET_FLAGS(impa, ACTIVE);
         }
     }
+    EXIT;
     return; // (0);
 }

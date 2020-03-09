@@ -24,6 +24,7 @@
 
 // 2020 includes:
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
 #include "Selenium.h"
 // end of includes
 
@@ -82,10 +83,8 @@ static double Sesstemp = 0.0;
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Sediff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf, double *iprt,
-	double *vprt)
-{
+void Sediff_coeff(float temp, double **new, double **equil, double *noni,
+                  double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     double Dix[MAXMAT];
@@ -124,9 +123,8 @@ void Sediff_coeff(float temp, double **new, double **equil,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Seactive(int simple, int nn, float temp,
-	double **conc, double **act, double **equil, double *noni)
-{
+void Seactive(int simple, int nn, float temp, double **conc, double **act,
+              double **equil, double *noni) {
     register int i;
     register int j;
     register int ss = imptosol[iSe];
@@ -208,8 +206,7 @@ void Seactive(int simple, int nn, float temp,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Seboundary(struct bound_str *bval)
-{
+void Seboundary(struct bound_str *bval) {
     double f;
     double h, m;
     int sol; /*the solution location of antimony*/
@@ -278,7 +275,7 @@ void Seboundary(struct bound_str *bval)
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void selenium(char *par, struct par_str* param) {
+void selenium(char *par, struct par_str *param) {
     int mat;
     int mat2 = -1;
     register int i, j;

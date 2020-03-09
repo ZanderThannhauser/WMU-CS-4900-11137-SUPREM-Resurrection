@@ -33,7 +33,7 @@
 // end of includes
 
 // 2020 forward declarations
-void compute_rate(double* rate, int* prio);
+void compute_rate(double *rate, int *prio);
 void rate_trip(int p, double rate, int t1, int t2);
 // end of declarations
 
@@ -52,8 +52,7 @@ void rate_trip(int p, double rate, int t1, int t2);
  *  Original:	MEL	5/88						*
  *									*
  ************************************************************************/
-void phys_etch(double *rate, double time)
-{
+void phys_etch(double *rate, double time) {
     double total = 0.0, dt, dtmax, maxr = 0.0;
     register int xsol, ysol;
     register int i, j;
@@ -142,8 +141,7 @@ void phys_etch(double *rate, double time)
  *  point in the mesh.							*
  *									*
  ************************************************************************/
-void compute_rate(double* rate, int* prio)
-{
+void compute_rate(double *rate, int *prio) {
     struct line *s;
     double lastv[MAXDIM];
     double newv[MAXDIM], perp[MAXDIM], dir[MAXDIM], dis;
@@ -280,8 +278,7 @@ void compute_rate(double* rate, int* prio)
  *  point in the mesh.							*
  *									*
  ************************************************************************/
-void rate_trip(int p, double rate, int t1, int t2)
-{
+void rate_trip(int p, double rate, int t1, int t2) {
     int i, fj, nb;
     int p1, p2;
     int xsol = imptosol[XVEL];

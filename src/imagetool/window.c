@@ -11,7 +11,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 #ifdef WDEBUG
 main() {
     float xarray[101];
@@ -40,11 +39,8 @@ main() {
 }
 #endif /*WDEBUG*/
 
-void window(float x, float y,
-	float* xarray, float* yarray,
-	int xsize, int ysize,
-	int* xlo, int* xhi, int* ylo, int* yhi)
-{
+void window(float x, float y, float *xarray, float *yarray, int xsize,
+            int ysize, int *xlo, int *xhi, int *ylo, int *yhi) {
     static int lo;
     static int hi;
     static int middle;

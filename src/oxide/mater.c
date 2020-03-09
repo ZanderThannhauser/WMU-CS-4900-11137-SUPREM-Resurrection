@@ -271,9 +271,7 @@ void SupToXtal(double *normal, double *vec3) {
  * known orientations.
  * Original: CSR 8/87
  *----------------------------------------------------------------------*/
-float DoOriDep(dir, valOri) double *dir; /* Crystal direction */
-float valOri[3];                         /* value in three known directions */
-{
+float DoOriDep(double *dir, float valOri[3]) {
     /* Known values: */
     /*100,   110,      111*/
     static float fval[Nornt] = {1.0, 0.70710678, 0.57735027};

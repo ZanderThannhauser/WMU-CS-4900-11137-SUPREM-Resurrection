@@ -37,7 +37,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 /************************************************************************
  *									*
  *	find_surf( p ) - find and sort the surface points left to right *

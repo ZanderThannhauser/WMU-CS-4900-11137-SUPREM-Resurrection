@@ -81,11 +81,7 @@ char *alloc_tri() {
 /*
  * make an element with vertices and neighbor information
  */
-int mk_ele(nv, v, nb, b, r, flag) int nv, *v;
-int nb, *b;
-int r;
-int flag;
-{
+int mk_ele(int nv, int *v, int nb, int *b, int r, int flag) {
     char *err;
     register int i, j, p, t;
 
@@ -161,9 +157,7 @@ int mk_ele_pt(int nv, int *v, int reg) {
 /*
  * mk an element out of nodes
  */
-int mk_ele_nd(nv, v, r) int nv, *v;
-int r;
-{
+int mk_ele_nd(int nv, int *v, int r) {
     char *err;
     int i;
     int nb = (mode == ONED) ? 2 : 3;

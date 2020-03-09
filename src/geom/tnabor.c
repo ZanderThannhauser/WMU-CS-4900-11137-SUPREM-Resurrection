@@ -12,7 +12,7 @@
  *
  * Original: CSR Nov 83
  *---------------------------------------------------------------------*/
- 
+
 #include "./src/include/constant.h"
 #include "./src/include/geom.h"
 #include "./src/include/global.h"

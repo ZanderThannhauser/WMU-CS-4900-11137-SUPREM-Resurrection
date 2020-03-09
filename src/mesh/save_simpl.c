@@ -34,6 +34,7 @@
 #include "./src/geom/limits.h"
 #include "./src/mesh/simpl.h"
 #include "./src/misc/panic.h"
+#include "./src/imagetool/fill_grid.h"
 #include "save_simpl.h"
 // end of includes
 
@@ -79,11 +80,12 @@ int simpl_write(char *SIMPLfilename, char *SIMPLheaderfilename) {
      *   line is blank then no information present
      */
 
-    fgets(buffer, BUFFERSIZE, SIMPLheader);
-    while (!feof(SIMPLheader)) {
-        fputs(buffer, SIMPLfile);
-        fgets(buffer, BUFFERSIZE, SIMPLheader);
-    }
+    if (fgets(buffer, BUFFERSIZE, SIMPLheader))
+        while (!feof(SIMPLheader)) {
+            if (fputs(buffer, SIMPLfile))
+                if (fgets(buffer, BUFFERSIZE, SIMPLheader))
+                    break;
+        }
     fclose(SIMPLheader);
 
     /*  need to do something about extraneous stuff on the left side.
@@ -264,7 +266,6 @@ void write_SIMPLPolygon(FILE *SIMPLfile) {
 void write_SIMPLGrid(FILE *SIMPLfile, float *xloc, int xlocsize, float *yloc,
                      int ylocsize) {
 
-    extern int fill_grid();
     int ix;
     int iy;
     static float *data;

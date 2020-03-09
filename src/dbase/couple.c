@@ -42,8 +42,7 @@
  *  Original:	MEL	11/85						*
  *									*
  ************************************************************************/
-void sum_coeff(double *area)
-{
+void sum_coeff(double *area) {
     register int t, i, j, s, n1, n2, m1, m2;
 
     /* zero the summing array */

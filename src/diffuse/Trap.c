@@ -12,7 +12,6 @@
 #include <math.h>
 #include <stdio.h>
 
-
 #include "./src/include/constant.h"
 #include "./src/include/defect.h"
 #include "./src/include/diffuse.h"
@@ -22,7 +21,6 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
 // 2020 includes:
 #include "./src/misc/get.h"
 #include "Trap.h"
@@ -30,7 +28,6 @@
 
 // 2020 forward declarations
 // end of declarations
-
 
 /************************************************************************
  *									*
@@ -53,8 +50,7 @@
  *  Original:	MEL	11/85						*
  *									*
  ************************************************************************/
-void trap(char *par, struct par_str* param)
-{
+void trap(char *par, struct par_str *param) {
     int mat;
 
     /*get the material number specified*/

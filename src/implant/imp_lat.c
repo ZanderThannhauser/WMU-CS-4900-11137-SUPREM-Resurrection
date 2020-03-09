@@ -39,8 +39,7 @@
  *  Original:	MEL	1/87						*
  *									*
  ************************************************************************/
-double imp_latr(double pos, struct imp_info *data)
-{
+double imp_latr(double pos, struct imp_info *data) {
     double val;
 
     val = exp(-(pos * pos) / (2.0 * data->lat[LATSIG] * data->lat[LATSIG]));

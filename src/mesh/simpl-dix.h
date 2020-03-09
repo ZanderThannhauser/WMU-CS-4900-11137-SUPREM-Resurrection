@@ -105,8 +105,6 @@
  * Macro procedures.
  */
 
-char *CheckPtr();
-
 #define Alloc(type) ((type *)CheckPtr((char *)malloc(sizeof(type))))
 
 #define AllocN(n, type)                                                        \

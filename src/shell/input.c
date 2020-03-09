@@ -15,6 +15,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 #include <unistd.h>
 
 #include "./src/include/shell.h"
@@ -38,8 +39,7 @@ char *read_line(char *prompt);
  *	Original	Mark E. Law		Sept, 1984		*
  *									*
  ************************************************************************/
-void get_input(FILE *in, int per)
-{
+void get_input(FILE *in, int per) {
     int i;
     char *s;
 
@@ -93,12 +93,11 @@ void get_input(FILE *in, int per)
 }
 
 #ifndef HAVE_KSH
-char *read_line(char *prompt)
-{
+char *read_line(char *prompt) {
     char *s = malloc(128);
 
     fputs(prompt, stderr);
-    (void)fgets(s, 128, stdin);
+    assert(fgets(s, 128, stdin));
     return (s);
 }
 #endif

@@ -10,7 +10,7 @@
 /*
  * $Log:
  */
- 
+
 #include <math.h>
 #include <stdio.h>
 
@@ -24,6 +24,7 @@
 
 // 2020 includes:
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
 #include "Silicon.h"
 // end of includes
 
@@ -82,10 +83,8 @@ static double Sisstemp = 0.0;
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Sidiff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf, double *iprt,
-	double *vprt)
-{
+void Sidiff_coeff(float temp, double **new, double **equil, double *noni,
+                  double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     double Dix[MAXMAT];
@@ -123,9 +122,8 @@ void Sidiff_coeff(float temp, double **new, double **equil,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Siactive(int simple, int nn, float temp,
-	double **conc, double **act, double **equil, double *noni)
-{
+void Siactive(int simple, int nn, float temp, double **conc, double **act,
+              double **equil, double *noni) {
     register int i;
     register int j;
     register int ss = imptosol[iSi];
@@ -207,8 +205,7 @@ void Siactive(int simple, int nn, float temp,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Siboundary(struct bound_str *bval)
-{
+void Siboundary(struct bound_str *bval) {
     double f;
     double h, m;
     int sol; /*the solution location of antimony*/
@@ -277,8 +274,7 @@ void Siboundary(struct bound_str *bval)
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void silicon(char *par, struct par_str* param)
-{
+void silicon(char *par, struct par_str *param) {
     int mat;
     int mat2 = -1;
     register int i, j;

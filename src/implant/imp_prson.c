@@ -55,9 +55,7 @@
 // 2020 forward declarations
 // end of declarations
 
-
-double prson(double x, struct imp_info *pc)
-{
+double prson(double x, struct imp_info *pc) {
 
     double b1, disc, f1, f2, f3, f4, f5;
     double val; /* return value */

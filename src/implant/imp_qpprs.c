@@ -24,13 +24,11 @@
 // 2020 forward declarations
 // end of declarations
 
-
 #define Bool short
 #define T 1
 #define F 0
 
-void qpprs(double dx, double maxd, struct imp_info *cvals)
-{
+void qpprs(double dx, double maxd, struct imp_info *cvals) {
 
     double x, ppeak;
     double v, v0 = 0.0;

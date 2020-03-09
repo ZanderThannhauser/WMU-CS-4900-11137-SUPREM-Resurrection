@@ -42,7 +42,7 @@
 // end of includes
 
 // 2020 forward declarations
-int imp_select(struct par_str* param, int *imp, int *ion);
+int imp_select(struct par_str *param, int *imp, int *ion);
 // end of declarations
 
 /************************************************************************
@@ -53,7 +53,7 @@ int imp_select(struct par_str* param, int *imp, int *ion);
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void implant(char *par, struct par_str* param) {
+void implant(char *par, struct par_str *param) {
     register int i, j;
     int imp, impa, ion, sol;
     int isol, vsol;
@@ -63,18 +63,16 @@ void implant(char *par, struct par_str* param) {
     double ang;
     ENTER;
 
-    if (InvalidMeshCheck())
-    {
-    EXIT;
+    if (InvalidMeshCheck()) {
+        EXIT;
         return;
-     }   
+    }
 
     /*get the impurity number of the place to put the implant*/
-    if (imp_select(param, &imp, &ion) == -1)
-    {
-    EXIT;
+    if (imp_select(param, &imp, &ion) == -1) {
+        EXIT;
         return;
-        }
+    }
     sol = imptosol[imp];
 
     /*get the main descriptive values for the implant*/
@@ -198,9 +196,8 @@ void implant(char *par, struct par_str* param) {
  *  Mod 1:	SEH	02/92  Add GaAs elements			*
  *									*
  ************************************************************************/
-int imp_select(struct par_str* param, int *imp, int *ion)
-{
-ENTER;
+int imp_select(struct par_str *param, int *imp, int *ion) {
+    ENTER;
     if (get_bool(param, "silicon")) {
         *ion = *imp = I;
     } else if (get_bool(param, "arsenic")) {
@@ -238,6 +235,6 @@ ENTER;
 
     /*then add a new one*/
     add_impurity(*imp, 1.0e+5, -1);
-EXIT;
+    EXIT;
     return (0);
 }

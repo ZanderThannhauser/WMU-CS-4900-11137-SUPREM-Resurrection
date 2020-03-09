@@ -55,8 +55,6 @@ void cg_block(int nv, int nsol, int *sol, int *il, int loff, double *l,
 void upd_p(int nv, double *p1, double *p2, double *qinvr, double *ap1,
            double *ap2, double *aqinvr, double beta);
 
-extern double norm2();
-
 #define BLKERR 1.0e-2
 
 /************************************************************************
@@ -70,10 +68,8 @@ extern double norm2();
  *              LCC      6/90 (mxv_tri for 1-D. mxv_diag for B_DIAG.)   *
  *									*
  ************************************************************************/
-void solve_blocks(int nv, int *sol, int nsol,
-	int *elim, int *il, double *l,
-	int loff, double *wrkspc[], int factor)
-{
+void solve_blocks(int nv, int *sol, int nsol, int *elim, int *il, double *l,
+                  int loff, double *wrkspc[], int factor) {
     register int i, si, sj;
     register int bi, bj;
     int lsol[MAXIMP], lnsol;

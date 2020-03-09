@@ -42,8 +42,7 @@
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-int read_ukfile(char* name)
-{
+int read_ukfile(char *name) {
     FILE *fd;
     char *file;
     int status;
@@ -60,7 +59,7 @@ int read_ukfile(char* name)
         return (-1);
     }
 
-    status = read_list(&(cards[-1]), fd);
+    status = read_list(cards - 1, fd);
 
     /*now match up the command names with the card names*/
     for (i = 0; cards[i] && strlen(cards[i]->name) != 0; i++) {

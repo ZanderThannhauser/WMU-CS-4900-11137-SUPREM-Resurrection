@@ -12,6 +12,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "./src/include/constant.h"
 #include "./src/include/defect.h"
@@ -22,9 +23,8 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
-
 // 2020 includes:
+#include "./src/debug.h"
 #include "./src/diffuse/Interst.h"
 #include "./src/diffuse/Vacancy.h"
 #include "./src/dbase/alloc.h"
@@ -33,8 +33,6 @@
 
 // 2020 forward declarations
 // end of declarations
-
-
 
 static int vadd = 0, iadd = 0, tadd = 0;
 
@@ -150,11 +148,10 @@ void get_Cstar(int imp, int nv, float temp, double *noni, double *equil,
     }
 }
 
-void IVblock_set(int ss, float temp, int nsol,
-	int *solve, double *area, double **chem,
-	double **sub, double *inter,
-	double *vacan)
-{ defect_block(ss, temp, chem, inter, vacan, area); }
+void IVblock_set(int ss, float temp, int nsol, int *solve, double *area,
+                 double **chem, double **sub, double *inter, double *vacan) {
+    defect_block(ss, temp, chem, inter, vacan, area);
+}
 
 /************************************************************************
  *									*
@@ -164,11 +161,8 @@ void IVblock_set(int ss, float temp, int nsol,
  * Original:	MEL	1/88						*
  *									*
  ************************************************************************/
-void defect_block(int sol, float temp, double **chem,
-	double* inter,
-	double* vacan,
-	double* area)
-{
+void defect_block(int sol, float temp, double **chem, double *inter,
+                  double *vacan, double *area) {
     register int i, l, u;    /*indices, what else?*/
     register int col;        /*column of the matrix being worked on*/
     register int row;        /*row of the matrix being worked on*/
@@ -201,6 +195,8 @@ void defect_block(int sol, float temp, double **chem,
     } else if (imp == V) {
         Vcoupling(temp, area, chem, equil, dequ, newb);
         val = vacan;
+    } else {
+        NOPE;
     }
 
     /*traps do not diffuse, so quit here..*/

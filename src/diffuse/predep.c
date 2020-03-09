@@ -23,12 +23,12 @@
 #include "./src/dbase/alloc.h"
 #include "./src/dbase/dispose.h"
 #include "./src/dbase/locate.h"
+#include "./src/oxide/Oxidant.h"
 #include "predep.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
-
 
 /************************************************************************
  *									*
@@ -39,7 +39,7 @@
  *									*
  ************************************************************************/
 void predep() {
-    float conc, Oss();
+    float conc;
     int i, j, ie;
     int imp, impa;
 

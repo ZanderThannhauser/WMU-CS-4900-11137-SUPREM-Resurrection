@@ -28,7 +28,6 @@
 #include "./src/include/material.h"
 #include "./src/include/sysdep.h"
 
-
 // 2020 includes:
 #include "./src/debug.h"
 #include "damage.h"
@@ -36,8 +35,6 @@
 
 // 2020 forward declarations
 // end of declarations
-
-
 
 #ifdef ardent
 #define ERFC(A) ((A > 0) ? (erfc(A)) : (1.0 + erf(A)))
@@ -78,8 +75,7 @@ double nvd[4][5] = {{-0.341, 0.00270, 130, 0.307, 38.6},
  *  Original:	MEL	7/87						*
  *									*
  ************************************************************************/
-void setdam(int imp, double energy, double* damstat)
-{
+void setdam(int imp, double energy, double *damstat) {
     int in;
     double a, b, c, d, p, e0, e;
     double a1, a2, a3, nv, z0, z1, c1, c2, wt;
@@ -101,9 +97,9 @@ void setdam(int imp, double energy, double* damstat)
         in = 3;
         break;
     default:
-    	// 2020: I hope this never happends
-    	NOPE;
-    	break;
+        // 2020: I hope this never happends
+        NOPE;
+        break;
     }
 
     /*compute the a1 term*/
@@ -189,9 +185,8 @@ void setdam(int imp, double energy, double* damstat)
         wt = 1.0;
     }
     // 2020: I hope this never happends:
-    else
-    {
-    	NOPE;
+    else {
+        NOPE;
     }
     /*convert from microns-1 to centi-1*/
     c1 *= 1.0e4;
@@ -245,10 +240,9 @@ double *damstat;
     } else if (damstat[DAM_WT] == 2.0) {
         val = (depth - damstat[DAM_A2]) / damstat[DAM_A3];
         val = damstat[DAM_C2] * exp(-val * val / 2.0);
-    } else
-    {
-    	// 2020: I hope this never happends
-    	NOPE;
+    } else {
+        // 2020: I hope this never happends
+        NOPE;
     }
 
     /*scale by the damage amounts*/

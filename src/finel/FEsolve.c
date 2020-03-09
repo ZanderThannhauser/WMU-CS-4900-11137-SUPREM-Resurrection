@@ -10,7 +10,6 @@
  * Original: CSR Dec 1986
  *---------------------------------------------------------------------*/
 
-
 #include <assert.h>
 #include <math.h>
 #include <stdio.h>
@@ -54,7 +53,6 @@ void FEscramble(int *reorder);
 
 #define neq (ia[0] - 1)
 static int FEverbose;
-extern double FEupdnorm();
 
 #ifdef DEBUG
 #ifdef CONVEX
@@ -80,7 +78,6 @@ void FEsolve(int verbose) {
     double *a, *l, *rhs;      /* Matrix elements, right hand side */
     int *pv = 0;              /* Inverse ordering */
     double *solo, *deln, *delo, *derr;
-    double elambda();   /* Lambda step, initial value, errnorm */
     int i, j, k;        /* Node, dof, eqn indices */
     int ContinMeth = 2; /* Which continuation method I decided on. */
     FEverbose = verbose;
@@ -393,7 +390,7 @@ int FEnewton(int *ia, int aoff, double *a, int *il, int loff, double *l,
              double *rhs) {
     int loop, converge;
     int i, j, k, TmpND;
-    double upd, FErhsnorm(), norm, onorm, *sol0;
+    double upd, norm, onorm, *sol0;
     double *updv; /* May keep update vector to scale with tk */
     double *nupd, progress;
     float ProjIter;
@@ -516,8 +513,7 @@ int FEnewton(int *ia, int aoff, double *a, int *il, int loff, double *l,
 
 /*-----------------FEnorm-----------------------------------------------
  *----------------------------------------------------------------------*/
-double FErhsnorm(a, rhs) double *a, *rhs;
-{
+double FErhsnorm(double *a, double *rhs) {
     int i, j, k;
     double RhsNorm[MAXDOF], norm, size;
 
@@ -534,8 +530,7 @@ double FErhsnorm(a, rhs) double *a, *rhs;
     return (sqrt(norm));
 }
 
-double FEupdnorm(delta) double *delta;
-{
+double FEupdnorm(double *delta) {
     int i, j, k;
     double norm = 0, sol, upd;
     float profile = 1e20;
@@ -569,7 +564,7 @@ void FEsymb(int **Pia, int **Pil, int *Paoff, int *Ploff, int **Ppv) {
     int *ia, *il, aoff, loff;   /* Matrix map */
     int *reorder;               /* Ordering at each step */
     int *accord, *accordn, *pv; /* Accumulated ordering, temp copy, temp iv */
-    int i, *lvls, lsize = 0, nonzero, FEconnect();
+    int i, *lvls, lsize = 0, nonzero;
     char talk[60];
 
     accord = salloc(int, FEnn);

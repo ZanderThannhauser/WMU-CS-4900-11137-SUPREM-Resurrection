@@ -30,6 +30,11 @@
 #include "./src/dbase/locate.h"
 #include "./src/dbase/make_db.h"
 #include "./src/refine/sp_edge.h"
+#include "./src/dbase/region.h"
+#include "./src/dbase/node.h"
+#include "./src/dbase/element.h"
+#include "./src/dbase/point.h"
+#include "./src/dbase/geom.h"
 #include "new_layer.h"
 // end of includes
 
@@ -336,7 +341,7 @@ int split_thick(n, Mox, Msil, vdisp) int n;
 int Mox, Msil;
 float vdisp[MAXDIM];
 {
-    float SilToOx[MAXDIM], OxToSil[MAXDIM], dox, rough_perp();
+    float SilToOx[MAXDIM], OxToSil[MAXDIM], dox;
 
     /* Compute a local normal */
     if (local_normal(n, Msil, OxToSil))
@@ -369,8 +374,7 @@ float vdisp[MAXDIM];
  * Return value: spacing value, scaled by length of direction vector.
  * Diagnostics:  return -1 for bad input or directions way out of the material.
  *----------------------------------------------------------------------*/
-float rough_perp(int p, int matl, float dir[MAXDIM])
-{
+float rough_perp(int p, int matl, float dir[MAXDIM]) {
     int n, it, t, j, k, ot, o1, o2;
     float p_ot[MAXDIM], o1_o2[MAXDIM], dlen, dlen2, olen2, cos2, cosd,
         xn[MAXDIM];
@@ -496,6 +500,10 @@ float rough_perp(int p, int matl, float dir[MAXDIM])
 int local_normal(int n, int matl, float ln[MAXDIM]) {
     int it, t, j, nbr, head, tail, is_refl = 0, p1, p2, v, nvec = 0;
     float arrow[MAXDIM], tmp, lln, len, refl[MAXDIM], cosf, save[MAXDIM];
+
+    // 2020: These values will be overwritten before they are used:
+    save[0] = save[1] = 0.0;
+    // 2020: They're just here to remove the error
 
     switch (mode) {
     case ONED:

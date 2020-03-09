@@ -31,6 +31,7 @@
 #include "./src/oxide/viscous.h"
 #include "./src/dbase/locate.h"
 #include "./src/dbase/new_layer.h"
+#include "./src/diffuse/solve_time.h"
 #include "oxide_vel.h"
 // end of includes
 
@@ -128,7 +129,6 @@ void oxide_vel(float temp, int ornt, int oxhow, double dt) {
  *----------------------------------------------------------------------*/
 void Onvel(int io, float vel[2]) {
     int Ps = imptosol[Psi];
-    float Ovel();
     int is;
     double myNoni;
     double conc;
@@ -175,11 +175,7 @@ int NeedNewFlow() {
     }
 }
 
-void SetFuse() {
-    extern double grid_dt();
-
-    fuse = total + oxide_redo * grid_dt();
-}
+void SetFuse() { fuse = total + oxide_redo * grid_dt(); }
 
 /*-----------------WipeVel----------------------------------------------
  * Wipe the slate clean before starting again.

@@ -31,7 +31,6 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
 // 2020 includes:
 #include "./src/math/blklu.h"
 #include "./src/diffuse/active.h"
@@ -41,7 +40,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 /************************************************************************
  *									*
  *	do_setup( ) - This routine is a simple cover function to 	*
@@ -50,8 +48,7 @@
  *  Original:	MEL	5/88						*
  *									*
  ************************************************************************/
-void do_setup(double *rhs2)
-{
+void do_setup(double *rhs2) {
     register int i, bi, bs;
     int is = imptosol[I];
     int vs = imptosol[V];
@@ -118,8 +115,7 @@ void do_setup(double *rhs2)
  *  Original:	MEL	5/88						*
  *									*
  ************************************************************************/
-void zero_setup(struct call_str *cs)
-{
+void zero_setup(struct call_str *cs) {
     register int bi, bs, i, j, js;
 
     for (bi = 0; bi < cs->nsol; bi++) {
@@ -155,8 +151,7 @@ void zero_setup(struct call_str *cs)
  *  Original:	MEL	5/88						*
  *									*
  ************************************************************************/
-void bval_compute(float temp, double **chem, double del)
-{
+void bval_compute(float temp, double **chem, double del) {
     register int i;
     register int nx1, nx2;
 
@@ -256,10 +251,8 @@ void time_val(int sol, double *rhsnm, struct call_str *cs) {
  *									*
  ************************************************************************/
 void setup_2d(int sol, float temp, int nsol, int *solve, double *inter,
-	double *vacan, double **chem, double **act,
-	double **equil, double *newarea, struct bound_str *bval,
-         int bcnum)
-{
+              double *vacan, double **chem, double **act, double **equil,
+              double *newarea, struct bound_str *bval, int bcnum) {
     register int imp;
     register int i;
     int nx1, nx2;
@@ -299,8 +292,7 @@ void setup_2d(int sol, float temp, int nsol, int *solve, double *inter,
  *  Original:	MEL	8/88						*
  *									*
  ************************************************************************/
-void init_rhs(float temp, double **old, double **olda, double *oarea)
-{
+void init_rhs(float temp, double **old, double **olda, double *oarea) {
     int i, j, si;
     double rhsnm[MAXIMP]; /*the two norm of the right hand side*/
 

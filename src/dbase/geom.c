@@ -26,6 +26,7 @@
 
 // 2020 includes:
 #include "./src/misc/panic.h"
+#include "./src/geom/misc.h"
 #include "geom.h"
 // end of includes
 
@@ -44,8 +45,7 @@
  * Returns a value representing the goodness of a triangle, in [-1...+1].
  * Negative values are for clockwise triangles.
  *----------------------------------------------------------------------*/
-double good_tri(i, j, k) int i, j, k;
-{
+double good_tri(int i, int j, int k) {
 #define NORM 3.464101616 /* So equilaterals come out one. */
     double x1, y1, x2, y2, x3, y3, det, dd;
 
@@ -68,8 +68,6 @@ float *c;                                 /* Centre. */
 double *r;                                /* Radius. */
 {
     float p[MAXDIM], q[MAXDIM], dp[MAXDIM], dq[MAXDIM], alph[MAXDIM];
-    double dist();
-    int lil();
 
     /*...Center is defined by intersection of perp. bisectors of sides. */
     p[0] = 0.5 * (XC(j) + XC(i));
@@ -98,8 +96,7 @@ double *r;                                /* Radius. */
  * signed distance is positive.
  * Value returned is in units of the length of the edge.
  *----------------------------------------------------------------------*/
-void d_perp(struct edg_str* ep, int n, float alph[MAXDIM])
-{
+void d_perp(struct edg_str *ep, int n, float alph[MAXDIM]) {
     float p[MAXDIM], dp[MAXDIM], q[MAXDIM], dq[MAXDIM];
     int ier, i, j;
     static char err[40];
@@ -122,15 +119,13 @@ void d_perp(struct edg_str* ep, int n, float alph[MAXDIM])
     }
 }
 
-double l_edge(ie) int ie;
-{ return (pdist(pt_edg(ie, 0), pt_edg(ie, 1))); }
+double l_edge(int ie) { return (pdist(pt_edg(ie, 0), pt_edg(ie, 1))); }
 
 /*-----------------INTANG-----------------------------------------------
  * Return the internal angle of points p1-p2-p3.
  * Result in the range 0->2*PI.
  *----------------------------------------------------------------------*/
-double intang(n1, n2, n3) int n1, n2, n3;
-{
+double intang(int n1, int n2, int n3) {
     double dx1, dy1, dx2, dy2, l1, l2, denom, cosa, sina, alph;
 
     dx1 = XCP(n2) - XCP(n1);
@@ -162,8 +157,7 @@ double intang(n1, n2, n3) int n1, n2, n3;
  * Return 0 if ok,
  *        1 if parallel.
  *----------------------------------------------------------------------*/
-int lil(p, dp, q, dq, alph) float *p, *dp, *q, *dq, *alph;
-{
+int lil(float *p, float *dp, float *q, float *dq, float *alph) {
     double dx, dy, det;
 
     dx = p[0] - q[0];

@@ -56,8 +56,7 @@ float ymin, ymax;
  *  Original:	MEL	8/85						*
  *									*
  ************************************************************************/
-void get_edge(float mval[], int mat[], int *mnum, int dir, float value)
-{
+void get_edge(float mval[], int mat[], int *mnum, int dir, float value) {
     register int i;
     register int j, k, l, e;
     register int tstart;
@@ -203,23 +202,15 @@ void get_edge(float mval[], int mat[], int *mnum, int dir, float value)
             }
         }
     }
-    
-    #ifdef DEBUGGING_2020
-    
+
+#ifdef DEBUGGING_2020
+
     HERE;
     verpv(mval[0]);
     verpv(*mnum);
     HERE;
-    
-    #endif
-    
+
+#endif
+
     EXIT;
 }
-
-
-
-
-
-
-
-

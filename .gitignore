@@ -9,3 +9,6 @@ data/
 suprem
 keyread
 suprem
+
+*.mk
+*.str

@@ -30,7 +30,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 #define fetch(N, V, S, A)                                                      \
     if (is_specified(param, N))                                                \
     V = S * get_float(param, N) + A
@@ -82,8 +81,7 @@ void Psiboundary(struct bound_str *bval) {
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-void psi_card(char *par, struct par_str* param)
-{
+void psi_card(char *par, struct par_str *param) {
     int mat;
     int mat2 = -1;
 

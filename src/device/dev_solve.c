@@ -22,7 +22,6 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
 // 2020 includes:
 #include "./src/diffuse/setup.h"
 #include "./src/diffuse/solve.h"
@@ -32,9 +31,6 @@
 // 2020 forward declarations
 void dev_setup(double *rhs2);
 // end of declarations
-
-
-
 
 /*the amount of over solve needed for this inner loop*/
 #define NEWT 1.0e-2
@@ -97,8 +93,7 @@ void dev_solve(double *area, char *movie) {
  *  Original:	MEL	5/88						*
  *									*
  ************************************************************************/
-void dev_setup(double *rhs2)
-{
+void dev_setup(double *rhs2) {
     register int i, j, imp, bi, bs;
 
     /*zero everything we can think of*/

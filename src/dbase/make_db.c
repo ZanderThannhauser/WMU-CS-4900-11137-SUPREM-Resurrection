@@ -24,6 +24,7 @@
 #include "./src/include/material.h" /* For nmat mattyp GAS */
 
 // 2020 includes
+#include "./src/debug.h"
 #include "./src/dbase/node.h"
 #include "./src/dbase/locate.h"
 #include "./src/dbase/element.h"
@@ -63,6 +64,7 @@
  ************************************************************************/
 void create_db(int mk_nodes) {
     int i;
+    ENTER;
 
     /*make edge boundaries self-consistent with the points*/
     bc_dirty = FALSE;
@@ -93,6 +95,7 @@ void create_db(int mk_nodes) {
 
     /*next build the connectivity pieces that are not fundamental*/
     bd_connect("Mesh Creation");
+    EXIT;
 }
 
 /************************************************************************
@@ -105,6 +108,7 @@ void create_db(int mk_nodes) {
 void bd_connect(char *when) {
 
     int r;
+    ENTER;
 
     /*free all existing skeletons*/
     while (nsreg > 0)
@@ -145,4 +149,20 @@ void bd_connect(char *when) {
     /*check for consistency*/
     mtest1(when);
     mtest2(when);
+    
+    EXIT;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

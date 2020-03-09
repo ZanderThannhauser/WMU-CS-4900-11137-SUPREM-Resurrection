@@ -1,4 +1,6 @@
 
+#include "./src/misc/get.h"
+
 double Nmobil();
 
 void Ncoupling(float temp, double *area, double **new, double **equil,
@@ -7,3 +9,6 @@ void Ncoupling(float temp, double *area, double **new, double **equil,
 void Nboundary(struct bound_str *bval);
 
 void electron(char *par, struct par_str *param);
+
+double Phi_n(double elec, double psi, double ec, int mat, double *dqdp,
+             double *dqde);

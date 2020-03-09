@@ -29,6 +29,7 @@
 #include "./src/dbase/flip.h"
 #include "./src/dbase/locate.h"
 #include "./src/misc/panic.h"
+#include "./src/geom/misc.h"
 #include "geometry.h"
 // end of includes
 
@@ -38,6 +39,7 @@ void chp_fix(int obe);
 void tri_geom(int ie);
 void seg_geom(int ie);
 void repair_obtuse();
+float ehed_tri(int t, int e);
 // end of declarations
 
 #define report(S, A, B, C)                                                     \
@@ -111,10 +113,9 @@ void sum_edge() {
  * Calculate the coupling coefficient contribution from one side of
  * a triangle.
  *----------------------------------------------------------------------*/
-float gimme_ehed(it) int it;
-{
+float gimme_ehed(int it) {
     int t, e;
-    float l, ehed_tri();
+    float l;
 
     /*for all elements connected to this edge*/
     l = 0.0;
@@ -132,8 +133,7 @@ float gimme_ehed(it) int it;
  *      Original     	Mark E. Law		2/90			*
  *									*
  ************************************************************************/
-float ehed_tri(t, e) int t, e;
-{
+float ehed_tri(int t, int e) {
 #ifdef FOO
     if (!ask(tri[t], GEOMDN))
         do_geom(t);

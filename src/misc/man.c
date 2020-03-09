@@ -37,7 +37,7 @@
  *  systems.								*
  *									*
  ************************************************************************/
-void man(char *par, struct par_str* param) {
+void man(char *par, struct par_str *param) {
     FILE *help, *more;
     char *s;
     char filename[80];

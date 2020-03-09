@@ -43,11 +43,17 @@
 #include "./src/dbase/locate.h"
 #include "./src/dbase/dispose.h"
 #include "./src/dbase/make_db.h"
+#include "./src/dbase/neigh.h"
+#include "./src/dbase/point.h"
+#include "./src/dbase/node.h"
+#include "./src/dbase/element.h"
 #include "pi_meshio.h"
 // end of includes
 
 // 2020 forward declarations
+char *pi_dop(float **r1, float **tconc);
 int ShowElect(int show, int Pnelect, int Pnb, int *Pnbc, int *Pietype);
+char *pi_mat(int *Pnp, int *Pne, int *Pnmat, int **Ppt, int *Preg);
 // end of declarations
 
 static char *erret;
@@ -78,7 +84,6 @@ int pi_write(char *name, int show) {
     int i;
     float *Pr1, *Ptconc;
     int Pnp, Pne, Pnb, Pnelect, *Pnbc, *Pietype, *Ppt, Pnmat, Preg[10];
-    char *pi_elect(), *pi_dop(), *pi_mat();
     FILE *lu;
 
     if (mode != TWOD) {
@@ -148,8 +153,7 @@ int pi_write(char *name, int show) {
  *----------------------------------------------------------------------*/
 #define NPE 9 /* 9 electrodes in pisces */
 
-char *pi_elect(nb, nelect, nbc, ietype) int *nb, *nelect, **nbc, **ietype;
-{
+char *pi_elect(int *nb, int *nelect, int **nbc, int **ietype) {
     int Pnb, Pnelect, Pnelect0, *tmp, i, j, k, *Pnbc, *Pietype, bcode;
     int r_to_elec[MAXMAT]; /* Electrode code for each region  */
 
@@ -276,8 +280,7 @@ int ShowElect(int show, int Pnelect, int Pnb, int *Pnbc, int *Pietype) {
 
 /*-----------------PI_DOP-----------------------------------------------
  *----------------------------------------------------------------------*/
-char *pi_dop(r1, tconc) float **r1, **tconc;
-{
+char *pi_dop(float **r1, float **tconc) {
     int i, k;
     float *Pr1 = scalloc(float, np), *Ptconc = scalloc(float, np);
     float *tmp = scalloc(float, nn);
@@ -324,8 +327,7 @@ char *pi_dop(r1, tconc) float **r1, **tconc;
 
 /*-----------------Pi-mat-----------------------------------------------
  *----------------------------------------------------------------------*/
-char *pi_mat(Pnp, Pne, Pnmat, Ppt, Preg) int *Pnp, *Pne, *Pnmat, **Ppt, *Preg;
-{
+char *pi_mat(int *Pnp, int *Pne, int *Pnmat, int **Ppt, int *Preg) {
     int i, j;
 
     /* Count the number of regions with reconized materials */
@@ -362,7 +364,6 @@ char *pi_mat(Pnp, Pne, Pnmat, Ppt, Preg) int *Pnp, *Pne, *Pnmat, **Ppt, *Preg;
  *----------------------------------------------------------------------*/
 void reflect_grid(float sign, int xy) {
     float extreme;
-    char *alloc_tri(), *alloc_nd(), *alloc_pt();
     int i, neO, npO, j, ip;
     int an;
     int ap;

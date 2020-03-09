@@ -21,12 +21,12 @@
 
 // 2020 includes:
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
 #include "Gold.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
-
 
 /*definitions for impurity constants as a function of material*/
 /*pre exp constant with neutral V*/
@@ -66,10 +66,8 @@
  *  Revised:	MEL	3/86	(multiple materials)			*
  *									*
  ************************************************************************/
-void Audiff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf,
-	double *iprt, double *vprt)
-{
+void Audiff_coeff(float temp, double **new, double **equil, double *noni,
+                  double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     int sol = imptosol[Au];
@@ -107,8 +105,7 @@ void Audiff_coeff(float temp, double **new, double **equil,
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void Auboundary(struct bound_str *bval)
-{
+void Auboundary(struct bound_str *bval) {
     double f;
     double h, m;
     int sol; /*the solution location of antimony*/
@@ -152,14 +149,8 @@ void Auboundary(struct bound_str *bval)
     }
 }
 
-void Aucoupling(
-	float unused_0,
-	double *unused_1,
-	double **unused_2,
-	double **unused_3,
-	double **unused_4,
-	double **unused_5)
-{}
+void Aucoupling(float unused_0, double *unused_1, double **unused_2,
+                double **unused_3, double **unused_4, double **unused_5) {}
 
 /************************************************************************
  *									*
@@ -170,7 +161,7 @@ void Aucoupling(
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void gold(char *par, struct par_str* param) {
+void gold(char *par, struct par_str *param) {
     int i, j;
     int tmpfl, imp_flag, gro_flag;
     int mat;

@@ -24,6 +24,7 @@
 
 // 2020 includes:
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
 #include "Germanium.h"
 // end of includes
 
@@ -82,11 +83,8 @@ static double Gesstemp = 0.0;
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Gediff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf,
-	double *iprt,
-	double *vprt)
-{
+void Gediff_coeff(float temp, double **new, double **equil, double *noni,
+                  double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     double Dix[MAXMAT];
@@ -124,9 +122,8 @@ void Gediff_coeff(float temp, double **new, double **equil,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Geactive(int simple, int nn, float temp,
-	double **conc, double **act, double **equil, double *noni)
-{
+void Geactive(int simple, int nn, float temp, double **conc, double **act,
+              double **equil, double *noni) {
     register int i;
     register int j;
     register int ss = imptosol[iGe];
@@ -208,8 +205,7 @@ void Geactive(int simple, int nn, float temp,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Geboundary(struct bound_str *bval)
-{
+void Geboundary(struct bound_str *bval) {
     double f;
     double h, m;
     int sol; /*the solution location of antimony*/
@@ -278,7 +274,7 @@ void Geboundary(struct bound_str *bval)
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void germanium(char *par, struct par_str* param) {
+void germanium(char *par, struct par_str *param) {
     int mat;
     int mat2 = -1;
     register int i, j;

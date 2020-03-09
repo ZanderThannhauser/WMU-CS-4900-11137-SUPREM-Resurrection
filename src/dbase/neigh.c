@@ -40,8 +40,7 @@ static int work_pt;
  * and stores them up for fast access.  It returns the number of
  * neighbors.
  */
-int num_neigh_nd(n) int n;
-{
+int num_neigh_nd(int n) {
     int i, j, p, t;
 
     num_neigh = 0;
@@ -71,8 +70,7 @@ int num_neigh_nd(n) int n;
  * and stores them up for fast access.  It returns the number of
  * neighbors.
  */
-int neigh_nd(n, i) int n, i;
-{
+int neigh_nd(int n, int i) {
     if (n != work_nd)
         (void)num_neigh_nd(n);
     return (neigh_list[i]);
@@ -83,8 +81,7 @@ int neigh_nd(n, i) int n, i;
  * and stores them up for fast access.  It returns the number of
  * neighbors.
  */
-int num_neigh_pt(p) int p;
-{
+int num_neigh_pt(int p) {
     int i, j, n, t;
 
     num_neighp = 0;
@@ -114,8 +111,7 @@ int num_neigh_pt(p) int p;
  * and stores them up for fast access.  It returns the number of
  * neighbors.
  */
-int neigh_pt(p, i) int p, i;
-{
+int neigh_pt(int p, int i) {
     if (p != work_pt)
         (void)num_neigh_pt(p);
     return (neigh_plist[i]);

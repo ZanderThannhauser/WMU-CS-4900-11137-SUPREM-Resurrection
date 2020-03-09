@@ -19,7 +19,6 @@
 #include "./src/include/global.h"
 #include "./src/include/shell.h"
 
-
 // 2020 includes:
 #include "./src/shell/proc.h"
 #include "set.h"

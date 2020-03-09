@@ -26,6 +26,7 @@
 // 2020 includes:
 #include "./src/refine/triang.h"
 #include "./src/misc/panic.h"
+#include "./src/dbase/element.h"
 #include "grid.h"
 // end of includes
 
@@ -48,8 +49,7 @@ void grid(int ir, int rbn, int bflag, int spflag) {
 /*
  * 	Generate the line segments on a skeleton into elements
  */
-void lineseg(int ir, int rbn)
-{
+void lineseg(int ir, int rbn) {
     struct LLedge *bp;
     int i;
     int n[2];

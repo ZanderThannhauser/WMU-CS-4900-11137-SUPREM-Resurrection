@@ -24,6 +24,7 @@
 #include "./src/debug.h"
 #include "./src/check/eval.h"
 #include "./src/check/parse.h"
+#include "./src/shell/list.h"
 #include "macro.h"
 // end of includes
 
@@ -345,7 +346,6 @@ int arg_expand(char *s, struct macro_table *mac) {
     int i;
     int cval, cnam;
     struct macro_table *m = NULL;
-    char *list_parse();
 
     list = salloc(char, strlen(s) + 1);
     strcpy(list, s);

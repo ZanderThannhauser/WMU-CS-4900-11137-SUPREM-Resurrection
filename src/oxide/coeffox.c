@@ -325,8 +325,7 @@ void get_array(struct par_str *param, char *name, float **fla, int *nfla) {
  *----------------------------------------------------------------------*/
 void parse_array(char *input, float **Pfla, int *nfla) {
     static char sep[] = "\t\r\n ,/:;_|";
-    char *walk, *strtok();
-    extern double atof();
+    char *walk;
     int mfla = 0;
     float *fla = 0;
 

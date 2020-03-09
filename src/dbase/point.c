@@ -76,9 +76,7 @@ char *alloc_pt() {
 /*
  *  Create a point out of the minimal information required for it.
  */
-int mk_pt(nc, cord) int nc;
-float *cord;
-{
+int mk_pt(int nc, float *cord) {
     char *err;
     int i;
 

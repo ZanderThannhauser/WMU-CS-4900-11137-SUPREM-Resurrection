@@ -33,6 +33,7 @@
 #include "./src/dbase/locate.h"
 #include "./src/dbase/remove.h"
 #include "./src/misc/panic.h"
+#include "./src/dbase/element.h"
 #include "grid_loop.h"
 // end of includes
 
@@ -76,7 +77,6 @@ int DetectLoop() {
     int pc, pcc, pc2, pcf, pcb;
     float db[MAXDIM], d1[MAXDIM], d2[MAXDIM], df[MAXDIM];
     float dnb[MAXDIM], dnf[MAXDIM], dcos, dsin;
-    char *alloc_tri();
 
     if (mode == ONED)
         return (0);
@@ -322,4 +322,3 @@ int DetectLoop() {
         bd_connect("after loop removal");
     return (fix_conn);
 }
-

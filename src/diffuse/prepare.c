@@ -106,9 +106,7 @@ void init_diffuse() {
  *  Original:	MEL	7/90						*
  *									*
  ************************************************************************/
-int upd_diff(double delta, double *area, int doit, int min_ok)
-{
-    int get_connect();
+int upd_diff(double delta, double *area, int doit, int min_ok) {
     int *reorder;
     int retval = FALSE;
 
@@ -252,11 +250,9 @@ void diff_alloc() {
  *  Original:	MEL	11/85						*
  *									*
  ************************************************************************/
-void ia_calc()
-{
+void ia_calc() {
     register int i, ij;
     register int p, n, j;
-    int get_connect();
 
     /*first get the old geometry pulled together*/
     if (ClockTri(FALSE))
@@ -568,8 +564,7 @@ void diff_blocks() {
  *  Original:	MEL	4/85						*
  *									*
  ************************************************************************/
-void arr_alloc(int *no_compute)
-{
+void arr_alloc(int *no_compute) {
     int i, j;
     int byte = 0;
 
@@ -632,8 +627,7 @@ void arr_alloc(int *no_compute)
  *  Original:	MEL	7/90						*
  *									*
  ************************************************************************/
-void assem_map()
-{
+void assem_map() {
     register int i, j, k;
     register int nx1, nx2, m;
     register int aoff = ia[nn] - ia[0];

@@ -26,6 +26,7 @@
 #include "./src/include/material.h"
 
 // 2020 includes:
+#include "./src/debug.h"
 #include "./src/geom/tnabor.h"
 #include "./src/misc/panic.h"
 #include "check.h"
@@ -47,6 +48,7 @@
  *----------------------------------------------------------------------*/
 void mtest1(char *when) {
     int i, j, p, n, t, e, r, tmat, gassy, err_cnt = 0, *n_in_tri;
+    ENTER;
 
     /*
      * There is but one way to get things right, and ah so
@@ -193,11 +195,14 @@ void mtest1(char *when) {
     /* That's as much as we can do right now... */
     if (err_cnt != 0)
         panic("after mesh self test");
+    
+    EXIT;
     return;
 }
 
 void mtest2(char *when) {
     int i, j, p, n, t, e, tn, err_cnt = 0, *is_exposed;
+    ENTER;
 
 #ifdef DEBUG
     /* Unless we are really paranoid, assume mtest1 has already been called */
@@ -207,6 +212,8 @@ void mtest2(char *when) {
     /* Check nodes */
     for (n = 0; n < nn; n++) {
 
+        verpv(n);
+        
         /*Material nodes should be in some triangle, gas nodes shouldn't*/
         if (mat_nd(n) == GAS) {
             if (num_tri_nd(n) != 0)
@@ -346,5 +353,7 @@ void mtest2(char *when) {
     /* if we haven't already dropped core :-) */
     if (err_cnt != 0)
         panic("after mesh self test");
+
+    EXIT;
     return;
 }

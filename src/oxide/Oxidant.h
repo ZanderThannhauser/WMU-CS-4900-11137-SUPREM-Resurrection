@@ -18,3 +18,6 @@ void O2diff_coeff(argl);
 void O2boundary(struct bound_str *bval);
 void H2Odiff_coeff(argl);
 void H2Oboundary(struct bound_str *bval);
+float Ovel(float temp, int s, float conc, double *n, double noni);
+float Oss(int s, int mat);
+float Orr(float temp, int s, double *normal, double noni);

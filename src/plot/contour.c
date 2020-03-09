@@ -44,4 +44,4 @@
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void contour(char *par, struct par_str* param) { ; }
+void contour(char *par, struct par_str *param) { ; }

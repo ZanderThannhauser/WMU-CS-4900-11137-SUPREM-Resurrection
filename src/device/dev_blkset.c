@@ -23,6 +23,8 @@
 #include "./src/include/matrix.h"
 
 // 2020 includes:
+#include "./src/device/Hole.h"
+#include "./src/device/Electron.h"
 #include "dev_blkset.h"
 // end of includes
 

@@ -29,6 +29,10 @@
 #include "./src/dbase/dispose.h"
 #include "./src/mesh/check_active.h"
 #include "./src/dbase/dimen.h"
+#include "./src/dbase/point.h"
+#include "./src/dbase/region.h"
+#include "./src/dbase/element.h"
+#include "./src/dbase/node.h"
 #include "ig2_meshio.h"
 // end of includes
 

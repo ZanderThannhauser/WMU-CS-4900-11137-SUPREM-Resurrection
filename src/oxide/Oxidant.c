@@ -25,10 +25,13 @@
 #include "./src/dbase/new_layer.h"
 #include "./src/oxide/mater.h"
 #include "./src/shell/smisc.h"
+#include "./src/diffuse/species.h"
 #include "Oxidant.h"
 // end of includes
 
 // 2020 forward declarations:
+float LenEff(float conc, float ks);
+double KsFermiDep(double noni, double temp);
 void plane_strain(double E, double v, double *matco);
 void FE_oxbulk(double *matco, int mat, double *eps, double *sig);
 void synch2(double arg, double *val, double *deriv);
@@ -56,8 +59,6 @@ void exp_l(double arg, double *f, double *dfda, double lambda);
 #define SegE(S, M1, M2) impur[S].seg[1][M1][M2]
 #define Trn0(S, M1, M2) impur[S].seg[2][M1][M2]
 #define TrnE(S, M1, M2) impur[S].seg[3][M1][M2]
-
-extern double KsFermiDep();
 
 /************************************************************************
  *									*
@@ -87,13 +88,11 @@ extern double KsFermiDep();
  *									*
  ************************************************************************/
 
-
 /* This is the real thing - it returns the diffusivity in one material for
    one species at one temperature.
    As a (misguided) performance hack, it calculates all materials upfront.*/
 
-double Odiff_coeff(int m, int s, float temp)
-{
+double Odiff_coeff(int m, int s, float temp) {
     static double Dix[MAXMAT];
     static double o_temp = 0, o_press = 0, o_s = (-1);
     int i;
@@ -118,8 +117,7 @@ double Odiff_coeff(int m, int s, float temp)
 }
 
 /* Vector version to write diffusivity into each node cell */
-void Odiff_vcoeff(int s, argl)
-{
+void Odiff_vcoeff(int s, argl) {
     int i;
     for (i = 0; i < nn; i++) {
         idf[i] = Odiff_coeff(nd[i]->mater, s, temp);
@@ -150,7 +148,6 @@ void Oboundary(int s, struct bound_str *bval) {
     int O2sol, Nsol;
     int mat0, mat1, nx0;
     int row0, row1, cp0, cp1;
-    float Orr();
     double dln[2];
 
     sol = imptosol[s];
@@ -229,9 +226,7 @@ void H2Oboundary(struct bound_str *bval) { Oboundary(H2O, bval); }
  * The oxygen solid solubility in various materials.
  * Original: CSR 4/86
  *----------------------------------------------------------------------*/
-float Oss(s, mat) int s; /* Which species it is */
-int mat;                 /* What material we're in */
-{
+float Oss(int s, int mat) {
     /* Henry's law rules OK */
     return (H(s, mat) * pressure);
 }
@@ -240,12 +235,8 @@ int mat;                 /* What material we're in */
  * The reaction rate constant, in its purest form.
  * Original: CSR 8/87
  *----------------------------------------------------------------------*/
-float Orr(temp, s, normal, noni) int s; /* Species */
-float temp;                             /* Temperature */
-double *normal;                         /* Normal vector */
-double noni;                            /* An estimate for Ef effects */
-{
-    float val, DoOriDep();
+float Orr(float temp, int s, double *normal, double noni) {
+    float val;
     double XtalDir[3];
 
     /* B, B/A at this temperature */
@@ -264,17 +255,11 @@ double noni;                            /* An estimate for Ef effects */
     return (val);
 }
 
-extern float LenEff(), ThinOxideCorr();
 /*-----------------Ovel-------------------------------------------------
  * Compute dx/dt from oxidant concentration
  * Original: CSR 4/86
  *----------------------------------------------------------------------*/
-float Ovel(temp, s, conc, n, noni) float temp; /* Temperature */
-int s;                                         /* Which species */
-float conc;                                    /* Oxidant concentration */
-double *n;                                     /* XY normal */
-double noni;                                   /* electron excess */
-{
+float Ovel(float temp, int s, float conc, double *n, double noni) {
     float v, l, orr;
 
     /* ks C / N1 */
@@ -299,9 +284,7 @@ double noni;                                   /* electron excess */
  * have caused that concentration.
  * Hassle: B/A can depend on position so it has to be passed in.
  *----------------------------------------------------------------------*/
-float LenEff(conc, ks) float conc,
-    ks; /* ks turns out more convenient than B/A */
-{
+float LenEff(float conc, float ks) {
     /* -D(C-C*) = kC .:.  X=D/ks(C* / C-1) */
     float D, Cstar;
 
@@ -326,8 +309,7 @@ float LenEff(conc, ks) float conc,
  *----------------------------------------------------------------------*/
 #define mabs(a) (((a) >= 0) ? (a) : (-(a)))
 
-double KsFermiDep(noni, temp) double noni, temp;
-{
+double KsFermiDep(double noni, double temp) {
     double Vratio, Kratio;
     static double oTemp, iVp, iVpp, iVn, iVnn, Kco;
 
@@ -621,7 +603,7 @@ static double istress[MAXMAT][3];
 
 void ThermSig(float temp1, float temp2) {
     int r, m, l;
-    float string_to_real(), Ta, dT, exp, temp, alph;
+    float Ta, dT, exp, temp, alph;
     static float wg3[3] = {5.0 / 9.0, 8.0 / 9.0, 5.0 / 9.0},
                  lg3[3] = {-0.7745966692, 0, 0.7745966692};
     int used[MAXMAT];
@@ -699,8 +681,6 @@ void sup4_ecoeff(double *matco, int mat, double *eps, double *sig) {
     sig[XY] += istress[mat][XY];
     sig[YY] += istress[mat][YY];
 }
-
-extern double asinh();
 
 void synch2(double arg, double *val, double *deriv) {
     double s;

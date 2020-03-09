@@ -16,7 +16,6 @@
 #include "./src/include/global.h"
 #include "./src/include/shell.h"
 
-
 // 2020 includes:
 #include "cpu.h"
 // end of includes
@@ -32,7 +31,7 @@
  *	Original :	Mark E. Law	Oct, 1984
  *									*
  ************************************************************************/
-void cpu(char *par, struct par_str* param) {
+void cpu(char *par, struct par_str *param) {
     char *f;
     int on;
     long i;

@@ -22,17 +22,14 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
-
 // 2020 includes:
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
 #include "Magnesium.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
-
-
 
 /*definitions for impurity constants as a function of material*/
 /*pre exp constant with neutral V*/
@@ -86,10 +83,8 @@ static double Mgsstemp = 0.0;
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Mgdiff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf, double *iprt,
-	double *vprt)
-{
+void Mgdiff_coeff(float temp, double **new, double **equil, double *noni,
+                  double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     double Dix[MAXMAT];
@@ -127,10 +122,8 @@ void Mgdiff_coeff(float temp, double **new, double **equil,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Mgactive(int simple, int nn, float temp,
-	double **conc, double **act, double **equil,
-	double *noni)
-{
+void Mgactive(int simple, int nn, float temp, double **conc, double **act,
+              double **equil, double *noni) {
     register int i;
     register int j;
     register int ss = imptosol[iMg];
@@ -212,8 +205,7 @@ void Mgactive(int simple, int nn, float temp,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Mgboundary(struct bound_str *bval)
-{
+void Mgboundary(struct bound_str *bval) {
     double f;
     double h, m;
     int sol; /*the solution location of antimony*/
@@ -282,8 +274,7 @@ void Mgboundary(struct bound_str *bval)
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void magnesium(char *par, struct par_str* param)
-{
+void magnesium(char *par, struct par_str *param) {
     int mat;
     int mat2 = -1;
     register int i, j;

@@ -7,6 +7,7 @@
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <fcntl.h>
+#include <assert.h>
 #include <unistd.h>
 
 #include "./src/include/bound.h"
@@ -16,8 +17,6 @@
 #include "./src/include/constant.h"
 #endif
 
-
-
 // 2020 includes:
 #include "makeframe.h"
 // end of includes
@@ -25,8 +24,6 @@
 // 2020 forward declarations
 int mysmooth(int value);
 // end of declarations
-
-
 
 #define CRITERION 1
 #define OFFSET 30
@@ -49,10 +46,8 @@ int mysmooth(int value);
         name= name to call output frame files ('movie' is good)
 */
 
-int makeframe(float *data, int NX, int NY,
-	int NXFAC, int NYFAC, char *name,
-	float min_value, int mode, int macfile)
-{
+int makeframe(float *data, int NX, int NY, int NXFAC, int NYFAC, char *name,
+              float min_value, int mode, int macfile) {
     float min, max, t, u, width;
     int k, ix, iy, iix, iiy, fdd, value;
     int NELX, NELY;
@@ -176,14 +171,13 @@ int makeframe(float *data, int NX, int NY,
 
     sprintf(filename, "%s(%d*%d)", name, NX, NY);
     fdd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
-    write(fdd, array, NX * NY);
+    assert(write(fdd, array, NX * NY) > 0);
     close(fdd);
     free(array);
     return (0);
 }
 
-int mysmooth(int value)
-{
+int mysmooth(int value) {
     int quotient;
     int remainder;
 

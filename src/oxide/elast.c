@@ -39,6 +39,7 @@
 
 // 2020 forward declarations
 void elem_stiff(int ie);
+int get_elasconn(int ind, short *taken, int *num);
 // end of declarations
 
 #define IAJA(R, C) iaja(ia, aoff, R, C)
@@ -48,7 +49,7 @@ void elem_stiff(int ie);
 float elstif[6][6];
 
 void elast_growth(float temp, double dt) {
-    int n, sXVEL, sYVEL, i, j, ie, v, w, s, t, get_elasconn();
+    int n, sXVEL, sYVEL, i, j, ie, v, w, s, t;
     int col, row, lcol, lrow, nat_p, where, *fix, *nx, *nx1, p;
     int *ia = 0, *il, aoff, loff;
     struct tms before, after;

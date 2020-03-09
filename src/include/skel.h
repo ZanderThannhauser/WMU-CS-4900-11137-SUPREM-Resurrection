@@ -98,20 +98,4 @@ EXT int debug1, debug2;
 EXT double mr;    /* Maximum spacing ratio. */
 EXT double mgeom; /* Minimum triangle geometry. */
 
-/***************************************************
- *                                                 *
- *            Functions.                           *
- *                                                 *
- ***************************************************/
-struct LLedge *eindex();
-
-double dist();
-double intang();
-double l_edge();
-int lil();
-
-double dmin();
-double dmax();
-double dabs();
-
 #endif

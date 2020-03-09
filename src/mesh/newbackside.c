@@ -4,6 +4,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 #include <stdlib.h>
 
 #include "./src/include/constant.h"
@@ -13,6 +14,7 @@
 
 // 2020 includes:
 #include "./src/shell/do_action.h"
+#include "./src/geom/limits.h"
 #include "newbackside.h"
 // end of includes
 
@@ -30,8 +32,7 @@
  */
 
 int newbackside(float line) {
-    extern int dev_lmts(); /* in geom/limits.c */
-    char *instr;
+    char instr[300];
     int ie;
     float min_x;
     float max_x;
@@ -39,8 +40,7 @@ int newbackside(float line) {
     float max_y;
     float offset = 1.0;
 
-    instr = malloc(80 * sizeof(char));
-    instr = "structure outf=suprem4temp.str";
+    strcpy(instr, "structure outf=suprem4temp.str");
     do_string(instr, NULL, 0);
 
     /*    hack up grid here */
@@ -50,17 +50,24 @@ int newbackside(float line) {
     min_y *= 1.0e4;
     max_y *= 1.0e4;
     if (line < max_y) {
-        sprintf(instr, "etch silicon start x=%g y=%g", min_x - offset, line);
+
+        snprintf(instr, 300, "etch silicon start x=%g y=%g", min_x - offset,
+                 line);
         do_string(instr, "/dev/null", 0);
-        sprintf(instr, "etch silicon continue x=%g y=%g", max_x + offset, line);
+
+        snprintf(instr, 300, "etch silicon continue x=%g y=%g", max_x + offset,
+                 line);
         do_string(instr, "/dev/null", 0);
-        sprintf(instr, "etch silicon continue x=%g y=%g", max_x + offset,
-                max_y + offset);
+
+        snprintf(instr, 300, "etch silicon continue x=%g y=%g", max_x + offset,
+                 max_y + offset);
         do_string(instr, "/dev/null", 0);
-        sprintf(instr, "etch silicon done x=%g y=%g", min_x - offset,
-                max_y + offset);
+
+        snprintf(instr, 300, "etch silicon done x=%g y=%g", min_x - offset,
+                 max_y + offset);
         do_string(instr, "/dev/null", 0);
-        instr = "structure outf=etch.str";
+
+        strcpy(instr, "structure outf=etch.str");
         do_string(instr, "/dev/null", 0);
 
         /* now that we have the final structure, recompute the backside
@@ -84,7 +91,6 @@ int newbackside(float line) {
                         tri[ie]->nb[0] = BC_OFFSET + 1;
             }
         }
-        free(instr);
     }
     return (0);
 }

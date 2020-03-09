@@ -29,16 +29,12 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
-
 // 2020 includes:
 #include "block_set.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
-
-
 
 #ifndef ardent
 #define pragma define
@@ -54,10 +50,8 @@
  * 		MEL	1/88						*
  *									*
  ************************************************************************/
-void PSbblock_set(int ss, float temp, int nsol,
-	int *solve, double *cpl, double **chem,
-	double **sub, double *inter, double *vacan)
-{
+void PSbblock_set(int ss, float temp, int nsol, int *solve, double *cpl,
+                  double **chem, double **sub, double *inter, double *vacan) {
     register int i;
     int imp = soltoimp[ss];
     int vs = imptosol[V];
@@ -143,11 +137,8 @@ void PSbblock_set(int ss, float temp, int nsol,
  * 		MEL	1/88						*
  *									*
  ************************************************************************/
-void BAsblock_set(int ss, float temp, int nsol,
-	int *solve, double *cpl, double **chem,
-	double **sub, double *inter,
-	double *vacan)
-{
+void BAsblock_set(int ss, float temp, int nsol, int *solve, double *cpl,
+                  double **chem, double **sub, double *inter, double *vacan) {
     register int i;
     int imp = soltoimp[ss];
     int vs = imptosol[V];
@@ -237,18 +228,16 @@ void BAsblock_set(int ss, float temp, int nsol,
  * Original:	MEL	12/84						*
  *									*
  ************************************************************************/
-void neut_block_set(int sol, float temp, int nu1,
-	int *nu2, double *area, double **chem,
-	double **nu3, double *nu4, double *nu5)
-{
+void neut_block_set(int sol, float temp, int nu1, int *nu2, double *area,
+                    double **chem, double **nu3, double *nu4, double *nu5) {
     register int i, u, l;      /*indices, what else?*/
     register int col;          /*column of the matrix being worked on*/
     register int row;          /*row of the matrix being worked on*/
     int imp = soltoimp[sol];   /*impurity we are working on*/
     double *b = newb[sol];     /*the right hand side at the new time*/
     double *ann = a[sol][sol]; /*the left hand block*/
-    double cpl;   /*diffusivity times the coupling coefficient*/
-    double grimp; /*gradients of impurity, potential, defects*/
+    double cpl;                /*diffusivity times the coupling coefficient*/
+    double grimp;              /*gradients of impurity, potential, defects*/
     double *idf;  /*the diffusivity with an interstitial mechanism*/
     double *vdf;  /*the diffusivity with an vacancy mechanism*/
     double *iprt; /*the partial with an interstitial mechanism*/
@@ -305,12 +294,9 @@ void neut_block_set(int sol, float temp, int nu1,
  * Original:	MEL	4/87						*
  *									*
  ************************************************************************/
-void chrg_block_set(int ss, int sol, double *df,
-	double *dprt, double *val,
-	double *lval, double *sqval, double *dval[MAXIMP],
-	double *pot,
-	double spot)
-{
+void chrg_block_set(int ss, int sol, double *df, double *dprt, double *val,
+                    double *lval, double *sqval, double *dval[MAXIMP],
+                    double *pot, double spot) {
     register int i, u, l;   /*indices, what else?*/
     register int col;       /*column of the matrix being worked on*/
     register int row;       /*row of the matrix being worked on*/
@@ -419,7 +405,7 @@ void chrg_block_set(int ss, int sol, double *df,
  *									*
  ************************************************************************/
 void poisson_block(sol, temp, nsol, solve, area, chem, nu1, nu2,
-              nu3) int sol; /*block number being solved*/
+                   nu3) int sol; /*block number being solved*/
 float temp;
 int nsol;
 int *solve;

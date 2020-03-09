@@ -27,6 +27,12 @@
 #include "./src/include/skel.h"
 
 // 2020 includes:
+#include "./src/geom/misc.h"
+#include "./src/dbase/edge.h"
+#include "./src/dbase/element.h"
+#include "./src/dbase/geom.h"
+#include "./src/dbase/point.h"
+#include "./src/dbase/node.h"
 #include "./src/dbase/locate.h"
 #include "./src/dbase/list.h"
 #include "./src/refine/dbase.h"
@@ -40,9 +46,9 @@
 int upd_edg(int ie, int in);
 void new_edg_tri(int e, int enew, int it);
 void new_edg_skel(int ie, int enew, int ir);
-int insert_pt_edg(int e, float c[MAXDIM], int* p);
-int sp_gredg(int ie, float c[MAXDIM], int* p);
-void move_edge(int ie, int ind, float* c);
+int insert_pt_edg(int e, float c[MAXDIM], int *p);
+int sp_gredg(int ie, float c[MAXDIM], int *p);
+void move_edge(int ie, int ind, float *c);
 // end of declarations
 
 #define DMIN(A, B) (A < B) ? (A) : (B)
@@ -106,8 +112,7 @@ int sp_edge(int ie, float c[MAXDIM], int *ip, int mv) {
     }
 }
 
-int sp_gredg(int ie, float c[MAXDIM], int* p)
-{
+int sp_gredg(int ie, float c[MAXDIM], int *p) {
     int ip, in;
     int eoth, en1;
 
@@ -129,8 +134,7 @@ int sp_gredg(int ie, float c[MAXDIM], int* p)
     return (en1);
 }
 
-int upd_edg(int ie, int in) 
-{
+int upd_edg(int ie, int in) {
     int i, enew;
     int n1;
     struct list_str tneigh;
@@ -171,8 +175,7 @@ int upd_edg(int ie, int in)
     return (enew);
 }
 
-void move_edge(int ie, int ind, float* c)
-{
+void move_edge(int ie, int ind, float *c) {
     int i;
 
     /*move the point to the given new cordinates*/
@@ -182,8 +185,7 @@ void move_edge(int ie, int ind, float* c)
 }
 
 /*create the new point on the edge, and split the edge*/
-int insert_pt_edg(int e, float c[MAXDIM], int* p)
-{
+int insert_pt_edg(int e, float c[MAXDIM], int *p) {
     int ip, eoth, etst;
     double ha;
     int in, n1, p1, p2, tn;
@@ -244,8 +246,7 @@ int insert_pt_edg(int e, float c[MAXDIM], int* p)
     return (eoth);
 }
 
-void new_edg_skel(int ie, int enew, int ir)
-{
+void new_edg_skel(int ie, int enew, int ir) {
     struct LLedge *lep;
 
     lep = eindex(ir, ie);
@@ -265,8 +266,7 @@ void new_edg_skel(int ie, int enew, int ir)
     add_ang(sreg[ir], lep->next);
 }
 
-void new_edg_tri(int e, int enew, int it)
-{
+void new_edg_tri(int e, int enew, int it) {
     int i, t1, t2;
     int nopp, nshare;
     int eshare, nopploc, etmp;

@@ -23,7 +23,6 @@
 #include "./src/include/global.h"
 #include "./src/include/implant.h"
 
-
 // 2020 includes:
 #include "./src/debug.h"
 #include "./src/implant/imp_prson.h"
@@ -34,7 +33,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 /************************************************************************
  *									*
  *	imp_vert() - This function returns a value between 0 and 1 	*
@@ -44,38 +42,33 @@
  *  Original:	MEL	1/87						*
  *									*
  ************************************************************************/
-double imp_vert(double depth, struct imp_info *dat)
-{
+double imp_vert(double depth, struct imp_info *dat) {
     double val;
     ENTER;
 
     if (imp_model == PEARS) {
-        
+
         HERE;
         verpv(dat->maxz);
         HERE;
         verpv(depth);
         HERE;
-        
-        if (depth < dat->maxz)
-        {
+
+        if (depth < dat->maxz) {
             HERE;
             val = prson(depth - dat->vert[PRS_RP], dat);
             HERE;
-        }
-        else
-        {
-        HERE;
+        } else {
+            HERE;
             val = 0.0;
-         }
+        }
     } else if (imp_model == GAUSS) {
         if (depth < dat->maxz) {
             val = (depth - dat->vert[GUS_RP]) / dat->vert[GUS_SIG];
             val = exp(-val * val * 0.5);
-        } else
-        {
+        } else {
             val = 0.0;
-           }
+        }
     }
     EXIT;
     return (val);
@@ -126,9 +119,8 @@ struct imp_info *dat;
     return (integ);
 }
 
-double evaluate(double l[MAXDIM], double lft[MAXDIM],
-	double rht[MAXDIM], struct imp_info *dat)
-{
+double evaluate(double l[MAXDIM], double lft[MAXDIM], double rht[MAXDIM],
+                struct imp_info *dat) {
     double a[MAXDIM], b[MAXDIM];
     double val;
 

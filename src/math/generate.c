@@ -29,7 +29,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 /************************************************************************
  *									*
  *	generate - This routine generates the ia, ja list		*

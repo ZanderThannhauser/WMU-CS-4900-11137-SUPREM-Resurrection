@@ -34,7 +34,6 @@
 int lex_command();
 // end of declarations
 
-
 #define C_STATE 1
 #define PAR_STATE 2
 #define READ_STATE 3
@@ -74,8 +73,7 @@ char *read_until(char *str);
  *  get_input is called.  get_input handles macro processing.		*
  *									*
  ************************************************************************/
-char fetchc(FILE *in, int per)
-{
+char fetchc(FILE *in, int per) {
     char c;
     int i;
 
@@ -290,19 +288,19 @@ int lex_command() {
     if (strcmp(s, "quit") == 0) {
         EXIT;
         return (QUIT);
-   } else if (strcmp(s, "exit") == 0) {
+    } else if (strcmp(s, "exit") == 0) {
         EXIT;
         return (QUIT);
     } else if (strcmp(s, "bye") == 0) {
         EXIT;
         return (QUIT);
-  }  else if (strcmp(s, "logout") == 0) {
+    } else if (strcmp(s, "logout") == 0) {
         EXIT;
         return (QUIT);
-   } else if (strcmp(s, "end") == 0) {
+    } else if (strcmp(s, "end") == 0) {
         EXIT;
         return (END);
-  }  else if (strcmp(s, "source") == 0) {
+    } else if (strcmp(s, "source") == 0) {
         ylstate = PAR_STATE;
         EXIT;
         return (SOURCE);

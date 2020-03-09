@@ -43,19 +43,9 @@ int vertex_tri(float x, float y, int tri_num);
 int si_interface(int pt_num);
 // end of declarations
 
-
-int fill_grid(
-	int xsize, int ysize,
-	float* xdata, float* ydata,
-	float* data,
-	float* val,
-	int mat_num,
-	int win_xmin_index,
-	int win_xmax_index,
-	int win_ymin_index,
-	int win_ymax_index,
-	float min_value)
-{
+int fill_grid(int xsize, int ysize, float *xdata, float *ydata, float *data,
+              float *val, int mat_num, int win_xmin_index, int win_xmax_index,
+              int win_ymin_index, int win_ymax_index, float min_value) {
     int i;
     register int j;
     register int k;
@@ -173,7 +163,7 @@ int fill_grid(
     return (0);
 } /* end subroutine */
 
-float interpolate(float x, float y, int tri_num, float* val)
+float interpolate(float x, float y, int tri_num, float *val)
 
 /*  use properties of normals to a plane to get answer.
  *	in this case first determine the equation of the normal to the
@@ -217,8 +207,7 @@ float interpolate(float x, float y, int tri_num, float* val)
 }
 
 /* vertex_tri determines whether point (x,y) is a vertex of triangle tri_num */
-int vertex_tri(float x, float y, int tri_num)
-{
+int vertex_tri(float x, float y, int tri_num) {
     register int index;
 
     if ((pt[nd[tri[tri_num]->nd[0]]->pt]->cord[0] == x) &&
@@ -236,8 +225,7 @@ int vertex_tri(float x, float y, int tri_num)
 }
 
 /* si_interface determines whether point pt_num is at a silicon interface */
-int si_interface(int pt_num)
-{
+int si_interface(int pt_num) {
     register int i;
     int nnodes;
     nnodes = pt[pt_num]->nn;

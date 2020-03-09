@@ -71,9 +71,8 @@ void echo(char *par, struct par_str *param) {
  * Nice for reading someone else's input deck and checking it out on
  * the fly.
  *----------------------------------------------------------------------*/
-void uPause(char *unused_0, struct par_str* unused_1) {
+void uPause(char *unused_0, struct par_str *unused_1) {
     char *CommandBuf;
-    char *read_line();
 
     if (isatty(fileno(stdin))) {
         for (;;) {
@@ -90,9 +89,9 @@ void uPause(char *unused_0, struct par_str* unused_1) {
             strcat(CommandBuf, "\n");
 #else
             CommandBuf = salloc(char, 256);
-            fgets(CommandBuf, 256, stdin);
-            if (!CommandBuf[0])
-                break;
+            if (fgets(CommandBuf, 256, stdin))
+                if (!CommandBuf[0])
+                    break;
 #endif
 
             do_string(CommandBuf, NULL, 0);
@@ -109,7 +108,7 @@ void uPause(char *unused_0, struct par_str* unused_1) {
  *	user_print( par, param ) - this routine prints its parameter string.  *
  *									*
  ************************************************************************/
-void user_print(char *par, struct par_str* param) {
+void user_print(char *par, struct par_str *param) {
     char *argv[50];
     char tmp[512];
     struct vec_str *out;

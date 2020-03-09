@@ -20,16 +20,14 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
 // 2020 includes:
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
 #include "Phosphorus.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
-
-
 
 /*definitions for impurity constants as a function of material*/
 /*pre exp constant with neutral V*/
@@ -95,11 +93,8 @@ static double Psstemp = 0.0;
  *									*
  ************************************************************************/
 
-void Pdiff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf,
-	double *iprt,
-	double *vprt)
-{
+void Pdiff_coeff(float temp, double **new, double **equil, double *noni,
+                 double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     double Dix[MAXMAT];
@@ -141,8 +136,7 @@ void Pdiff_coeff(float temp, double **new, double **equil,
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void Pboundary(struct bound_str *bval)
-{
+void Pboundary(struct bound_str *bval) {
     double f;
     double h, m;
     int sol; /*the solution location of antimony*/
@@ -210,9 +204,8 @@ void Pboundary(struct bound_str *bval)
  *  Original:	MEL	7/87						*
  *									*
  ************************************************************************/
-void Pactive(int simple, int nn, float temp,
-	double **conc, double **act, double **equil, double *noni)
-{
+void Pactive(int simple, int nn, float temp, double **conc, double **act,
+             double **equil, double *noni) {
     register int i;
     register int j;
     register int ss = imptosol[P];
@@ -287,8 +280,7 @@ void Pactive(int simple, int nn, float temp,
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void phosphorus(char *par, struct par_str* param)
-{
+void phosphorus(char *par, struct par_str *param) {
     int mat;
     int mat2 = -1;
     register int i, j;

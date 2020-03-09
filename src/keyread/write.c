@@ -47,8 +47,7 @@ int write_param(struct par_str *par, int fd);
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-int write_list(struct par_str **param, int fd)
-{
+int write_list(struct par_str **param, int fd) {
 
     while (param[0]->name[0] != '\0') {
         /*process this parameter*/
@@ -78,8 +77,7 @@ int write_list(struct par_str **param, int fd)
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-int write_boolean(struct bool_exp *bexp, int fd)
-{
+int write_boolean(struct bool_exp *bexp, int fd) {
 
     /*first write out the current structure*/
     assert(write(fd, &(bexp->type), sizeof(int)) == sizeof(int));
@@ -123,8 +121,7 @@ int write_boolean(struct bool_exp *bexp, int fd)
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-int write_param(struct par_str *par, int fd)
-{
+int write_param(struct par_str *par, int fd) {
     char nullstr[2];
     int i;
 

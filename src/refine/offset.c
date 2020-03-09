@@ -35,9 +35,8 @@
 // end of includes
 
 // 2020 forward declarations
-void del_fromline(int index, int* nop, struct line* op);
+void del_fromline(int index, int *nop, struct line *op);
 // end of declarations
-
 
 /************************************************************************
  *									*
@@ -47,13 +46,8 @@ void del_fromline(int index, int* nop, struct line* op);
  *  Original:	MEL	4/87   						*
  *		LCC     4/90						*
  ************************************************************************/
-int gen_offset(
-	int nump,
-	struct line *p,
-	struct line **pop,
-	double thick,
-	double space)
-{
+int gen_offset(int nump, struct line *p, struct line **pop, double thick,
+               double space) {
     register int i, j;     /*every routine needs indices*/
     int nop = 0;           /*current number of surface points*/
     double nx, ny, d;      /*the normal to the curve*/
@@ -209,10 +203,8 @@ int gen_offset(
     return (nop);
 }
 
-void add_toline(int* nop, struct line* op,
-	double x, double y,
-	int m, double err)
-{
+void add_toline(int *nop, struct line *op, double x, double y, int m,
+                double err) {
     double dis, dx, dy;
 
     if (*nop > 1) {
@@ -236,8 +228,7 @@ void add_toline(int* nop, struct line* op,
     }
 }
 
-void del_fromline(int index, int* nop, struct line* op)
-{
+void del_fromline(int index, int *nop, struct line *op) {
     int i;
 
     for (i = index; i < *nop - 1; i++) {

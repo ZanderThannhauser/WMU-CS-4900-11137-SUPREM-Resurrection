@@ -38,9 +38,8 @@
 // 2020 forward declarations
 // end of declarations
 
-double zeqv(double dose, double qtot,
-	double dx, double bt, struct imp_info *data)
-{
+double zeqv(double dose, double qtot, double dx, double bt,
+            struct imp_info *data) {
 
     double x, val, ov;
     double q = 0.0; /* Accumulating dose */

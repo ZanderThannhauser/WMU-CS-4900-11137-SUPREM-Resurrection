@@ -35,8 +35,7 @@
  *  Original:	MEL	4/86						*
  *									*
  ************************************************************************/
-void moving_bound(double dt, double scale)
-{
+void moving_bound(double dt, double scale) {
     int i, j, k, ix, it, t, s;
     int nx1, nx2;
     int ysol, xsol, dsol;

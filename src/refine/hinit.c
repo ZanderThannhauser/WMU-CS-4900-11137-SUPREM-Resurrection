@@ -36,7 +36,6 @@
 void hinit(int ir, double sp) {
     int f, p, i, n;
     struct LLedge *bp;
-    double l_edge();
 
 #define min2(A, B) (A < B) ? A : B
 

@@ -24,12 +24,12 @@
 
 // 2020 includes:
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
 #include "Generic.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
-
 
 /*definitions for impurity constants as a function of material*/
 /*pre exp constant with neutral V*/
@@ -99,10 +99,8 @@ static double Gsstemp = 0.0;
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Gdiff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf, double *iprt,
-	double *vprt)
-{
+void Gdiff_coeff(float temp, double **new, double **equil, double *noni,
+                 double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     double Dix[MAXMAT];
@@ -156,9 +154,8 @@ void Gdiff_coeff(float temp, double **new, double **equil,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Gactive(int simple, int nn, float temp,
-	double **conc, double **act, double **equil, double *noni)
-{
+void Gactive(int simple, int nn, float temp, double **conc, double **act,
+             double **equil, double *noni) {
     register int i;
     register int j;
     register int ss = imptosol[iG];
@@ -240,8 +237,7 @@ void Gactive(int simple, int nn, float temp,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Gboundary(struct bound_str *bva)
-{
+void Gboundary(struct bound_str *bva) {
     double f;
     double h, m;
     int sol; /*the solution location of antimony*/
@@ -310,8 +306,7 @@ void Gboundary(struct bound_str *bva)
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void generic(char *par, struct par_str* param)
-{
+void generic(char *par, struct par_str *param) {
     int mat;
     int mat2 = -1;
     register int i, j;

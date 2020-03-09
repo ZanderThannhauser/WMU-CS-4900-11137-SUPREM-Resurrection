@@ -33,12 +33,10 @@
 void dvedge(int ie, double lej, int nnew, double ratio, double first);
 // end of declarations
 
-
 /*-----------------DVEDGE-----------------------------------------------
  * Divide an edge
  *----------------------------------------------------------------------*/
-void div_edg(int ie)
-{
+void div_edg(int ie) {
     double lej, ha, hb, rr, ff;
     int nn, inew, i;
     double updn = 10.0;
@@ -73,8 +71,7 @@ void div_edg(int ie)
  * Divide an edge, using the spacing parameters calculated in dvpram.
  * Called from bfill, and also during the triangulation (triang.c).
  *----------------------------------------------------------------------*/
-void dvedge(int ie, double lej, int nnew, double ratio, double first)
-{
+void dvedge(int ie, double lej, int nnew, double ratio, double first) {
     int inew, ip, ied;
     double dx, dy, h, frac;
     float c[MAXDIM];

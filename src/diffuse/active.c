@@ -51,10 +51,8 @@
  * Original:	7/87							*
  *									*
  ************************************************************************/
-void get_active(int simple, float temp, double **chem,
-	double *net, double **dnet, double **active,
-	double **equil, double **dequ)
-{
+void get_active(int simple, float temp, double **chem, double *net,
+                double **dnet, double **active, double **equil, double **dequ) {
     register int i, j, imp;
     double Vt = kb * temp;
     int vsol = imptosol[V];
@@ -130,12 +128,10 @@ void get_active(int simple, float temp, double **chem,
     gaas_act(temp, net);
 }
 
-void gaas_act(float temp, double *net)
-{
+void gaas_act(float temp, double *net) {
     int r, mat;
     register int i, j;
     double a0, a1, b0, b1, n;
-    float string_to_real();
 
     fmacro("T", temp, "%12e");
     for (r = 0; (r < nreg); r++) {

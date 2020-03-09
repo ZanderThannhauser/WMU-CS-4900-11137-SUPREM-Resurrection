@@ -34,10 +34,8 @@
 #define E_GTMOM_EBIG -3
 #define E_GTMOM_NONE -4 /* couldn't find the elem/mattr pair */
 
-int fgtmom(int elem, int mattr,
-	double energy,
-	double* rp, double* sigp, double* gam1, double* kurt, double* later)
-{
+int fgtmom(int elem, int mattr, double energy, double *rp, double *sigp,
+           double *gam1, double *kurt, double *later) {
 
     /* Locals.... */
     Bool already = F; /* Not already at the right mattr & elem */
@@ -53,7 +51,7 @@ int fgtmom(int elem, int mattr,
     double fact1, fact2;
 
     /* ---- start gtmom ---- */
-    if((file = (char *)getenv("IMPFILE")))
+    if ((file = (char *)getenv("IMPFILE")))
         fp = fopen(file, OP_READ);
     else
         fp = fopen(IMP_FILE, OP_READ);

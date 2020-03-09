@@ -30,7 +30,6 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
 // 2020 includes:
 #include "./src/debug.h"
 #include "./src/dbase/alloc.h"
@@ -50,7 +49,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 /************************************************************************
  *									*
  *	diffuse( par, param ) - diffuse solves the partial differential *
@@ -59,8 +57,7 @@
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void diffuse(char *par, struct par_str* param)
-{
+void diffuse(char *par, struct par_str *param) {
     ENTER;
     float time, temp, cs;
     struct tms before, after;

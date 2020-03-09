@@ -24,7 +24,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 /************************************************************************
  *									*
  *	make_movie( string, time ) - This routine executes the commands *
@@ -33,8 +32,7 @@
  *  Original:	MEL	11/86						*
  *									*
  ************************************************************************/
-void make_movie(char *commands, float time)
-{
+void make_movie(char *commands, float time) {
     char buffer[512];
 
     if (commands == NULL)

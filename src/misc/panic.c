@@ -34,9 +34,9 @@ void panic(char *s) {
     if ((!strcmp(s, "nocore")) || (!strcmp(s, "Out of memory")))
         goto outtahere;
 
-    fprintf(stderr, "Writing structure to panic.str...");
+    fprintf(stderr, "Writing structure to /tmp/panic.str...");
     fflush(stderr);
-    if ((ig2_write("panic.str", 0, 1.0)) < 0)
+    if ((ig2_write("/tmp/panic.str", 0, 1.0)) < 0)
         fprintf(stderr, "Failed\n");
     else
         fprintf(stderr, "Succeeded\n");

@@ -22,6 +22,7 @@
 
 
 // 2020 includes:
+#include "./src/keyread/main.h"
 // end of includes
 
 // 2020 forward declarations
@@ -29,6 +30,12 @@ int yylex();
 int yywrap(void);
 int yylook();
 int yyerror();
+
+struct bool_exp *node(
+	int type,
+	val_str val,
+	struct bool_exp* left,
+	struct bool_exp* right);
 // end of declarations
 
 
@@ -314,10 +321,11 @@ term
  *  space and assigns the data.						*
  *									*
  ************************************************************************/
-struct bool_exp *node(type, val, left, right)
-int type;
-val_str val;
-struct bool_exp *left, *right;
+struct bool_exp *node(
+	int type,
+	val_str val,
+	struct bool_exp* left,
+	struct bool_exp* right)
 {
     struct bool_exp *t;
 

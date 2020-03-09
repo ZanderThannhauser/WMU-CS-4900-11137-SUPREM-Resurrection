@@ -19,7 +19,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 /************************************************************************
  *									*
  *	norm( arr, n ) - This routine calculates the norm of the array	*

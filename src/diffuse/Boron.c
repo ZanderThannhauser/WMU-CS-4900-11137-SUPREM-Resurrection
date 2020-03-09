@@ -20,21 +20,17 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
-
 // 2020 includes:
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
 #include "Boron.h"
 // end of includes
 
 // 2020 forward declarations
 void Ptboundary(int imp, struct bound_str *bval);
-void Ptypeactive(int imp, int simple, int nn,
-	float temp, double **chem, double **act,
-	double **equil, double *noni);
+void Ptypeactive(int imp, int simple, int nn, float temp, double **chem,
+                 double **act, double **equil, double *noni);
 // end of declarations
-
-
 
 /*definitions for impurity constants as a function of material*/
 /*pre exp constant with neutral V*/
@@ -84,10 +80,8 @@ static int Bssmax;
  *  Revised:	MEL	3/86	(multiple materials)			*
  *									*
  ************************************************************************/
-void Bdiff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf,
-	double *iprt, double *vprt)
-{
+void Bdiff_coeff(float temp, double **new, double **equil, double *noni,
+                 double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     double Dix[MAXMAT];
@@ -115,11 +109,9 @@ void Bdiff_coeff(float temp, double **new, double **equil,
     }
 }
 
-void Bboundary(struct bound_str *bval)
-{ Ptboundary(B, bval); }
+void Bboundary(struct bound_str *bval) { Ptboundary(B, bval); }
 
-void Gaboundary(struct bound_str *bval)
-{ Ptboundary(Ga, bval); }
+void Gaboundary(struct bound_str *bval) { Ptboundary(Ga, bval); }
 
 /************************************************************************
  *									*
@@ -131,8 +123,7 @@ void Gaboundary(struct bound_str *bval)
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void Ptboundary(int imp, struct bound_str *bval)
-{
+void Ptboundary(int imp, struct bound_str *bval) {
     double f;
     double h, m;
     int sol; /*the solution location of antimony*/
@@ -192,13 +183,15 @@ void Ptboundary(int imp, struct bound_str *bval)
     }
 }
 
-void Bactive(int simple, int nn, float temp,
-	double **chem, double **act, double **equil, double *noni)
-{ Ptypeactive(B, simple, nn, temp, chem, act, equil, noni); }
+void Bactive(int simple, int nn, float temp, double **chem, double **act,
+             double **equil, double *noni) {
+    Ptypeactive(B, simple, nn, temp, chem, act, equil, noni);
+}
 
-void Gaactive(int simple, int nn, float temp,
-	double **chem, double **act, double **equil, double *noni)
-{ Ptypeactive(Ga, simple, nn, temp, chem, act, equil, noni); }
+void Gaactive(int simple, int nn, float temp, double **chem, double **act,
+              double **equil, double *noni) {
+    Ptypeactive(Ga, simple, nn, temp, chem, act, equil, noni);
+}
 
 /************************************************************************
  *									*
@@ -208,10 +201,8 @@ void Gaactive(int simple, int nn, float temp,
  *  Original:	MEL	7/87						*
  *									*
  ************************************************************************/
-void Ptypeactive(int imp, int simple, int nn,
-	float temp, double **chem, double **act,
-	double **equil, double *noni)
-{
+void Ptypeactive(int imp, int simple, int nn, float temp, double **chem,
+                 double **act, double **equil, double *noni) {
     register int i;
     register int j;
     register int ss = imptosol[imp];
@@ -286,8 +277,7 @@ void Ptypeactive(int imp, int simple, int nn,
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void boron(char *par, struct par_str* param)
-{
+void boron(char *par, struct par_str *param) {
     int mat;
     int mat2 = -1;
     register int i, j;

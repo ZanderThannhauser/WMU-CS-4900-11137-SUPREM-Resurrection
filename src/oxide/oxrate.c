@@ -102,7 +102,7 @@ void deal_grove(float temp, int ornt, int oxytyp, float *arate, float *brate) {
  *----------------------------------------------------------------------*/
 float ThinOxideCorr(double thick, double normal[2]) {
     int io;
-    float DoOriDep(), trate[3], v;
+    float trate[3], v;
     double XtalDir[3];
 
     if (gas_type != GAS_DRYO2)
@@ -126,7 +126,6 @@ float ThinOxideCorr(double thick, double normal[2]) {
  * The chlorine dependence model - lookup table approach.
  *----------------------------------------------------------------------*/
 void cldep(float temp, float *lcl, float *pcl) {
-    extern float linear_int();
     int ip, it;
     float v0, v1, v2, v3, s, t;
 

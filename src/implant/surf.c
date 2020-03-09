@@ -33,13 +33,13 @@
 #include "./src/debug.h"
 #include "./src/refine/surface.h"
 #include "./src/plot/matedge.h"
+#include "./src/geom/misc.h"
 #include "surf.h"
 // end of includes
 
 // 2020 forward declarations
 void get_mat(struct surf_info *cur, int angle);
 // end of declarations
-
 
 double tr[MAXDIM][MAXDIM];
 
@@ -55,11 +55,10 @@ double tr[MAXDIM][MAXDIM];
  *  Original:	MEL	12/86						*
  *									*
  ************************************************************************/
-void make_surf(struct surf_info **v, double ang, double lat)
-{
+void make_surf(struct surf_info **v, double ang, double lat) {
     register int i, j; /*every routine needs these for indexing*/
-    struct line *s;           /*surface list*/
-    int ns;                   /*and number thereof */
+    struct line *s;    /*surface list*/
+    int ns;            /*and number thereof */
     struct surf_info *cur, *prev, lft, rht;
     float x;
     float atop;
@@ -82,23 +81,23 @@ void make_surf(struct surf_info **v, double ang, double lat)
 
     /*before angular rotation, get the materials at left and right*/
     lft.rht[0] = lft.lft[0] = pt[s[0].p]->cord[0] + ERR;
-    
+
     get_mat(&lft, TRUE);
-    
+
     HERE;
     verpv(lft.top[0]);
     HERE;
-    
+
     rht.lft[0] = rht.rht[0] = pt[s[ns - 1].p]->cord[0] - ERR;
     get_mat(&rht, TRUE);
 
     HERE;
-    
+
     /*translate the mesh onto the new angle coordinates*/
     for (i = 0; i < np; i++) {
-        
+
         HERE;
-        
+
         for (j = 0; j < mode; j++) {
             pt[i]->cordo[j] = pt[i]->cord[j];
         }
@@ -107,9 +106,9 @@ void make_surf(struct surf_info **v, double ang, double lat)
     }
 
     if (mode == ONED) {
-        
+
         HERE;
-        
+
         cur = scalloc(struct surf_info, 1);
         *v = cur;
         cur->next = NULL;
@@ -118,9 +117,9 @@ void make_surf(struct surf_info **v, double ang, double lat)
     }
 
     if (mode != ONED) {
-        
+
         HERE;
-        
+
         /*copy the line into the surface info structure*/
         cur = scalloc(struct surf_info, 1);
         *v = cur;
@@ -140,7 +139,7 @@ void make_surf(struct surf_info **v, double ang, double lat)
     for (i = 1; i < ns; i++) {
 
         HERE;
-        
+
         cur = scalloc(struct surf_info, 1);
 
         for (j = 0; j < mode; j++) {
@@ -157,7 +156,7 @@ void make_surf(struct surf_info **v, double ang, double lat)
 
     if (mode != ONED) {
         HERE;
-        
+
         cur = scalloc(struct surf_info, 1);
         prev->next = cur;
         cur->next = NULL;
@@ -180,12 +179,10 @@ void make_surf(struct surf_info **v, double ang, double lat)
     else
         id = 1;
 
-    
-    
     HERE;
     verpv(lft.top[0]);
     HERE;
-    
+
     cur = *v;
     while (cur != NULL) {
         HERE;
@@ -231,22 +228,21 @@ void make_surf(struct surf_info **v, double ang, double lat)
         prev = cur;
         cur = cur->next;
     }
-    
-    #ifdef DEBUGGING_2020
-    
+
+#ifdef DEBUGGING_2020
+
     cur = *v;
     verpv(cur->nmat);
-    while(cur != NULL)
-    {
-    	HERE;
-    	verpv(cur);
-    	HERE;
-    	verpv(cur->top[0]);
+    while (cur != NULL) {
+        HERE;
+        verpv(cur);
+        HERE;
+        verpv(cur->top[0]);
     }
-    
+
     CHECK;
-    #endif
-    
+#endif
+
     EXIT;
 }
 
@@ -258,8 +254,7 @@ void make_surf(struct surf_info **v, double ang, double lat)
  *  Original:	MEL	12/86						*
  *									*
  ************************************************************************/
-void get_mat(struct surf_info *cur, int angle)
-{
+void get_mat(struct surf_info *cur, int angle) {
     int j, k;
     float mval[2 * MAXMAT], tf;
     int mat[2 * MAXMAT], ti;
@@ -269,24 +264,23 @@ void get_mat(struct surf_info *cur, int angle)
 
     get_edge(mval, mat, &mnum, Y_SLICE, 0.5 * (cur->lft[0] + cur->rht[0]));
 
-   HERE;
-   verpv(mval[0]);
-   HERE;
-   
-   #ifdef DEBUGGING_2020
-   
-   for(j = 0;j < mnum;j++)
-   {
-   	verpv(j);
-   	HERE;
-   	verpv(mval[j]);
-   	HERE;
-   }
-   
-   #endif
-   
     HERE;
-    
+    verpv(mval[0]);
+    HERE;
+
+#ifdef DEBUGGING_2020
+
+    for (j = 0; j < mnum; j++) {
+        verpv(j);
+        HERE;
+        verpv(mval[j]);
+        HERE;
+    }
+
+#endif
+
+    HERE;
+
     /*order from top to bottom each material*/
     for (j = 0; j < mnum; j += 2) {
         if (mval[j] > mval[j + 1]) {
@@ -301,7 +295,7 @@ void get_mat(struct surf_info *cur, int angle)
     }
 
     HERE;
-    
+
     /*order the pairs of materials*/
     for (j = 0; j < mnum - 2; j += 2) {
         for (k = j + 2; k < mnum; k += 2) {
@@ -324,18 +318,16 @@ void get_mat(struct surf_info *cur, int angle)
     }
 
     HERE;
-    
-    #ifdef DEBUGGING_2020
-    for(j = 0;j < mnum;j++)
-    {
-    	verpv(j);
-    	HERE;
-    	verpv(mval[j]);
-    	HERE;
+
+#ifdef DEBUGGING_2020
+    for (j = 0; j < mnum; j++) {
+        verpv(j);
+        HERE;
+        verpv(mval[j]);
+        HERE;
     }
-    #endif
-    
-    
+#endif
+
     if (angle) {
         HERE;
         switch (mode) {
@@ -354,41 +346,40 @@ void get_mat(struct surf_info *cur, int angle)
         HERE;
         verpv(x[0]);
         HERE;
-        
+
         for (j = 1; j < mnum; j++)
             mval[j] = (mval[j] - mval[0]) / tr[0][0] + x[0];
         mval[0] = x[0];
     }
 
     HERE;
-    #ifdef DEBUGGING_2020
-    for(j = 0;j < mnum;j++)
-    {
-    	verpv(j);
-    	HERE;
-    	verpv(mval[j]);
-    	HERE;
-    }
-    #endif
-    HERE;
-    
-    /*load the material offsets*/
-    for (cur->nmat = j = 0; j < mnum; j += 2) {
-    
+#ifdef DEBUGGING_2020
+    for (j = 0; j < mnum; j++) {
         verpv(j);
         HERE;
-        
+        verpv(mval[j]);
+        HERE;
+    }
+#endif
+    HERE;
+
+    /*load the material offsets*/
+    for (cur->nmat = j = 0; j < mnum; j += 2) {
+
+        verpv(j);
+        HERE;
+
         cur->top[cur->nmat] = mval[j];
         cur->bot[cur->nmat] = mval[j + 1];
         cur->mat[cur->nmat] = mat[j];
-        
+
         HERE;
         verpv(cur->top[cur->nmat]);
         HERE;
 
         cur->nmat++;
     }
-    
+
     EXIT;
 }
 
@@ -400,8 +391,7 @@ void get_mat(struct surf_info *cur, int angle)
  *  Original:	MEL	12/86						*
  *									*
  ************************************************************************/
-void free_surf(struct surf_info **v)
-{
+void free_surf(struct surf_info **v) {
     struct surf_info *cur, *next;
 
     cur = *v;

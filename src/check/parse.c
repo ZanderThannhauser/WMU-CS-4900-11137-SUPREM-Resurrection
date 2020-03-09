@@ -111,8 +111,7 @@ int detect_error() {
  *  Original:	MEL	2/85						*
  *									*
  ************************************************************************/
-char *parse_expr(char *str, struct vec_str **out)
-{
+char *parse_expr(char *str, struct vec_str **out) {
 
     /*make the return null to handle error conditions*/
     out[0] = NULL;

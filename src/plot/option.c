@@ -56,5 +56,4 @@ void option(char *par, struct par_str *param) {
         verbose = V_CHAT;
     if (CHOSEN("barf"))
         verbose = V_BARF;
-
 }

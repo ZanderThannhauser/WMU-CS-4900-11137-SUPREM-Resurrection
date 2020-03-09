@@ -28,8 +28,7 @@
  *  between two points. if b is null, just return magnitude.            *
  *									*
  ************************************************************************/
-double dist(a, b) float a[MAXDIM], b[MAXDIM];
-{
+double dist(float a[MAXDIM], float b[MAXDIM]) {
     float tx, ty;
 
     tx = a[0];
@@ -52,8 +51,7 @@ double dist(a, b) float a[MAXDIM], b[MAXDIM];
  *	vol_ele(t) - this routine returns the volume of the element	*
  *									*
  ************************************************************************/
-float vol_ele(t) int t;
-{
+float vol_ele(int t) {
     switch (mode) {
     case ONED:
         return (fabs(cordinate(pt_nd(vert_tri(t, 0)), 0) -
@@ -77,8 +75,9 @@ float vol_ele(t) int t;
  *  the triangle formed by the coordintes passed.			*
  *									*
  ************************************************************************/
-float area_tri(a1, a2, b1, b2, c1, c2) float a1, a2, b1, b2, c1, c2;
-{ return ((b1 * (c2 - a2) + c1 * (a2 - b2) + a1 * (b2 - c2)) * 0.5); }
+float area_tri(float a1, float a2, float b1, float b2, float c1, float c2) {
+    return ((b1 * (c2 - a2) + c1 * (a2 - b2) + a1 * (b2 - c2)) * 0.5);
+}
 
 /************************************************************************
  *									*
@@ -86,8 +85,7 @@ float area_tri(a1, a2, b1, b2, c1, c2) float a1, a2, b1, b2, c1, c2;
  *  element number tr.							*
  *									*
  ************************************************************************/
-int pt_in_tri(float c[3], int tr)
-{
+int pt_in_tri(float c[3], int tr) {
     float tx1, tx2, tx3, ty1, ty2, ty3;
     float abtol, artol, tsign;
     float x = c[0];

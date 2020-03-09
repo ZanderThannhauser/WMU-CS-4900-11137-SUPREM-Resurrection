@@ -24,6 +24,7 @@
 
 // 2020 includes:
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
 #include "Tin.h"
 // end of includes
 
@@ -82,10 +83,8 @@ static double Snsstemp = 0.0;
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Sndiff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf, double *iprt,
-	double *vprt)
-{
+void Sndiff_coeff(float temp, double **new, double **equil, double *noni,
+                  double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     double Dix[MAXMAT];
@@ -123,9 +122,8 @@ void Sndiff_coeff(float temp, double **new, double **equil,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Snactive(int simple, int nn, float temp, double** conc,
-	double** act, double** equil, double* noni)
-{
+void Snactive(int simple, int nn, float temp, double **conc, double **act,
+              double **equil, double *noni) {
     register int i;
     register int j;
     register int ss = imptosol[iSn];
@@ -207,8 +205,7 @@ void Snactive(int simple, int nn, float temp, double** conc,
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void Snboundary(struct bound_str *bval)
-{
+void Snboundary(struct bound_str *bval) {
     double f;
     double h, m;
     int sol; /*the solution location of antimony*/
@@ -277,7 +274,7 @@ void Snboundary(struct bound_str *bval)
  *  Original:	SEH	8/91   (Based on Arsenic.c by MEL)              *
  *									*
  ************************************************************************/
-void tin(char *par, struct par_str* param) {
+void tin(char *par, struct par_str *param) {
     int mat;
     int mat2 = -1;
     register int i, j;

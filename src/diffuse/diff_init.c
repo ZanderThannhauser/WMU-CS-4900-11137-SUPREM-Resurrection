@@ -22,8 +22,6 @@
 #include "./src/include/impurity.h"
 #include "./src/include/material.h"
 
-
-
 // 2020 includes:
 #include "./src/diffuse/Antimony.h"
 #include "./src/diffuse/defect.h"
@@ -51,8 +49,6 @@
 
 // 2020 forward declarations
 // end of declarations
-
-
 
 /************************************************************************
  *									*

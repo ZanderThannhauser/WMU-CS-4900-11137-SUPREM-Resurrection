@@ -44,7 +44,7 @@ etch poly right p1.x=0.55 p1.y=-0.020 p2.x=0.45 p2.y=-0.55
 #anneal this step
 diffuse time=30.0 temp=950
 
-struct outf=poly.str
+struct outf=/tmp/poly.str
 
 #do the phosphorus implant
 implant phos dose=1.0e13 energy=50.0
@@ -71,5 +71,5 @@ struct outf=imp4.str
 #do the final anneal
 diffuse time=20 temp=950
 
-struct outf=ldd.str
+struct outf=/tmp/ldd.str
 

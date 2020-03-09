@@ -51,11 +51,9 @@
  *  Mod #  1:   Michael Eldredge 4/86,  Convert to use Pearson routines *
  *									*
  ************************************************************************/
-void do_implant(int ion, double angle, double dose,
-	double energy, int damage, int sol,
-	int is, int vs)
-{
-    register int i, j, r;      /* every routine needs indices */
+void do_implant(int ion, double angle, double dose, double energy, int damage,
+                int sol, int is, int vs) {
+    register int i, j, r;         /* every routine needs indices */
     struct imp_info Idat[MAXREG]; /*the appropriate set*/
     struct imp_info *data;        /* pointer to constants */
     struct surf_info *surf, *cur;
@@ -107,7 +105,7 @@ void do_implant(int ion, double angle, double dose,
     for (cur = surf; cur != NULL; cur = cur->next) {
 
         HERE;
-        
+
         /*work out the material by material offsets*/
         bias = cur->top[0]; /*location of material top*/
         HERE;
@@ -143,18 +141,18 @@ void do_implant(int ion, double angle, double dose,
             HERE;
             verpv(bias);
             HERE;
-            
+
             tp = (cur->top[rm] - bias) * 1.0e4;
             bt = (cur->bot[rm] - bias) * 1.0e4;
-            
+
             HERE;
             verpv(tp);
             HERE;
-            
+
             dosofar += qeqv(tp, bt, dose, PRS_DX, data);
 
             HERE;
-            
+
             /*for all the nodes*/
             /*Here we assume ions make right turns in the substrate...
               They go straight down in this material, but go laterally
@@ -214,6 +212,6 @@ void do_implant(int ion, double angle, double dose,
 
     free_surf(&surf);
     free(node_done);
-EXIT;
+    EXIT;
     return; /* all ok */
 }

@@ -30,10 +30,11 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
 // 2020 includes:
 #include "./src/diffuse/Interst.h"
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
+#include "./src/oxide/Oxidant.h"
 #include "Vacancy.h"
 // end of includes
 
@@ -65,10 +66,8 @@
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void Vdiff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf,
-	double *iprt, double *vprt)
-{
+void Vdiff_coeff(float temp, double **new, double **equil, double *noni,
+                 double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     double diff;
@@ -95,9 +94,8 @@ void Vdiff_coeff(float temp, double **new, double **equil,
  *  Original:	MEL	2/85						*
  *									*
  ************************************************************************/
-void Vcoupling(float temp, double *area,
-	double **new, double **equil, double **dequ, double **rhs)
-{
+void Vcoupling(float temp, double *area, double **new, double **equil,
+               double **dequ, double **rhs) {
     register int is = imptosol[I];
     register int vs = imptosol[V];
     register int ps = imptosol[Psi];
@@ -141,14 +139,13 @@ void Vcoupling(float temp, double *area,
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void Vboundary(struct bound_str *bval)
-{
+void Vboundary(struct bound_str *bval) {
     register int Sisol;
     int sol;
     double tmp;
     double vloc;
     double vpow, tpow;
-    float vmax, Ovel(), Oss();
+    float vmax;
     double normal[2];
     int Osp = ((imptosol[H2O] == -1) ? (O2) : (H2O));
     double K;
@@ -240,8 +237,7 @@ void Vboundary(struct bound_str *bval)
  *  Original:	MEL	8/88 (rewrite of two older routines)		*
  *									*
  ************************************************************************/
-void Vtime_val(int vs, double *rhsnm, struct call_str *cs)
-{
+void Vtime_val(int vs, double *rhsnm, struct call_str *cs) {
     register int i, j, mat, s, si;
     int dop[MAXIMP], ndop;
     int ip = which(V);
@@ -402,8 +398,7 @@ void Vtime_val(int vs, double *rhsnm, struct call_str *cs)
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void vacancy(char *par, struct par_str* param)
-{
+void vacancy(char *par, struct par_str *param) {
     int mat, mat2 = -1;
     int imp = -1;
     char *tmp;

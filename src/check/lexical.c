@@ -31,6 +31,7 @@
 // 2020 includes:
 #include "./src/shell/proc.h"
 #include "./src/check/vector.h"
+#include "./src/check/verify.h"
 #include "lexical.h"
 // end of includes
 
@@ -227,7 +228,6 @@ int lexical(char *str, struct tok_str *tok) {
     char tmp[256];
     char buf[256];
     int i;
-    char *parse_real();
 
     /*if string is null, return error*/
     if (!str)

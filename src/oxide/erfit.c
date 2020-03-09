@@ -30,8 +30,6 @@
  * Original: CSR June 85.
  *----------------------------------------------------------------------*/
 
-extern double erf(); /* From the math library but not in math.h */
-extern double erfc();
 #define root2 1.414213562373094
 #define rootpi 1.7724539
 #define nlog10 2.3025851
@@ -39,7 +37,6 @@ extern double erfc();
 
 double old_t1d;                /* Patch for when t1d gets back_pedalled */
 double subnormal[2] = {0, -1}; /* Normal to substrate */
-float ThinOxideCorr();
 
 void erfc_growth(float temp, int ornt, int oxhow, double dt) {
     int in; /* node walker */
@@ -112,7 +109,7 @@ void erf1_growth(float temp, int ornt, int oxhow, double dt, int which) {
     float arate, brate,   /* deal-grove coefficients */
         dx1 = 0, dx2 = 0, /* new growth, displacement into substrate */
         xn, yn,           /* coordinates of a node */
-        xdep, lift_ratio, Lbb, Ht, string_to_real();
+        xdep, lift_ratio, Lbb, Ht;
 
     /* Check that this has all been set up properly */
     if (tinitN < 0 || tinit < 0) {

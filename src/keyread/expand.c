@@ -26,11 +26,8 @@
 // 2020 forward declarations
 void bool_expand(struct bool_exp *bexp);
 int par_expand(struct bool_exp *bexp);
-int check_list(char* s,
-	struct par_str **pars,
-	int* best,
-	struct par_str **match,
-	int recurs);
+int check_list(char *s, struct par_str **pars, int *best,
+               struct par_str **match, int recurs);
 // end of declarations
 
 /************************************************************************
@@ -56,8 +53,7 @@ int check_list(char* s,
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-void expand(struct par_str **param)
-{
+void expand(struct par_str **param) {
 
     while (param[0]->name[0] != '\0') {
         /*process this parameter*/
@@ -86,8 +82,7 @@ void expand(struct par_str **param)
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-void bool_expand(struct bool_exp *bexp)
-{
+void bool_expand(struct bool_exp *bexp) {
     /*check the type to see if it needs expansion*/
     if (bexp->type == PARVAL)
         if (par_expand(bexp) == -1) {
@@ -129,8 +124,7 @@ int compare(s1, s2) char *s1, *s2;
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-int par_expand(struct bool_exp *bexp)
-{
+int par_expand(struct bool_exp *bexp) {
     char *s;
     int best;
     struct par_str *match;
@@ -182,12 +176,8 @@ int par_expand(struct bool_exp *bexp)
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-int check_list(char* s,
-	struct par_str **pars,
-	int* best,
-	struct par_str **match,
-	int recurs)
-{
+int check_list(char *s, struct par_str **pars, int *best,
+               struct par_str **match, int recurs) {
     int temp;
     static int ambig;
 
@@ -220,8 +210,7 @@ int check_list(char* s,
  *	Original	Mark E. Law		Oct, 1984		*
  *									*
  ************************************************************************/
-void make_depth(struct par_str **param)
-{
+void make_depth(struct par_str **param) {
 
     while (param[0]->name[0] != '\0') {
         /*process this parameter*/

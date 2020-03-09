@@ -20,6 +20,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "./src/include/constant.h"
 #include "./src/include/dbaccess.h"
@@ -44,8 +45,7 @@
  *  Original:	MEL	8/85						*
  *									*
  ************************************************************************/
-float sol_interp(int type, float val1, float val2)
-{
+float sol_interp(int type, float val1, float val2) {
     register int i;
     struct d_str *data;
     int count;
@@ -55,58 +55,73 @@ float sol_interp(int type, float val1, float val2)
     verpv(val1);
     verpv(val2);
 
-    if (mode == ONED)
-    {
-    	HERE;
-    	verpv(3 * ned);
+    if (mode == ONED) {
+        HERE;
+        verpv(3 * ned);
         data = salloc(struct d_str, 3 * ned);
-        }
-    else
-    {
+    } else {
         HERE;
         data = salloc(struct d_str, 2 * ne);
-        }
+    }
 
-   verpv(data);
-   verpv(mode);
+    verpv(data);
+    verpv(mode);
+    verpv(TWOD);
+    verpv(ONED);
     /*get a one dimensional line profile*/
     switch (mode) {
-    case TWOD:
+    case TWOD: {
         verpv(type);
         switch (type) {
-        case X:
+        case X: {
             HERE;
             count = do_1d(YSEC, val1 * 1.0e-4, data, -1, -1, 0);
             break;
-        case Y:
+        }
+        case Y: {
             HERE;
             count = do_1d(XSEC, val1 * 1.0e-4, data, -1, -1, 0);
             break;
-        case Z:
+        }
+        case Z: {
             HERE;
             count = do_1d(XSEC, val1 * 1.0e-4, data, -1, -1, 0);
             break;
+        }
+        default:
+            NOPE;
         }
         break;
-    case ONED:
+    }
+    case ONED: {
         verpv(type);
         switch (type) {
-        case X:
-            HERE;
-            count = do_1d(YSEC, 0.0, data, -1, -1, 0);
-            break;
-        case Y:
-            HERE;
-            count = do_1d(YSEC, 0.0, data, -1, -1, 0);
-            break;
-        case Z:
+        case X: {
             HERE;
             count = do_1d(YSEC, 0.0, data, -1, -1, 0);
             break;
         }
+        case Y: {
+            HERE;
+            count = do_1d(YSEC, 0.0, data, -1, -1, 0);
+            break;
+        }
+        case Z: {
+            HERE;
+            count = do_1d(YSEC, 0.0, data, -1, -1, 0);
+            break;
+        }
+        default:
+            NOPE;
+        }
+        break;
+    }
+    default:
+        NOPE;
     }
 
     verpv(count);
+
     /*x and y functions work similarly*/
     if ((type == X) || (type == Y)) {
 
@@ -129,10 +144,9 @@ float sol_interp(int type, float val1, float val2)
 
         /*run up the list and find the intersection*/
         for (i = count - 1;
-             ((data[i].x > val2) == (data[i - 1].x > val2)) && (i > 1); i--)
-         {
-         verpv(i);
-         }
+             ((data[i].x > val2) == (data[i - 1].x > val2)) && (i > 1); i--) {
+            verpv(i);
+        }
 
         /*interpolate to the answer*/
         if (data[i].x == data[i - 1].x)
@@ -155,9 +169,7 @@ float sol_interp(int type, float val1, float val2)
  *  Original:	MEL	8/85						*
  *									*
  ************************************************************************/
-float interface(type, loc) int type;
-float loc;
-{
+float interface(int type, float loc) {
     register int i;
     struct d_str *data;
     int count, match;

@@ -19,6 +19,7 @@
 
 // 2020 includes
 #include "./src/math/blklu.h"
+#include "./src/math/generate.h"
 #include "FEassmb.h"
 // end of includes
 
@@ -100,7 +101,7 @@ void FEassmb(int *ia, int aoff, double *a, double *rhs) {
 void addstf(int *ia, int aoff, double *a, double *rhs, int nel,
             double stiff[MELDOF * MELDOF], double wrhs[MELDOF],
             int eqns[MELDOF], int fixity[MELDOF], int dummy) {
-    int i, j, aloc, iaja(), eldof = FEdf * nel;
+    int i, j, aloc, eldof = FEdf * nel;
     int row, col;
 
     /* Put b into the RHS */

@@ -17,10 +17,6 @@
 
 extern struct par_str **current; /*current pointer into table*/
 
-extern struct par_str **pop(); /*routine to handle pops to stack*/
-extern struct par_str **push();
-extern struct bool_exp *node();
-
 extern int depth;
 extern int cardnum;
 extern char depthstr[20];

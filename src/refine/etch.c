@@ -42,13 +42,16 @@
 #include "./src/refine/skel.h"
 #include "./src/refine/grid.h"
 #include "./src/refine/interp.h"
+#include "./src/dbase/point.h"
+#include "./src/dbase/node.h"
+#include "./src/dbase/edge.h"
+#include "./src/dbase/region.h"
 #include "etch.h"
 // end of includes
 
 // 2020 forward declarations
 
 // end of declarations
-
 
 /*some useful macros for getting at the parameters*/
 #define CHOSEN(A) (is_specified(param, A) && get_bool(param, A))
@@ -75,8 +78,7 @@
 /*-----------------USER_ETCH--------------------------------------------
  * User interface to etching routine.
  *----------------------------------------------------------------------*/
-void user_etch(char *par, struct par_str* param)
-{
+void user_etch(char *par, struct par_str *param) {
     register int i;
     static int mater_save;
     int mater;
@@ -299,8 +301,7 @@ void user_etch(char *par, struct par_str* param)
 
 /*-----------------ETCH-------------------------------------------------
  *----------------------------------------------------------------------*/
-void etch(float *p[MAXDIM + 1], int nump, int mater)
-{
+void etch(float *p[MAXDIM + 1], int nump, int mater) {
     int i, e;
     int ir, node, ip, ln, fn;
     int sr;

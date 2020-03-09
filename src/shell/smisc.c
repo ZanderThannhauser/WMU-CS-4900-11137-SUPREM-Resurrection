@@ -21,6 +21,7 @@
 // 2020 includes:
 #include "./src/shell/macro.h"
 #include "./src/check/eval.h"
+#include "./src/check/parse.h"
 #include "smisc.h"
 // end of includes
 
@@ -30,10 +31,8 @@
 /*-----------------STRING_TO_REAL---------------------------------------
  * Hide everything from the innocent users
  *----------------------------------------------------------------------*/
-float string_to_real(expr, defval) char *expr;
-float defval;
-{
-    char *parse_expr(), *eval_real(), *err, *dexpr;
+float string_to_real(char *expr, float defval) {
+    char *err, *dexpr;
     struct vec_str *rexp;
     int len;
     float val;

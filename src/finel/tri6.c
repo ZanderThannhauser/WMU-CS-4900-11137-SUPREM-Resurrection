@@ -249,49 +249,56 @@ void do_tri6_nodal_stress(double xl[6][2], double ul[6][2], double epsn[6][3],
 
 #ifdef DEBUG
 #include <math.h>
-test_tri6()
-{
+test_tri6() {
     int i, j, c;
     double rr, ss, sum, sumx, sumy, xl[2], xr[2], derror;
     double xsj, shp[6][3], shp2[6][3];
 
-    static double garbage[6][2] = { {0,0},{1,1},{-1,1}};
-    for (i = 3; i < 6; i++) for (j = 0; j < 2; j++)
-	garbage[i][j] = 0.5*(garbage[(i+1)%3][j] + garbage[(i+2)%3][j]);
+    static double garbage[6][2] = {{0, 0}, {1, 1}, {-1, 1}};
+    for (i = 3; i < 6; i++)
+        for (j = 0; j < 2; j++)
+            garbage[i][j] =
+                0.5 * (garbage[(i + 1) % 3][j] + garbage[(i + 2) % 3][j]);
 
-    for (rr = 0; rr < 1; rr+= 0.2) {
-	for (ss = 0; ss < 1; ss+= 0.2) {
-	    if (rr + ss > 1) continue;
-	    tri6_shape( rr, ss, garbage, &xsj, shp);
+    for (rr = 0; rr < 1; rr += 0.2) {
+        for (ss = 0; ss < 1; ss += 0.2) {
+            if (rr + ss > 1)
+                continue;
+            tri6_shape(rr, ss, garbage, &xsj, shp);
 
-	    sum = sumx = sumy = 0;
-	    for (i = 0; i < 6; i++) {
-		sum += shp[i][2];
-		sumx += shp[i][X];
-		sumy += shp[i][Y];
-	    }
-	    sum -= 1.0;
-	    if (fabs(sum) >= 1e-10) printf("[%g %g] sum %g\n",rr,ss,sum);
-	    if (fabs(sumx) >= 1e-10) printf("[%g %g] sumx %g\n",rr,ss,sumx);
-	    if (fabs(sumy) >= 1e-10) printf("[%g %g] sumy %g\n",rr,ss,sumy);
+            sum = sumx = sumy = 0;
+            for (i = 0; i < 6; i++) {
+                sum += shp[i][2];
+                sumx += shp[i][X];
+                sumy += shp[i][Y];
+            }
+            sum -= 1.0;
+            if (fabs(sum) >= 1e-10)
+                printf("[%g %g] sum %g\n", rr, ss, sum);
+            if (fabs(sumx) >= 1e-10)
+                printf("[%g %g] sumx %g\n", rr, ss, sumx);
+            if (fabs(sumy) >= 1e-10)
+                printf("[%g %g] sumy %g\n", rr, ss, sumy);
 
-	    /* See if the derivatives really are */
-	    tri6_shape( rr+1e-2, ss+1e-2, garbage, &xsj, shp2);
-	    for (c = 0; c < 2; c++) {
-		xl[c] = 0;
-		xr[c] = 0;
-		for (j = 0; j < 6; j++) xl[c] += shp[j][2]*garbage[j][c];
-		for (j = 0; j < 6; j++) xr[c] += shp2[j][2]*garbage[j][c];
-	    }
-	    for (j = 0; j < 6; j++) {
-		derror = shp2[j][2] - shp[j][2] 
-			 - (xr[0]-xl[0])*(shp2[j][0] + shp[j][0])/2
-			     - (xr[1]-xl[1])*(shp2[j][1] + shp[j][1])/2;
+            /* See if the derivatives really are */
+            tri6_shape(rr + 1e-2, ss + 1e-2, garbage, &xsj, shp2);
+            for (c = 0; c < 2; c++) {
+                xl[c] = 0;
+                xr[c] = 0;
+                for (j = 0; j < 6; j++)
+                    xl[c] += shp[j][2] * garbage[j][c];
+                for (j = 0; j < 6; j++)
+                    xr[c] += shp2[j][2] * garbage[j][c];
+            }
+            for (j = 0; j < 6; j++) {
+                derror = shp2[j][2] - shp[j][2] -
+                         (xr[0] - xl[0]) * (shp2[j][0] + shp[j][0]) / 2 -
+                         (xr[1] - xl[1]) * (shp2[j][1] + shp[j][1]) / 2;
 
-		if( derror > 1e-4 || derror < -1e-4)
-		    printf("derivative error \n");
-	    }
-	}
+                if (derror > 1e-4 || derror < -1e-4)
+                    printf("derivative error \n");
+            }
+        }
     }
 }
 

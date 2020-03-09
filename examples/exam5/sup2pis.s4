@@ -15,4 +15,4 @@ etch done  x=-0.5 y=-1.0
 struct mirror left
 
 #save it in Pisces format
-struct pisc=ldd.mesh
+struct pisc=/tmp/ldd.mesh

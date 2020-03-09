@@ -31,6 +31,7 @@
 #include "./src/dbase/grid_upd.h"
 #include "./src/misc/print_time.h"
 #include "./src/dbase/locate.h"
+#include "./src/geom/misc.h"
 #include "oxgrow.h"
 // end of includes
 
@@ -43,8 +44,7 @@ void point_vel();
  * Remember: All nodes must be added before
  * computing velocities, otherwise new nodes won't have any.
  *----------------------------------------------------------------------*/
-void oxgrow(float temp, int ornt, int oxhow, double *dt)
- {
+void oxgrow(float temp, int ornt, int oxhow, double *dt) {
     struct tms before, after;
 
     times(&before);
@@ -112,8 +112,7 @@ void point_vel() {
 /*------------------MOVE_POINT------------------------------------------
  * Turn point velocities into honest-to-god point displacements.
  *----------------------------------------------------------------------*/
-void move_point(double dt)
-{
+void move_point(double dt) {
     register int ip, ix;
 
     for (ip = 0; ip < np; ip++) {
@@ -162,7 +161,7 @@ void tot_areas(double *oar, double *nar) {
 #define Y 1
 int ClockTri(int FixEm) {
     int ie, *n, swap, nclock = 0, nzero = 0;
-    float *c0, *c1, *c2, area, area_tri();
+    float *c0, *c1, *c2, area;
 
     if (mode == ONED)
         return (0);

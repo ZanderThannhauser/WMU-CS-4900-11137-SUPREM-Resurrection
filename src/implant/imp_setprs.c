@@ -21,7 +21,6 @@
 #include "./src/include/impurity.h"
 #include "./src/include/material.h"
 
-
 // 2020 includes:
 #include "./src/implant/fgtmom.h"
 #include "./src/implant/imp_gtprs.h"
@@ -33,15 +32,13 @@
 // 2020 forward declarations
 // end of declarations
 
-
 /* MAP Suprem-IV numbers to those of Suprem-III (which is how they are
  * stored in the implant range data file.
  */
 #define S3_BF2 5
 
 /* "setprs" : get Pearson constants for given ion/matterial/energy */
-int setprs(int ion, int mat, double energy, struct imp_info *cvals)
-{
+int setprs(int ion, int mat, double energy, struct imp_info *cvals) {
 
     double rang, sigp, gam1, kurt, later;
     int ierr;

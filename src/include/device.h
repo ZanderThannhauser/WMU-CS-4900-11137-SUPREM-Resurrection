@@ -89,7 +89,4 @@ EXTERN int *ia_cn, ao_cn;
 /*band edges as a function of doping and material*/
 EXTERN double *Ec, *Ev;
 
-/*quasi fermi functions*/
-extern double Phi_n(), Phi_p();
-
 #endif

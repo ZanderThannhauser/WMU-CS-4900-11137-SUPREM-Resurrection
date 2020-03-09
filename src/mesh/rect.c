@@ -32,6 +32,9 @@
 // 2020 includes:
 #include "./src/dbase/dispose.h"
 #include "./src/misc/get.h"
+#include "./src/dbase/point.h"
+#include "./src/dbase/element.h"
+#include "./src/dbase/region.h"
 #include "rect.h"
 // end of includes
 
@@ -344,6 +347,7 @@ int squares(float new_mr) {
     int ie, i, j, k, ir, ij, dim, ix[3];
     int test, vl[12];
     float c1[MAXDIM];
+    ENTER;
 
     test = FALSE;
     for (i = 0; i < mode; i++)
@@ -460,6 +464,7 @@ int squares(float new_mr) {
 
     /* Clear out user data so we can come back */
     rect_boot();
+    EXIT;
     return (0);
 }
 
@@ -469,8 +474,7 @@ int squares(float new_mr) {
 
 #define chosen(A) is_specified(param, A) && get_bool(param, A)
 
-void rregion(char *par, struct par_str *param)
-{
+void rregion(char *par, struct par_str *param) {
     int mater;
 
     /* There is a new region */
@@ -511,7 +515,6 @@ void rregion(char *par, struct par_str *param)
     if (chosen("gaas"))
         mater = GaAs;
     umattyp[nur - 1] = mater;
-
 }
 
 /*-----------------REDGE------------------------------------------------

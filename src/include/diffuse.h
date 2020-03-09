@@ -27,9 +27,6 @@
 #define EXTERN extern
 #endif
 
-/*set up a definition for the norm function*/
-EXTERN double norm();
-
 /*add a couple of solution vectors for the diffusion timestep algorithm*/
 EXTERN double total;         /*the total time so far*/
 EXTERN double *old[MAXIMP];  /*solution at last time step*/

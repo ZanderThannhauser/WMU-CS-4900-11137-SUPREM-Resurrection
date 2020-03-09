@@ -20,7 +20,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
+#include <assert.h>
 
 #include "./src/include/constant.h"
 #include "./src/include/defect.h"
@@ -32,18 +32,17 @@
 #include "./src/include/matrix.h"
 #include "./src/include/plot.h"
 
-
-
 // 2020 includes:
+#include "./src/debug.h"
 #include "./src/shell/smisc.h"
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
+#include "./src/oxide/Oxidant.h"
 #include "Interst.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
-
-
 
 /************************************************************************
  *									*
@@ -70,11 +69,8 @@
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void Idiff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf,
-	double *vdf, double *iprt,
-	double *vprt)
-{
+void Idiff_coeff(float temp, double **new, double **equil, double *noni,
+                 double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     double diff;
@@ -101,9 +97,8 @@ void Idiff_coeff(float temp, double **new, double **equil,
  *  Original:	MEL	2/85						*
  *									*
  ************************************************************************/
-void Icoupling(float temp, double *area, double **new,
-	double **equil, double **dequ, double **rhs)
-{
+void Icoupling(float temp, double *area, double **new, double **equil,
+               double **dequ, double **rhs) {
     register int is = imptosol[I];
     register int vs = imptosol[V];
     register int ps = imptosol[Psi];
@@ -147,13 +142,12 @@ void Icoupling(float temp, double *area, double **new,
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void Iboundary(struct bound_str *bval)
-{
+void Iboundary(struct bound_str *bval) {
     register int Sisol;
     int sol;
     double tmp;
     double vloc;
-    float vmax, Ovel(), Oss();
+    float vmax;
     double normal[2];
     int Osp = ((imptosol[H2O] == -1) ? (O2) : (H2O));
     double vpow, tpow;
@@ -276,8 +270,7 @@ void Iboundary(struct bound_str *bval)
  *  Original:	MEL	8/88 (rewrite of two older routines)		*
  *									*
  ************************************************************************/
-void Itime_val(int is, double *rhsnm, struct call_str *cs)
-{
+void Itime_val(int is, double *rhsnm, struct call_str *cs) {
     register int i, j, s, si;
     int dop[MAXIMP], ndop, mat;
     int ip = which(I);
@@ -290,6 +283,11 @@ void Itime_val(int is, double *rhsnm, struct call_str *cs)
     double expa, dnda, dndb, jac;
     register int ts = imptosol[T];
     register int ps = imptosol[Psi];
+
+    // 2020: if (cs->type == BDF): then this value will be overwritten before
+    // it is used, otherwise, it will never be used.
+    t2 = t3 = 0.0;
+    // this is just to remove the GCC error.
 
     if (IS_PSEUDO(I)) {
         for (i = 0; i < nn; i++)
@@ -331,6 +329,8 @@ void Itime_val(int is, double *rhsnm, struct call_str *cs)
         t3 = (igam * igam / gam) / cs->new_del;
         if (ts != -1)
             ot = cs->mid[ts];
+    } else {
+        NOPE;
     }
 
     /*since we can't get it vectorized anyway, one big outer loop*/
@@ -477,8 +477,7 @@ void foo2(ar1, ar2) double *ar1, *ar2;
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void interstitial(char *par, struct par_str* param)
-{
+void interstitial(char *par, struct par_str *param) {
     int mat, mat2 = -1;
     int imp = -1;
     char *tmp;
@@ -796,9 +795,8 @@ void comp_intparam(float temp) {
     }
 }
 
-float form_eval(char *expr, float total, float cord[2])
-{
-    float val, string_to_real();
+float form_eval(char *expr, float total, float cord[2]) {
+    float val;
 
     fmacro("t", total, "%e");
     fmacro("x", cord[0] * 1.0e4, "%e");

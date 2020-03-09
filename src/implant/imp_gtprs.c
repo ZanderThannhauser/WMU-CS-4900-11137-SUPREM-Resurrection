@@ -34,9 +34,8 @@
 // 2020 forward declarations
 // end of declarations
 
-
-void gtprs(double rp, double sigp, double gam1, double kurt, struct imp_info *cvals)
-{
+void gtprs(double rp, double sigp, double gam1, double kurt,
+           struct imp_info *cvals) {
 
     double ca, gam1sq;
 

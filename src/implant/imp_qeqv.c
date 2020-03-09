@@ -35,12 +35,12 @@
 // 2020 forward declarations
 // end of declarations
 
-double qeqv(double xst, double xen, double qtot, double dx, struct imp_info *data)
-{
+double qeqv(double xst, double xen, double qtot, double dx,
+            struct imp_info *data) {
     double x, val, ov;
     double q = 0.0;
     ENTER;
-    
+
     HERE;
     verpv(xst);
     HERE;
@@ -49,9 +49,9 @@ double qeqv(double xst, double xen, double qtot, double dx, struct imp_info *dat
     HERE;
     ov = imp_vert(xst, data);
     HERE;
-    
+
     for (x = xst + dx; (x < xen - dx) && (x < data->maxz); x += dx) {
-    	HERE;
+        HERE;
         val = imp_vert(x, data);
         HERE;
         q += 0.5 * (val + ov) * dx;
@@ -60,7 +60,7 @@ double qeqv(double xst, double xen, double qtot, double dx, struct imp_info *dat
 
     /*add the excess for the last bit*/
     if (x > (xen - dx)) {
-    	HERE;
+        HERE;
         val = imp_vert(xen, data);
         HERE;
         q += 0.5 * (val + ov) * (xen - x);
@@ -70,25 +70,3 @@ double qeqv(double xst, double xen, double qtot, double dx, struct imp_info *dat
     EXIT;
     return (q * qtot / data->area);
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

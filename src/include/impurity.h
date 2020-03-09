@@ -85,8 +85,6 @@ typedef double (*PTR_DBLFNC)();
 #define iG 47   /*Generic impurity*/
 #define iGa 48  /*Generic active concentration*/
 
-extern double charge();
-
 /*set up an array of pointer from solution numbers to impurity number*/
 EXTERN int soltoimp[MAXIMP];
 
@@ -192,10 +190,6 @@ EXTERN int bcnum;
 #define O_ERFG 7
 EXTERN int oxide_model;
 
-/*the following are definitions used in the impurity routine so that future
-  implementers of models can do it without memorizing the data structure.*/
-extern double get_conc();
-
 /*
  *	A - the row index
  *	B - the impurity index
@@ -204,9 +198,6 @@ extern double get_conc();
  */
 #define left_side(A, B, D) a[B][B][A] += D
 #define right_side(A, B, C, D) C[B][A] += D
-
-void clear_row(int n, int sol);
-extern double get_area();
 
 /*
  *	A - is the row

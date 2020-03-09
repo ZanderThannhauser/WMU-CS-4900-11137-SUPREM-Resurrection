@@ -107,8 +107,7 @@ char *alloc_nd() {
 /*
  * make a node at a point with the given material
  */
-int mk_nd(p, m) int p, m;
-{
+int mk_nd(int p, int m) {
     char *err;
 
     if ((err = alloc_nd()) != NULL)
@@ -166,7 +165,6 @@ void make_nodes() {
     register int p;   /*point count*/
     register int t;   /*triangle count*/
     register int mat; /*material type of the current triangle*/
-    char *alloc_nd();
 #define PC(ARG)                                                                \
     if (err = ARG)                                                             \
     panic(err)

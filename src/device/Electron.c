@@ -22,8 +22,6 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
-
 // 2020 includes:
 #include "./src/misc/get.h"
 #include "Electron.h"
@@ -31,8 +29,6 @@
 
 // 2020 forward declarations
 // end of declarations
-
-
 
 /************************************************************************
  *									*
@@ -77,10 +73,8 @@ void Nboundary(struct bound_str *bval) {}
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-double Phi_n(elec, psi, ec, mat, dqdp, dqde) double elec, psi, ec;
-int mat;
-double *dqdp, *dqde;
-{
+double Phi_n(double elec, double psi, double ec, int mat, double *dqdp,
+             double *dqde) {
     double qfn;
 
     if (IS_SEMI(mat)) {
@@ -104,8 +98,7 @@ double *dqdp, *dqde;
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-void electron(char *par, struct par_str* param)
-{
+void electron(char *par, struct par_str *param) {
     int mat, mat2 = -1;
 
 #define fetch(V, S, F)                                                         \

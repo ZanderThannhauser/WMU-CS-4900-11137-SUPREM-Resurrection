@@ -23,7 +23,6 @@
 #include "./src/include/dbaccess.h"
 #include "./src/include/global.h"
 
-
 // 2020 includes:
 #include "./src/refine/tridata.h"
 #include "./src/refine/rect_tri.h"
@@ -32,27 +31,25 @@
 #include "./src/dbase/list.h"
 #include "./src/refine/dbase.h"
 #include "./src/misc/panic.h"
+#include "./src/refine/triheur.h"
+#include "./src/dbase/geom.h"
 #include "triang.h"
 // end of includes
 
 // 2020 forward declarations
+int acomp(struct LLedge **lep1, struct LLedge **lep2);
 // end of declarations
 
-double dmin(X, Y) double X, Y;
-{ return (X <= Y ? X : Y); }
-double dmax(X, Y) double X, Y;
-{ return (X >= Y ? X : Y); }
-double dabs(X) double X;
-{ return ((X >= 0) ? X : -X); }
+double dmin(double X, double Y) { return (X <= Y ? X : Y); }
+double dmax(double X, double Y) { return (X >= Y ? X : Y); }
+double dabs(double X) { return ((X >= 0) ? X : -X); }
 
 /*-----------------TRIANG-----------------------------------------------
  * Triangulate a region. The core routine.
  *----------------------------------------------------------------------*/
-void triang(int ir, int rbn, int bflag, int spflag)
-{
-    int ie, f, save_nreg, divide(), split, nr;
-    struct LLedge *bp, *nbp, *chop(), *quadsplit();
-    double l_edge();
+void triang(int ir, int rbn, int bflag, int spflag) {
+    int ie, f, save_nreg, split, nr;
+    struct LLedge *bp, *nbp;
 
     mgeom = 0.6;
     debug1 = FALSE;
@@ -156,12 +153,11 @@ void triang(int ir, int rbn, int bflag, int spflag)
 /*-----------------CK_CLOCK---------------------------------------------
  * Initialize and check counter-clockwise structures for region # ir.
  *----------------------------------------------------------------------*/
-void ck_clock(int ir, int fl)
-{
+void ck_clock(int ir, int fl) {
     struct LLedge *ep, *tmp, *bnd, **ptrs;
     struct edg_str *enext, *eprev;
-    int f, acomp(), mod(), n1, n0, no, io;
-    double tang, intang();
+    int f, n1, n0, no, io;
+    double tang;
     static char err[80];
     int cnt = 0;
 
@@ -243,7 +239,7 @@ void ck_clock(int ir, int fl)
     for (no = 0, f = 1, ep = bnd; (ep != bnd) || f; ep = ep->next, f = 0)
         ptrs[no++] = ep;
 
-    qsort(ptrs, no, sizeof(struct LLedge *), acomp);
+    qsort(ptrs, no, sizeof(struct LLedge *), (__compar_fn_t)acomp);
 
 #define MOD(A, B) ((A) >= 0) ? ((A) % (B)) : ((B)-1 - (-1 - (A)) % (B))
     sreg[ir]->maxa = ptrs[no - 1];
@@ -261,8 +257,7 @@ void ck_clock(int ir, int fl)
 /*
  * ACOMP - comparison routine for quicksort.
  */
-int acomp(lep1, lep2) struct LLedge **lep1, **lep2;
-{
+int acomp(struct LLedge **lep1, struct LLedge **lep2) {
     double v;
     v = (*lep1)->ang - (*lep2)->ang;
     if (v < 0)

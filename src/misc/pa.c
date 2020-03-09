@@ -37,7 +37,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 static int r0 = -1;
 static int r1 = -1;
 

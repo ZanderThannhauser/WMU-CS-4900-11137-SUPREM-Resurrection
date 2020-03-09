@@ -68,27 +68,26 @@
  *  Original:	MEL	8/85						*
  *									*
  ************************************************************************/
-char *eval_real(struct vec_str *expr, float* val)
-{
+char *eval_real(struct vec_str *expr, float *val) {
     float lval, rval;
-    float interface();
     char *err;
     ENTER;
 
+    // 2020: to fix error: "may be used uninitialized in this function"
+    lval = 0, rval = 0;
+
     /*evaluate the kids*/
     if (expr->left != NULL)
-        if ((err = eval_real(expr->left, &lval)) != NULL)
-        {
-        EXIT;
+        if ((err = eval_real(expr->left, &lval)) != NULL) {
+            EXIT;
             return (err);
-            }
+        }
 
     if (expr->right != NULL)
-        if ((err = eval_real(expr->right, &rval)) != NULL)
-        {
-        EXIT;
+        if ((err = eval_real(expr->right, &rval)) != NULL) {
+            EXIT;
             return (err);
-            }
+        }
 
     /*switch on the type of value contained in the passed argument*/
     switch (expr->type) {
@@ -150,11 +149,10 @@ char *eval_real(struct vec_str *expr, float* val)
         case X:
         case Y:
         case Z:
-            if ((expr->left == NULL) || (expr->right == NULL))
-            {
-    EXIT;
+            if ((expr->left == NULL) || (expr->right == NULL)) {
+                EXIT;
                 return ("x,y,and z functions require two arguments\n");
-            }else
+            } else
                 *val = sol_interp(expr->value.ival, lval, rval);
             break;
         default:
@@ -166,11 +164,11 @@ char *eval_real(struct vec_str *expr, float* val)
         break;
     case VFN:
     case SOLVAL:
-    EXIT;
+        EXIT;
         return ("a vector solution value is illegal here\n");
         break;
     case STRING:
-    EXIT;
+        EXIT;
         return ("string not allowed in expression\n");
         break;
     }
@@ -187,8 +185,7 @@ char *eval_real(struct vec_str *expr, float* val)
  *  Original:	MEL	8/85						*
  *									*
  ************************************************************************/
-char *eval_vec(struct vec_str *expr, float *val)
-{
+char *eval_vec(struct vec_str *expr, float *val) {
     float *lval, *rval;
     float tmp;
     char *err = NULL;
@@ -332,8 +329,9 @@ char *eval_vec(struct vec_str *expr, float *val)
  *  Original:	MEL	12/85						*
  *									*
  ************************************************************************/
-int islogexp(struct vec_str *expr)
-{ return ((expr->type == FN) && (expr->value.ival == LOG10)); }
+int islogexp(struct vec_str *expr) {
+    return ((expr->type == FN) && (expr->value.ival == LOG10));
+}
 
 /************************************************************************
  *									*

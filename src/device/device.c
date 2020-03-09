@@ -160,7 +160,7 @@ void device_init() {
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-void device(char *par, struct par_str* param) {
+void device(char *par, struct par_str *param) {
     double *area;
     int tfl, tfm;
     char *movie;

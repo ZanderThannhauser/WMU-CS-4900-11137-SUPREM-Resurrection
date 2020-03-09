@@ -16,13 +16,13 @@
  */
 
 #include <stdio.h>
+#include <assert.h>
 #include <stdlib.h>
 
 #include "./src/include/constant.h"
 #include "./src/include/global.h"
 #include "./src/include/material.h"
 #include "./src/include/refine.h"
-
 
 // 2020 includes:
 #include "./src/refine/etch.h"
@@ -33,11 +33,9 @@
 // 2020 forward declarations
 // end of declarations
 
-
 #define BUFFERSIZE 80
 
-void string_etch(char *infile, int material)
-{
+void string_etch(char *infile, int material) {
     char *buffer;
     int start_index;
     int stop_index;
@@ -58,7 +56,7 @@ void string_etch(char *infile, int material)
 
         /* read in data */
         /* get first point */
-        fgets(buffer, BUFFERSIZE, inf);
+        assert(fgets(buffer, BUFFERSIZE, inf));
         sscanf(buffer, "%f %f", &xcord, &ycord);
 
         maxp = 300;

@@ -32,20 +32,21 @@
 #include "./src/refine/dbase.h"
 #include "./src/refine/triang.h"
 #include "./src/misc/panic.h"
+#include "./src/dbase/geom.h"
+#include "./src/geom/misc.h"
 #include "rect_tri.h"
 // end of includes
 
 // 2020 forward declarations
-int chk_pt(float* q, struct sreg_str* r);
-int rect_cnt(struct sreg_str* r, float *p, int ie);
+int chk_pt(float *q, struct sreg_str *r);
+int rect_cnt(struct sreg_str *r, float *p, int ie);
 // end of declarations
 
 /*-----------------DIVIDE-----------------------------------------------
  * Choose good ways to cut a region in half.
  * Returns pointers to the edge following each end of the cut.
  *----------------------------------------------------------------------*/
-int rect_div(struct sreg_str *r, struct LLedge **lep1, struct LLedge** lep2)
-{
+int rect_div(struct sreg_str *r, struct LLedge **lep1, struct LLedge **lep2) {
     struct LLedge *bp1, *bp2, *bnd, *t1, *t2, *bst1, *bst2;
     double piby2, ang1, ang3;
     double eps = 1.0e-2;
@@ -108,9 +109,8 @@ int rect_div(struct sreg_str *r, struct LLedge **lep1, struct LLedge** lep2)
  * Divide an edge, using the spacing parameters calculated in dvpram.
  * Called from bfill, and also during the triangulation (triang.c).
  *----------------------------------------------------------------------*/
-int dvrecedg(struct sreg_str* r1, struct sreg_str* r2,
-	int ie, struct LLedge* t1)
-{
+int dvrecedg(struct sreg_str *r1, struct sreg_str *r2, int ie,
+             struct LLedge *t1) {
     struct LLedge *bp1, *bnd;
     float *p;
     int nump, n;
@@ -161,8 +161,7 @@ int dvrecedg(struct sreg_str* r1, struct sreg_str* r2,
     return (ret);
 }
 
-int rect_cnt(struct sreg_str* r, float *p, int ie)
-{
+int rect_cnt(struct sreg_str *r, float *p, int ie) {
     struct LLedge *bp1, *bnd;
     float x[MAXDIM], dx[MAXDIM], q[MAXDIM], dq[MAXDIM], alp[MAXDIM];
     int nump, n;
@@ -205,8 +204,7 @@ int rect_cnt(struct sreg_str* r, float *p, int ie)
     return (nump);
 }
 
-int chk_pt(float* q, struct sreg_str* r)
-{
+int chk_pt(float *q, struct sreg_str *r) {
     struct LLedge *bp1;
     int p, f;
 
@@ -218,9 +216,8 @@ int chk_pt(float* q, struct sreg_str* r)
     return (1);
 }
 
-void rect_tri(int r, int rbn)
-{
-    struct LLedge *bp, *bn, *bpi2, *quadsplit();
+void rect_tri(int r, int rbn) {
+    struct LLedge *bp, *bn, *bpi2;
     float pi2 = PI / 2.0, pi = PI, bpang;
     int f;
 

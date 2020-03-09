@@ -1045,7 +1045,7 @@ test_stress(n) int n;
 
 #ifdef CONVEX
 test_pbc() {
-    extern double *FDrhs, ffcos();
+    extern double *FDrhs;
     double dx, dy;
     int i, j, k1, k2, k;
 

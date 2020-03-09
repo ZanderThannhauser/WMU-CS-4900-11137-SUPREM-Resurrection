@@ -20,17 +20,14 @@
 #include "./src/include/material.h"
 #include "./src/include/matrix.h"
 
-
-
 // 2020 includes:
 #include "./src/misc/get.h"
+#include "./src/diffuse/species.h"
 #include "Antimony.h"
 // end of includes
 
 // 2020 forward declarations
 // end of declarations
-
-
 
 /*definitions for impurity constants as a function of material*/
 /*pre exp constant with neutral V*/
@@ -81,10 +78,8 @@ static double Sbsstemp = 0.0;
  *  Revised:	MEL	3/86	(multiple materials)			*
  *									*
  ************************************************************************/
-void Sbdiff_coeff(float temp, double **new, double **equil,
-	double *noni, double *idf, double *vdf, double *iprt,
-	double *vprt)
-{
+void Sbdiff_coeff(float temp, double **new, double **equil, double *noni,
+                  double *idf, double *vdf, double *iprt, double *vprt) {
     register int i;
     int mat;
     static double Dix[MAXMAT];
@@ -122,8 +117,7 @@ void Sbdiff_coeff(float temp, double **new, double **equil,
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void Sbboundary(struct bound_str *bval)
-{
+void Sbboundary(struct bound_str *bval) {
     double f;
     double h, m;
     int sol; /*the solution location of antimony*/
@@ -191,9 +185,8 @@ void Sbboundary(struct bound_str *bval)
  *  Original:	MEL	7/87						*
  *									*
  ************************************************************************/
-void Sbactive(int simple, int nn, float temp,
-	double **chem, double **act, double **equil, double *noni)
-{
+void Sbactive(int simple, int nn, float temp, double **chem, double **act,
+              double **equil, double *noni) {
     register int i;
     register int j;
     register int ss = imptosol[Sb];
@@ -267,8 +260,7 @@ void Sbactive(int simple, int nn, float temp,
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void antimony(char *par, struct par_str* param)
-{
+void antimony(char *par, struct par_str *param) {
     int mat;
     int mat2 = -1;
     register int i, j;

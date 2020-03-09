@@ -35,6 +35,8 @@
 #include "./src/dbase/remove.h"
 #include "./src/diffuse/poly.h"
 #include "./src/misc/panic.h"
+#include "./src/dbase/neigh.h"
+#include "./src/dbase/edge.h"
 #include "kill_node.h"
 // end of includes
 

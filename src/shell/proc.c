@@ -24,7 +24,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 /*here be stuff that should live in .h some day*/
 #define FALSE 0
 #define TRUE 1
@@ -104,8 +103,7 @@ int substring(char *s, char *ss) {
  *	Original	Mark E. Law		Sept, 1984		*
  *									*
  ************************************************************************/
-FILE *file_parse(char *name, char *type)
-{
+FILE *file_parse(char *name, char *type) {
     ENTER;
     char *end_str;
 

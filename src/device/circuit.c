@@ -29,7 +29,6 @@
 // 2020 forward declarations
 // end of declarations
 
-
 /************************************************************************
  *									*
  *	circuit_setup() - This routine calculates the circuit values.	*

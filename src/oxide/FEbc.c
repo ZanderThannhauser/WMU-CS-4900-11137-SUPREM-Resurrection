@@ -25,6 +25,7 @@
 #include "./src/shell/smisc.h"
 #include "./src/dbase/locate.h"
 #include "./src/dbase/new_layer.h"
+#include "./src/oxide/Oxidant.h"
 #include "FEbc.h"
 // end of includes
 
@@ -168,8 +169,7 @@ void FEdirichlet(char *par, struct par_str *param) {
     int ie, j, i, k, v, c;
     FEelt_typ *ae;
     FEnd_typ *an;
-    float string_to_real();
-    char *s, *ubc[10], *vbc[10], name[256], *get_string();
+    char *s, *ubc[10], *vbc[10], name[256];
 
     for (i = 3; i < 10; i++) {
         ubc[i] = vbc[i] = 0;
@@ -284,7 +284,6 @@ void gas_fixities() {
     int ie, j, *k, *kk;
     FEnd_typ *an;
     FEelt_typ *ae;
-    float Oss();
 
     for (ie = 0; ie < FEne; ie++) {
         ae = FEelt[ie];
