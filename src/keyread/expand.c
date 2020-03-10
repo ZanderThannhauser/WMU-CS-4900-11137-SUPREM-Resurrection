@@ -16,8 +16,8 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "../include/check.h"
-#include "../include/key.h"
+#include "../suprem/include/check.h"
+#include "../suprem/include/key.h"
 
 // 2020 includes:
 #include "expand.h"

@@ -31,10 +31,10 @@
    version 2.2 of Bison.  */
 
 #ifndef YY_YY_Y_TAB_H_INCLUDED
-#define YY_YY_Y_TAB_H_INCLUDED
+# define YY_YY_Y_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-#define YYDEBUG 0
+# define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -42,8 +42,9 @@ extern int yydebug;
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
-#define YYTOKENTYPE
-enum yytokentype {
+# define YYTOKENTYPE
+  enum yytokentype
+  {
     CARD = 258,
     BG_GRP = 259,
     END_GRP = 260,
@@ -70,7 +71,7 @@ enum yytokentype {
     ERR_MSG = 281,
     COMMENT = 282,
     PARNAME = 283
-};
+  };
 #endif
 /* Tokens.  */
 #define CARD 258
@@ -101,26 +102,29 @@ enum yytokentype {
 #define PARNAME 283
 
 /* Value type.  */
-#if !defined YYSTYPE && !defined YYSTYPE_IS_DECLARED
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
-union YYSTYPE {
+union YYSTYPE
+{
 #line 54 "src/keyread/./parser.y" /* yacc.c:1909  */
 
     int ival;
     float dval;
     char *sval;
     struct bool_exp *bval;
+    
 
 #line 118 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
-#define YYSTYPE_IS_TRIVIAL 1
-#define YYSTYPE_IS_DECLARED 1
+# define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
 #endif
+
 
 extern YYSTYPE yylval;
 
-int yyparse(void);
+int yyparse (void);
 
 #endif /* !YY_YY_Y_TAB_H_INCLUDED  */

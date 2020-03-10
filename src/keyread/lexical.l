@@ -18,8 +18,8 @@
 
 #include "./parser.h"
 
-#include "../include/check.h"
-#include "../include/key.h"
+#include "../suprem/include/check.h"
+#include "../suprem/include/key.h"
 
 %}
 

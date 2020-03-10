@@ -19,9 +19,9 @@
 #include <fcntl.h>
 
 #define STATIC_ALLOCATION_TIME
-#include "../include/check.h"
-#include "../include/key.h"
-#include "../include/sysdep.h"
+#include "../suprem/include/check.h"
+#include "../suprem/include/key.h"
+#include "../suprem/include/sysdep.h"
 
 // 2020 includes:
 #include "./parser.h"

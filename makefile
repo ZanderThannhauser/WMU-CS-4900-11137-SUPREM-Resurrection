@@ -86,6 +86,8 @@ run.d: bin/suprem.d data/suprem.uk
 valrun: bin/suprem.d data/suprem.uk
 	valgrind --gen-suppressions=yes ./bin/suprem.d $(ARGS)
 
+#all: bin/keyread bin/keyread.d bin/scraper bin/scraper.d bin/suprem bin/suprem.d
+
 bin/keyread: $(KR_OBJS) 
 	$(CC) $(LDFLAGS) $(KR_OBJS) $(LOADLIBES) $(LDLIBS) -o $@
 
