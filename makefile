@@ -51,9 +51,9 @@ SUP_DEPENDS = $(SUP_SRCS:.c=.mk)
 
 # --gen-suppressions=yes
 
-ARGS = ./examples/exam1/boron.in # seems to work
+#ARGS = ./examples/exam1/boron.in # seems to work
 #ARGS = ./examples/exam2/oed.in # seems to work
-#ARGS = ./examples/exam3/oed.in # seems to work?
+ARGS = ./examples/exam3/oed.in # seems to work?
 #ARGS = ./examples/exam4/oed.in # aborts
 #ARGS = ./examples/exam5/whole.s4 # aborts
 #ARGS = ./examples/exam6/oxcalib.s4 # aborts
