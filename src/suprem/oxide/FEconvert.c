@@ -22,18 +22,18 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes
+/* 2020 includes*/
 #include "./src/suprem/dbase/alloc.h"
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/misc/panic.h"
 #include "FEconvert.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void stash_noniC(int in, double where[]);
 void valencies();
 void FE2s4(int SavWhat);
-// end of declarations
+/* end of declarations*/
 
 #define X 0
 #define Y 1

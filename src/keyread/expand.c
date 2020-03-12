@@ -19,16 +19,16 @@
 #include "../suprem/include/check.h"
 #include "../suprem/include/key.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "expand.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void bool_expand(struct bool_exp *bexp);
 int par_expand(struct bool_exp *bexp);
 int check_list(char *s, struct par_str **pars, int *best,
                struct par_str **match, int recurs);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

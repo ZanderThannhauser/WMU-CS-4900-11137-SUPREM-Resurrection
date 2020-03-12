@@ -25,22 +25,22 @@
 #include "./src/suprem/include/material.h" /* For nmat, mattyp, SiO2 etc */
 #include "./src/suprem/include/matrix.h"   /* For UpdateSymbolic */
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/flip.h"
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/misc/panic.h"
 #include "./src/suprem/geom/misc.h"
 #include "geometry.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void sum_edge();
 void chp_fix(int obe);
 void tri_geom(int ie);
 void seg_geom(int ie);
 void repair_obtuse();
 float ehed_tri(int t, int e);
-// end of declarations
+/* end of declarations*/
 
 #define report(S, A, B, C)                                                     \
     {                                                                          \

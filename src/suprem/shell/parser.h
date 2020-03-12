@@ -98,7 +98,7 @@ enum yytokentype {
 #if !defined YYSTYPE && !defined YYSTYPE_IS_DECLARED
 
 union YYSTYPE {
-#line 75 "src/shell/parser.y" /* yacc.c:1909  */
+#line 73 "src/suprem/shell/parser.y" /* yacc.c:1909  */
 
     int ival;
     char *sval;

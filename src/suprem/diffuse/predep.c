@@ -19,16 +19,16 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/alloc.h"
 #include "./src/suprem/dbase/dispose.h"
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/oxide/Oxidant.h"
 #include "predep.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*

@@ -30,7 +30,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/dbase/alloc.h"
 #include "./src/suprem/dbase/geometry.h"
@@ -44,10 +44,10 @@
 #include "./src/suprem/misc/print_time.h"
 #include "./src/suprem/misc/get.h"
 #include "diffuse.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -58,16 +58,18 @@
  *									*
  ************************************************************************/
 void diffuse(char *par, struct par_str *param) {
-    ENTER;
     float time, temp, cs;
     struct tms before, after;
     int cont;
     int dump;
     int r;
     char *movie;
+    ENTER;
 
-    if (InvalidMeshCheck())
+    if (InvalidMeshCheck()) {
+        EXIT;
         return;
+    }
 
     /*change the solution flags from the default configuration*/
     CLEAR_FLAGS(Psi, ALL_FLAGS);

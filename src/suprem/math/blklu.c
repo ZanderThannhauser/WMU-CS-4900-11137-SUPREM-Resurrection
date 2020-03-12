@@ -32,15 +32,15 @@
 #include "./src/suprem/include/matrix.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 header includes:
+/* 2020 header includes:*/
 #include "./src/suprem/math/mxv.h"
 #include "./src/suprem/math/coldata.h"
 #include "./src/suprem/math/blklu.h"
 #include "blklu.h"
-// end of 2020 includes
+/* end of 2020 includes*/
 
-// 2020 forward declarations:
-// end of 2020 declarations
+/* 2020 forward declarations:*/
+/* end of 2020 declarations*/
 
 /************************************************************************
  *									*

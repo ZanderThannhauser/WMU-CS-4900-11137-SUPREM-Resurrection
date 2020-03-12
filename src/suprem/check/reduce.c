@@ -24,12 +24,12 @@
 #include "./src/suprem/include/expr.h"
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "reduce.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 #define NEW_VEC (struct vec_str *)calloc(sizeof(struct vec_str), 1)
 #define EQUIVALENCE(A, B)                                                      \

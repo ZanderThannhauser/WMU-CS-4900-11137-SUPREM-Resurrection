@@ -26,7 +26,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/skel.h"
 
-// 2020 includes
+/* 2020 includes*/
 #include "./src/suprem/refine/grid.h"
 #include "./src/suprem/refine/triang.h"
 #include "./src/suprem/dbase/locate.h"
@@ -38,7 +38,7 @@
 #include "./src/suprem/dbase/neigh.h"
 #include "./src/suprem/dbase/edge.h"
 #include "kill_node.h"
-// end of includes
+/* end of includes*/
 
 /*-----------------KILL_NODE--------------------------------------------
  * Remove a node from the grid and fix up the triangulation.

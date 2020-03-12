@@ -24,14 +24,14 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/material.h" /* So we can set nmat to 0 - want this? */
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/refine/skel.h"
 #include "./src/suprem/dbase/region.h"
 #include "./src/suprem/dbase/list.h"
 #include "./src/suprem/refine/triang.h"
 #include "./src/suprem/misc/panic.h"
 #include "region.h"
-// endof includes
+/* endof includes*/
 
 int mk_reg(int mat) {
     if (nreg + 1 > MAXREG)

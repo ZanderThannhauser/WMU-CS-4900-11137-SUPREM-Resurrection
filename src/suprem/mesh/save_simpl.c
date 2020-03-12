@@ -30,20 +30,20 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/plot.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/geom/limits.h"
 #include "./src/suprem/mesh/simpl.h"
 #include "./src/suprem/misc/panic.h"
 #include "./src/suprem/imagetool/fill_grid.h"
 #include "save_simpl.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void write_SIMPLPolygon(FILE *SIMPLfile);
 
 void write_SIMPLGrid(FILE *SIMPLfile, float *xloc, int xlocsize, float *yloc,
                      int ylocsize);
-// end of declarations
+/* end of declarations*/
 
 #define BUFFERSIZE 80
 

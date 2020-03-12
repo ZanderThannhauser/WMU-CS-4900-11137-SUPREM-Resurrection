@@ -23,13 +23,13 @@
 #include "./src/suprem/include/geom.h"
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "clktri.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations:
+/* 2020 forward declarations:*/
 void sclk_tri(int ie);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

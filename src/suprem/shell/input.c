@@ -20,16 +20,16 @@
 
 #include "./src/suprem/include/shell.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/shell/macro.h"
 #include "input.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 #ifndef HAVE_KSH
 char *read_line(char *prompt);
 #endif
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

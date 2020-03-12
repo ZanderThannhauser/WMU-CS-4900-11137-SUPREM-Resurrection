@@ -22,13 +22,13 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/refine.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/misc/panic.h"
 #include "string_off.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 #define BUFFERSIZE 80
 

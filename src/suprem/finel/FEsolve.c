@@ -24,16 +24,16 @@
 #include "./src/suprem/include/FEgeom.h"
 #include "./src/suprem/include/FEmath.h"
 
-// 2020 includes
+/* 2020 includes*/
 #include "./src/suprem/finel/FEassmb.h"
 #include "./src/suprem/math/blklu.h"
 #include "./src/suprem/finel/tomcal.h"
 #include "./src/suprem/math/min_fill.h"
 #include "./src/suprem/math/generate.h"
 #include "FEsolve.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int FlopCount(int *il);
 void build_ia(int **pia);
 void FEsymb(int **Pia, int **Pil, int *Paoff, int *Ploff, int **Ppv);
@@ -49,7 +49,7 @@ void FEstep(int *ia, int aoff, double *a, int *il, int loff, double *l,
             double *rhs, double *solo, double *deln, double *delo, double *derr,
             double lami, double lamf);
 void FEscramble(int *reorder);
-// end of declarations
+/* end of declarations*/
 
 #define neq (ia[0] - 1)
 static int FEverbose;

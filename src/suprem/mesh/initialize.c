@@ -24,7 +24,7 @@
 #include "./src/suprem/include/material.h" /* For B, P, Sb, As */
 #include "./src/suprem/include/dbaccess.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/mesh/ig2_meshio.h"
@@ -32,10 +32,10 @@
 #include "./src/suprem/dbase/make_db.h"
 #include "./src/suprem/dbase/alloc.h"
 #include "initialize.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -114,7 +114,7 @@ void initialize(char *par, struct par_str *param) {
         HERE;
         if ((ier = ig2_read(infile, lflip, scale)) < 0) {
             EXIT;
-            return; // (ier);
+            return; /* (ier);*/
         }
         by_nd = nn == 0;
     } else {
@@ -122,11 +122,11 @@ void initialize(char *par, struct par_str *param) {
         /* At this point we must already have the lines, regions, bounds .*/
         if ((ier = squares(ivratio)) < 0) {
             EXIT;
-            return; // (ier);
+            return; /* (ier);*/
         }
         by_nd = TRUE;
     }
-    
+
     HERE;
     create_db(by_nd);
 
@@ -184,5 +184,5 @@ void initialize(char *par, struct par_str *param) {
         }
     }
     EXIT;
-    return; // (0);
+    return; /* (0);*/
 }

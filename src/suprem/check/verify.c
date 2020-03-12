@@ -25,18 +25,18 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/shell/proc.h"
 #include "./src/suprem/check/eval.h"
 #include "./src/suprem/check/split.h"
 #include "./src/suprem/check/check.h"
 #include "./src/suprem/check/parse.h"
 #include "verify.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void unspecify(struct par_str **par);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

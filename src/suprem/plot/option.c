@@ -21,10 +21,10 @@
 
 #include "./src/suprem/include/global.h"
 
-// 2020 includes
+/* 2020 includes*/
 #include "./src/suprem/misc/get.h"
 #include "option.h"
-// end of includes
+/* end of includes*/
 
 /************************************************************************
  *									*

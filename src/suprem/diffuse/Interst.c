@@ -32,17 +32,17 @@
 #include "./src/suprem/include/matrix.h"
 #include "./src/suprem/include/plot.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/shell/smisc.h"
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/diffuse/species.h"
 #include "./src/suprem/oxide/Oxidant.h"
 #include "Interst.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -284,10 +284,10 @@ void Itime_val(int is, double *rhsnm, struct call_str *cs) {
     register int ts = imptosol[T];
     register int ps = imptosol[Psi];
 
-    // 2020: if (cs->type == BDF): then this value will be overwritten before
-    // it is used, otherwise, it will never be used.
+    /* 2020: if (cs->type == BDF): then this value will be overwritten before*/
+    /* it is used, otherwise, it will never be used.*/
     t2 = t3 = 0.0;
-    // this is just to remove the GCC error.
+    /* this is just to remove the GCC error.*/
 
     if (IS_PSEUDO(I)) {
         for (i = 0; i < nn; i++)

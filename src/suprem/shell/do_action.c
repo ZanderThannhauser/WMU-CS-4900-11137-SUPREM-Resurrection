@@ -31,17 +31,17 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/shell.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/shell/yyparse.h"
 #include "./src/suprem/shell/proc.h"
 #include "./src/suprem/check/verify.h"
 #include "do_action.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void do_exec(char *par, int intr, int index, int no_exec);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

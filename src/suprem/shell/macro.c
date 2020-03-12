@@ -20,17 +20,17 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/shell.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/check/eval.h"
 #include "./src/suprem/check/parse.h"
 #include "./src/suprem/shell/list.h"
 #include "macro.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int arg_expand(char *s, struct macro_table *mac);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

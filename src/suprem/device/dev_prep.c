@@ -24,7 +24,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/math/generate.h"
 #include "./src/suprem/math/symb.h"
 #include "./src/suprem/diffuse/prepare.h"
@@ -33,11 +33,11 @@
 #include "./src/suprem/dbase/couple.h"
 #include "./src/suprem/misc/panic.h"
 #include "dev_prep.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void dev_net();
-// end of declarations
+/* end of declarations*/
 
 #define Alloc(P, O, N)                                                         \
     if (P)                                                                     \
@@ -206,9 +206,9 @@ void ckt_ia_bld() {
     short *taken;
     int num;
 
-    // 2020: this value will be overwritten before it is used:
+    /* 2020: this value will be overwritten before it is used:*/
     row = 0;
-    // 2020: This is just to remove the GCC error
+    /* 2020: This is just to remove the GCC error*/
 
     /*first assign the current and voltage numbers to the contacts*/
     for (i = 0; i < n_con; i++) {

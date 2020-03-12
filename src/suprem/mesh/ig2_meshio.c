@@ -25,7 +25,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/dispose.h"
 #include "./src/suprem/mesh/check_active.h"
 #include "./src/suprem/dbase/dimen.h"
@@ -34,11 +34,11 @@
 #include "./src/suprem/dbase/element.h"
 #include "./src/suprem/dbase/node.h"
 #include "ig2_meshio.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void ugh(int line, char *s, int ierr);
-// end of declarations
+/* end of declarations*/
 
 #define nop(J, I) nd[tri[I]->nd[J]]->pt
 #define ngh(J, I) tri[I]->nb[J]

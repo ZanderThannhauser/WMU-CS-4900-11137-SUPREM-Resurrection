@@ -30,7 +30,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/dbase/dispose.h"
 #include "./src/suprem/diffuse/defect.h"
@@ -39,11 +39,11 @@
 #include "./src/suprem/misc/print_time.h"
 #include "./src/suprem/dbase/alloc.h"
 #include "implant.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int imp_select(struct par_str *param, int *imp, int *ion);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

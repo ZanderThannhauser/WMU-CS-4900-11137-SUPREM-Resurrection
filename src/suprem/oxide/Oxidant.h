@@ -1,6 +1,6 @@
 
 
-// 2020: needed to bring this here to get the declarations to work:
+/* 2020: needed to bring this here to get the declarations to work:*/
 
 #define argh temp, new, equil, noni, idf, vdf, iprt, vprt
 #define argl                                                                   \

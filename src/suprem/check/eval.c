@@ -26,16 +26,16 @@
 #include "./src/suprem/include/expr.h"
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/check/check.h"
 #include "./src/suprem/check/vector.h"
 #include "./src/suprem/check/sint.h"
 #include "eval.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -73,7 +73,7 @@ char *eval_real(struct vec_str *expr, float *val) {
     char *err;
     ENTER;
 
-    // 2020: to fix error: "may be used uninitialized in this function"
+    /* 2020: to fix error: "may be used uninitialized in this function"*/
     lval = 0, rval = 0;
 
     /*evaluate the kids*/

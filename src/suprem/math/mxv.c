@@ -25,15 +25,15 @@
 #include "./src/suprem/include/matrix.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "mxv.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations:
+/* 2020 forward declarations:*/
 void blkmxv(int b1, int b2, int bnot, int nv, int sum, double *vec,
             double *avec);
 void vinit(double a[], int nv);
-// end of 2020 declarations
+/* end of 2020 declarations*/
 
 /*************************************************************************
  *									*

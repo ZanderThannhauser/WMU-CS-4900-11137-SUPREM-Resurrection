@@ -27,7 +27,8 @@
 #include "./src/suprem/include/plot.h"
 #include "./src/suprem/include/regrid.h"
 
-// 2020 includes:
+/* 2020 includes:*/
+#include "./src/debug.h"
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/dbase/dispose.h"
 #include "./src/suprem/geom/limits.h"
@@ -35,7 +36,7 @@
 #include "./src/suprem/plot/plot.h"
 #include "./src/suprem/plot/material.h"
 #include "plot_2d.h"
-// end of includes
+/* end of includes*/
 
 #define XCORD(A) pt[A]->cord[0]
 #define YCORD(A) pt[A]->cord[1]
@@ -65,16 +66,20 @@ void plot_2d(char *par, struct par_str *param) {
     static float txmin, txmax, tymin, tymax;
     float vleng, vmax;
     int deb;
+    ENTER;
 
-    if (InvalidMeshCheck())
-        return; // (-1);
+    if (InvalidMeshCheck()) {
+        EXIT;
+        return; /* (-1);*/
+    }
 
     deb = pl_debug;
     pl_debug = FALSE;
 
     if (mode == ONED) {
         fprintf(stderr, "plot.2d is illegal in one dimension\n");
-        return; // (-1);
+        EXIT;
+        return; /* (-1);*/
     }
 
     /*get the card parameters*/
@@ -142,7 +147,8 @@ void plot_2d(char *par, struct par_str *param) {
     if (txmin >= txmax || tymin >= tymax) {
         fprintf(stderr, "bad bounds in plotting: x(%f:%f) y(%f:%f)\n", txmin,
                 txmax, tymin, tymax);
-        return; // (-1);
+        EXIT;
+        return; /* (-1);*/
     }
 
     yflip = TRUE;
@@ -173,7 +179,8 @@ void plot_2d(char *par, struct par_str *param) {
     /*clean up plotting and post it out*/
     pl_debug = deb;
 
-    return; // (0);
+    EXIT;
+    return; /* (0);*/
 }
 
 void draw_vornoi() {}

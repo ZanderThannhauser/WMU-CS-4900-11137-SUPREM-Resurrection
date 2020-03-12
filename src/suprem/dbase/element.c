@@ -24,15 +24,15 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/material.h" /* So we can set nmat to 0 - want this? */
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/list.h"
 #include "./src/suprem/geom/tnabor.h"
 #include "./src/suprem/misc/panic.h"
 #include "element.h"
-// end of includes
+/* end of includes*/
 
-// 2020 foward declarations:
-// end of declarations
+/* 2020 foward declarations:*/
+/* end of declarations*/
 
 static int maxtri = 0;
 

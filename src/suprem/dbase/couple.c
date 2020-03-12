@@ -27,12 +27,12 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "couple.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*

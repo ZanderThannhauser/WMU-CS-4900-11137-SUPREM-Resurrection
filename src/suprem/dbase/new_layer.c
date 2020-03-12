@@ -26,7 +26,7 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes
+/* 2020 includes*/
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/dbase/make_db.h"
 #include "./src/suprem/refine/sp_edge.h"
@@ -36,12 +36,12 @@
 #include "./src/suprem/dbase/point.h"
 #include "./src/suprem/dbase/geom.h"
 #include "new_layer.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations:
+/* 2020 forward declarations:*/
 int exposed(int in);
 int SplitNode(int aNode, float *v, int mSil);
-// end of declarations
+/* end of declarations*/
 
 #ifdef CONVEX
 #define hypot(a, b) sqrt((a) * (a) + (b) * (b))
@@ -501,9 +501,9 @@ int local_normal(int n, int matl, float ln[MAXDIM]) {
     int it, t, j, nbr, head, tail, is_refl = 0, p1, p2, v, nvec = 0;
     float arrow[MAXDIM], tmp, lln, len, refl[MAXDIM], cosf, save[MAXDIM];
 
-    // 2020: These values will be overwritten before they are used:
+    /* 2020: These values will be overwritten before they are used:*/
     save[0] = save[1] = 0.0;
-    // 2020: They're just here to remove the error
+    /* 2020: They're just here to remove the error*/
 
     switch (mode) {
     case ONED:

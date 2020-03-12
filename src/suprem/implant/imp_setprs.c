@@ -21,16 +21,16 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/implant/fgtmom.h"
 #include "./src/suprem/implant/imp_gtprs.h"
 #include "./src/suprem/implant/imp_qpprs.h"
 #include "./src/suprem/implant/imp_qpgauss.h"
 #include "imp_setprs.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /* MAP Suprem-IV numbers to those of Suprem-III (which is how they are
  * stored in the implant range data file.

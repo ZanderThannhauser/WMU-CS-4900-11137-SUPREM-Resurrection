@@ -23,16 +23,16 @@
 #include "./src/suprem/include/shell.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/shell/parser.h"
 #include "./src/suprem/shell/input.h"
 #include "lex.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int lex_command();
-// end of declarations
+/* end of declarations*/
 
 #define C_STATE 1
 #define PAR_STATE 2

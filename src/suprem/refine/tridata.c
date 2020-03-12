@@ -24,17 +24,17 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/skel.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/plot/plot.h"
 #include "./src/suprem/refine/dbase.h"
 #include "./src/suprem/refine/triang.h"
 #include "./src/suprem/dbase/edge.h"
 #include "./src/suprem/dbase/geom.h"
 #include "tridata.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /*-----------------SP_REG-----------------------------------------------
  * Split region at top of stack (nsreg), leaving result

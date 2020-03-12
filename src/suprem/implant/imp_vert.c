@@ -23,15 +23,15 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/implant.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/implant/imp_prson.h"
 #include "./src/suprem/implant/imp_lat.h"
 #include "imp_vert.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*

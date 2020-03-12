@@ -27,17 +27,17 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/diffuse/prepare.h"
 #include "./src/suprem/diffuse/setup.h"
 #include "./src/suprem/diffuse/solve.h"
 #include "./src/suprem/diffuse/moving.h"
 #include "./src/suprem/oxide/oxgrow.h"
 #include "time.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*

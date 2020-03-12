@@ -30,12 +30,12 @@
 
 #include <stdio.h>
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "pa.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 static int r0 = -1;
 static int r1 = -1;

@@ -27,7 +27,7 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/implant/surf.h"
 #include "./src/suprem/implant/imp_setprs.h"
@@ -36,10 +36,10 @@
 #include "./src/suprem/implant/imp_zeqv.h"
 #include "./src/suprem/implant/imp_qeqv.h"
 #include "pearson.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*

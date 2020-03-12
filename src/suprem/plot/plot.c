@@ -24,12 +24,12 @@
 #include "./src/suprem/include/skel.h"
 #include "./src/suprem/include/plot.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "plot.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 #define XC(A) cordinate(A, 0)
 #define YC(A) cordinate(A, 1)

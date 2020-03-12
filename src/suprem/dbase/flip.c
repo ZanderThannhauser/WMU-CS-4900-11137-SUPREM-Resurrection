@@ -25,19 +25,19 @@
 #include "./src/suprem/include/geom.h"
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/geometry.h"
 #include "./src/suprem/misc/print_time.h"
 #include "./src/suprem/dbase/clktri.h"
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/dbase/list.h"
 #include "flip.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int ck_flip(int we);
 void tri_flip(int it, int tp, int tq);
-// end of declarations
+/* end of declarations*/
 
 /*-----------------FLIP-------------------------------------------------
  * Triangle flipper - makes triangulation Delauney.

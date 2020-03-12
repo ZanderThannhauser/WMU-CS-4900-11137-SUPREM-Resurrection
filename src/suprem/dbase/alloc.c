@@ -24,9 +24,9 @@
 #include "./src/suprem/include/diffuse.h"  /* for the time of creation */
 #include "./src/suprem/include/impurity.h" /* So we can set n_imp to 0 */
 
-// 2020 includes
+/* 2020 includes*/
 #include "alloc.h"
-// end of includes
+/* end of includes*/
 
 /*-----------------ADD_IMPURITY-----------------------------------------
  * Adds a new impurity to the solution set...

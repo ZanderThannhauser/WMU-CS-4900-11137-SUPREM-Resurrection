@@ -23,7 +23,7 @@
 #include "./src/suprem/include/dbaccess.h"
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/refine/tridata.h"
 #include "./src/suprem/refine/rect_tri.h"
 #include "./src/suprem/refine/bfill.h"
@@ -34,11 +34,11 @@
 #include "./src/suprem/refine/triheur.h"
 #include "./src/suprem/dbase/geom.h"
 #include "triang.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int acomp(struct LLedge **lep1, struct LLedge **lep2);
-// end of declarations
+/* end of declarations*/
 
 double dmin(double X, double Y) { return (X <= Y ? X : Y); }
 double dmax(double X, double Y) { return (X >= Y ? X : Y); }
@@ -268,7 +268,7 @@ int acomp(struct LLedge **lep1, struct LLedge **lep2) {
         return (1);
 }
 
-// 2020: I'm assuming this is an int:
+/* 2020: I'm assuming this is an int:*/
 void free_skel(int nr) {
     int f, i, r, e;
     struct LLedge *bp, *bnd, *nbp;

@@ -24,10 +24,10 @@
 #include "./src/suprem/include/shell.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/mesh/ig2_meshio.h"
 #include "panic.h"
-// end of includes
+/* end of includes*/
 
 void panic(char *s) {
     fprintf(stderr, "suprem4 panic: %s\n", s);

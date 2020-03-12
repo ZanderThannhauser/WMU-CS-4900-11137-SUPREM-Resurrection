@@ -36,7 +36,7 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#include "./src/include/sysdep.h"
+#include "./src/suprem/include/sysdep.h"
 
 static char *tp[10];
 static int te[10];
@@ -45,24 +45,22 @@ static int te[10];
 #define malloc MALLOC
 #endif
 
-#include "./src/include/shell.h"
-#include "./src/shell/proc.h"
+#include "./src/suprem/include/shell.h"
+#include "./src/suprem/shell/proc.h"
 
 
-// 2020 includes:
-#include "./src/shell/lex.h"
-#include "./src/shell/do_action.h"
-#include "./src/shell/help.h"
-#include "./src/shell/macro.h"
-#include "./src/shell/set.h"
-// end of includes
+/* 2020 includes: */
+#include "./src/suprem/shell/lex.h"
+#include "./src/suprem/shell/do_action.h"
+#include "./src/suprem/shell/help.h"
+#include "./src/suprem/shell/macro.h"
+#include "./src/suprem/shell/set.h"
+/* end of includes */
 
-// 2020 forward declarations
+/* 2020 forward declarations */
 int yylex();
 int yyerror();
-// end of declarations
-
-
+/* end of declarations */
 
 #define YYRETURN(A)        { return(A); }
 

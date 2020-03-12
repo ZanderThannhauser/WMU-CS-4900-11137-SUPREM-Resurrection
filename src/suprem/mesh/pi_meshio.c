@@ -37,7 +37,7 @@
 #include "./src/suprem/include/regrid.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/geom/limits.h"
 #include "./src/suprem/shell/do_action.h"
 #include "./src/suprem/dbase/locate.h"
@@ -48,13 +48,13 @@
 #include "./src/suprem/dbase/node.h"
 #include "./src/suprem/dbase/element.h"
 #include "pi_meshio.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 char *pi_dop(float **r1, float **tconc);
 int ShowElect(int show, int Pnelect, int Pnb, int *Pnbc, int *Pietype);
 char *pi_mat(int *Pnp, int *Pne, int *Pnmat, int **Ppt, int *Preg);
-// end of declarations
+/* end of declarations*/
 
 static char *erret;
 #undef EC

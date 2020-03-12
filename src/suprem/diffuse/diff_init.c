@@ -22,7 +22,7 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/diffuse/Antimony.h"
 #include "./src/suprem/diffuse/defect.h"
 #include "./src/suprem/diffuse/Vacancy.h"
@@ -45,10 +45,10 @@
 #include "./src/suprem/diffuse/Generic.h"
 #include "./src/suprem/oxide/Oxidant.h"
 #include "diff_init.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*

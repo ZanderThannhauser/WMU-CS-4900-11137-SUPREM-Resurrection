@@ -29,14 +29,14 @@
 #include "./src/suprem/include/refine.h"
 #include "./src/suprem/include/regrid.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/refine/deloop.h"
 #include "offset.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void del_fromline(int index, int *nop, struct line *op);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

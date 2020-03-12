@@ -31,14 +31,14 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/math/blklu.h"
 #include "./src/suprem/diffuse/active.h"
 #include "setup.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*

@@ -18,12 +18,12 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes
+/* 2020 includes*/
 #include "./src/suprem/oxide/oxrate.h"
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/shell/smisc.h"
 #include "erfit.h"
-// end of includes
+/* end of includes*/
 
 /*-----------------ERFC_GROWTH------------------------------------------
  * Implement Hee-Gook Lee's analytic approximation for bird's beaks.

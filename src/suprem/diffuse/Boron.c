@@ -20,17 +20,17 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/diffuse/species.h"
 #include "Boron.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void Ptboundary(int imp, struct bound_str *bval);
 void Ptypeactive(int imp, int simple, int nn, float temp, double **chem,
                  double **act, double **equil, double *noni);
-// end of declarations
+/* end of declarations*/
 
 /*definitions for impurity constants as a function of material*/
 /*pre exp constant with neutral V*/

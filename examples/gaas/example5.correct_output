@@ -1,0 +1,52 @@
+SUPREM-IV.GS B.9305
+	(c) 1991-1993 Stanford University
+	(c) 1991 University of Florida
+Reading Models...
+mode one.dim
+line x loc=0.0 spacing=0.01 tag=top
+line x loc=1.0 spacing=0.01
+line x loc=20 spacing=0.25 tag=bottom
+region gaas	xlo=top  xhi=bottom
+boundary exposed xlo=top xhi=top
+boundary backside xlo=bottom xhi=bottom
+init beryllium conc=1e15
+deposit gaas thick=.5 divisions=100 beryllium conc=5e18
+deposit gaas thick=.5 divisions=100 beryllium conc=1e15
+deposit nitride thick=.3
+	select z=log10(beryllium)	
+	plot.1d x.min=-1.0 x.ma=1.0 y.mi=14.0 y.max=20.0 line.type=4
+method fermi init=1e-5
+method full.fac
+diffuse time=15 temp=800 argon 
+estimated first time step -0.000000e+00
+Solving            0 +        1e-05 =        1e-05,      100%, np 556
+Solving        1e-05 +  0.000105243 =  0.000115243,  1052.43%, np 556
+Solving  0.000115243 +    0.0227177 =     0.022833,  21585.9%, np 556
+Solving     0.022833 +     0.125105 =     0.147938,  550.692%, np 556
+Solving     0.147938 +     0.533228 =     0.681165,  426.225%, np 556
+Solving     0.681165 +      1.83986 =      2.52103,  345.043%, np 556
+Solving      2.52103 +      2.06225 =      4.58328,  112.087%, np 556
+Solving      4.58328 +      4.28363 =      8.86691,  207.717%, np 556
+Solving      8.86691 +      7.90404 =      16.7709,  184.517%, np 556
+Solving      16.7709 +      8.84373 =      25.6147,  111.889%, np 556
+Solving      25.6147 +      13.0486 =      38.6633,  147.546%, np 556
+Solving      38.6633 +      21.5898 =      60.2531,  165.457%, np 556
+Solving      60.2531 +      22.2867 =      82.5398,  103.228%, np 556
+Solving      82.5398 +      27.8745 =      110.414,  125.072%, np 556
+Solving      110.414 +      27.2785 =      137.693,  97.8619%, np 556
+Solving      137.693 +      40.3506 =      178.043,  147.921%, np 556
+Solving      178.043 +       33.224 =      211.268,  82.3383%, np 556
+Solving      211.268 +       27.793 =      239.061,  83.6532%, np 556
+Solving      239.061 +      47.3693 =       286.43,  170.436%, np 556
+Solving       286.43 +      55.5451 =      341.975,   117.26%, np 556
+Solving      341.975 +      59.3114 =      401.286,  106.781%, np 556
+Solving      401.286 +       68.192 =      469.478,  114.973%, np 556
+Solving      469.478 +      55.1681 =      524.647,  80.9011%, np 556
+Solving      524.647 +      76.7634 =       601.41,  139.144%, np 556
+Solving       601.41 +      72.5022 =      673.912,  94.4488%, np 556
+Solving      673.912 +      89.3982 =       763.31,  123.304%, np 556
+Solving       763.31 +      65.7583 =      829.069,  73.5566%, np 556
+Solving      829.069 +      70.9313 =          900,  107.867%, np 556
+	select z=log10(beryllium)	
+	plot.1d x.min=-1 x.ma=1.0 y.mi=14.0 y.max=20.0 cle=f axi=f line.type=2
+quit

@@ -19,15 +19,15 @@
 #include <math.h>
 #include <stdio.h>
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "tri6.h"
-// end of 2020 includes
+/* end of 2020 includes*/
 
-// 2020 foward declarations
+/* 2020 foward declarations*/
 void do_tri6_nodal_stress(double xl[6][2], double ul[6][2], double epsn[6][3],
                           double sign[6][3], int (*coeff)(), int mat,
                           double *xsj, int smooth);
-// end declarations
+/* end declarations*/
 
 /************************************************************************
  *									*

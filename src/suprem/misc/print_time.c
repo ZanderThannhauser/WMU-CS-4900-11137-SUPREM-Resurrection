@@ -15,12 +15,12 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/shell.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "print_time.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /* couldn't find HZ on the CONVEX in an include file.  set it to
  *    100 per Mike Eldredge

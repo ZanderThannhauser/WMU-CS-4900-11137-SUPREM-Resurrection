@@ -46,7 +46,7 @@
 #include "./src/suprem/include/device.h"
 #endif
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/dimen.h"
 #include "./src/suprem/device/device.h"
 #include "./src/suprem/diffuse/Antimony.h"
@@ -93,13 +93,13 @@
 #include "./src/suprem/refine/etch.h"
 #include "./src/suprem/shell/do_action.h"
 #include "./src/suprem/shell/parser_boot.h"
-// end of includes
+/* end of includes*/
 
 #ifdef DEBUGGING_2020
 int debugging_depth_2020;
 #endif
 
-// 2020: These used be set on the command line, but let's not:
+/* 2020: These used be set on the command line, but let's not:*/
 #define MANLOC "./help"
 #define KEYLOC "./data/suprem.uk"
 #define MODELLOC "./data/modelrc"
@@ -120,57 +120,56 @@ void mode_cmd(char *par, struct par_str *param) {
 
 int yyparse();
 
-struct command_table command[NUMCMD] = {
-	{"echo", echo, 0},
-	{"man", man, 0},
-	{"initialize", initialize, 0},
-	{"cpulog", cpu, 0},
-	{"plot.2d", plot_2d, 0},
-	{"option", option, 0},
-	{"method", method, 0},
-	{"diffuse", diffuse, 0},
-	{"implant", implant, 0},
-	{"select", sel_var, 0},
-	{"contour", contour, 0},
-	{"plot.1d", plot_1d, 0},
-	{"print.1d", print_1d, 0},
-	{"vacancy", vacancy, 0},
-	{"interstitial", interstitial, 0},
-	{"antimony", antimony, 0},
-	{"arsenic", arsenic, 0},
-	{"boron", boron, 0},
-	{"oxide", coeffox, 0},
-	{"phosphorus", phosphorus, 0},
-	{"region", rregion, 0},
-	{"boundary", redge, 0},
-	{"line", rline, 0},
-	{"structure", structure, 0},
-	{"deposit", user_deposit, 0},
-	{"etch", user_etch, 0},
-	{"gold", gold, 0},
-	{"stress", stress_analysis, 0},
-	{"material", c_mater, 0},
-	{"cesium", cesium, 0},
-	{"pause", uPause, 0},
-	{"trap", trap, 0},
-	{"printf", user_print, 0},
-	{"profile", profile, 0},
-	{"mode", mode_cmd, 0},
-	{"device", device, 0},
-	{"beryllium", beryllium, 0},
-	{"magnesium", magnesium, 0},
-	{"selenium", selenium, 0},
-	{"isilicon", silicon, 0},
-	{"tin", tin, 0},
-	{"germanium", germanium, 0},
-	{"zinc", zinc, 0},
-	{"carbon", carbon, 0},
-	{"generic", generic, 0},
-	{"", NULL, 45},
-	{"", NULL, 46},
-	{"", NULL, 47},
-	{"", NULL, 48},
-	{"", NULL, 49}};
+struct command_table command[NUMCMD] = {{"echo", echo, 0},
+                                        {"man", man, 0},
+                                        {"initialize", initialize, 0},
+                                        {"cpulog", cpu, 0},
+                                        {"plot.2d", plot_2d, 0},
+                                        {"option", option, 0},
+                                        {"method", method, 0},
+                                        {"diffuse", diffuse, 0},
+                                        {"implant", implant, 0},
+                                        {"select", sel_var, 0},
+                                        {"contour", contour, 0},
+                                        {"plot.1d", plot_1d, 0},
+                                        {"print.1d", print_1d, 0},
+                                        {"vacancy", vacancy, 0},
+                                        {"interstitial", interstitial, 0},
+                                        {"antimony", antimony, 0},
+                                        {"arsenic", arsenic, 0},
+                                        {"boron", boron, 0},
+                                        {"oxide", coeffox, 0},
+                                        {"phosphorus", phosphorus, 0},
+                                        {"region", rregion, 0},
+                                        {"boundary", redge, 0},
+                                        {"line", rline, 0},
+                                        {"structure", structure, 0},
+                                        {"deposit", user_deposit, 0},
+                                        {"etch", user_etch, 0},
+                                        {"gold", gold, 0},
+                                        {"stress", stress_analysis, 0},
+                                        {"material", c_mater, 0},
+                                        {"cesium", cesium, 0},
+                                        {"pause", uPause, 0},
+                                        {"trap", trap, 0},
+                                        {"printf", user_print, 0},
+                                        {"profile", profile, 0},
+                                        {"mode", mode_cmd, 0},
+                                        {"device", device, 0},
+                                        {"beryllium", beryllium, 0},
+                                        {"magnesium", magnesium, 0},
+                                        {"selenium", selenium, 0},
+                                        {"isilicon", silicon, 0},
+                                        {"tin", tin, 0},
+                                        {"germanium", germanium, 0},
+                                        {"zinc", zinc, 0},
+                                        {"carbon", carbon, 0},
+                                        {"generic", generic, 0},
+                                        {"", NULL, 45},
+                                        {"", NULL, 46},
+                                        {"", NULL, 47},
+                                        {"", NULL, 48},
+                                        {"", NULL, 49}};
 
 int main(int argc, char **argv) {
     int i;
@@ -251,4 +250,6 @@ int main(int argc, char **argv) {
     /*if we are logging cpu stats, close the file*/
     if (cpufile != NULL)
         fclose(cpufile);
+
+    return 0;
 }

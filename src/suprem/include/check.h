@@ -18,7 +18,7 @@
  *									*
  ************************************************************************/
 
-// 2020 #include guard:
+/* 2020 #include guard:*/
 
 #ifndef INCLUDE_CHECK_H
 #define INCLUDE_CHECK_H

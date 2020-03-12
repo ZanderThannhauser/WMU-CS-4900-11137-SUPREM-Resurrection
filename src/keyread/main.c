@@ -23,15 +23,15 @@
 #include "../suprem/include/key.h"
 #include "../suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./parser.h"
 #include "./expand.h"
 #include "./write.h"
 #include "main.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 struct par_str **current;
 struct par_str **stack[10];
@@ -86,7 +86,7 @@ char **argv;
     /*malloc off the space for the sub params*/
     for (i = 0; i < NUMPAR; i++)
         cards[i] = (struct par_str *)calloc(1, sizeof(struct par_str));
-    // cards[NUMPAR] = NULL; // 2020: 'array subscript is above array bounds'
+    /* cards[NUMPAR] = NULL; // 2020: 'array subscript is above array bounds'*/
     current = cards;
     stack[depth++] = NULL;
     yyparse();

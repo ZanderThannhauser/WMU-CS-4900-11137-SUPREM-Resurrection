@@ -27,7 +27,8 @@
 #include "./src/suprem/include/impurity.h" /* So we can set n_imp to 0 */
 #include "./src/suprem/include/diffuse.h"  /* for the time of creation */
 
-// 2020 includes:
+/* 2020 includes:*/
+#include "./src/debug.h"
 #include "./src/suprem/refine/triang.h"
 #include "./src/suprem/dbase/point.h"
 #include "./src/suprem/dbase/node.h"
@@ -36,11 +37,13 @@
 #include "./src/suprem/dbase/region.h"
 #include "./src/suprem/misc/panic.h"
 #include "dispose.h"
-// end of 2020 includes
+/* end of 2020 includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void MeshInvalidate();
-// end of declarations
+/* end of declarations*/
+
+#include "./src/suprem/include/regrid.h" /* Until we move the macros from regrid.h to geom.h */
 
 /************************************************************************
  *									*
@@ -50,20 +53,22 @@ void MeshInvalidate();
  ************************************************************************/
 void dis_all() {
     int i;
-    while (nsreg > 0)
+    ENTER;
+    while (nsreg > 0) {
         free_skel(0);
+    }
     dis_pt();
     dis_nd();
     dis_tri();
     dis_edg();
     dis_reg();
     n_imp = 0;
-    for (i = 0; i < MAXIMP; i++)
+    for (i = 0; i < MAXIMP; i++) {
         soltoimp[i] = imptosol[i] = -1;
+    }
     MeshInvalidate();
+    EXIT;
 }
-
-#include "./src/suprem/include/regrid.h" /* Until we move the macros from regrid.h to geom.h */
 
 /*-----------------WASTE------------------------------------------------
  * To standardize global grid removals
@@ -75,6 +80,7 @@ void waste() {
     nd_typ *nswap;
     pt_typ *pswap;
     struct reg_str *rswap;
+    ENTER;
 
     new_tri = salloc(int, ne);
     new_nd = salloc(int, nn);
@@ -173,10 +179,13 @@ void waste() {
     free(new_pt);
     free(new_edg);
     free(new_reg);
+
+    EXIT;
 }
 
 void lose_impurity(int imp) {
     int i, j, sol = imptosol[imp];
+    ENTER;
 
     if (sol != -1) {
         for (j = sol; j < n_imp - 1; j++) {
@@ -189,6 +198,8 @@ void lose_impurity(int imp) {
         imptosol[imp] = -1;
         soltoimp[n_imp] = -1;
     }
+
+    EXIT;
 }
 
 /*-----------------MeshValid--------------------------------------------
@@ -207,9 +218,14 @@ void MeshInvalidate() {
 }
 
 int InvalidMeshCheck() {
+
+    ENTER;
     if (!MeshValid()) {
         fprintf(stderr, "No mesh defined!\n");
+        EXIT;
         return (-1);
-    } else
+    } else {
+        EXIT;
         return (0);
+    }
 }

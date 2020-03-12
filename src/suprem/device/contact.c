@@ -21,18 +21,18 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/dispose.h"
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/include/device.h"
 #include "./src/suprem/misc/panic.h"
 #include "contact.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void gen_contact();
 void find_con(int n, int nc, int *chk[3], int *len);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

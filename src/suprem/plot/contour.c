@@ -30,11 +30,11 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/plot.h"
 
-// 2020 includes
+/* 2020 includes*/
 #include "./src/suprem/dbase/dispose.h"
 #include "./src/suprem/misc/get.h"
 #include "contour.h"
-// end of includes
+/* end of includes*/
 
 /************************************************************************
  *									*

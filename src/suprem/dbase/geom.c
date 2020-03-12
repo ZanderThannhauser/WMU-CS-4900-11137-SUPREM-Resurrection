@@ -24,14 +24,14 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/skel.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/misc/panic.h"
 #include "./src/suprem/geom/misc.h"
 #include "geom.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 #define XC(A) cordinate(A, 0)
 #define YC(A) cordinate(A, 1)

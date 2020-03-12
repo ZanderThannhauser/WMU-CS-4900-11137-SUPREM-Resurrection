@@ -22,12 +22,12 @@
 #include "./src/suprem/include/constant.h"
 #include "./src/suprem/include/dbaccess.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "material.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /*define a macro to get the material code for the material*/
 #define XCORD(A, B) (pt[nd[tri[A]->nd[B]]->pt]->cord[0])

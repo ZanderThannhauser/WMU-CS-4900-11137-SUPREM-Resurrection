@@ -22,17 +22,17 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/device/Hole.h"
 #include "./src/suprem/device/Electron.h"
 #include "dev_blkset.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void GSD_block_set(int nn, double *m, double *u, double *eu, double *v,
                    double *cur, double *coeff, double *djdm, double *djdu,
                    double *djdv);
-// end of declarations
+/* end of declarations*/
 
 #define qchrg 1.62e-19
 

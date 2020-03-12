@@ -28,7 +28,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/regrid.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/dispose.h"
 #include "./src/suprem/misc/panic.h"
 #include "./src/suprem/refine/surface.h"
@@ -47,11 +47,11 @@
 #include "./src/suprem/dbase/edge.h"
 #include "./src/suprem/dbase/region.h"
 #include "etch.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 
-// end of declarations
+/* end of declarations*/
 
 /*some useful macros for getting at the parameters*/
 #define CHOSEN(A) (is_specified(param, A) && get_bool(param, A))
@@ -94,7 +94,7 @@ void user_etch(char *par, struct par_str *param) {
 
     sfile = NULL;
     if (InvalidMeshCheck())
-        return; // -1;
+        return; /* -1;*/
     GridSave();
 
     /* check for a string file for deposit */
@@ -296,7 +296,7 @@ void user_etch(char *par, struct par_str *param) {
     } else if (sfile)
         string_etch(sfile, mater);
 
-    return; // (0);
+    return; /* (0);*/
 }
 
 /*-----------------ETCH-------------------------------------------------

@@ -26,7 +26,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/skel.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/geom/misc.h"
 #include "./src/suprem/dbase/edge.h"
 #include "./src/suprem/dbase/element.h"
@@ -40,16 +40,16 @@
 #include "./src/suprem/dbase/geometry.h"
 #include "./src/suprem/misc/panic.h"
 #include "sp_edge.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int upd_edg(int ie, int in);
 void new_edg_tri(int e, int enew, int it);
 void new_edg_skel(int ie, int enew, int ir);
 int insert_pt_edg(int e, float c[MAXDIM], int *p);
 int sp_gredg(int ie, float c[MAXDIM], int *p);
 void move_edge(int ie, int ind, float *c);
-// end of declarations
+/* end of declarations*/
 
 #define DMIN(A, B) (A < B) ? (A) : (B)
 #define DMIN3(A, B, C) DMIN(A, DMIN(B, C))

@@ -22,9 +22,9 @@
 #include "./src/suprem/include/geom.h"
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "locate.h"
-// end of includes
+/* end of includes*/
 
 /*-----------------TWHICH, PWHICH---------------------------------------
  * Find which neighbor/node/pt of a triangle is the given neighbor/node/pt.

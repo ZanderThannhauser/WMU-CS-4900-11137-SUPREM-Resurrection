@@ -17,13 +17,13 @@
 #include "./src/suprem/include/constant.h"
 #endif
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "makeframe.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int mysmooth(int value);
-// end of declarations
+/* end of declarations*/
 
 #define CRITERION 1
 #define OFFSET 30

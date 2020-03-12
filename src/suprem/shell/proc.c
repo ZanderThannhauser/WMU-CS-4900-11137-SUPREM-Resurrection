@@ -16,13 +16,13 @@
 
 #include "./src/suprem/include/shell.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "proc.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /*here be stuff that should live in .h some day*/
 #define FALSE 0

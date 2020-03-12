@@ -27,7 +27,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/regrid.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/refine/dbase.h"
 #include "./src/suprem/refine/hinit.h"
 #include "./src/suprem/plot/plot.h"
@@ -39,16 +39,16 @@
 #include "./src/suprem/geom/misc.h"
 #include "./src/suprem/dbase/edge.h"
 #include "skel.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int on_bound(int p, int sr);
 struct LLedge *edg_crs(int e, int s2, float c[MAXDIM]);
 int pt_in_skel(float c[3], int sr);
 int sub_2dskel(int s1, int s2, int *s, int *inside);
 int sub_1dskel(int s1, int s2, int *s, int *inside);
 void check_in(int s1, int s2, int *inside, int *ai, int *ao);
-// end of declarations
+/* end of declarations*/
 
 #define endpt(A) ((dir) ? (nF(A)) : (nB(A)))
 #define begpt(A) ((dir) ? (nB(A)) : (nF(A)))

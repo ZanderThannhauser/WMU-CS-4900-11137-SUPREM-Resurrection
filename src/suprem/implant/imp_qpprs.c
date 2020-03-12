@@ -15,14 +15,14 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/implant.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/implant/imp_prson.h"
 #include "./src/suprem/implant/imp_vert.h"
 #include "imp_qpprs.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 #define Bool short
 #define T 1

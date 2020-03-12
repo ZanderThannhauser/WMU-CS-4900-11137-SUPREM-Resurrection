@@ -18,14 +18,14 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/shell.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/shell/proc.h"
 #include "help.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void print_help(char *space, struct par_str **param);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

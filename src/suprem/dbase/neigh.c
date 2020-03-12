@@ -20,13 +20,13 @@
 #include "./src/suprem/include/dbaccess.h"
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "neigh.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void elim_dups(int *taken, int *num);
-// end of declarations
+/* end of declarations*/
 
 static int neigh_list[200];
 static int num_neigh;

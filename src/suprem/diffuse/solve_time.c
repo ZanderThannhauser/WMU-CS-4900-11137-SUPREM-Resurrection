@@ -21,6 +21,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/times.h>
+#include <string.h>
 #include <strings.h>
 
 #include "./src/suprem/include/constant.h"
@@ -35,7 +36,7 @@
 #include "./src/suprem/include/poly.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/diffuse/poly.h"
 #include "./src/suprem/diffuse/time.h"
@@ -55,14 +56,14 @@
 #include "./src/suprem/misc/print_time.h"
 #include "./src/suprem/device/device.h"
 #include "solve_time.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 double start_step(float temp, int cont);
 double solstep(double del_df, float temp, int timemeth, int compute);
 double do_oxide(float temp, int ornt, int oxhow, double *dt);
 void dump_data(double total, int dump, char *movie, int *cnt);
-// end of declarations
+/* end of declarations*/
 
 #define DAMP 0.9
 

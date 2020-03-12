@@ -20,7 +20,7 @@
  *									*
  ************************************************************************/
 
-// 2020 #include guard:
+/* 2020 #include guard:*/
 #ifndef INCLUDE_IMPURITY_H
 #define INCLUDE_IMPURITY_H
 
@@ -99,8 +99,8 @@ struct imp_str {
     double seg[8][MAXMAT][MAXMAT];  /*the segregation coefficients*/
     int flags;                      /*steady state, diffusing, or mobile*/
 
-    // 2020: putting this union here to remove some
-    // 'assignment from incompatible pointer type' errors!
+    /* 2020: putting this union here to remove some*/
+    /* 'assignment from incompatible pointer type' errors!*/
     union {
         double (*bad_diff_coeff)();
         void (*diff_coeff)(float, double **, double **, double *, double *,
@@ -111,8 +111,8 @@ struct imp_str {
                      double **);
     void (*boundary)(struct bound_str *); /*set up boundary conditions*/
     PTR_FNC algebc;                       /*set up boundary conditions*/
-    // 2020: putting this union here to remove some
-    // 'assignment from incompatible pointer type' errors!
+    /* 2020: putting this union here to remove some*/
+    /* 'assignment from incompatible pointer type' errors!*/
     union {
         PTR_FNC bad_active;
         void (*active)(int, int, float, double **, double **, double **,

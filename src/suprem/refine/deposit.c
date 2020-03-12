@@ -30,7 +30,8 @@
 #include "./src/suprem/include/refine.h"
 #include "./src/suprem/include/regrid.h"
 
-// 2020 includes:
+/* 2020 includes:*/
+#include "./src/debug.h"
 #include "./src/suprem/diffuse/poly.h"
 #include "./src/suprem/refine/dbase.h"
 #include "./src/suprem/dbase/list.h"
@@ -49,12 +50,12 @@
 #include "./src/suprem/dbase/point.h"
 #include "./src/suprem/dbase/node.h"
 #include "deposit.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int build_skel(int nump, struct line *p, int numop, struct line *op, int div,
                int rn, double sp, int square);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -78,10 +79,13 @@ void user_deposit(char *par, struct par_str *param) {
     double conc, space;
     double temp, pressure;
     int oldnn = nn;
+    ENTER;
 
     sfile = NULL;
-    if (InvalidMeshCheck())
-        return; // -1;
+    if (InvalidMeshCheck()) {
+        EXIT;
+        return; /* -1;*/
+    }
 
     /*increment the process step counter*/
     process_step++;
@@ -121,7 +125,8 @@ void user_deposit(char *par, struct par_str *param) {
         if (thick <= 0 || space <= 0) {
             fprintf(stderr, "Bad deposition parameters: thick %e spacing %e\n",
                     thick * 1e4, space * 1e4);
-            return; // (-1);
+            EXIT;
+            return; /* (-1);*/
         }
 
         if (is_specified(param, "square"))
@@ -270,7 +275,8 @@ void user_deposit(char *par, struct par_str *param) {
         /*inititialize the grain size*/
         poly_init(oldnn, temp, pressure, thick, imp, conc, ndiv);
     }
-    return; // (0);
+    EXIT;
+    return; /* (0);*/
 }
 
 /************************************************************************

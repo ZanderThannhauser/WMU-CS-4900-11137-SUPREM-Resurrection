@@ -29,13 +29,14 @@
 #include "./src/suprem/include/refine.h"
 #include "./src/suprem/include/regrid.h"
 
-// 2020 includes:
+/* 2020 includes:*/
+#include "./src/debug.h"
 #include "./src/suprem/dbase/new_layer.h"
 #include "surface.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -56,6 +57,7 @@ int find_surf(struct line **pp) /*the point numbers*/
     int done, found;
     struct line *p;
     int maxop;
+    ENTER;
 
     maxop = 100;
     *pp = salloc(struct line, maxop);
@@ -188,5 +190,6 @@ int find_surf(struct line **pp) /*the point numbers*/
         break;
     }
 
+    EXIT;
     return (ns);
 }

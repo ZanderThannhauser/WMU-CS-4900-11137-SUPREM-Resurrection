@@ -20,13 +20,14 @@
 #include "./src/suprem/include/expr.h"
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
+#include "./src/debug.h"
 #include "./src/suprem/check/eval.h"
 #include "./src/suprem/shell/do_action.h"
 #include "./src/suprem/check/split.h"
 #include "./src/suprem/check/parse.h"
 #include "echo.h"
-// end of includes
+/* end of includes*/
 
 /************************************************************************
  *									*
@@ -38,10 +39,12 @@ void echo(char *par, struct par_str *param) {
     char *err;
     struct vec_str *out;
     float val;
+    ENTER;
 
     if (par == NULL) {
         fprintf(stdout, "\n");
         fflush(stdout);
+        EXIT;
         return;
     }
 
@@ -64,6 +67,8 @@ void echo(char *par, struct par_str *param) {
     fflush(stdout);
     if (out != NULL)
         free_expr(out);
+
+    EXIT;
 }
 
 /*-----------------uPause-----------------------------------------------
@@ -100,7 +105,7 @@ void uPause(char *unused_0, struct par_str *unused_1) {
         }
     }
 
-    return; //(0);
+    return; /*(0);*/
 }
 
 /************************************************************************
@@ -118,12 +123,12 @@ void user_print(char *par, struct par_str *param) {
     if (par == NULL) {
         fprintf(stdout, "\n");
         fflush(stdout);
-        return; // (0);
+        return; /* (0);*/
     }
 
     if (par != NULL)
         if (split(par, argv, FALSE) == -1)
-            return; //(-1);
+            return; /*(-1);*/
 
     for (i = 0; argv[i] != NULL; i++) {
 
@@ -142,5 +147,5 @@ void user_print(char *par, struct par_str *param) {
         free(argv[i]);
     }
     fprintf(stdout, "\n");
-    return; // (0);
+    return; /* (0);*/
 }

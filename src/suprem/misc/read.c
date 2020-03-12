@@ -25,11 +25,11 @@
 #include "./src/suprem/include/shell.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/misc/reader.h"
 #include "./src/suprem/shell/proc.h"
 #include "read.h"
-// end of includes
+/* end of includes*/
 
 /************************************************************************
  *									*

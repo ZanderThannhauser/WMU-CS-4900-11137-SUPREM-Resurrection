@@ -22,15 +22,15 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/diffuse/setup.h"
 #include "./src/suprem/diffuse/solve.h"
 #include "dev_solve.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void dev_setup(double *rhs2);
-// end of declarations
+/* end of declarations*/
 
 /*the amount of over solve needed for this inner loop*/
 #define NEWT 1.0e-2

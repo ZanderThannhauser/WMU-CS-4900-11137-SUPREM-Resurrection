@@ -27,7 +27,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/plot.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/dbase/dispose.h"
@@ -36,10 +36,10 @@
 #include "./src/suprem/geom/limits.h"
 #include "./src/suprem/include/plot.h"
 #include "plot_1d.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of decalarations
+/* 2020 forward declarations*/
+/* end of decalarations*/
 
 /************************************************************************
  *									*
@@ -50,9 +50,7 @@
  *  Original:	MEL	1/85	(modeled on pisces2)			*
  *									*
  ************************************************************************/
-void plot_1d(char *par, struct par_str *param) {
-    // 2020: took all this out
-}
+void plot_1d(char *par, struct par_str *param) { /* 2020: took all this out*/ }
 
 /*----------------------------------------------------------------------
  * Fix equal or swapped bounds.

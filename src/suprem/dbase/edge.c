@@ -23,13 +23,13 @@
 #include "./src/suprem/include/dbaccess.h"
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/list.h"
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/misc/panic.h"
 #include "./src/suprem/geom/misc.h"
 #include "edge.h"
-// end of includes
+/* end of includes*/
 
 #define MIN2(A, B) ((A) < (B)) ? (A) : (B)
 

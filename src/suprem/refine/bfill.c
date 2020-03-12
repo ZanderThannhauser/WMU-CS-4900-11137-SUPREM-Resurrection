@@ -23,15 +23,15 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/skel.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/refine/sp_edge.h"
 #include "./src/suprem/mesh/rect.h"
 #include "bfill.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void dvedge(int ie, double lej, int nnew, double ratio, double first);
-// end of declarations
+/* end of declarations*/
 
 /*-----------------DVEDGE-----------------------------------------------
  * Divide an edge

@@ -30,19 +30,19 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/regrid.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/geom/misc.h"
 #include "./src/suprem/misc/print_time.h"
 #include "./src/suprem/misc/panic.h"
 #include "interp.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void interp_2d(int in, int ie2);
 void interp_1d(int in, int ie2);
 void fac3x3(double a[3][3], int pvt[3]);
 void sol3x3(double a[3][3], int pvt[3], double ans[3]);
-// end of declarations
+/* end of declarations*/
 
 /*
  * interpolate the solutions found in r2 onto those found in r1

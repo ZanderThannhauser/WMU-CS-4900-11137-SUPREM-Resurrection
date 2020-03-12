@@ -23,13 +23,13 @@
 #include "./src/suprem/include/dbaccess.h"
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/misc/panic.h"
 #include "list.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /*
  *	Add to a list.

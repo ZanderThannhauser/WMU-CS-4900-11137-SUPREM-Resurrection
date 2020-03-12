@@ -12,14 +12,14 @@
 #include "./src/suprem/include/implant.h"
 #include "./src/suprem/include/shell.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/shell/do_action.h"
 #include "./src/suprem/geom/limits.h"
 #include "newbackside.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /*  newbackside( line ) -  etch substrate at y=line and place a new
  *	backside contact at the new position for Pisces.  To prevent

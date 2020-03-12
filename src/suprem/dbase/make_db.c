@@ -23,7 +23,7 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/material.h" /* For nmat mattyp GAS */
 
-// 2020 includes
+/* 2020 includes*/
 #include "./src/debug.h"
 #include "./src/suprem/dbase/node.h"
 #include "./src/suprem/dbase/locate.h"
@@ -37,10 +37,10 @@
 #include "./src/suprem/dbase/region.h"
 #include "./src/suprem/dbase/check.h"
 #include "make_db.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -149,20 +149,6 @@ void bd_connect(char *when) {
     /*check for consistency*/
     mtest1(when);
     mtest2(when);
-    
+
     EXIT;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-

@@ -31,17 +31,17 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/plot.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/imagetool/window.h"
 #include "./src/suprem/imagetool/make_grid.h"
 #include "./src/suprem/geom/misc.h"
 #include "fill_grid.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int vertex_tri(float x, float y, int tri_num);
 int si_interface(int pt_num);
-// end of declarations
+/* end of declarations*/
 
 int fill_grid(int xsize, int ysize, float *xdata, float *ydata, float *data,
               float *val, int mat_num, int win_xmin_index, int win_xmax_index,

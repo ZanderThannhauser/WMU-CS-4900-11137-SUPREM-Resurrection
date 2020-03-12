@@ -28,13 +28,13 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/alloc.h"
 #include "check_active.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 void check_active() {
     int i, imp, impa;

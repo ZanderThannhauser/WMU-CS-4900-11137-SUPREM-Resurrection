@@ -1,0 +1,60 @@
+SUPREM-IV.GS B.9305
+	(c) 1991-1993 Stanford University
+	(c) 1991 University of Florida
+Reading Models...
+"---------- Orientation < 100 > --------------------"
+grammar rule violated in expression
+
+estimated first time step 1.286963e-16
+Solving            0 +          0.1 =          0.1,      100%, np 6
+Solving          0.1 +       302.52 =       302.62,   302520%, np 6
+Solving       302.62 +      302.522 =      605.142,  100.001%, np 6
+Solving      605.142 +      311.041 =      916.183,  102.816%, np 6
+Solving      916.183 +      319.326 =      1235.51,  102.664%, np 6
+Solving      1235.51 +      327.623 =      1563.13,  102.598%, np 8
+Solving      1563.13 +      236.869 =         1800,  72.2992%, np 8
+layer  material        thickness  Integrated
+num    type            microns    Depth(A)
+ 0     oxide           -0.043     0.000000e+00    
+ 1     oxide           0.000      -3.104514e-04   
+ 2     oxide           0.035      0.000000e+00    
+ 3     silicon         1.000      4.993907e-01    
+"---------- Orientation < 110 > --------------------"
+grammar rule violated in expression
+
+estimated first time step 4.402759e-16
+Solving            0 +          0.1 =          0.1,      100%, np 6
+Solving          0.1 +      216.262 =      216.362,   216262%, np 6
+Solving      216.362 +      216.266 =      432.629,  100.002%, np 6
+Solving      432.629 +      224.785 =      657.413,  103.939%, np 6
+Solving      657.413 +       232.98 =      890.393,  103.646%, np 6
+Solving      890.393 +      241.199 =      1131.59,  103.528%, np 8
+Solving      1131.59 +      249.427 =      1381.02,  103.411%, np 8
+Solving      1381.02 +      257.664 =      1638.68,  103.302%, np 8
+Solving      1638.68 +      161.318 =         1800,  62.6078%, np 10
+layer  material        thickness  Integrated
+num    type            microns    Depth(A)
+ 0     oxide           -0.056     0.000000e+00    
+ 1     oxide           -0.000     -1.296132e-03   
+ 2     oxide           0.046      7.714586e-04    
+ 3     silicon         1.000      4.989346e-01    
+"---------- Orientation < 111 > --------------------"
+grammar rule violated in expression
+
+estimated first time step 1.269085e-17
+Solving            0 +          0.1 =          0.1,      100%, np 6
+Solving          0.1 +       180.25 =       180.35,   180250%, np 6
+Solving       180.35 +      180.255 =      360.605,  100.003%, np 6
+Solving      360.605 +      188.773 =      549.378,  104.726%, np 6
+Solving      549.378 +      196.907 =      746.285,  104.309%, np 6
+Solving      746.285 +      205.073 =      951.358,  104.147%, np 8
+Solving      951.358 +      213.252 =      1164.61,  103.988%, np 8
+Solving      1164.61 +      221.444 =      1386.05,  103.841%, np 8
+Solving      1386.05 +      229.647 =       1615.7,  103.704%, np 10
+Solving       1615.7 +        184.3 =         1800,  80.2534%, np 10
+layer  material        thickness  Integrated
+num    type            microns    Depth(A)
+ 0     oxide           -0.065     0.000000e+00    
+ 1     oxide           0.000      -1.962906e-03   
+ 2     oxide           0.053      1.281196e-03    
+ 3     silicon         1.000      4.985963e-01    

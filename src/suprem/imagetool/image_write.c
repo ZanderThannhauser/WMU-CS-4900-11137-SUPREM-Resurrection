@@ -33,7 +33,7 @@
 #define STATIC_ALLOCATION_TIME
 #include "./src/suprem/include/bound.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/geom/limits.h"
 #include "./src/suprem/imagetool/make_grid.h"
@@ -41,11 +41,11 @@
 #include "./src/suprem/imagetool/makeframe.h"
 #include "./src/suprem/include/plot.h"
 #include "image_write.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 
-// end of declarations
+/* end of declarations*/
 
 /**********************************************************************/
 

@@ -20,23 +20,23 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h" /* where Odiff, Obc put things */
 
-// 2020 function includes:
+/* 2020 function includes:*/
 #include "./src/suprem/oxide/oxrate.h"
 #include "./src/suprem/dbase/new_layer.h"
 #include "./src/suprem/oxide/mater.h"
 #include "./src/suprem/shell/smisc.h"
 #include "./src/suprem/diffuse/species.h"
 #include "Oxidant.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations:
+/* 2020 forward declarations:*/
 float LenEff(float conc, float ks);
 double KsFermiDep(double noni, double temp);
 void plane_strain(double E, double v, double *matco);
 void FE_oxbulk(double *matco, int mat, double *eps, double *sig);
 void synch2(double arg, double *val, double *deriv);
 void exp_l(double arg, double *f, double *dfda, double lambda);
-// end of declarations
+/* end of declarations*/
 
 /*
  * Oxidant diffusion and reaction coefficients in SiO2 are derived

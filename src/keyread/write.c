@@ -21,13 +21,13 @@
 #include "../suprem/include/check.h"
 #include "../suprem/include/key.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "write.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int write_param(struct par_str *par, int fd);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

@@ -18,13 +18,13 @@
 
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "list.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void loop_check(char **str);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

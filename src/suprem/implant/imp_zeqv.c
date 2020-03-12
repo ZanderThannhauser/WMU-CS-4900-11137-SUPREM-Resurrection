@@ -30,13 +30,13 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/implant.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/implant/imp_vert.h"
 #include "imp_zeqv.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 double zeqv(double dose, double qtot, double dx, double bt,
             struct imp_info *data) {

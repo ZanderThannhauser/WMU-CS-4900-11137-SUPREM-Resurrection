@@ -30,11 +30,11 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-#define MAXDOF 3                  /* too painful to do right */
+#define MAXDOF 3                         /* too painful to do right */
 #include "./src/suprem/include/FEmath.h" /* for FErel */
 #include "./src/suprem/include/poly.h"   /* for FErel */
 
-// 2020: header file includes:
+/* 2020: header file includes:*/
 #include "./src/suprem/include/check.h"
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/math/blklu.h"
@@ -42,7 +42,7 @@
 #include "./src/suprem/misc/print_time.h"
 #include "./src/suprem/dbase/neigh.h"
 #include "symb.h"
-// end of 2020 includes
+/* end of 2020 includes*/
 
 #define TURNEDON(A, B) (is_specified(A, B) && get_bool(A, B))
 

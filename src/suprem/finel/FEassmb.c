@@ -17,21 +17,21 @@
 #define WANT_STATIC
 #include "./src/suprem/include/FEgeom.h"
 
-// 2020 includes
+/* 2020 includes*/
 #include "./src/suprem/math/blklu.h"
 #include "./src/suprem/math/generate.h"
 #include "FEassmb.h"
-// end of includes
+/* end of includes*/
 
 #define MELDOF MAXNEL *MAXDOF /* degrees of freedom per element */
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void addstf(int *ia, int aoff, double *a, double *rhs, int nel,
             double stiff[MELDOF * MELDOF], double wrhs[MELDOF],
             int eqns[MELDOF], int fixity[MELDOF], int dummy);
 void localize(int ie, double *xl, double *disp, int *eqns, int *fixity,
               double *bc);
-// end of declarations
+/* end of declarations*/
 
 extern int noderiv;
 

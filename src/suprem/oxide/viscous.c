@@ -23,7 +23,7 @@
 #include "./src/suprem/include/FEmath.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/oxide/FEconvert.h"
 #include "./src/suprem/oxide/FEbc.h"
 #include "./src/suprem/finel/FEsolve.h"
@@ -35,11 +35,11 @@
 #include "./src/suprem/oxide/oxide_vel.h"
 #include "./src/suprem/finel/tri7.h"
 #include "viscous.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void FEmathset(int flow);
-// end of declarations
+/* end of declarations*/
 
 /* By arrangement with FEconvert.c */
 #define TRIOX 0
@@ -103,7 +103,7 @@ void stress_analysis(char *par, struct par_str *param) {
     int element;
 
     if (InvalidMeshCheck())
-        return; // -1;
+        return; /* -1;*/
 
     if (is_specified(param, "temp1"))
         temp1 = 273 + get_float(param, "temp1");
@@ -121,7 +121,7 @@ void stress_analysis(char *par, struct par_str *param) {
         element = ELAST7;
     else {
         fprintf(stderr, "Only know 6 & 7 noded elements\n");
-        return; // (-1);
+        return; /* (-1);*/
     }
 
     /* fixed by Zak to ensure that data structures are initialized
@@ -165,7 +165,7 @@ void stress_analysis(char *par, struct par_str *param) {
 
     /* Generate appropriate data structures for the FE method */
     if (FEconvert(element, 2) < 0)
-        return; // (-1);
+        return; /* (-1);*/
 
     /*
      * Set up boundary conditions.
@@ -180,7 +180,7 @@ void stress_analysis(char *par, struct par_str *param) {
     FE2s4all();
 
     FEfree();
-    return; // (0);
+    return; /* (0);*/
 }
 
 void FEmathset(int flow) /* Doing flow or stress calc? */

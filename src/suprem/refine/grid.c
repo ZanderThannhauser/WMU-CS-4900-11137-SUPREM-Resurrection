@@ -23,16 +23,16 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/skel.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/refine/triang.h"
 #include "./src/suprem/misc/panic.h"
 #include "./src/suprem/dbase/element.h"
 #include "grid.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void lineseg(int ir, int rbn);
-// end of declarations
+/* end of declarations*/
 
 /*-----------------TRIANG-----------------------------------------------
  * Triangulate a region. The core routine.

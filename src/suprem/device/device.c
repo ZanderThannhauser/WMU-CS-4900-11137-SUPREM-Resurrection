@@ -23,7 +23,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/device/Electron.h"
 #include "./src/suprem/device/circuit.h"
@@ -37,11 +37,11 @@
 #include "./src/suprem/device/Psi.h"
 #include "./src/suprem/device/dev_prep.h"
 #include "device.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void init_dev(double temp);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -167,7 +167,7 @@ void device(char *par, struct par_str *param) {
     double temp = 293.0;
 
     if (InvalidMeshCheck())
-        return; // (-1);
+        return; /* (-1);*/
 
     area = salloc(double, nn);
     nd2cont = salloc(int, nn);
@@ -271,7 +271,7 @@ void device(char *par, struct par_str *param) {
     free(pt2cont);
     free(Ec);
     free(Ev);
-    return; // (0);
+    return; /* (0);*/
 }
 
 /************************************************************************

@@ -18,12 +18,13 @@
 
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
+#include "./src/debug.h"
 #include "man.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -43,6 +44,7 @@ void man(char *par, struct par_str *param) {
     char filename[80];
     int c;
     char *dir;
+    ENTER;
 
     /*figure out where to look for the manual directory*/
     if ((dir = (char *)getenv("MANDIR")) == NULL)
@@ -70,6 +72,7 @@ void man(char *par, struct par_str *param) {
     /*open a file to read from*/
     if ((help = fopen(filename, "r")) == NULL) {
         fprintf(stderr, "can not find help for %s\n", par);
+        EXIT;
         return;
     }
 
@@ -81,5 +84,6 @@ void man(char *par, struct par_str *param) {
 
     fclose(help);
     pclose(more);
+    EXIT;
     return;
 }

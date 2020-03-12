@@ -1,0 +1,56 @@
+SUPREM-IV.GS B.9305
+	(c) 1991-1993 Stanford University
+	(c) 1991 University of Florida
+Reading Models...
+mode one.dim
+line x loc=0.0 spacing=0.01 tag=top
+line x loc=1.0 spacing=0.01
+line x loc=20 spacing=0.25 tag=bottom
+region gaas      xlo=top  xhi=bottom
+boundary exposed xlo=top  xhi=top
+boundary backside xlo=bottom xhi=bottom
+init carbon conc=1e15
+implant beryllium dose=1e14 energy=100 pearson
+profile infile=file1 inter
+deposit nitride thick=.3
+interstitial gaas D.0=5e-14     D.E= 0.
+interstitial gaas Kr.0=1e-18    Kr.E= 0.
+interstitial gaas Cstar.0= 1.0e16    Cstar.E= 0.
+interstitial gaas  /nitride  Ksurf.0= 1e-3     Ksurf.E= 0.
+interstitial gaas neu.0=0 pos.0=1 neu.E=0 neg.0=0 pos.E=0 dneg.0=0
+interstitial gaas dpos.0=0 dpos.E=0 neg.E=0 tpos.0=0 tneg.0=0
+vacancy gaas D.0= 1e-15      D.E= 0.
+vacancy gaas Kr.0=1e-18      Kr.E= 0.
+vacancy gaas Cstar.0= 1e16    Cstar.E= 0.
+vacancy gaas  /nitride  Ksurf.0= 1e-3     Ksurf.E= 0.
+vacancy gaas neu.0=0 pos.0=0 neu.E=0 neg.0=0 pos.E=0 dneg.0=0
+vacancy	dpos.0=0 dpos.E=0 neg.E=0 tpos.0=0 tneg.0=1
+method full.fac
+	select z=log10(beryllium)
+	plot.1d x.min=0 x.ma=2 y.mi=14 y.max=20 line.type=4
+	select z=log10(inter)
+	plot.1d x.min=0 x.ma=2 y.mi=14 y.max=20 cle=f axi=f line.type=2
+method two.dim init=1e-5
+diffuse time=15 temp=800 argon
+estimated first time step -0.000000e+00
+Solving            0 +        1e-05 =        1e-05,      100%, np 356
+Solving        1e-05 +   0.00061638 =   0.00062638,   6163.8%, np 356
+Solving   0.00062638 +   0.00174429 =   0.00237067,   282.99%, np 356
+Solving   0.00237067 +   0.00232734 =   0.00469801,  133.426%, np 356
+Solving   0.00469801 +   0.00671947 =    0.0114175,  288.719%, np 356
+Solving    0.0114175 +    0.0269316 =    0.0383491,  400.799%, np 356
+Solving    0.0383491 +     0.162957 =     0.201307,  605.079%, np 356
+Solving     0.201307 +      1.52996 =      1.73127,  938.872%, np 356
+Solving      1.73127 +      3.77913 =       5.5104,  247.008%, np 356
+Solving       5.5104 +      5.09729 =      10.6077,   134.88%, np 356
+Solving      10.6077 +       11.132 =      21.7396,   218.39%, np 356
+Solving      21.7396 +      44.6612 =      66.4009,  401.199%, np 356
+Solving      66.4009 +      81.8498 =      148.251,  183.268%, np 356
+Solving      148.251 +      174.243 =      322.494,  212.882%, np 356
+Solving      322.494 +      273.155 =      595.649,  156.767%, np 356
+Solving      595.649 +      304.351 =          900,   111.42%, np 356
+	select z=log10(beryllium)
+	plot.1d x.min=0 x.ma=2 y.mi=14 y.max=20 cle=f axi=f line.type=4
+	select z=log10(inter)
+	plot.1d x.min=0 x.ma=2 y.mi=14 y.max=20 cle=f axi=f line.type=2
+quit

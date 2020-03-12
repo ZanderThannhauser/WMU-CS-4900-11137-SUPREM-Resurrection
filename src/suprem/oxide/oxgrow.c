@@ -25,7 +25,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 function includes
+/* 2020 function includes*/
 #include "./src/suprem/oxide/oxide_vel.h"
 #include "./src/suprem/dbase/grid_loop.h"
 #include "./src/suprem/dbase/grid_upd.h"
@@ -33,11 +33,11 @@
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/geom/misc.h"
 #include "oxgrow.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void point_vel();
-// end of declarations
+/* end of declarations*/
 
 /*-----------------OXGROW-----------------------------------------------
  * Controller for oxide growth.

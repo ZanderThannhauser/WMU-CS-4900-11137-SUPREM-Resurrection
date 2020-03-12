@@ -21,17 +21,17 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/key.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "reader.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
-// 2020 forward decalarations:
+/* 2020 forward decalarations:*/
 int read_param(struct par_str *par, FILE *fd);
 int read_boolean(struct bool_exp **bexp, FILE *fd);
-// end of decalarations
+/* end of decalarations*/
 
 /************************************************************************
  *									*

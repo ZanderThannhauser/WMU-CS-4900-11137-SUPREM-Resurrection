@@ -21,7 +21,7 @@
 #include "./src/suprem/include/refine.h"
 #include "./src/suprem/include/regrid.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/alloc.h"
 #include "./src/suprem/oxide/oxgrow.h"
 #include "./src/suprem/dbase/grid_loop.h"
@@ -30,12 +30,12 @@
 #include "./src/suprem/refine/surface.h"
 #include "./src/suprem/refine/dbase.h"
 #include "rate.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void compute_rate(double *rate, int *prio);
 void rate_trip(int p, double rate, int t1, int t2);
-// end of declarations
+/* end of declarations*/
 
 /*define some macros to work on the triple point handling*/
 #define TRIPLE 0x4

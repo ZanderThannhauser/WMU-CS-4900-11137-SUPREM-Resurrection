@@ -28,13 +28,13 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "damage.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 #ifdef ardent
 #define ERFC(A) ((A > 0) ? (erfc(A)) : (1.0 + erf(A)))
@@ -97,7 +97,7 @@ void setdam(int imp, double energy, double *damstat) {
         in = 3;
         break;
     default:
-        // 2020: I hope this never happends
+        /* 2020: I hope this never happends*/
         NOPE;
         break;
     }
@@ -184,7 +184,7 @@ void setdam(int imp, double energy, double *damstat) {
         c1 = c2 * exp(-z1 / a1);
         wt = 1.0;
     }
-    // 2020: I hope this never happends:
+    /* 2020: I hope this never happends:*/
     else {
         NOPE;
     }
@@ -241,7 +241,7 @@ double *damstat;
         val = (depth - damstat[DAM_A2]) / damstat[DAM_A3];
         val = damstat[DAM_C2] * exp(-val * val / 2.0);
     } else {
-        // 2020: I hope this never happends
+        /* 2020: I hope this never happends*/
         NOPE;
     }
 

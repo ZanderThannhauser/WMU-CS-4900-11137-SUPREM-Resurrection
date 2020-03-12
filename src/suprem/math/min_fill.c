@@ -34,10 +34,10 @@ struct d_sort {
 int o_compar(struct d_sort *f1, struct d_sort *f2);
 void new_storage();
 
-// 2020 function header includes:
+/* 2020 function header includes:*/
 #include "./src/suprem/dbase/locate.h"
 #include "min_fill.h"
-// end of 2020 includes
+/* end of 2020 includes*/
 
 /* All links come off a single big list */
 typedef struct _link {

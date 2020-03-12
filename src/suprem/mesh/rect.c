@@ -29,7 +29,7 @@
 #include "./src/suprem/include/global.h" /* For min() */
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/dbase/dispose.h"
 #include "./src/suprem/misc/get.h"
@@ -37,7 +37,7 @@
 #include "./src/suprem/dbase/element.h"
 #include "./src/suprem/dbase/region.h"
 #include "rect.h"
-// end of includes
+/* end of includes*/
 
 int nxy[MAXDIM];
 #define NX (nxy[0])
@@ -47,10 +47,10 @@ int nxy[MAXDIM];
 #define MAXBNDS 2 * MAXDIM + 1
 #define TYPLOC 2 * MAXDIM
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int tag_look(struct par_str *param, char *name, int dim);
 int read_bound(struct par_str *param, int where[MAXBNDS], int what);
-// end of declarations
+/* end of declarations*/
 
 unsigned maxuser;
 unsigned maxplanes;
@@ -77,6 +77,7 @@ char XY[] = "xyz";
 void rect_boot() {
     static int before = 0;
     int i, j;
+    ENTER;
 
     for (i = 0; i < MAXDIM; i++) {
         nxy[i] = 1;
@@ -99,17 +100,20 @@ void rect_boot() {
     }
 
     /* Clear out the tags array */
-    for (i = 0; i < MAXDIM; i++)
+    for (i = 0; i < MAXDIM; i++) {
         for (j = 0; j < maxuser; j++) {
             if (before && utag[i][j])
                 free(utag[i][j]);
             utag[i][j] = 0;
         }
+    }
     before++;
 
     /* Just in case anyone's watching...*/
     for (i = 0; i < MAXMAT; i++)
         umattyp[i] = -1;
+
+    EXIT;
 }
 
 /*-----------------RLINE------------------------------------------------
@@ -122,6 +126,7 @@ void rline(char *par, struct par_str *param) {
     int i, j, dim, nu;
     double lloc, spa;
     char *s;
+    ENTER;
 
     /* Dimension: parser better guarantee one of these guys is set */
     if (get_bool(param, "x.direction"))
@@ -139,7 +144,8 @@ void rline(char *par, struct par_str *param) {
     if (nu > 0 && lloc <= uloc[dim][nu - 1]) {
         fprintf(stderr, "Error: %c node %d is in non-increasing order\n",
                 XY[dim], nu);
-        return; // (-1);
+        EXIT;
+        return; /* (-1);*/
     }
 
     /*
@@ -172,7 +178,9 @@ void rline(char *par, struct par_str *param) {
         (s) ? (char *)strcpy((char *)malloc(1 + strlen(s)), s) : NULL;
 
     und[dim]++;
-    return; // (0);
+
+    EXIT;
+    return; /* (0);*/
 }
 
 /*-----------------SMOOTH-----------------------------------------------
@@ -181,6 +189,7 @@ void rline(char *par, struct par_str *param) {
 int smooth(int dim) {
     int in, jn, *done, jmin, jmax;
     double hmin, lej, hM;
+    ENTER;
 
     /* Set defaults: */
     for (in = 0; in < und[dim] - 1; in++) {
@@ -188,29 +197,35 @@ int smooth(int dim) {
         lej = fabs(uloc[dim][in + 1] - uloc[dim][in]);
 
         /* Use it if shorter than the existing spacing (initially MAXFLOAT) */
-        if (lej < uspa[dim][in])
+        if (lej < uspa[dim][in]) {
             uspa[dim][in] = lej;
-        if (lej < uspa[dim][in + 1])
+        }
+        if (lej < uspa[dim][in + 1]) {
             uspa[dim][in + 1] = lej;
+        }
     }
 
     /* User specified values were negative, so the above missed them */
     /* Now make 'em positive */
-    for (in = 0; in < und[dim]; in++)
-        if (uspa[dim][in] < 0)
+    for (in = 0; in < und[dim]; in++) {
+        if (uspa[dim][in] < 0) {
             uspa[dim][in] = -uspa[dim][in];
+        }
+    }
 
     /* Search points in order of increasing h, and round down big h */
     done = salloc(int, maxuser);
-    for (in = 0; in < und[dim]; in++)
+    for (in = 0; in < und[dim]; in++) {
         done[in] = 0;
+    }
 
     for (in = 0; in < und[dim]; in++) {
 
         /* Set jmin to index of minimum remaining h. */
         for (hmin = MAXFLOAT, jmin = 0, jn = 0; jn < und[dim]; jn++) {
-            if (done[jn])
+            if (done[jn]) {
                 continue;
+            }
             if (uspa[dim][jn] < hmin) {
                 hmin = uspa[dim][jn];
                 jmin = jn;
@@ -218,8 +233,9 @@ int smooth(int dim) {
         }
 
         for (jmax = jmin - 1; jmax < jmin + 2; jmax += 2) {
-            if (jmax < 0 || jmax >= und[dim])
+            if (jmax < 0 || jmax >= und[dim]) {
                 continue;
+            }
             lej = fabs(uloc[dim][jmax] - uloc[dim][jmin]);
             hM = (hmin + (mr - 1) * lej) / mr;
             uspa[dim][jmin] = min(hM, uspa[dim][jmin]);
@@ -228,16 +244,17 @@ int smooth(int dim) {
     }
 
     free(done);
+    EXIT;
     return (0);
 }
 
 /*-----------------ADDINT-----------------------------------------------
  * Add planes between the user specified ones.
  *----------------------------------------------------------------------*/
-int addint(dim) int dim;
-{
+int addint(int dim) {
     int nn, is, j, i;
     double r, f, x, dx;
+    ENTER;
 
     umap[dim][0] = 0;
     rloc[dim][0] = uloc[dim][0];
@@ -269,6 +286,8 @@ int addint(dim) int dim;
         }
         umap[dim][is + 1] = nxy[dim] - 1;
     }
+
+    EXIT;
     return (0);
 }
 
@@ -278,9 +297,11 @@ int addint(dim) int dim;
 void dvpram(double hl, double hr, double el, int *nnew, double *ratio,
             double *first) {
     double r, rn, hl2, hr2;
+    ENTER;
 
     if (hl == 0 || hr == 0) {
         nnew = 0;
+        EXIT;
         return;
     }
 
@@ -294,13 +315,16 @@ void dvpram(double hl, double hr, double el, int *nnew, double *ratio,
         hr = el;
 
     /* Spacing is just length of edge. */
-    if (fabs(el - hl) <= EPS * el && fabs(el - hr) <= EPS * el)
+    if (fabs(el - hl) <= EPS * el && fabs(el - hr) <= EPS * el) {
+        EXIT;
         return;
+    }
 
     /* Spacing is same at both ends. */
     if (fabs(hr - hl) <= EPS * el) {
         *nnew = (int)((el / hl) - 0.49999);
         *first = 1.0 / (*nnew + 1);
+        EXIT;
         return;
     }
 
@@ -328,8 +352,10 @@ void dvpram(double hl, double hr, double el, int *nnew, double *ratio,
        printf("rn=%g,r=%g,fnew=%g,nnew=%d\n",r,rn,((log(rn)/log(r))+0.5),*nnew);
     */
 
-    if (*nnew == 0)
+    if (*nnew == 0) {
+        EXIT;
         return;
+    }
 
     *ratio = exp(log(rn) / *nnew);
     if (*ratio < 1 / mr)
@@ -338,6 +364,8 @@ void dvpram(double hl, double hr, double el, int *nnew, double *ratio,
         *ratio = mr;
 
     *first = (*ratio - 1) / (exp((*nnew + 1) * log(*ratio)) - 1);
+
+    EXIT;
     return;
 }
 
@@ -351,26 +379,32 @@ int squares(float new_mr) {
     ENTER;
 
     test = FALSE;
-    for (i = 0; i < mode; i++)
+    for (i = 0; i < mode; i++) {
         test = test || und[i] < 2;
+    }
+
     /* Do we have enough user data? */
     if (rect_err || test) {
         fprintf(stderr, "user mesh data not given or incomplete\n");
         rect_boot();
+        EXIT;
         return (-1);
     }
 
-    if (new_mr > 1)
+    if (new_mr > 1) {
         mr = new_mr;
+    }
 
     /* OK, fill out the spaces between the user specified lines */
     for (dim = 0; dim < mode; dim++) {
         if (smooth(dim)) {
             rect_boot();
+            EXIT;
             return (-1);
         }
         if (addint(dim)) {
             rect_boot();
+            EXIT;
             return (-1);
         }
         if (verbose >= V_NORMAL) {
@@ -386,20 +420,26 @@ int squares(float new_mr) {
 
     /* Change the region and edge user numbers to mapped numbers*/
     /*for all regions*/
-    for (ir = 0; ir < nur; ir++)
+    for (ir = 0; ir < nur; ir++) {
         /*for all dimensions*/
-        for (dim = 0; dim < mode; dim++)
+        for (dim = 0; dim < mode; dim++) {
             /*for high and low...*/
-            for (k = 0; k < 2; k++)
+            for (k = 0; k < 2; k++) {
                 ureg[ir][2 * dim + k] = umap[dim][ureg[ir][2 * dim + k]];
+            }
+        }
+    }
 
     /*for all edges*/
-    for (ij = 0; ij < nuj; ij++)
+    for (ij = 0; ij < nuj; ij++) {
         /*for all dimensions*/
-        for (dim = 0; dim < mode; dim++)
+        for (dim = 0; dim < mode; dim++) {
             /*for high and low...*/
-            for (k = 0; k < 2; k++)
+            for (k = 0; k < 2; k++) {
                 uedge[ij][2 * dim + k] = umap[dim][uedge[ij][2 * dim + k]];
+            }
+        }
+    }
 
     for (ix[0] = 0; ix[0] < nxy[0]; ix[0]++) {
         for (ix[1] = 0; ix[1] < nxy[1]; ix[1]++) {
@@ -419,10 +459,12 @@ int squares(float new_mr) {
             for (ix[1] = uedge[ij][2]; ix[1] <= uedge[ij][3]; ix[1]++) {
                 for (ix[2] = uedge[ij][4]; ix[2] <= uedge[ij][5]; ix[2]++) {
                     k = ix[2] + nxy[2] * ix[1] + nxy[1] * nxy[2] * ix[0];
-                    if (uedge[ij][TYPLOC] == EXPOSED)
+                    if (uedge[ij][TYPLOC] == EXPOSED) {
                         set_surf(k);
-                    if (uedge[ij][TYPLOC] == BACKEDG)
+                    }
+                    if (uedge[ij][TYPLOC] == BACKEDG) {
                         set_back(k);
+                    }
                 }
             }
         }
@@ -434,7 +476,7 @@ int squares(float new_mr) {
         ie = -1;
         /*for each region*/
         for (ir = 0; ir < nur; ir++) {
-            for (i = ureg[ir][0]; i < ureg[ir][1]; i++)
+            for (i = ureg[ir][0]; i < ureg[ir][1]; i++) {
                 for (j = ureg[ir][2]; j < ureg[ir][3]; j++) {
                     vl[0] = j + NY * i;
                     vl[1] = j + 1 + NY * i;
@@ -445,6 +487,7 @@ int squares(float new_mr) {
                     vl[2] = j + NY * (i + 1);
                     ie = mk_ele_pt(3, vl, ureg[ir][TYPLOC]);
                 }
+            }
         }
 
         break;
@@ -460,8 +503,9 @@ int squares(float new_mr) {
         break;
     }
 
-    for (i = 0; i < nur; i++)
+    for (i = 0; i < nur; i++) {
         (void)mk_reg(umattyp[i]);
+    }
 
     /* Clear out user data so we can come back */
     rect_boot();
@@ -489,13 +533,13 @@ void rregion(char *par, struct par_str *param) {
 
     /* Get its bounds */
     if (read_bound(param, &ureg[nur - 1][0], 1))
-        return; // (-1);
+        return; /* (-1);*/
 
     /* This is to make sure the user specified one */
     if (chosen("gas")) {
         fprintf(stderr, "No material specified for region %d\n", nur);
         ++rect_err;
-        return; // (-++rect_err) && 0;
+        return; /* (-++rect_err) && 0;*/
     }
 
     mater = Si;
@@ -526,7 +570,7 @@ void redge(char *par, struct par_str *param) {
     nuj++;
 
     if (read_bound(param, &uedge[nuj - 1][0], 0))
-        return; // (-1);
+        return; /* (-1);*/
 
     if (chosen("exposed"))
         uedge[nuj - 1][TYPLOC] = BC_OFFSET + 2;
@@ -539,7 +583,7 @@ void redge(char *par, struct par_str *param) {
     if (is_specified(param, "code"))
         uedge[nuj - 1][TYPLOC] = BC_OFFSET + get_int(param, "code");
 
-    return; // (0);
+    return; /* (0);*/
 }
 
 /*-----------------READ_BOUND-------------------------------------------

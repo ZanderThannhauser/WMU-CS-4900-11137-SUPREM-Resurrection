@@ -33,7 +33,7 @@
 #include "./src/suprem/include/device.h"
 #endif
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/diffuse/defect.h"
 #include "./src/suprem/oxide/mater.h"
 #include "./src/suprem/diffuse/Interst.h"
@@ -44,11 +44,11 @@
 #include "./src/suprem/device/Electron.h"
 #include "./src/suprem/device/Hole.h"
 #include "vector.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void RoughGrad(int which, float *vector);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

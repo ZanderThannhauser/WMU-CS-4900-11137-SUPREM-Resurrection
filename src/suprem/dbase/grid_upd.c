@@ -27,21 +27,22 @@
 #include "./src/suprem/include/matrix.h" /* For the old, new areas */
 #include "./src/suprem/include/regrid.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/new_layer.h"
 #include "./src/suprem/dbase/make_db.h"
 #include "./src/suprem/dbase/remove.h"
 #include "./src/suprem/oxide/erfit.h"
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/misc/panic.h"
+#include "./src/suprem/dbase/grid_loop.h"
 #include "grid_upd.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int CknMcObt(double dt, double sepTol, double obTol);
 int CknMcLen(double dt, double sepTol, double obTol, double abstol);
 float BadObtuse(float x, float y, float x1, float y1, float x2, float y2);
-// end of declarations
+/* end of declarations*/
 
 #define assert(x)                                                              \
     if (!(x))                                                                  \

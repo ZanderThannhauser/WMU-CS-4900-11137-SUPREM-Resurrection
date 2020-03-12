@@ -31,11 +31,11 @@
 #include "./src/suprem/include/matrix.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 function includes:
+/* 2020 function includes:*/
 #include "./src/suprem/math/blklu.h"
 #include "./src/suprem/math/mxv.h"
 #include "solblk.h"
-// end of 2020 includes
+/* end of 2020 includes*/
 
 void hist_upd(int nv, double *p1, double *p2, double *ap1, double *ap2,
               double beta);

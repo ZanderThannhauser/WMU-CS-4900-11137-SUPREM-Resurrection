@@ -18,16 +18,16 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 function includes:
+/* 2020 function includes:*/
 #include "./src/suprem/oxide/mater.h"
 #include "./src/suprem/misc/panic.h"
 #include "oxrate.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations:
+/* 2020 forward declarations:*/
 void cldep(float temp, float *lcl, float *pcl);
 void linlook(float val, float *fla, int n, int *ixl, float *s);
-// end of declarations
+/* end of declarations*/
 
 /* Cache the values of the thin oxide coeffs on the three common orientations */
 static float trateS[3], tlenS[3];

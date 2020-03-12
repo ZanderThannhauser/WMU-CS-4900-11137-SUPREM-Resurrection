@@ -30,7 +30,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/oxide/oxgrow.h"
 #include "./src/suprem/dbase/geometry.h"
 #include "./src/suprem/dbase/couple.h"
@@ -40,14 +40,14 @@
 #include "./src/suprem/math/symb.h"
 #include "./src/suprem/misc/panic.h"
 #include "prepare.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void diff_blocks();
 void upd_matrix();
 void diff_alloc();
 int upd_diff(double delta, double *area, int doit, int min_ok);
-// end of declarations
+/* end of declarations*/
 
 #define Alloc(P, O, N)                                                         \
     if (P)                                                                     \

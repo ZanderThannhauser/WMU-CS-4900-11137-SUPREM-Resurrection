@@ -25,7 +25,7 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/list.h"
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/dbase/kill_node.h"
@@ -33,11 +33,11 @@
 #include "./src/suprem/dbase/node.h"
 #include "./src/suprem/geom/misc.h"
 #include "remove.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void rem_edg_end(int ie, int nr);
-// of forward declarations
+/* of forward declarations*/
 
 /************************************************************************
  *									*

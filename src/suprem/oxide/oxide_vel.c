@@ -20,7 +20,7 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes
+/* 2020 includes*/
 #include "./src/suprem/oxide/triox.h"
 #include "./src/suprem/oxide/Oxidant.h"
 #include "./src/suprem/finel/tri6.h"
@@ -33,12 +33,12 @@
 #include "./src/suprem/dbase/new_layer.h"
 #include "./src/suprem/diffuse/solve_time.h"
 #include "oxide_vel.h"
-// end of includes
+/* end of includes*/
 
-// 2020 foward declarations
+/* 2020 foward declarations*/
 void WipeVel();
 void SetFuse();
-// end of declarations
+/* end of declarations*/
 
 double temperature; /* I'm tired of passing this guy around */
 

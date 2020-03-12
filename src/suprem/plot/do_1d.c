@@ -27,12 +27,12 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/plot.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/plot/intersect.h"
 #include "./src/suprem/dbase/kill_node.h"
 #include "do_1d.h"
-// end of 2020 includes
+/* end of 2020 includes*/
 
 #define ABS(x) (((x) > 0.0) ? (x) : (-(x)))
 
@@ -42,11 +42,11 @@ typedef struct b_str {
     int ie, j;
 } b_typ;
 
-// 2020 forward decalarations
+/* 2020 forward decalarations*/
 int d_compar(struct d_str *f1, struct d_str *f2);
 b_typ **FindItf(int mat1, int mat2);
 b_typ *AddItfEdge(int ie, int j, int mat1, int mat2, b_typ **touched);
-// end of decalarations
+/* end of decalarations*/
 
 /************************************************************************
  *									*

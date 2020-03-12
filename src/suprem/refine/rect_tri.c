@@ -25,7 +25,7 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/skel.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/refine/triheur.h"
 #include "./src/suprem/refine/sp_edge.h"
 #include "./src/suprem/refine/tridata.h"
@@ -35,12 +35,12 @@
 #include "./src/suprem/dbase/geom.h"
 #include "./src/suprem/geom/misc.h"
 #include "rect_tri.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int chk_pt(float *q, struct sreg_str *r);
 int rect_cnt(struct sreg_str *r, float *p, int ie);
-// end of declarations
+/* end of declarations*/
 
 /*-----------------DIVIDE-----------------------------------------------
  * Choose good ways to cut a region in half.

@@ -18,15 +18,15 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/shell.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/shell/macro.h"
 #include "./src/suprem/check/eval.h"
 #include "./src/suprem/check/parse.h"
 #include "smisc.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /*-----------------STRING_TO_REAL---------------------------------------
  * Hide everything from the innocent users

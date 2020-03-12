@@ -2,12 +2,12 @@
 
 #include "./src/suprem/include/global.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "tomcal.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 void tomcal(int *ia, int *reord, int *lvls) {
     int neq, i, nnb, *adjstk, *check;

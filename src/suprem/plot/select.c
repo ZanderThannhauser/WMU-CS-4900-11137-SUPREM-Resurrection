@@ -29,16 +29,16 @@
 #include "./src/suprem/include/plot.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/oxide/mater.h"
 #include "./src/suprem/check/parse.h"
 #include "./src/suprem/check/eval.h"
 #include "select.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -96,17 +96,17 @@ void sel_var(char *par, struct par_str *param) {
     /*attempt to parse the string*/
     if ((err = (char *)parse_expr(zstr, &zexp)) != NULL) {
         fprintf(stderr, "%s\n", err);
-        return; //(-1);
+        return; /*(-1);*/
     }
 
     /*evaluate the vector expression*/
     if ((err = (char *)eval_vec(zexp, z)) != NULL) {
         fprintf(stderr, "%s\n", err);
-        return; //(-1);
+        return; /*(-1);*/
     }
 
     sel_log = islogexp(zexp);
 
     free_expr(zexp);
-    return; //(0);
+    return; /*(0);*/
 }

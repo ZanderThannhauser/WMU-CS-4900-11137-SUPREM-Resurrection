@@ -21,11 +21,11 @@
 #include "../suprem/include/key.h"
 
 
-// 2020 includes:
+/* 2020 includes: */
 #include "./src/keyread/main.h"
-// end of includes
+/* end of includes */
 
-// 2020 forward declarations
+/* 2020 forward declarations */
 int yylex();
 int yywrap(void);
 int yylook();
@@ -36,9 +36,7 @@ struct bool_exp *node(
 	val_str val,
 	struct bool_exp* left,
 	struct bool_exp* right);
-// end of declarations
-
-
+/* end of declarations */
 
 #ifdef MEMDEB
 #define malloc MALLOC

@@ -29,7 +29,7 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/impurity.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/mesh/ig2_meshio.h"
 #include "./src/suprem/dbase/make_db.h"
@@ -39,14 +39,14 @@
 #include "./src/suprem/imagetool/image_write.h"
 #include "./src/suprem/mesh/save_simpl.h"
 #include "structure.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void newcat(char **a, char *b);
 int polygon_etch(char *str, int foo);
 int pif_write(char *str);
 int skel_write(char *str, int i1, float f1);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -146,7 +146,7 @@ void structure(char *par, struct par_str *param) {
     /*Are we going in or out? */
     if (infile) {
         if ((ier = ig2_read(infile, lflip, scale) < 0))
-            return; // (ier);
+            return; /* (ier);*/
 
         create_db((nn == 0));
     }
@@ -154,7 +154,7 @@ void structure(char *par, struct par_str *param) {
     /*write out the file if that is asked for*/
     if (outfile)
         if ((ier = ig2_write(outfile, lflip, scale)) < 0)
-            return; // (ier);
+            return; /* (ier);*/
 
     /*etcetc*/
     if (pifile) {
@@ -162,9 +162,9 @@ void structure(char *par, struct par_str *param) {
         backside = get_float(param, "backside.y");
         if (backside > 0.0)
             if ((ier = newbackside(backside)) < 0)
-                return; // (ier);
+                return; /* (ier);*/
         if ((ier = pi_write(pifile, show)) < 0)
-            return; // (ier);
+            return; /* (ier);*/
         if (backside > 0.0) {
             instr = "structure inf=suprem4temp.str";
             do_string(instr, "/dev/null", 0);
@@ -173,26 +173,26 @@ void structure(char *par, struct par_str *param) {
 
     if (imagefile) {
         if ((ier = image_write(imagefile, par, param)) < 0)
-            return; // (ier);
+            return; /* (ier);*/
     }
 
     if (simplfile)
         if ((ier = simpl_write(simplfile, headerfile)) < 0)
-            return; // (ier);
+            return; /* (ier);*/
 
     if (etchfile) {
         skip = get_int(param, "line");
         if ((ier = polygon_etch(etchfile, skip)) < 0)
-            return; // (ier);
+            return; /* (ier);*/
     }
 
     if (skelfile)
         if ((ier = skel_write(skelfile, lflip, scale)) < 0)
-            return; // (ier);
+            return; /* (ier);*/
 
     if (piffile)
         if ((ier = pif_write(piffile)) < 0)
-            return; // (ier);
+            return; /* (ier);*/
 
     /*was this a reflection command?*/
     if (get_bool(param, "mirror")) {
@@ -210,7 +210,7 @@ void structure(char *par, struct par_str *param) {
         }
         reflect_grid(sign, xy);
     }
-    return; // (0);
+    return; /* (0);*/
 }
 
 void newcat(char **a, char *b) {

@@ -27,7 +27,7 @@
 #include "./src/suprem/include/matrix.h" /* For the old, new areas */
 #include "./src/suprem/include/regrid.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/kill_node.h"
 #include "./src/suprem/dbase/make_db.h"
 #include "./src/suprem/dbase/locate.h"
@@ -35,16 +35,14 @@
 #include "./src/suprem/misc/panic.h"
 #include "./src/suprem/dbase/element.h"
 #include "grid_loop.h"
-// end of includes
+/* end of includes*/
 
 #define assert(x)                                                              \
     if (!(x))                                                                  \
     panic("assertion failed")
 
-double fmin(x, y) double x, y;
-{ return (x <= y) ? x : y; }
-double fmax(x, y) double x, y;
-{ return (x >= y) ? x : y; }
+double fmin(double x, double y) { return (x <= y) ? x : y; }
+double fmax(double x, double y) { return (x >= y) ? x : y; }
 
 #define PC(x)                                                                  \
     if (err = (x))                                                             \

@@ -19,9 +19,9 @@
 #include <math.h>
 #include <stdio.h>
 
-// 2020 function includes:
+/* 2020 function includes:*/
 #include "tri7.h"
-// end of 2020 includes
+/* end of 2020 includes*/
 
 /************************************************************************
  *									*

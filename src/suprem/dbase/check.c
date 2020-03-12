@@ -25,12 +25,12 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/geom/tnabor.h"
 #include "./src/suprem/misc/panic.h"
 #include "check.h"
-// end of includes
+/* end of includes*/
 
 #define report(...)                                                            \
     {                                                                          \
@@ -195,7 +195,7 @@ void mtest1(char *when) {
     /* That's as much as we can do right now... */
     if (err_cnt != 0)
         panic("after mesh self test");
-    
+
     EXIT;
     return;
 }
@@ -213,7 +213,7 @@ void mtest2(char *when) {
     for (n = 0; n < nn; n++) {
 
         verpv(n);
-        
+
         /*Material nodes should be in some triangle, gas nodes shouldn't*/
         if (mat_nd(n) == GAS) {
             if (num_tri_nd(n) != 0)

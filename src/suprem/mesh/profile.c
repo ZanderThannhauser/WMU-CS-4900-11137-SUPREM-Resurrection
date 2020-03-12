@@ -28,15 +28,15 @@
 #include "./src/suprem/include/impurity.h" /* For B, P, Sb, As */
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/diffuse/defect.h"
 #include "./src/suprem/dbase/alloc.h"
 #include "profile.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -89,7 +89,7 @@ void profile(char *par, struct par_str *param) {
     /* create the pointers for the new impurity */
     if (imp == -1) {
         fprintf(stderr, "Must specify impurity to read in!\n");
-        return; // (-1);
+        return; /* (-1);*/
     }
     if (is_specified(param, "offset"))
         offset = get_float(param, "offset");
@@ -98,7 +98,7 @@ void profile(char *par, struct par_str *param) {
 
     val = salloc(float, nn);
     if (read_data(val, infile, 2, offset) == -1)
-        return; // (-1);
+        return; /* (-1);*/
 
     if ((imp == I) || (imp == V)) {
         if (last_temp != 0.0)
@@ -128,7 +128,7 @@ void profile(char *par, struct par_str *param) {
     }
 
     free(val);
-    return; // (0);
+    return; /* (0);*/
 }
 
 /************************************************************************

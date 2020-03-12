@@ -26,7 +26,7 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 function includes
+/* 2020 function includes*/
 #include "./src/suprem/math/generate.h"
 #include "./src/suprem/math/blklu.h"
 #include "./src/suprem/misc/print_time.h"
@@ -35,12 +35,12 @@
 #include "./src/suprem/math/blklu.h"
 #include "./src/suprem/math/symb.h"
 #include "elast.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void elem_stiff(int ie);
 int get_elasconn(int ind, short *taken, int *num);
-// end of declarations
+/* end of declarations*/
 
 #define IAJA(R, C) iaja(ia, aoff, R, C)
 #define X 0

@@ -21,18 +21,18 @@
 #include <math.h>
 #include <stdio.h>
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/math/blklu.h"
 #include "./src/suprem/finel/FEassmb.h"
 #include "./src/suprem/oxide/Oxidant.h"
 #include "./src/suprem/include/impurity.h"
 #include "triox.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations:
+/* 2020 forward declarations:*/
 void TrioxBCinit();
 void obfix(double Cord[NEL][2], double cord[NEL][2]);
-// end of declarations
+/* end of declarations*/
 
 /************************************************************************
  *									*

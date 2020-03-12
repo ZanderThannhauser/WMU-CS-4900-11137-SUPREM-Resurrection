@@ -23,16 +23,16 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/diffuse/Interst.h"
 #include "./src/suprem/diffuse/Vacancy.h"
 #include "./src/suprem/dbase/alloc.h"
 #include "defect.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 static int vadd = 0, iadd = 0, tadd = 0;
 

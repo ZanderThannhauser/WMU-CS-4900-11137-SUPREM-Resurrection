@@ -28,7 +28,7 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/plot.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/dbase/dispose.h"
@@ -38,7 +38,7 @@
 #include "./src/suprem/geom/limits.h"
 #include "./src/suprem/plot/plot_1d.h"
 #include "print_1d.h"
-// end of includes
+/* end of includes*/
 
 /************************************************************************
  *									*

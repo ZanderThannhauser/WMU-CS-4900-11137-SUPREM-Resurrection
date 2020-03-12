@@ -24,14 +24,14 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "matedge.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward decalarations
+/* 2020 forward decalarations*/
 void get_edge(float mval[], int mat[], int *mnum, int dir, float value);
-// end of decalarations
+/* end of decalarations*/
 
 /************************************************************************
  *									*

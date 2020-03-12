@@ -11,15 +11,20 @@ CPPFLAGS = -I .
 CPPFLAGS += -D DEVICE
 CPPFLAGS += -D NO_F77
 
+CPPFLAGS += -D _XOPEN_SOURCE=500 # this brings in the needed stdlib functions
+
 # Define which platform we're using. I made up a new one!
 CPPFLAGS += -D UBUNTU
+
+CFLAGS += -std=c90
+#CFLAGS += -std=c99
 
 CFLAGS += -Wall
 CFLAGS += -Werror
 CFLAGS += -Wfatal-errors
 CFLAGS += -Wno-maybe-uninitialized
 CFLAGS += -Wno-array-bounds
-CFLAGS += -O3
+#CFLAGS += -O2
 
 DFLAGS += -g
 DFLAGS += -D DEBUGGING_2020
@@ -27,13 +32,13 @@ DFLAGS += -D DEBUGGING_2020
 LDLIBS += -lm
 
 keyread.mk:
-	find ./src/keyread -name '*.c' | sort | sed 's/^/KR_SRCS += /' > keyread.mk
+	find ./src/keyread -name '*.c' | sort | sed 's/^/KR_SRCS += /' > $@
 
 scraper.mk:
-	find ./src/scraper -name '*.c' | sort | sed 's/^/SCPR_SRCS += /' > scraper.mk
+	find ./src/scraper -name '*.c' | sort | sed 's/^/SCPR_SRCS += /' > $@
 
 suprem.mk:
-	find ./src/suprem -name '*.c' | sort | sed 's/^/SUP_SRCS += /' > suprem.mk
+	find ./src/suprem -name '*.c' | sort | sed 's/^/SUP_SRCS += /' > $@
 
 include keyread.mk scraper.mk suprem.mk
 
@@ -49,34 +54,6 @@ SUP_OBJS = $(SUP_SRCS:.c=.o)
 SUP_DOBJS = $(SUP_SRCS:.c=.d.o)
 SUP_DEPENDS = $(SUP_SRCS:.c=.mk)
 
-# --gen-suppressions=yes
-
-#ARGS = ./examples/exam1/boron.in # seems to work
-#ARGS = ./examples/exam2/oed.in # seems to work
-ARGS = ./examples/exam3/oed.in # seems to work?
-#ARGS = ./examples/exam4/oed.in # aborts
-#ARGS = ./examples/exam5/whole.s4 # aborts
-#ARGS = ./examples/exam6/oxcalib.s4 # aborts
-#ARGS = ./examples/exam7/fullrox.s4 # aborts
-#ARGS = ./examples/exam8/nit-stress.s4 # aborts
-#ARGS = ./examples/exam9/sdep.s4 # aborts
-#ARGS = ./examples/exam10/example10.in # seems to work
-#ARGS = ./examples/exam11/example11.in # aborts
-#ARGS = ./examples/exam12/example12.in # seems to work
-#ARGS = ./examples/exam13/example13.in # seems to work
-#ARGS = ./examples/exam14/example14.in # seems to work
-#ARGS = ./examples/exam15/example15.in # seems to work
-#ARGS = ./examples/exam16/example16.in # seems to work
-#ARGS = ./examples/exam17/example17.in # seems to work
-#ARGS = ./examples/gaas/example1 # seems to work
-#ARGS = ./examples/gaas/example2 # aborts
-#ARGS = ./examples/gaas/example3 # seems to work
-#ARGS = ./examples/gaas/example4 # seems to work
-#ARGS = ./examples/gaas/example5 # seems to work
-#ARGS = ./examples/gaas/example6 # seems to work
-#ARGS = ./examples/gaas/example7 # seems to work
-#ARGS = ./examples/gaas/example8 # seems to work
-
 run: bin/suprem data/suprem.uk
 	./bin/suprem $(ARGS)
 
@@ -84,7 +61,44 @@ run.d: bin/suprem.d data/suprem.uk
 	./bin/suprem.d $(ARGS)
 
 valrun: bin/suprem.d data/suprem.uk
+	valgrind ./bin/suprem.d $(ARGS)
+
+valrun-stop: bin/suprem.d data/suprem.uk
 	valgrind --gen-suppressions=yes ./bin/suprem.d $(ARGS)
+
+TESTCASES += ./examples/exam1/boron.in
+TESTCASES += ./examples/exam2/oed.in
+TESTCASES += ./examples/exam3/oed.in
+#TESTCASES += ./examples/exam4/oed.in # unreliable
+#TESTCASES += ./examples/exam5/whole.s4 # unreliable
+TESTCASES += ./examples/exam6/oxcalib.s4
+#TESTCASES += ./examples/exam7/fullrox.s4 # unreliable
+TESTCASES += ./examples/exam8/nit-stress.s4
+#TESTCASES += ./examples/exam9/sdep.s4 # unreliable
+TESTCASES += ./examples/exam10/example10.in
+TESTCASES += ./examples/exam11/example11.in
+TESTCASES += ./examples/exam12/example12.in
+TESTCASES += ./examples/exam13/example13.in
+TESTCASES += ./examples/exam14/example14.in
+TESTCASES += ./examples/exam15/example15.in
+TESTCASES += ./examples/exam16/example16.in
+TESTCASES += ./examples/exam17/example17.in
+TESTCASES += ./examples/gaas/example1
+TESTCASES += ./examples/gaas/example2
+TESTCASES += ./examples/gaas/example3
+TESTCASES += ./examples/gaas/example4
+TESTCASES += ./examples/gaas/example5
+TESTCASES += ./examples/gaas/example6
+TESTCASES += ./examples/gaas/example7
+TESTCASES += ./examples/gaas/example8
+
+TESTCASE_SUCCESSES = $(TESTCASES:=.success)
+
+%.success: % ./bin/suprem data/suprem.uk
+	./bin/suprem $* < /dev/null > $*.actual_output
+	cmp $*.actual_output $*.correct_output && touch $@
+
+test: $(TESTCASE_SUCCESSES)
 
 #all: bin/keyread bin/keyread.d bin/scraper bin/scraper.d bin/suprem bin/suprem.d
 
@@ -123,12 +137,19 @@ data/suprem.uk: bin/keyread
 %.d.o: %.c  %.mk
 	$(CC) -c $(DFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || (gedit $< && false)
 
-.PHONY: format clean
+.PHONY: open-all format clean-successes clean
+
+open-all:
+	find -name '*.c' -exec 'gedit' '{}' \;
+	find -name '*.h' -exec 'gedit' '{}' \;
 
 format:
 	find -name '*.c' -exec 'clang-format' '-i' '-verbose' '{}' \;
 	find -name '*.h' -exec 'clang-format' '-i' '-verbose' '{}' \;
 
+clean-successes:
+	find -name '*.success' -exec 'rm' '-v' '{}' \;
+	
 clean:
 	find -name '*.o' -exec 'rm' '-v' '{}' \;
 	find -name '*.mk' -exec 'rm' '-v' '{}' \;

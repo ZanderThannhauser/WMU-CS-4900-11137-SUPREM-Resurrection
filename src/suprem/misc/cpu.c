@@ -16,12 +16,13 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/shell.h"
 
-// 2020 includes:
+/* 2020 includes:*/
+#include "./src/debug.h"
 #include "cpu.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /************************************************************************
  *									*
@@ -35,6 +36,7 @@ void cpu(char *par, struct par_str *param) {
     char *f;
     int on;
     long i;
+    ENTER;
 
     f = get_string(param, "cpufile");
     on = get_bool(param, "log");
@@ -47,7 +49,8 @@ void cpu(char *par, struct par_str *param) {
         else {
             if ((cpufile = fopen(f, "a")) == NULL) {
                 fprintf(stderr, "error on open of cpu file %s\n", f);
-                return; // (-1);
+                EXIT;
+                return; /* (-1);*/
             }
 #ifdef BSD
             setlinebuf(cpufile);
@@ -66,5 +69,6 @@ void cpu(char *par, struct par_str *param) {
                 fclose(cpufile);
         cpufile = NULL;
     }
-    return; // (0);
+    EXIT;
+    return; /* (0);*/
 }

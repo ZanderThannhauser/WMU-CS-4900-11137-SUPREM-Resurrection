@@ -19,16 +19,16 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/oxide/mater.h"
 #include "./src/suprem/misc/panic.h"
 #include "mater.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations:
+/* 2020 forward declarations:*/
 void set_crystal();
-// end of declarations
+/* end of declarations*/
 
 #define chosen(A) ((is_specified(param, (A))) && (get_bool(param, (A))))
 #define fetch(N, V, S, A)                                                      \
@@ -52,7 +52,7 @@ void c_mater(char *par, struct par_str *param) {
     mat = ChosenMater(par, param, 0);
     if (mat == -1) {
         fprintf(stderr, "A material must be selected on the material card\n");
-        return; // (-1);
+        return; /* (-1);*/
     }
     if (mat == SiO2) {
         if (is_specified(param, "wet") && get_bool(param, "wet"))
@@ -63,7 +63,7 @@ void c_mater(char *par, struct par_str *param) {
              (is_specified(param, "visc.E"))) &&
             (wd == -1)) {
             fprintf(stderr, "Wet/dry must be specified with oxide viscosity\n");
-            return; // (-1);
+            return; /* (-1);*/
         }
     }
 
@@ -98,7 +98,7 @@ void c_mater(char *par, struct par_str *param) {
     if ((is_specified(param, "act.a") || is_specified(param, "act.b")) &&
         type < 0) {
         fprintf(stderr, "n.type or p.type must be specified with act.a\n");
-        return; // (-1);
+        return; /* (-1);*/
     }
     if (is_specified(param, "act.a")) {
         char *s = get_string(param, "act.a");
@@ -114,7 +114,7 @@ void c_mater(char *par, struct par_str *param) {
         act_b[mat][type] = (char *)malloc(strlen(s) + 1);
         (void)strcpy(act_b[mat][type], s);
     }
-    return; // (0);
+    return; /* (0);*/
 }
 
 /*-----------------ChosenMater------------------------------------------

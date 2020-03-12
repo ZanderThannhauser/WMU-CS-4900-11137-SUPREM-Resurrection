@@ -21,17 +21,17 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 function includes:
+/* 2020 function includes:*/
 #include "./src/suprem/misc/get.h"
 #include "./src/suprem/oxide/mater.h"
 #include "coeffox.h"
-// endof 2020 includes
+/* endof 2020 includes*/
 
-// 2020 forward declarations:
+/* 2020 forward declarations:*/
 void parse_array(char *input, float **Pfla, int *nfla);
 void get_array(struct par_str *param, char *name, float **fla, int *nfla);
 int mono_array(float *fla, int nfla, char *name);
-// endof 2020 declarations
+/* endof 2020 declarations*/
 
 /************************************************************************
  *									*
@@ -298,7 +298,7 @@ void coeffox(char *par, struct par_str *param) {
     fetchd("trn.E", TrnE(spes, mat2, mat) = TrnE(spes, mat, mat2), 1, 0, spes,
            "wet/dry", mat2 * mat, "materials 1 and 2");
 
-    return; // (0);
+    return; /* (0);*/
 }
 
 /*-----------------get_array--------------------------------------------

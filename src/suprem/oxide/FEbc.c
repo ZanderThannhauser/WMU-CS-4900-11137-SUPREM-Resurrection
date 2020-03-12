@@ -20,23 +20,23 @@
 #include "./src/suprem/include/geom.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 function includes
+/* 2020 function includes*/
 #include "./src/suprem/oxide/FEconvert.h"
 #include "./src/suprem/shell/smisc.h"
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/dbase/new_layer.h"
 #include "./src/suprem/oxide/Oxidant.h"
 #include "FEbc.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void clear_bc();
 void gas_fixities();
 void sil_face();
 void refl_disp();
 void SilOxLoad();
 void face_ache(FEelt_typ *ae, int j);
-// end of forward declarations
+/* end of forward declarations*/
 
 #define hypot(x, y) sqrt((x) * (x) + (y) * (y))
 

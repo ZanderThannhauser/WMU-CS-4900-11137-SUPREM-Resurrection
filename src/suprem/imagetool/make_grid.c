@@ -9,16 +9,16 @@
 
 #include "./src/suprem/include/bound.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "make_grid.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 float Fmax(float x, float y);
 float Fmin(float x, float y);
 void shiftwindow(float *array, int size, float min, float max, int min_index,
                  int max_index);
-// end of declarations
+/* end of declarations*/
 
 int make_grid(int xsize, int ysize, float **xd, float **yd, float win_xmin,
               float win_xmax, float win_ymin, float win_ymax,

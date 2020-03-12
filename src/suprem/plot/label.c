@@ -25,10 +25,10 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/plot.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/misc/get.h"
 #include "label.h"
-// end of 2020 includes
+/* end of 2020 includes*/
 
 /************************************************************************
  *									*

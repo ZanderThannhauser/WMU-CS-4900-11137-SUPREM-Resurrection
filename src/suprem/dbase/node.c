@@ -27,12 +27,12 @@
 #include "./src/suprem/include/impurity.h" /* So we can set n_imp to 0 */
 #include "./src/suprem/include/diffuse.h"  /* for the time of creation */
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/node.h"
 #include "./src/suprem/dbase/list.h"
 #include "./src/suprem/misc/panic.h"
 #include "node.h"
-// end of includes
+/* end of includes*/
 
 static int maxnd = 0;
 

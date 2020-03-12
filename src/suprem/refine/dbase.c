@@ -25,15 +25,15 @@
 #include "./src/suprem/include/regrid.h"
 #include "./src/suprem/include/skel.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/suprem/dbase/list.h"
 #include "./src/suprem/misc/panic.h"
 #include "./src/suprem/dbase/element.h"
 #include "dbase.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 /*-----------------CR_REG-----------------------------------------------
  *Create a new skeleton region, return the index

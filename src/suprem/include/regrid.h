@@ -23,10 +23,10 @@ struct polyel {
     struct polyel *prev, *next;
 };
 
-// 2020: I'm guessing that we don't actually need these:
-// they are causing a name collision with functions with the same name,
-// the functions also do the same thing (almost).
-// hopefully the 'almost' part doesn't matter.
+/* 2020: I'm guessing that we don't actually need these:*/
+/* they are causing a name collision with functions with the same name,*/
+/* the functions also do the same thing (almost).*/
+/* hopefully the 'almost' part doesn't matter.*/
 
 #if !2020
 

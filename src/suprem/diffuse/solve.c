@@ -31,17 +31,17 @@
 #include "./src/suprem/include/material.h"
 #include "./src/suprem/include/matrix.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/diffuse/setup.h"
 #include "./src/suprem/math/solblk.h"
 #include "solve.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int update_vars(double *nm, int nsol, int *sol, int nv, double **vars,
                 double **update);
-// end of declarations
+/* end of declarations*/
 
 /* HZ is 100 per Mike Eldredge on the Convex,
    which should be included in the file sys/param, above*/

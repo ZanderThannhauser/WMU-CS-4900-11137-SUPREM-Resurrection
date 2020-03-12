@@ -18,15 +18,15 @@
 #include "./src/suprem/include/impurity.h"
 #include "./src/suprem/include/material.h"
 
-// 2020 function includes:
+/* 2020 function includes:*/
 #include "./src/suprem/dbase/locate.h"
 #include "./src/suprem/oxide/oxide_vel.h"
 #include "vert.h"
-// end of 2020 includes
+/* end of 2020 includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 int dofxcmp(float *a, float *b);
-// end of declarations
+/* end of declarations*/
 
 /*-----------------VERT_GROWTH------------------------------------------
  * Try the assumption of vertical growth.

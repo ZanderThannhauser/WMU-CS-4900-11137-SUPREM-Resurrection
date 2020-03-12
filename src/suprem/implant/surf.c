@@ -29,17 +29,17 @@
 #include "./src/suprem/include/refine.h"
 #include "./src/suprem/include/sysdep.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/refine/surface.h"
 #include "./src/suprem/plot/matedge.h"
 #include "./src/suprem/geom/misc.h"
 #include "surf.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
+/* 2020 forward declarations*/
 void get_mat(struct surf_info *cur, int angle);
-// end of declarations
+/* end of declarations*/
 
 double tr[MAXDIM][MAXDIM];
 
@@ -238,9 +238,9 @@ void make_surf(struct surf_info **v, double ang, double lat) {
         verpv(cur);
         HERE;
         verpv(cur->top[0]);
+        cur = cur->next;
     }
 
-    CHECK;
 #endif
 
     EXIT;

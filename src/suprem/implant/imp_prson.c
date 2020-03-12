@@ -48,12 +48,12 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/implant.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "imp_prson.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 double prson(double x, struct imp_info *pc) {
 

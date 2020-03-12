@@ -26,14 +26,14 @@
 #include "./src/suprem/include/global.h"
 #include "./src/suprem/include/implant.h"
 
-// 2020 includes:
+/* 2020 includes:*/
 #include "./src/debug.h"
 #include "./src/suprem/implant/imp_vert.h"
 #include "imp_qeqv.h"
-// end of includes
+/* end of includes*/
 
-// 2020 forward declarations
-// end of declarations
+/* 2020 forward declarations*/
+/* end of declarations*/
 
 double qeqv(double xst, double xen, double qtot, double dx,
             struct imp_info *data) {
