@@ -6,8 +6,6 @@ CC = gcc
 
 CPPFLAGS = -I .
 
-# I don't understand the need for these, I just know the original makefile had
-# them:
 CPPFLAGS += -D DEVICE
 CPPFLAGS += -D NO_F77
 
@@ -54,6 +52,10 @@ SUP_OBJS = $(SUP_SRCS:.c=.o)
 SUP_DOBJS = $(SUP_SRCS:.c=.d.o)
 SUP_DEPENDS = $(SUP_SRCS:.c=.mk)
 
+#ARGS = ./examples/exam1/boron.in
+ARGS = ./examples/exam3/oed.in
+#ARGS = ./examples/exam4/oed.in
+
 run: bin/suprem data/suprem.uk
 	./bin/suprem $(ARGS)
 
@@ -92,7 +94,7 @@ TESTCASES += ./examples/gaas/example6
 TESTCASES += ./examples/gaas/example7
 TESTCASES += ./examples/gaas/example8
 
-TESTCASE_SUCCESSES = $(TESTCASES:=.success)
+TESTCASE_SUCCESSES = $(addsuffix .success,$(TESTCASES))
 
 %.success: % ./bin/suprem data/suprem.uk
 	./bin/suprem $* < /dev/null > $*.actual_output
