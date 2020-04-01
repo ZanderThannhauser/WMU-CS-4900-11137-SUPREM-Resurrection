@@ -68,23 +68,23 @@ valrun: bin/suprem.d data/suprem.uk
 valrun-stop: bin/suprem.d data/suprem.uk
 	valgrind --gen-suppressions=yes ./bin/suprem.d $(ARGS)
 
-TESTCASES += ./examples/exam1/boron.in
-TESTCASES += ./examples/exam2/oed.in
-TESTCASES += ./examples/exam3/oed.in
-#TESTCASES += ./examples/exam4/oed.in # unreliable
-#TESTCASES += ./examples/exam5/whole.s4 # unreliable
-TESTCASES += ./examples/exam6/oxcalib.s4
-#TESTCASES += ./examples/exam7/fullrox.s4 # unreliable
-TESTCASES += ./examples/exam8/nit-stress.s4
-#TESTCASES += ./examples/exam9/sdep.s4 # unreliable
-TESTCASES += ./examples/exam10/example10.in
-TESTCASES += ./examples/exam11/example11.in
-TESTCASES += ./examples/exam12/example12.in
-TESTCASES += ./examples/exam13/example13.in
-TESTCASES += ./examples/exam14/example14.in
-TESTCASES += ./examples/exam15/example15.in
-TESTCASES += ./examples/exam16/example16.in
-TESTCASES += ./examples/exam17/example17.in
+TESTCASES += ./examples/exam1/boron
+TESTCASES += ./examples/exam2/oed
+TESTCASES += ./examples/exam3/oed
+#TESTCASES += ./examples/exam4/oed # unreliable
+#TESTCASES += ./examples/exam5/whole # unreliable
+TESTCASES += ./examples/exam6/oxcalib
+#TESTCASES += ./examples/exam7/fullrox # unreliable
+TESTCASES += ./examples/exam8/nit-stress
+#TESTCASES += ./examples/exam9/sdep # unreliable
+TESTCASES += ./examples/exam10/example10
+TESTCASES += ./examples/exam11/example11
+TESTCASES += ./examples/exam12/example12
+TESTCASES += ./examples/exam13/example13
+TESTCASES += ./examples/exam14/example14
+TESTCASES += ./examples/exam15/example15
+TESTCASES += ./examples/exam16/example16
+TESTCASES += ./examples/exam17/example17
 TESTCASES += ./examples/gaas/example1
 TESTCASES += ./examples/gaas/example2
 TESTCASES += ./examples/gaas/example3
@@ -96,9 +96,16 @@ TESTCASES += ./examples/gaas/example8
 
 TESTCASE_SUCCESSES = $(addsuffix .success,$(TESTCASES))
 
-%.success: % ./bin/suprem data/suprem.uk
-	./bin/suprem $* < /dev/null > $*.actual_output
-	cmp $*.actual_output $*.correct_output && touch $@
+%.success: ./bin/suprem data/suprem.uk %.in %.stdout.correct
+	./bin/suprem $*.in < /dev/null > $*.stdout.actual
+	cmp $*.stdout.actual $*.stdout.correct
+	touch $@
+
+%.success: ./bin/suprem data/suprem.uk %.in %.stdout.correct %.str.correct
+	./bin/suprem $*.in < /dev/null > $*.stdout.actual
+	cmp $*.stdout.actual $*.stdout.correct
+	cmp $*.str.actual $*.str.correct
+	touch $@
 
 test: $(TESTCASE_SUCCESSES)
 

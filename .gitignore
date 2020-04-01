@@ -8,5 +8,5 @@ bin/
 *.mk
 *.str
 
-*.actual_output
+*.actual
 *.success

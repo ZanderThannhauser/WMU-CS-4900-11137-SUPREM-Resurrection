@@ -71,5 +71,5 @@ struct outf=imp4.str
 #do the final anneal
 diffuse time=20 temp=950
 
-struct outf=/tmp/ldd.str
+struct outf=./examples/exam5/whole.str.actual
 

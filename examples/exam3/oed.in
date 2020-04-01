@@ -43,5 +43,5 @@ method init=1.0e-3 two.d
 
 
 #save the data
-structure out=/tmp/oed-exam3.str
+structure out=./examples/exam3/oed.str.actual
 
