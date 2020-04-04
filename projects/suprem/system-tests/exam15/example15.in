@@ -11,7 +11,7 @@ boundary exposed xlo=top  xhi=top
 boundary backside xlo=bottom xhi=bottom
 
 init carbon conc=1e15
-profile infile=be1 beryllium
+profile infile=./projects/suprem/system-tests/exam15/be1 beryllium
 implant beryllium dose=1e1 energy=100 pearson
 deposit nitride thick=.3
 

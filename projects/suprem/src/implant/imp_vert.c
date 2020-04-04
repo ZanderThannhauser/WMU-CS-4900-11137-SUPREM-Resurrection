@@ -48,22 +48,12 @@ double imp_vert(double depth, struct imp_info *dat)
 
 	if (imp_model == PEARS)
 	{
-
-		HERE;
-		verpv(dat->maxz);
-		HERE;
-		verpv(depth);
-		HERE;
-
 		if (depth < dat->maxz)
 		{
-			HERE;
 			val = prson(depth - dat->vert[PRS_RP], dat);
-			HERE;
 		}
 		else
 		{
-			HERE;
 			val = 0.0;
 		}
 	}

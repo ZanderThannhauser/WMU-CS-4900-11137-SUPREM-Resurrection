@@ -35,5 +35,5 @@ method two.d
 diffuse time=30 temp=1100 dry
 
 #save the data
-structure out=./examples/exam4/oed.str.actual
+structure out=./projects/suprem/system-tests/exam4/oed.str.actual
 

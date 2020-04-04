@@ -12,7 +12,7 @@ boundary backside xlo=bottom xhi=bottom
 
 init carbon conc=1e15
 implant beryllium dose=1e14 energy=100 pearson
-profile infile=file1 inter
+profile infile=./projects/suprem/system-tests/exam16/file1 inter
 deposit nitride thick=.3
 
 interstitial gaas D.0=5e-14     D.E= 0.

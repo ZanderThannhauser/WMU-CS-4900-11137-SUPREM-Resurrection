@@ -44,7 +44,7 @@ etch poly right p1.x=0.55 p1.y=-0.020 p2.x=0.45 p2.y=-0.55
 #anneal this step
 diffuse time=30.0 temp=950
 
-struct outf=./examples/exam5/poly.str.actual
+struct outf=./projects/suprem/system-tests/exam5/poly.str.actual
 
 #do the phosphorus implant
 implant phos dose=1.0e13 energy=50.0
@@ -55,7 +55,7 @@ deposit oxide thick=0.400 spac=0.05
 #etch the spacer back
 etch dry oxide thick=0.420 
 
-struct outf=./examples/exam5/imp2.str.actual
+struct outf=./projects/suprem/system-tests/exam5/imp2.str.actual
 #after etch anneal
 method vert fermi grid.ox=0.0
 diffuse time=30 temp=950 dry
@@ -66,10 +66,10 @@ implant ars dose=5.0e15 energy=80.0
 #deposit a cap oxide
 deposit oxide thick=0.15 space=0.03
 
-struct outf=./examples/exam5/imp4.str.actual
+struct outf=./projects/suprem/system-tests/exam5/imp4.str.actual
 
 #do the final anneal
 diffuse time=20 temp=950
 
-struct outf=./examples/exam5/whole.str.actual
+struct outf=./projects/suprem/system-tests/exam5/whole.str.actual
 

@@ -5,9 +5,8 @@ mode one.dim
 
 #the vertical definition
 line x loc = 0     spacing = 0.02 tag = top
-line x loc = 1.50  spacing = 0.05
-line x loc = 5.0   spacing = 0.5
-line x loc = 400.0                tag=bottom
+line x loc = 0.50  spacing = 0.02
+line x loc = 2.0   spacing = 0.25 tag=bottom
 
 #the silicon wafer
 region silicon xlo = top xhi = bottom
@@ -29,13 +28,12 @@ select z=log10(boron)
 plot.1d x.ma=2.0 y.mi=14.0 y.max=20.0
 
 #the diffusion card
-method init=1.0e-3 two.d
-diffuse time=30 temp=1100 dry
+diffuse time=30 temp=1100 
 
 #save the data
-structure out=./examples/exam2/oed.str.actual
+structure out=./projects/suprem/system-tests/exam1/boron.str.actual
 
 #plot the final profile
 select z=log10(bor)
-plot.1d cle=f axi=f
+plot.1d x.v=0.1 cle=f axi=f
 

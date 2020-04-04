@@ -48,7 +48,7 @@ Solving       963.93 +       265.71 =      1229.64,  129.546%, np 43
 Solving      1229.64 +      376.381 =      1606.02,  141.651%, np 43
 Solving      1606.02 +      193.979 =         1800,  51.5381%, np 43
 #save the data
-structure out=./examples/exam1/boron.str.actual
+structure out=./projects/suprem/system-tests/exam1/boron.str.actual
 #plot the final profile
 select z=log10(bor)
 plot.1d x.v=0.1 cle=f axi=f
