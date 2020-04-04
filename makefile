@@ -107,8 +107,8 @@ valrun.d: bin/suprem.d data/suprem.uk
 valrun-stop.d: bin/suprem.d data/suprem.uk
 	valgrind --gen-suppressions=yes ./bin/suprem.d $(ARGS)
 
-
 bin/%:
+	mkdir -p bin
 	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
 bin/keyread: $(KYRD_OBJS) 
