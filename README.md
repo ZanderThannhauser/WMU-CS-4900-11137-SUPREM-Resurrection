@@ -1,6 +1,12 @@
 # README
 
-![](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Make%20and%20Test/badge.svg)
+![](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Keyread/badge.svg)
+
+![](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Preprocessor/badge.svg)
+
+![](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Scraper/badge.svg)
+
+![](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Suprem/badge.svg)
 
 SUPREM is an advanced two dimensional process simulator for silicon and
 gallium arsenide, originally developed at Stanford University.

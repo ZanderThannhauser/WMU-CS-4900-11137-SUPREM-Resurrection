@@ -4,6 +4,7 @@ name: Scraper
 on: [push]
 
 jobs:
+  scraper:
     name: Scraper
     runs-on: ubuntu-latest
     steps:
