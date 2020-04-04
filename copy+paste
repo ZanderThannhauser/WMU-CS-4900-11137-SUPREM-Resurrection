@@ -7,11 +7,11 @@
 /*2020 forward declarations*/
 /*end of declarations*/
 
-#include "./src/debug.h"
+#include "debug.h"
 
-#include "./src/suprem/misc/get.h"
+#include "suprem/misc/get.h"
 
-#include "./src/suprem/misc/panic.h"
+#include "suprem/misc/panic.h"
 
 src/
 

@@ -1,0 +1,7 @@
+
+
+enum
+{
+	e_success,
+	
+};
