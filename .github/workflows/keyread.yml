@@ -1,0 +1,18 @@
+
+name: Keyread
+
+on: [push]
+
+jobs:
+  keyread:
+    name: Keyread
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: Install yacc and lex
+        run: sudo apt-get install -y bison flex
+      - name: make bin/keyread
+        run: make bin/keyread
+      - name: make systest-keyread
+        run: make systest-keyread

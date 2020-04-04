@@ -1,0 +1,16 @@
+
+name: Preprocessor
+
+on: [push]
+
+jobs:
+  preprocessor:
+    name: Preprocessor
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: make bin/preprocessor
+        run: make bin/preprocessor
+      - name: make systest-preprocessor
+        run: make systest-preprocessor

@@ -1,0 +1,18 @@
+
+name: Suprem
+
+on: [push]
+
+jobs:
+  suprem:
+    name: Suprem
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: Install yacc
+        run: sudo apt-get install -y bison
+      - name: make bin/suprem
+        run: make bin/suprem
+      - name: make systest-suprem
+        run: make systest-suprem

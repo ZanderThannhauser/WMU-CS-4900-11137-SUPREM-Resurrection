@@ -1,0 +1,15 @@
+
+name: Scraper
+
+on: [push]
+
+jobs:
+    name: Scraper
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: make bin/scraper
+        run: make bin/scraper
+      - name: make systest-scraper
+        run: make systest-scraper
