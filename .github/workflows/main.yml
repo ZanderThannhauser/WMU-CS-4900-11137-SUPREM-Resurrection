@@ -11,7 +11,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
       - name: Install yacc and lex
-        run: sudo apt-get install bison flex
+        run: sudo apt-get install -y bison flex
       - name: make bin/keyread
         run: make bin/keyread
       - name: make systest-keyread
@@ -43,7 +43,7 @@ jobs:
       - name: checkout repo
         uses: actions/checkout@v2
       - name: Install yacc
-        run: sudo apt-get install bison
+        run: sudo apt-get install -y bison
       - name: make bin/suprem
         run: make bin/suprem
       - name: make systest-suprem

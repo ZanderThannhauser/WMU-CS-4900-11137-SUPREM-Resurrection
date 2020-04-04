@@ -1,5 +1,7 @@
 # README
 
+![](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Make%20and%20Test/badge.svg)
+
 SUPREM is an advanced two dimensional process simulator for silicon and
 gallium arsenide, originally developed at Stanford University.
 
@@ -9,27 +11,18 @@ and cannot be built on GNU/Linux.
 This repository contains patched source files to allow compilation, without
 X11 support, on recent GNU/Linux operating systems.
 
-Actually it builds on:
-
-* Fedora 20 x86-64
-* Fedora 20 x86
-
-And it runs on:
-
-* Fedora 20 x86-64
-* Fedora 20 x86
-* Ubuntu 13.10 x86-64
+it builds on: Ubuntu 18.04 x86-64
 
 If you find other supported operating systems, please, fill an issue with
 instructions.
 
 ## Instructions
 
-### Fedora
+### Ubuntu
 
-    sudo yum install gcc compat-gcc-34-g77
-    make depend install
-    ./suprem4gs
+	sudo apt install bison flex
+	make
+	make test
 
 ## Original README
 
