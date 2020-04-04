@@ -4,7 +4,7 @@ name: Make and Test
 on: [push]
 
 jobs:
-  a:
+  keyread:
     name: Keyread
     runs-on: ubuntu-latest
     steps:
@@ -14,7 +14,7 @@ jobs:
         run: make bin/keyread
       - name: make systest-keyread
         run: make systest-keyread
-  b:
+  preprocessor:
     name: Preprocessor
     runs-on: ubuntu-latest
     steps:
@@ -24,3 +24,23 @@ jobs:
         run: make bin/preprocessor
       - name: make systest-preprocessor
         run: make systest-preprocessor
+  scraper:
+    name: Scraper
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: make bin/scraper
+        run: make bin/scraper
+      - name: make systest-scraper
+        run: make systest-scraper
+  suprem:
+    name: Suprem
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout repo
+        uses: actions/checkout@v2
+      - name: make bin/suprem
+        run: make bin/suprem
+      - name: make systest-suprem
+        run: make systest-suprem
