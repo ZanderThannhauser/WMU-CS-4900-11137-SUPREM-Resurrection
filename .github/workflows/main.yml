@@ -10,7 +10,19 @@ jobs:
     steps:
       - name: checkout repo
         uses: actions/checkout@v2
-      - name: make
-        run: make
-      - name: make test
-        run: make test
+      - name: make bin/keyread
+        run: make bin/keyread
+      - name: make bin/preprocessor
+        run: make bin/preprocessor
+      - name: make bin/scraper
+        run: make bin/scraper
+      - name: make bin/suprem
+        run: make bin/suprem
+      - name: make bin/systest-keyread
+        run: make bin/systest-keyread
+      - name: make bin/systest-preprocessor
+        run: make bin/systest-preprocessor
+      - name: make bin/systest-scraper
+        run: make bin/systest-scraper
+      - name: make bin/systest-suprem
+        run: make bin/systest-suprem
