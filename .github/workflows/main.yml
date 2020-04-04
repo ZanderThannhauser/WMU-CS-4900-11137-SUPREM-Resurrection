@@ -4,7 +4,7 @@ name: Make and Test
 on: [push]
 
 jobs:
-  build:
+  a:
     name: Keyread
     runs-on: ubuntu-latest
     steps:
@@ -14,7 +14,7 @@ jobs:
         run: make bin/keyread
       - name: make systest-keyread
         run: make systest-keyread
-  build:
+  b:
     name: Preprocessor
     runs-on: ubuntu-latest
     steps:
