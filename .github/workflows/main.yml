@@ -1,12 +1,14 @@
 
-name: Greet Everyone
+name: Make and Test
 
 on: [push]
 
 jobs:
   build:
-    name: Greeting
+    name: Make and Test
     runs-on: ubuntu-latest
     steps:
-      - name: Hello world
-        run: echo 'Hello, World!'
+      - name: make
+        run: make
+      - name: make test
+        run: make test
