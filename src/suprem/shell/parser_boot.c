@@ -39,36 +39,36 @@
  *	Orignal: CSR Thu Jan 15 17:07:46 PST 1987			*
  ************************************************************************/
 void parser_boot(char *Pkeyfile, char *Pprompt) {
-    int i;
+	int i;
 
-    /*set up the input buffer*/
-    buflen = 160;
-    buffer = scalloc(char, buflen);
-    bufptr = 0;
-    echo_buflen = 160;
-    echo_buffer = scalloc(char, echo_buflen);
-    echo_bufptr = 0;
-    supbln = 160;
-    supbuf = scalloc(char, echo_buflen);
-    supbpt = 0;
+	/*set up the input buffer*/
+	buflen = 160;
+	buffer = scalloc(char, buflen);
+	bufptr = 0;
+	echo_buflen = 160;
+	echo_buffer = scalloc(char, echo_buflen);
+	echo_bufptr = 0;
+	supbln = 160;
+	supbuf = scalloc(char, echo_buflen);
+	supbpt = 0;
 
-    /*initialize shell variables*/
-    interactive = FALSE;
-    noexecute = FALSE;
-    depth = -1;
+	/*initialize shell variables*/
+	interactive = FALSE;
+	noexecute = FALSE;
+	depth = -1;
 
-    /*read the unformatted key file*/
-    if (read_ukfile(Pkeyfile) == -1) {
-        fprintf(stderr, "unable to read or open the unformatted key file %s\n",
-                Pkeyfile);
-        exit(-1);
-    }
+	/*read the unformatted key file*/
+	if (read_ukfile(Pkeyfile) == -1) {
+		fprintf(stderr, "unable to read or open the unformatted key file %s\n",
+				Pkeyfile);
+		exit(-1);
+	}
 
-    /*set up the prompt*/
-    prompt = salloc(char, strlen(Pprompt) + 1);
-    strcpy(prompt, Pprompt);
+	/*set up the prompt*/
+	prompt = salloc(char, strlen(Pprompt) + 1);
+	strcpy(prompt, Pprompt);
 
-    in_file = stdin;
-    for (i = 0; i < 10; i++)
-        store[i] = NULL;
+	in_file = stdin;
+	for (i = 0; i < 10; i++)
+		store[i] = NULL;
 }

@@ -53,9 +53,9 @@ EXTERN int *jrow_d; /*row index locations must be 2x ia_d length*/
 
 /*structure to hold assembly edges*/
 struct asm_edg_str {
-    int node[2];  /*the node indices*/
-    int u, l;     /*the location of lower and upper couplings*/
-    double coeff; /*the coupling coefficients*/
+	int node[2];  /*the node indices*/
+	int u, l;	 /*the location of lower and upper couplings*/
+	double coeff; /*the coupling coefficients*/
 };
 
 /*and we'll store these by material*/
@@ -72,16 +72,16 @@ EXTERN int baoff[MAXIMP][MAXIMP];  /*the offset for each block*/
 EXTERN int *birow[MAXIMP][MAXIMP]; /*the row descriptors for each block*/
 EXTERN int *bjrow[MAXIMP][MAXIMP]; /*the row locations for each block*/
 
-EXTERN int *ss_il;         /*column index pointers for steady state solve*/
-EXTERN int ss_loff;        /*upper triangular offset for steady state solve*/
-EXTERN int *tm_il;         /*column index pointers for time dependent solve*/
-EXTERN int tm_loff;        /*upper triangular offset for time dependent solve*/
-EXTERN double *ss_l;       /*the lower triangular values for steady state*/
-EXTERN double *tm_l;       /*the lower triangular values for time dependent*/
+EXTERN int *ss_il;		   /*column index pointers for steady state solve*/
+EXTERN int ss_loff;		   /*upper triangular offset for steady state solve*/
+EXTERN int *tm_il;		   /*column index pointers for time dependent solve*/
+EXTERN int tm_loff;		   /*upper triangular offset for time dependent solve*/
+EXTERN double *ss_l;	   /*the lower triangular values for steady state*/
+EXTERN double *tm_l;	   /*the lower triangular values for time dependent*/
 EXTERN int ss_sol[MAXIMP]; /*solution numbers of those being worked on*/
-EXTERN int ss_nsol;        /*number of those being worked on*/
+EXTERN int ss_nsol;		   /*number of those being worked on*/
 EXTERN int tm_sol[MAXIMP]; /*solution numbers of those being worked on*/
-EXTERN int tm_nsol;        /*number of those being worked on*/
+EXTERN int tm_nsol;		   /*number of those being worked on*/
 
 EXTERN int tm_elim[MAXIMP];
 EXTERN int tm_nelim;
@@ -91,9 +91,9 @@ EXTERN double *wrkspc[MAXIMP]; /*scratch space for calculations*/
 /*arrays for use with the Conjugate Gradient method*/
 EXTERN double *p[MAXBACK][MAXIMP];  /*current direction vector*/
 EXTERN double *ap[MAXBACK][MAXIMP]; /*matrix a * p*/
-EXTERN double *r[MAXIMP];           /*residual*/
-EXTERN double *qinvr[MAXIMP];       /*Qinv residual (Q is preconditioner)*/
-EXTERN double *aqinvr[MAXIMP];      /*matrix a * qinvr */
+EXTERN double *r[MAXIMP];			/*residual*/
+EXTERN double *qinvr[MAXIMP];		/*Qinv residual (Q is preconditioner)*/
+EXTERN double *aqinvr[MAXIMP];		/*matrix a * qinvr */
 
 /*what types are each of the blocks*/
 #define B_NONE 0 /*no block*/
@@ -105,11 +105,11 @@ EXTERN double *aqinvr[MAXIMP];      /*matrix a * qinvr */
 #define B_CNCP 4 /*block circuit coupler*/
 
 /*block descriptors for above*/
-EXTERN int *dev_il;         /*column index pointers for device solve*/
-EXTERN int dev_loff;        /*upper triangular offset for device solve*/
-EXTERN double *dev_l;       /*the lower triangular values for device*/
+EXTERN int *dev_il;			/*column index pointers for device solve*/
+EXTERN int dev_loff;		/*upper triangular offset for device solve*/
+EXTERN double *dev_l;		/*the lower triangular values for device*/
 EXTERN int dev_sol[MAXIMP]; /*solution numbers of those being worked on*/
-EXTERN int dev_nsol;        /*number of those being worked on*/
+EXTERN int dev_nsol;		/*number of those being worked on*/
 #endif
 
 /*declare some stuff which specifies type of linear solve being done*/
@@ -134,17 +134,17 @@ EXTERN int dev_nsol;        /*number of those being worked on*/
 
 /*decalre a single structure to hold the method information*/
 struct meth_str {
-    int block;         /*the block iterative method*/
-    int fill;          /*the level of fill to calculate*/
-    int back;          /*the number of backing vectors to use with iccg*/
-    int minfill;       /*do a minimum fill reorder*/
-    double minfreq;    /*the minfill frequency parameter*/
-    int factor;        /*the matrices need to be factored*/
-    int timemeth;      /*the time integration method*/
-    int defmodel;      /*the defect model being used*/
-    char dtform[1024]; /*character sttring for the timestep*/
-    double init_time;  /*the initial time step to be used*/
-    int blkitlim;      /*maximum number of block iterations*/
+	int block;		   /*the block iterative method*/
+	int fill;		   /*the level of fill to calculate*/
+	int back;		   /*the number of backing vectors to use with iccg*/
+	int minfill;	   /*do a minimum fill reorder*/
+	double minfreq;	/*the minfill frequency parameter*/
+	int factor;		   /*the matrices need to be factored*/
+	int timemeth;	  /*the time integration method*/
+	int defmodel;	  /*the defect model being used*/
+	char dtform[1024]; /*character sttring for the timestep*/
+	double init_time;  /*the initial time step to be used*/
+	int blkitlim;	  /*maximum number of block iterations*/
 };
 
 EXTERN struct meth_str methdata;

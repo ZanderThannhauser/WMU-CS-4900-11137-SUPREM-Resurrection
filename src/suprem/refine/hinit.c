@@ -34,20 +34,20 @@
  * Initialize the local spacing for each node.
  *----------------------------------------------------------------------*/
 void hinit(int ir, double sp) {
-    int f, p, i, n;
-    struct LLedge *bp;
+	int f, p, i, n;
+	struct LLedge *bp;
 
 #define min2(A, B) (A < B) ? A : B
 
-    for (f = 1, bp = sreg[ir]->bnd; (bp != sreg[ir]->bnd) || f;
-         f = 0, bp = bp->next) {
-        n = nB(bp);
-        p = pt_nd(n);
+	for (f = 1, bp = sreg[ir]->bnd; (bp != sreg[ir]->bnd) || f;
+		 f = 0, bp = bp->next) {
+		n = nB(bp);
+		p = pt_nd(n);
 
-        /*for each edge, spacing is set to sp*/
-        set_space(p, sp);
-        for (i = 0; i < num_edge_nd(n); i++) {
-            set_space(p, min2(get_space(p), len_edg(edge_nd(n, i))));
-        }
-    }
+		/*for each edge, spacing is set to sp*/
+		set_space(p, sp);
+		for (i = 0; i < num_edge_nd(n); i++) {
+			set_space(p, min2(get_space(p), len_edg(edge_nd(n, i))));
+		}
+	}
 }

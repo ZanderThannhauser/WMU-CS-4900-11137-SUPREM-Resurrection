@@ -45,28 +45,28 @@
  ***************************************************/
 
 struct slink_str {
-    int i; /* objects being linked. */
-    struct Slink *next;
+	int i; /* objects being linked. */
+	struct Slink *next;
 };
 
 struct LLedge {
-    int edge;            /* Index of edge */
-    int iscc;            /* Is the edge c-c in the region*/
-    struct LLedge *next; /* Next edge in the linked list */
-    struct LLedge *prev; /* Last " */
-    double ang;          /* Angle between this & prev edge. */
-    struct LLedge *gt;   /* Edge with greater angle. */
-    struct LLedge *lt;   /* Edge with lesser  angle. */
+	int edge;			 /* Index of edge */
+	int iscc;			 /* Is the edge c-c in the region*/
+	struct LLedge *next; /* Next edge in the linked list */
+	struct LLedge *prev; /* Last " */
+	double ang;			 /* Angle between this & prev edge. */
+	struct LLedge *gt;   /* Edge with greater angle. */
+	struct LLedge *lt;   /* Edge with lesser  angle. */
 };
 
 /*skeleton region structure*/
 struct sreg_str {
-    int len;             /* length of region. */
-    int mat;             /* Material index of this region. */
-    struct LLedge *bnd;  /* Pointer to linked list for region. */
-    struct LLedge *maxa; /* Pointer to edge of max angle. */
-    struct LLedge *mina; /* Pointer to edge of min angle. */
-    int reg;             /* the full region structure */
+	int len;			 /* length of region. */
+	int mat;			 /* Material index of this region. */
+	struct LLedge *bnd;  /* Pointer to linked list for region. */
+	struct LLedge *maxa; /* Pointer to edge of max angle. */
+	struct LLedge *mina; /* Pointer to edge of min angle. */
+	int reg;			 /* the full region structure */
 };
 
 #define mat_skl(A) sreg[A]->mat
@@ -95,7 +95,7 @@ EXT struct sreg_str *sreg[MAXREG];
 
 EXT int debug1, debug2;
 
-EXT double mr;    /* Maximum spacing ratio. */
+EXT double mr;	/* Maximum spacing ratio. */
 EXT double mgeom; /* Minimum triangle geometry. */
 
 #endif

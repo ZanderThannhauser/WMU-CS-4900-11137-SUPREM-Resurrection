@@ -56,131 +56,131 @@ void draw_flow(float vleng, float vmax, int col);
  *									*
  ************************************************************************/
 void plot_2d(char *par, struct par_str *param) {
-    int i;
-    int boundary;
-    int grid;
-    int fill;
-    static int line_bound = 1, line_com = 3, line_ten = 4;
-    int vornoi, diamonds;
-    int stress;
-    static float txmin, txmax, tymin, tymax;
-    float vleng, vmax;
-    int deb;
-    ENTER;
+	int i;
+	int boundary;
+	int grid;
+	int fill;
+	static int line_bound = 1, line_com = 3, line_ten = 4;
+	int vornoi, diamonds;
+	int stress;
+	static float txmin, txmax, tymin, tymax;
+	float vleng, vmax;
+	int deb;
+	ENTER;
 
-    if (InvalidMeshCheck()) {
-        EXIT;
-        return; /* (-1);*/
-    }
+	if (InvalidMeshCheck()) {
+		EXIT;
+		return; /* (-1);*/
+	}
 
-    deb = pl_debug;
-    pl_debug = FALSE;
+	deb = pl_debug;
+	pl_debug = FALSE;
 
-    if (mode == ONED) {
-        fprintf(stderr, "plot.2d is illegal in one dimension\n");
-        EXIT;
-        return; /* (-1);*/
-    }
+	if (mode == ONED) {
+		fprintf(stderr, "plot.2d is illegal in one dimension\n");
+		EXIT;
+		return; /* (-1);*/
+	}
 
-    /*get the card parameters*/
-    boundary = get_bool(param, "boundary");
-    grid = get_bool(param, "grid");
-    vornoi = get_int(param, "vornoi");
-    diamonds = get_bool(param, "diamonds");
-    stress = get_bool(param, "stress");
-    fill = get_bool(param, "fill");
-    if (is_specified(param, "line.bound"))
-        line_bound = get_int(param, "line.bound");
-    if (is_specified(param, "line.com"))
-        line_com = get_int(param, "line.com");
-    if (is_specified(param, "line.ten"))
-        line_ten = get_int(param, "line.ten");
-    if (is_specified(param, "vmax"))
-        vmax = get_float(param, "vmax");
-    if (is_specified(param, "vleng"))
-        vleng = 1e-4 * get_float(param, "vleng");
-    else if (stress) {
-        fprintf(stderr, "A vector length must be specified!\n");
-        stress = 0;
-    }
+	/*get the card parameters*/
+	boundary = get_bool(param, "boundary");
+	grid = get_bool(param, "grid");
+	vornoi = get_int(param, "vornoi");
+	diamonds = get_bool(param, "diamonds");
+	stress = get_bool(param, "stress");
+	fill = get_bool(param, "fill");
+	if (is_specified(param, "line.bound"))
+		line_bound = get_int(param, "line.bound");
+	if (is_specified(param, "line.com"))
+		line_com = get_int(param, "line.com");
+	if (is_specified(param, "line.ten"))
+		line_ten = get_int(param, "line.ten");
+	if (is_specified(param, "vmax"))
+		vmax = get_float(param, "vmax");
+	if (is_specified(param, "vleng"))
+		vleng = 1e-4 * get_float(param, "vleng");
+	else if (stress) {
+		fprintf(stderr, "A vector length must be specified!\n");
+		stress = 0;
+	}
 
-    dev_lmts(&txmin, &txmax, &tymin, &tymax);
+	dev_lmts(&txmin, &txmax, &tymin, &tymax);
 
-    if (is_specified(param, "x.min"))
-        txmin = get_float(param, "x.min") * 1e-4;
-    if (is_specified(param, "x.max"))
-        txmax = get_float(param, "x.max") * 1e-4;
-    if (is_specified(param, "y.min"))
-        tymin = get_float(param, "y.min") * 1e-4;
-    if (is_specified(param, "y.max"))
-        tymax = get_float(param, "y.max") * 1e-4;
+	if (is_specified(param, "x.min"))
+		txmin = get_float(param, "x.min") * 1e-4;
+	if (is_specified(param, "x.max"))
+		txmax = get_float(param, "x.max") * 1e-4;
+	if (is_specified(param, "y.min"))
+		tymin = get_float(param, "y.min") * 1e-4;
+	if (is_specified(param, "y.max"))
+		tymax = get_float(param, "y.max") * 1e-4;
 
-    /* have a heart */
-    if (txmin > txmax) {
-        float swap = txmin;
-        txmin = txmax;
-        txmax = swap;
-    }
-    if (tymin > tymax) {
-        float swap = tymin;
-        tymin = tymax;
-        tymax = swap;
-    }
+	/* have a heart */
+	if (txmin > txmax) {
+		float swap = txmin;
+		txmin = txmax;
+		txmax = swap;
+	}
+	if (tymin > tymax) {
+		float swap = tymin;
+		tymin = tymax;
+		tymax = swap;
+	}
 
-    if (!fill) {
+	if (!fill) {
 
-        /* Center the requested area in the window */
+		/* Center the requested area in the window */
 
-        float dx = txmax - txmin, dy = tymax - tymin, cenwin;
-        if (dx > dy) {
-            cenwin = 0.5 * (tymin + tymax);
-            tymax = cenwin + 0.5 * dx;
-            tymin = cenwin - 0.5 * dx;
-        } else {
-            cenwin = 0.5 * (txmin + txmax);
-            txmax = cenwin + 0.5 * dy;
-            txmin = cenwin - 0.5 * dy;
-        }
-    }
+		float dx = txmax - txmin, dy = tymax - tymin, cenwin;
+		if (dx > dy) {
+			cenwin = 0.5 * (tymin + tymax);
+			tymax = cenwin + 0.5 * dx;
+			tymin = cenwin - 0.5 * dx;
+		} else {
+			cenwin = 0.5 * (txmin + txmax);
+			txmax = cenwin + 0.5 * dy;
+			txmin = cenwin - 0.5 * dy;
+		}
+	}
 
-    /* Check the results to avoid disaster */
-    if (txmin >= txmax || tymin >= tymax) {
-        fprintf(stderr, "bad bounds in plotting: x(%f:%f) y(%f:%f)\n", txmin,
-                txmax, tymin, tymax);
-        EXIT;
-        return; /* (-1);*/
-    }
+	/* Check the results to avoid disaster */
+	if (txmin >= txmax || tymin >= tymax) {
+		fprintf(stderr, "bad bounds in plotting: x(%f:%f) y(%f:%f)\n", txmin,
+				txmax, tymin, tymax);
+		EXIT;
+		return; /* (-1);*/
+	}
 
-    yflip = TRUE;
+	yflip = TRUE;
 
-    if (grid) {
-        for (i = 0; i < ned; i++)
-            edge_pl(i);
-    }
+	if (grid) {
+		for (i = 0; i < ned; i++)
+			edge_pl(i);
+	}
 
-    if (vornoi) {
-        draw_vornoi();
-    }
+	if (vornoi) {
+		draw_vornoi();
+	}
 
-    if (boundary) {
-        material(line_bound);
-    }
+	if (boundary) {
+		material(line_bound);
+	}
 
-    if (diamonds) {
-        draw_points(0.005 * (xmax - xmin + ymax - ymin));
-    }
+	if (diamonds) {
+		draw_points(0.005 * (xmax - xmin + ymax - ymin));
+	}
 
-    if (stress)
-        draw_stress(vleng, vmax, line_com, line_ten);
+	if (stress)
+		draw_stress(vleng, vmax, line_com, line_ten);
 
-    if (get_bool(param, "flow"))
-        draw_flow(vleng, vmax, line_com);
+	if (get_bool(param, "flow"))
+		draw_flow(vleng, vmax, line_com);
 
-    /*clean up plotting and post it out*/
-    pl_debug = deb;
+	/*clean up plotting and post it out*/
+	pl_debug = deb;
 
-    EXIT;
-    return; /* (0);*/
+	EXIT;
+	return; /* (0);*/
 }
 
 void draw_vornoi() {}

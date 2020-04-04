@@ -30,9 +30,9 @@
 #endif
 
 struct line {
-    double x, y; /*the location of the point*/
-    int p;       /*the point index*/
-    int map;     /*the match on the other line*/
+	double x, y; /*the location of the point*/
+	int p;		 /*the point index*/
+	int map;	 /*the match on the other line*/
 };
 
 #define XC(A) pt[A]->cord[0]

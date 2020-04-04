@@ -33,18 +33,18 @@ typedef char *(*PTR_EVALFUNC)();
 
 /*define token values for the different type of lexical values*/
 #define EXPR 0x0001
-#define OP1 0x0002    /* plus/minus */
-#define OP2 0x0004    /* multiply/divide */
-#define FN 0x0008     /* miscellaneous functions */
-#define VFN 0x0010    /* vector valued functions */
+#define OP1 0x0002	/* plus/minus */
+#define OP2 0x0004	/* multiply/divide */
+#define FN 0x0008	 /* miscellaneous functions */
+#define VFN 0x0010	/* vector valued functions */
 #define LPAR 0x0020   /* left parenthesis */
 #define RPAR 0x0040   /* right parenthesis */
 #define RCONST 0x0080 /* real constant value */
 #define SOLVAL 0x0100 /* solution value, As, B, etc. */
 #define TOPSTK 0x0200 /* top of stack value */
-#define EOI 0x0400    /* end of input marker */
-#define OP3 0x0800    /* exponentiation */
-#define COM 0x1000    /* comma operator for two arg functions*/
+#define EOI 0x0400	/* end of input marker */
+#define OP3 0x0800	/* exponentiation */
+#define COM 0x1000	/* comma operator for two arg functions*/
 #define STRING 0x2000 /* strings for functional use */
 
 /*define numbers for functions*/
@@ -82,24 +82,24 @@ typedef char *(*PTR_EVALFUNC)();
 
 /*type def a relationship for the value field*/
 typedef union {
-    float dval;
-    int ival;
-    char *sval;
-    struct vec_str *bval;
+	float dval;
+	int ival;
+	char *sval;
+	struct vec_str *bval;
 } plt_val;
 
 /*define a streucture to hold everything in*/
 struct vec_str {
-    plt_val value;
-    int type;
-    struct vec_str *right;
-    struct vec_str *left;
+	plt_val value;
+	int type;
+	struct vec_str *right;
+	struct vec_str *left;
 };
 
 /*declare a structure for parsing*/
 struct tok_str {
-    int type;
-    plt_val value;
+	int type;
+	plt_val value;
 };
 
 /*declare the global stack of the values to be handled*/

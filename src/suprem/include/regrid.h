@@ -17,10 +17,10 @@
 
 /* Describe a polygon by a linked list */
 struct polyel {
-    int nd; /* Node number */
-    int nb; /* Neighbor element on clockwise side of that node */
-    int nx; /* Which neighbor of that element needs to be fixed */
-    struct polyel *prev, *next;
+	int nd; /* Node number */
+	int nb; /* Neighbor element on clockwise side of that node */
+	int nx; /* Which neighbor of that element needs to be fixed */
+	struct polyel *prev, *next;
 };
 
 /* 2020: I'm guessing that we don't actually need these:*/
@@ -31,16 +31,16 @@ struct polyel {
 #if !2020
 
 #define twhich(T, N)                                                           \
-    ((tri[T]->nb[0] == (N)                                                     \
-          ? 0                                                                  \
-          : (tri[T]->nb[1] == (N)                                              \
-                 ? 1                                                           \
-                 : (tri[T]->nb[2] == (N) ? 2 : NO_TRIANGLE))))
+	((tri[T]->nb[0] == (N)                                                     \
+		  ? 0                                                                  \
+		  : (tri[T]->nb[1] == (N)                                              \
+				 ? 1                                                           \
+				 : (tri[T]->nb[2] == (N) ? 2 : NO_TRIANGLE))))
 #define nwhich(T, N)                                                           \
-    ((tri[T]->nd[0] == (N)                                                     \
-          ? 0                                                                  \
-          : (tri[T]->nd[1] == (N)                                              \
-                 ? 1                                                           \
-                 : (tri[T]->nd[2] == (N) ? 2 : NO_TRIANGLE))))
+	((tri[T]->nd[0] == (N)                                                     \
+		  ? 0                                                                  \
+		  : (tri[T]->nd[1] == (N)                                              \
+				 ? 1                                                           \
+				 : (tri[T]->nd[2] == (N) ? 2 : NO_TRIANGLE))))
 
 #endif

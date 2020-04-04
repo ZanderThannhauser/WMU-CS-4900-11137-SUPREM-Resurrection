@@ -38,54 +38,54 @@
  *									*
  ************************************************************************/
 int intersect(float a[MAXVRT][3], float val, float x[2][3]) {
-    int s1, s2; /*side pointers*/
-    int i;      /*side counters*/
-    int ans;    /*the answer counter*/
-    float tau;  /*answer temps*/
+	int s1, s2; /*side pointers*/
+	int i;		/*side counters*/
+	int ans;	/*the answer counter*/
+	float tau;  /*answer temps*/
 
-    switch (mode) {
-    case TWOD:
-        if (((a[0][2] > val) && (a[1][2] > val) && (a[2][2] > val)) ||
-            ((a[0][2] < val) && (a[1][2] < val) && (a[2][2] < val)))
-            return (0);
+	switch (mode) {
+	case TWOD:
+		if (((a[0][2] > val) && (a[1][2] > val) && (a[2][2] > val)) ||
+			((a[0][2] < val) && (a[1][2] < val) && (a[2][2] < val)))
+			return (0);
 
-        for (ans = i = 0; i < 3; i++) {
-            s1 = (i + 1) % 3;
-            s2 = (i + 2) % 3;
+		for (ans = i = 0; i < 3; i++) {
+			s1 = (i + 1) % 3;
+			s2 = (i + 2) % 3;
 
-            /*check for an intersection on this side*/
-            if (((a[s1][2] <= val) || (a[s2][2] < val)) &&
-                ((a[s1][2] >= val) || (a[s2][2] > val))) {
+			/*check for an intersection on this side*/
+			if (((a[s1][2] <= val) || (a[s2][2] < val)) &&
+				((a[s1][2] >= val) || (a[s2][2] > val))) {
 
-                /*if the side values are equal, return that*/
-                if (a[s1][2] == a[s2][2]) {
-                    x[0][0] = a[s1][0];
-                    x[0][1] = a[s1][1];
-                    x[0][2] = a[s1][2];
-                    x[1][0] = a[s2][0];
-                    x[1][1] = a[s2][1];
-                    x[1][2] = a[s2][2];
-                    return (2);
-                }
+				/*if the side values are equal, return that*/
+				if (a[s1][2] == a[s2][2]) {
+					x[0][0] = a[s1][0];
+					x[0][1] = a[s1][1];
+					x[0][2] = a[s1][2];
+					x[1][0] = a[s2][0];
+					x[1][1] = a[s2][1];
+					x[1][2] = a[s2][2];
+					return (2);
+				}
 
-                /*else, calculate an intersection*/
-                tau = (val - a[s1][2]) / (a[s2][2] - a[s1][2]);
-                x[ans][0] = (a[s2][0] - a[s1][0]) * tau + a[s1][0];
-                x[ans][1] = (a[s2][1] - a[s1][1]) * tau + a[s1][1];
-                x[ans][2] = val;
-                ans++;
-            }
-        }
-        return (ans);
-        break;
+				/*else, calculate an intersection*/
+				tau = (val - a[s1][2]) / (a[s2][2] - a[s1][2]);
+				x[ans][0] = (a[s2][0] - a[s1][0]) * tau + a[s1][0];
+				x[ans][1] = (a[s2][1] - a[s1][1]) * tau + a[s1][1];
+				x[ans][2] = val;
+				ans++;
+			}
+		}
+		return (ans);
+		break;
 
-    case ONED:
-        for (i = 0; i < 3; i++) {
-            x[0][i] = a[0][i];
-            x[1][i] = a[1][i];
-        }
-        return (2);
-        break;
-    }
-    return (0);
+	case ONED:
+		for (i = 0; i < 3; i++) {
+			x[0][i] = a[0][i];
+			x[1][i] = a[1][i];
+		}
+		return (2);
+		break;
+	}
+	return (0);
 }

@@ -50,27 +50,28 @@
  *  Original:	MEL	1/85	(modeled on pisces2)			*
  *									*
  ************************************************************************/
-void plot_1d(char *par, struct par_str *param) { /* 2020: took all this out*/ }
+void plot_1d(char *par, struct par_str *param) { /* 2020: took all this out*/
+}
 
 /*----------------------------------------------------------------------
  * Fix equal or swapped bounds.
  *----------------------------------------------------------------------*/
 void CheckBound(float *lo, float *hi) {
-    float swap;
+	float swap;
 
-    if (*lo == *hi) {
-        if (*lo == 0) {
-            *lo = -1.0;
-            *hi = 1.0;
-        } else {
-            *lo *= 0.9;
-            *hi *= 1.1;
-        }
-    }
+	if (*lo == *hi) {
+		if (*lo == 0) {
+			*lo = -1.0;
+			*hi = 1.0;
+		} else {
+			*lo *= 0.9;
+			*hi *= 1.1;
+		}
+	}
 
-    if (*lo > *hi) {
-        swap = *lo;
-        *lo = *hi;
-        *hi = swap;
-    }
+	if (*lo > *hi) {
+		swap = *lo;
+		*lo = *hi;
+		*hi = swap;
+	}
 }

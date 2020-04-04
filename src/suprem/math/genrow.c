@@ -41,60 +41,60 @@
  *									*
  ************************************************************************/
 void genrow(int *ia, int aoff, int *irow, int *jrow) {
-    register int i, j, indx, row, col;
-    int *links; /*linked list pointers*/
-    int *locs;  /*locations*/
-    int *cnum;  /*column number*/
-    int el;     /*end of the list pointer*/
+	register int i, j, indx, row, col;
+	int *links; /*linked list pointers*/
+	int *locs;  /*locations*/
+	int *cnum;  /*column number*/
+	int el;		/*end of the list pointer*/
 
-    /*malloc the local space*/
-    links = salloc(int, ia[nn] + 1 + aoff);
-    locs = salloc(int, ia[nn] + 1 + aoff);
-    cnum = salloc(int, ia[nn] + 1 + aoff);
+	/*malloc the local space*/
+	links = salloc(int, ia[nn] + 1 + aoff);
+	locs = salloc(int, ia[nn] + 1 + aoff);
+	cnum = salloc(int, ia[nn] + 1 + aoff);
 
-    /*initialize the links*/
-    for (i = 0; i < nn; i++)
-        links[i] = -1;
+	/*initialize the links*/
+	for (i = 0; i < nn; i++)
+		links[i] = -1;
 
-    /*run through the column list in ia and invert it*/
-    el = nn;
-    for (row = nn - 1; row >= 0; row--) {
-        for (j = ia[row]; j < ia[row + 1]; j++) {
-            col = ia[j];
+	/*run through the column list in ia and invert it*/
+	el = nn;
+	for (row = nn - 1; row >= 0; row--) {
+		for (j = ia[row]; j < ia[row + 1]; j++) {
+			col = ia[j];
 
-            /*update the links add at beginning*/
-            links[el] = links[col];
-            links[col] = el;
-            cnum[el] = row;
-            locs[el] = j;
-            el++;
-        }
-    }
+			/*update the links add at beginning*/
+			links[el] = links[col];
+			links[col] = el;
+			cnum[el] = row;
+			locs[el] = j;
+			el++;
+		}
+	}
 
-    /*now that we have ia inverted to a row list, make irow, jrow*/
-    irow[0] = nn + 1;
-    indx = nn + 1;
-    for (row = 0; row < nn; row++) {
+	/*now that we have ia inverted to a row list, make irow, jrow*/
+	irow[0] = nn + 1;
+	indx = nn + 1;
+	for (row = 0; row < nn; row++) {
 
-        /*first merge in the linked list*/
-        for (i = links[row]; i != -1; i = links[i]) {
-            irow[indx] = cnum[i];
-            jrow[indx] = locs[i];
-            indx += 1;
-        }
+		/*first merge in the linked list*/
+		for (i = links[row]; i != -1; i = links[i]) {
+			irow[indx] = cnum[i];
+			jrow[indx] = locs[i];
+			indx += 1;
+		}
 
-        /*now merge in any column space*/
-        for (i = ia[row]; i < ia[row + 1]; i++) {
-            irow[indx] = ia[i];
-            jrow[indx] = i + aoff;
-            indx += 1;
-        }
+		/*now merge in any column space*/
+		for (i = ia[row]; i < ia[row + 1]; i++) {
+			irow[indx] = ia[i];
+			jrow[indx] = i + aoff;
+			indx += 1;
+		}
 
-        irow[row + 1] = indx;
-    }
+		irow[row + 1] = indx;
+	}
 
-    /*free the space and go home*/
-    free(links);
-    free(locs);
-    free(cnum);
+	/*free the space and go home*/
+	free(links);
+	free(locs);
+	free(cnum);
 }

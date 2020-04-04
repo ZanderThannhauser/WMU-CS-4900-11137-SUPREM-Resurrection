@@ -39,37 +39,37 @@
  *									*
  ************************************************************************/
 int get_proc(char *name) {
-    int test;
-    int match, best_match;
-    int best;
-    int length;
-    int ambig;
+	int test;
+	int match, best_match;
+	int best;
+	int length;
+	int ambig;
 
-    length = strlen(name);
+	length = strlen(name);
 
-    /*compare all the names in the command table to this name*/
-    best = -1;
-    ambig = FALSE;
-    best_match = 0;
-    for (test = 0; command[test].name[0] != '\0'; test++) {
-        match = substring(command[test].name, name);
-        if (match == best_match)
-            ambig = TRUE;
-        if ((match > best_match) && (match == length)) {
-            best_match = match;
-            best = test;
-            ambig = FALSE;
-        }
-    }
+	/*compare all the names in the command table to this name*/
+	best = -1;
+	ambig = FALSE;
+	best_match = 0;
+	for (test = 0; command[test].name[0] != '\0'; test++) {
+		match = substring(command[test].name, name);
+		if (match == best_match)
+			ambig = TRUE;
+		if ((match > best_match) && (match == length)) {
+			best_match = match;
+			best = test;
+			ambig = FALSE;
+		}
+	}
 
-    /*now use the best fit as the executable command*/
-    if (best == -1)
-        return (-1);
-    else if (ambig) {
-        fprintf(stderr, "the command is ambiguous\n");
-        return (-1);
-    } else
-        return (best);
+	/*now use the best fit as the executable command*/
+	if (best == -1)
+		return (-1);
+	else if (ambig) {
+		fprintf(stderr, "the command is ambiguous\n");
+		return (-1);
+	} else
+		return (best);
 }
 
 /************************************************************************
@@ -83,14 +83,14 @@ int get_proc(char *name) {
  *									*
  ************************************************************************/
 int substring(char *s, char *ss) {
-    char *ass;
+	char *ass;
 
-    for (ass = ss; (*s == *ss) && *ss; s++, ss++)
-        ;
+	for (ass = ss; (*s == *ss) && *ss; s++, ss++)
+		;
 
-    if (!*ss)
-        return (ss - ass);
-    return (0);
+	if (!*ss)
+		return (ss - ass);
+	return (0);
 }
 
 /************************************************************************
@@ -104,23 +104,23 @@ int substring(char *s, char *ss) {
  *									*
  ************************************************************************/
 FILE *file_parse(char *name, char *type) {
-    ENTER;
-    char *end_str;
+	ENTER;
+	char *end_str;
 
-    /*strip off leading blanks*/
-    for (; (*name == ' ') || (*name == '\t'); name++)
-        ;
+	/*strip off leading blanks*/
+	for (; (*name == ' ') || (*name == '\t'); name++)
+		;
 
-    /*strip off trailing blanks*/
-    for (end_str = name; *end_str; end_str++)
-        ;
-    end_str--;
-    if ((*end_str == ' ') || (*end_str == '\t')) {
-        for (end_str--; (*end_str == ' ') || (*end_str == '\t'); end_str--)
-            ;
-        *(end_str + 1) = '\0';
-    }
-    EXIT;
-    /*open the file and return*/
-    return (fopen(name, type));
+	/*strip off trailing blanks*/
+	for (end_str = name; *end_str; end_str++)
+		;
+	end_str--;
+	if ((*end_str == ' ') || (*end_str == '\t')) {
+		for (end_str--; (*end_str == ' ') || (*end_str == '\t'); end_str--)
+			;
+		*(end_str + 1) = '\0';
+	}
+	EXIT;
+	/*open the file and return*/
+	return (fopen(name, type));
 }

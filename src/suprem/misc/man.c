@@ -39,51 +39,51 @@
  *									*
  ************************************************************************/
 void man(char *par, struct par_str *param) {
-    FILE *help, *more;
-    char *s;
-    char filename[80];
-    int c;
-    char *dir;
-    ENTER;
+	FILE *help, *more;
+	char *s;
+	char filename[80];
+	int c;
+	char *dir;
+	ENTER;
 
-    /*figure out where to look for the manual directory*/
-    if ((dir = (char *)getenv("MANDIR")) == NULL)
-        dir = MANDIR;
+	/*figure out where to look for the manual directory*/
+	if ((dir = (char *)getenv("MANDIR")) == NULL)
+		dir = MANDIR;
 
-    strcpy(filename, dir);
-    strcat(filename, "/");
+	strcpy(filename, dir);
+	strcat(filename, "/");
 
-    if (par == NULL)
-        strcat(filename, "suprem.h");
-    else {
-        /*skip over leading white space*/
-        while (isspace(*par))
-            par++;
+	if (par == NULL)
+		strcat(filename, "suprem.h");
+	else {
+		/*skip over leading white space*/
+		while (isspace(*par))
+			par++;
 
-        /*skip over non blanks*/
-        for (s = par; (!isspace(*s) && (*s != '\0')); s++)
-            ;
-        *s = '\0';
+		/*skip over non blanks*/
+		for (s = par; (!isspace(*s) && (*s != '\0')); s++)
+			;
+		*s = '\0';
 
-        strcat(filename, par);
-        strcat(filename, ".h");
-    }
+		strcat(filename, par);
+		strcat(filename, ".h");
+	}
 
-    /*open a file to read from*/
-    if ((help = fopen(filename, "r")) == NULL) {
-        fprintf(stderr, "can not find help for %s\n", par);
-        EXIT;
-        return;
-    }
+	/*open a file to read from*/
+	if ((help = fopen(filename, "r")) == NULL) {
+		fprintf(stderr, "can not find help for %s\n", par);
+		EXIT;
+		return;
+	}
 
-    /*open up the command more to write to*/
-    more = (FILE *)popen(PAGER, "w");
+	/*open up the command more to write to*/
+	more = (FILE *)popen(PAGER, "w");
 
-    while ((c = getc(help)) != EOF)
-        putc(c, more);
+	while ((c = getc(help)) != EOF)
+		putc(c, more);
 
-    fclose(help);
-    pclose(more);
-    EXIT;
-    return;
+	fclose(help);
+	pclose(more);
+	EXIT;
+	return;
 }

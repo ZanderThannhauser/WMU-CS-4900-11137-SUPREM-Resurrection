@@ -32,15 +32,15 @@
 double norm(arr, n) double *arr;
 int n;
 {
-    double f;
-    int i;
+	double f;
+	int i;
 
-    f = 0.0;
+	f = 0.0;
 
-    for (i = 0; i < n; i++) {
-        f += arr[i] * arr[i];
-    }
+	for (i = 0; i < n; i++) {
+		f += arr[i] * arr[i];
+	}
 
-    f = sqrt(f / n);
-    return (f);
+	f = sqrt(f / n);
+	return (f);
 }

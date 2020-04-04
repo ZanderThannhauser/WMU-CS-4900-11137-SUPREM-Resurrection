@@ -50,41 +50,41 @@
  ************************************************************************/
 char *strtok(news1, s2) char *news1, *s2;
 {
-    static char *s1;
-    char *start, *t;
+	static char *s1;
+	char *start, *t;
 
-    /*set up a new string to work on, if required*/
-    if (news1 != NULL)
-        s1 = news1;
+	/*set up a new string to work on, if required*/
+	if (news1 != NULL)
+		s1 = news1;
 
-    /*advance the pointer past any token separators*/
-    for (; *s1; s1++) {
-        for (t = s2; *t; t++)
-            if (*s1 == *t)
-                goto found;
-        break;
-    found:;
-    }
+	/*advance the pointer past any token separators*/
+	for (; *s1; s1++) {
+		for (t = s2; *t; t++)
+			if (*s1 == *t)
+				goto found;
+		break;
+	found:;
+	}
 
-    /*we are now at the beginning of the token*/
-    if (!*s1)
-        start = NULL;
-    else {
-        start = s1;
+	/*we are now at the beginning of the token*/
+	if (!*s1)
+		start = NULL;
+	else {
+		start = s1;
 
-        /*now find the end of the token*/
-        for (; *s1; s1++)
-            for (t = s2; *t; t++)
-                if (*t == *s1)
-                    goto break2b;
-    break2b:
+		/*now find the end of the token*/
+		for (; *s1; s1++)
+			for (t = s2; *t; t++)
+				if (*t == *s1)
+					goto break2b;
+	break2b:
 
-        /*put in the null*/
-        if (*s1)
-            *s1++ = '\0';
-    }
+		/*put in the null*/
+		if (*s1)
+			*s1++ = '\0';
+	}
 
-    return (start);
+	return (start);
 }
 
 #endif /* NOSTRTOK */

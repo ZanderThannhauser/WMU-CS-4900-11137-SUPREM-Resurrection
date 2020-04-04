@@ -28,7 +28,7 @@
 #include "./src/suprem/mesh/simpl-dix.h"
 
 typedef struct simpl_polygon {
-    char name[NAME_SIZE];       /* Polygon layer name. */
-    struct float_path *path;    /* Polygon path. */
-    struct simpl_polygon *next; /* Pointer to next layer. */
+	char name[NAME_SIZE];		/* Polygon layer name. */
+	struct float_path *path;	/* Polygon path. */
+	struct simpl_polygon *next; /* Pointer to next layer. */
 } simplPolygon;

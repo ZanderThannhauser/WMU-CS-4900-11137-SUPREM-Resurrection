@@ -82,21 +82,21 @@ EXTERN char *Dstr[2][2][MAXMAT][MAXMAT];
 
 /*interface properties*/
 #define Ksurf0(A, M1, M2)                                                      \
-    Dconst[which(A)][0][M1][M2] /*surface                                      \
-                                   recombination*/
+	Dconst[which(A)][0][M1][M2] /*surface                                      \
+								   recombination*/
 #define KsurfE(A, M1, M2)                                                      \
-    Dconst[which(A)][1][M1][M2]                      /*surface                 \
-                                                        recombination*/
+	Dconst[which(A)][1][M1][M2]						 /*surface                 \
+														recombination*/
 #define Ksurf(A, M1, M2) Dconst[which(A)][2][M1][M2] /*surface recombination*/
 #define Krat0(A, M1, M2) Dconst[which(A)][3][M1][M2] /*growing/inert ratio*/
 #define KratE(A, M1, M2) Dconst[which(A)][4][M1][M2] /*growing/inert ratio*/
 #define Krat(A, M1, M2) Dconst[which(A)][5][M1][M2]  /*growing/inert ratio*/
 #define Kpow0(A, M1, M2)                                                       \
-    Dconst[which(A)][6][M1][M2] /*power dependence on growth*/
+	Dconst[which(A)][6][M1][M2] /*power dependence on growth*/
 #define KpowE(A, M1, M2)                                                       \
-    Dconst[which(A)][7][M1][M2] /*power dependence on growth*/
+	Dconst[which(A)][7][M1][M2] /*power dependence on growth*/
 #define Kpow(A, M1, M2)                                                        \
-    Dconst[which(A)][8][M1][M2] /*power dependence on growth*/
+	Dconst[which(A)][8][M1][M2] /*power dependence on growth*/
 
 /*time dependence injection*/
 #define A0(A, M1, M2) Dconst[which(A)][9][M1][M2]   /*time injection constant*/
@@ -106,11 +106,11 @@ EXTERN char *Dstr[2][2][MAXMAT][MAXMAT];
 #define t0E(A, M1, M2) Dconst[which(A)][13][M1][M2] /*linear time constant*/
 #define t0(A, M1, M2) Dconst[which(A)][14][M1][M2]  /*linear time constant*/
 #define Tpow0(A, M1, M2)                                                       \
-    Dconst[which(A)][15][M1][M2] /*time dependence                             \
-                                    power*/
+	Dconst[which(A)][15][M1][M2] /*time dependence                             \
+									power*/
 #define TpowE(A, M1, M2)                                                       \
-    Dconst[which(A)][16][M1][M2]                     /*time dependence         \
-                                                        power*/
+	Dconst[which(A)][16][M1][M2]					 /*time dependence         \
+														power*/
 #define Tpow(A, M1, M2) Dconst[which(A)][17][M1][M2] /*time dependence power*/
 
 /*growth dependence injection*/
@@ -118,14 +118,14 @@ EXTERN char *Dstr[2][2][MAXMAT][MAXMAT];
 #define thetaE(A, M1, M2) Dconst[which(A)][19][M1][M2] /*growth dependence*/
 #define theta(A, M1, M2) Dconst[which(A)][20][M1][M2]  /*growth dependence*/
 #define Gpow0(A, M1, M2)                                                       \
-    Dconst[which(A)][21][M1][M2] /*growth dependence power*/
+	Dconst[which(A)][21][M1][M2] /*growth dependence power*/
 #define GpowE(A, M1, M2)                                                       \
-    Dconst[which(A)][22][M1][M2] /*growth dependence power*/
+	Dconst[which(A)][22][M1][M2] /*growth dependence power*/
 #define Gpow(A, M1, M2)                                                        \
-    Dconst[which(A)][23][M1][M2] /*growth dependence                           \
-                                    power*/
+	Dconst[which(A)][23][M1][M2] /*growth dependence                           \
+									power*/
 #define vmole(A, M1, M2)                                                       \
-    Dconst[which(A)][24][M1][M2] /*molecular concentration term*/
+	Dconst[which(A)][24][M1][M2] /*molecular concentration term*/
 
 /*segregation terms*/
 #define Trn0(A, M1, M2) Dconst[which(A)][25][M1][M2] /*transport rate*/

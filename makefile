@@ -15,7 +15,6 @@ CPPFLAGS += -D _XOPEN_SOURCE=500 # this brings in the needed stdlib functions
 CPPFLAGS += -D UBUNTU
 
 CFLAGS += -std=c90
-#CFLAGS += -std=c99
 
 CFLAGS += -Wall
 CFLAGS += -Werror
@@ -23,8 +22,8 @@ CFLAGS += -Wfatal-errors
 CFLAGS += -Wno-maybe-uninitialized
 CFLAGS += -Wno-array-bounds
 #CFLAGS += -O2
+CFLAGS += -g
 
-DFLAGS += -g
 DFLAGS += -D DEBUGGING_2020
 
 LDLIBS += -lm
@@ -53,8 +52,11 @@ SUP_DOBJS = $(SUP_SRCS:.c=.d.o)
 SUP_DEPENDS = $(SUP_SRCS:.c=.mk)
 
 #ARGS = ./examples/exam1/boron.in
-ARGS = ./examples/exam3/oed.in
+#ARGS = ./examples/exam3/oed.in
 #ARGS = ./examples/exam4/oed.in
+ARGS = ./examples/exam5/whole.in
+#ARGS = ./examples/exam7/fullrox.in
+#ARGS = ./examples/exam9/sdep.in
 
 run: bin/suprem data/suprem.uk
 	./bin/suprem $(ARGS)
@@ -62,17 +64,23 @@ run: bin/suprem data/suprem.uk
 run.d: bin/suprem.d data/suprem.uk
 	./bin/suprem.d $(ARGS)
 
-valrun: bin/suprem.d data/suprem.uk
+valrun: bin/suprem data/suprem.uk
+	valgrind ./bin/suprem $(ARGS)
+
+valrun-stop: bin/suprem data/suprem.uk
+	valgrind --gen-suppressions=yes ./bin/suprem $(ARGS)
+
+valrun.d: bin/suprem.d data/suprem.uk
 	valgrind ./bin/suprem.d $(ARGS)
 
-valrun-stop: bin/suprem.d data/suprem.uk
+valrun-stop.d: bin/suprem.d data/suprem.uk
 	valgrind --gen-suppressions=yes ./bin/suprem.d $(ARGS)
 
 TESTCASES += ./examples/exam1/boron
 TESTCASES += ./examples/exam2/oed
 TESTCASES += ./examples/exam3/oed
-#TESTCASES += ./examples/exam4/oed # unreliable
-#TESTCASES += ./examples/exam5/whole # unreliable
+TESTCASES += ./examples/exam4/oed
+TESTCASES += ./examples/exam5/whole
 TESTCASES += ./examples/exam6/oxcalib
 #TESTCASES += ./examples/exam7/fullrox # unreliable
 TESTCASES += ./examples/exam8/nit-stress
@@ -150,7 +158,7 @@ data/suprem.uk: bin/keyread
 
 open-all:
 	find -name '*.c' -exec 'gedit' '{}' \;
-	find -name '*.h' -exec 'gedit' '{}' \;
+	# find -name '*.h' -exec 'gedit' '{}' \;
 
 format:
 	find -name '*.c' -exec 'clang-format' '-i' '-verbose' '{}' \;

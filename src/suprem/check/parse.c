@@ -65,40 +65,40 @@
  *  									*
  ************************************************************************/
 int detect_error() {
-    switch (stack[st_pnt].type) {
-    case OP1:
-        if (((!input_token.type) & (VFN | FN | LPAR | RCONST | SOLVAL))) {
-            if (input_token.type == OP1) {
-                if (stack[st_pnt - 1].type != EXPR)
-                    return (TRUE);
-            } else
-                return (TRUE);
-        }
-        break;
-    case TOPSTK:
-    case OP3:
-    case OP2:
-    case COM:
-    case LPAR:
-    case VFN:
-    case FN:
-        if ((!input_token.type) & (VFN | FN | OP1 | LPAR | RCONST | SOLVAL))
-            return (TRUE);
-        break;
-    case EXPR:
-    case RCONST:
-    case SOLVAL:
-    case STRING:
-    case RPAR:
-        if ((!input_token.type) & (EOI | RPAR | OP1 | OP2 | OP3))
-            return (TRUE);
-        break;
-    case EOI:
-        break;
-    default:
-        return (TRUE);
-    }
-    return (FALSE);
+	switch (stack[st_pnt].type) {
+	case OP1:
+		if (((!input_token.type) & (VFN | FN | LPAR | RCONST | SOLVAL))) {
+			if (input_token.type == OP1) {
+				if (stack[st_pnt - 1].type != EXPR)
+					return (TRUE);
+			} else
+				return (TRUE);
+		}
+		break;
+	case TOPSTK:
+	case OP3:
+	case OP2:
+	case COM:
+	case LPAR:
+	case VFN:
+	case FN:
+		if ((!input_token.type) & (VFN | FN | OP1 | LPAR | RCONST | SOLVAL))
+			return (TRUE);
+		break;
+	case EXPR:
+	case RCONST:
+	case SOLVAL:
+	case STRING:
+	case RPAR:
+		if ((!input_token.type) & (EOI | RPAR | OP1 | OP2 | OP3))
+			return (TRUE);
+		break;
+	case EOI:
+		break;
+	default:
+		return (TRUE);
+	}
+	return (FALSE);
 }
 
 /************************************************************************
@@ -113,40 +113,40 @@ int detect_error() {
  ************************************************************************/
 char *parse_expr(char *str, struct vec_str **out) {
 
-    /*make the return null to handle error conditions*/
-    out[0] = NULL;
+	/*make the return null to handle error conditions*/
+	out[0] = NULL;
 
-    /*initialize the stack*/
-    st_pnt = 0;
-    stack[st_pnt].type = TOPSTK;
-    stack[st_pnt].value.ival = 0;
+	/*initialize the stack*/
+	st_pnt = 0;
+	stack[st_pnt].type = TOPSTK;
+	stack[st_pnt].value.ival = 0;
 
-    /*repeat until an error or end of input encountered*/
-    do {
+	/*repeat until an error or end of input encountered*/
+	do {
 
-        /*get an input token for parsing*/
-        if (lexical(str, &input_token) == -1)
-            return ("unrecognized strings in expression\n");
+		/*get an input token for parsing*/
+		if (lexical(str, &input_token) == -1)
+			return ("unrecognized strings in expression\n");
 
-        /*check for an error*/
-        if (detect_error())
-            return ("grammar rule violated in expression\n");
+		/*check for an error*/
+		if (detect_error())
+			return ("grammar rule violated in expression\n");
 
-        /*else reduce it until we can't no more*/
-        while (reduce())
-            ;
+		/*else reduce it until we can't no more*/
+		while (reduce())
+			;
 
-        /*push the now reduced input token onto the top of stack*/
-        stack[++st_pnt] = input_token;
+		/*push the now reduced input token onto the top of stack*/
+		stack[++st_pnt] = input_token;
 
-    } while (input_token.type != EOI);
+	} while (input_token.type != EOI);
 
-    /*make sure we were able to fully reduce it all*/
-    if ((st_pnt != 2) || (stack[0].type != TOPSTK) || (stack[1].type != EXPR) ||
-        (stack[2].type != EOI))
-        return ("grammar rule violated in expression\n");
+	/*make sure we were able to fully reduce it all*/
+	if ((st_pnt != 2) || (stack[0].type != TOPSTK) || (stack[1].type != EXPR) ||
+		(stack[2].type != EOI))
+		return ("grammar rule violated in expression\n");
 
-    /*set up the pointers*/
-    out[0] = stack[1].value.bval;
-    return (NULL);
+	/*set up the pointers*/
+	out[0] = stack[1].value.bval;
+	return (NULL);
 }

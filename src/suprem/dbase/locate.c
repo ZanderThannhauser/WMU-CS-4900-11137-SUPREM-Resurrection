@@ -18,6 +18,8 @@
 
 #include <stdio.h>
 
+#include "./src/debug.h"
+
 #include "./src/suprem/include/constant.h"
 #include "./src/suprem/include/geom.h"
 #include "./src/suprem/include/global.h"
@@ -31,27 +33,27 @@
  * Would be macros were C perfect. Returns 3 if anything went wrong.
  *----------------------------------------------------------------------*/
 int twhich(int in, int wanted) {
-    int j;
-    for (j = 0; j < nedg; j++)
-        if (tri[in]->nb[j] == wanted)
-            break;
-    return (j);
+	int j;
+	for (j = 0; j < nedg; j++)
+		if (tri[in]->nb[j] == wanted)
+			break;
+	return (j);
 }
 
 int nwhich(int in, int wanted) {
-    int j;
-    for (j = 0; j < nvrt; j++)
-        if (tri[in]->nd[j] == wanted)
-            break;
-    return (j);
+	int j;
+	for (j = 0; j < nvrt; j++)
+		if (tri[in]->nd[j] == wanted)
+			break;
+	return (j);
 }
 
 int ewhich(int it, int wanted) {
-    int j;
-    for (j = 0; j < num_edge(it); j++)
-        if (edg_ele(it, j) == wanted)
-            break;
-    return (j);
+	int j;
+	for (j = 0; j < num_edge(it); j++)
+		if (edg_ele(it, j) == wanted)
+			break;
+	return (j);
 }
 
 /*-----------------NODE_MAT---------------------------------------------
@@ -59,12 +61,17 @@ int ewhich(int it, int wanted) {
  * -1 for bad.
  *----------------------------------------------------------------------*/
 int node_mat(int in, int wanted) {
-    int ip, nx;
-    ip = pt_nd(in);
+	int ip, nx;
+	ENTER;
 
-    for (nx = 0; nx < num_nd(ip); nx++)
-        if (mat_nd(nd_pt(ip, nx)) == wanted)
-            return (nd_pt(ip, nx));
+	ip = pt_nd(in);
 
-    return (-1);
+	for (nx = 0; nx < num_nd(ip); nx++)
+		if (mat_nd(nd_pt(ip, nx)) == wanted) {
+			EXIT;
+			return (nd_pt(ip, nx));
+		}
+
+	EXIT;
+	return (-1);
 }

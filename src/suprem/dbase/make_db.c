@@ -63,39 +63,39 @@
  *									*
  ************************************************************************/
 void create_db(int mk_nodes) {
-    int i;
-    ENTER;
+	int i;
+	ENTER;
 
-    /*make edge boundaries self-consistent with the points*/
-    bc_dirty = FALSE;
-    make_bc();
+	/*make edge boundaries self-consistent with the points*/
+	bc_dirty = FALSE;
+	make_bc();
 
-    /*if we have no nodes read in*/
-    if (mk_nodes) {
-        /*first order of business is to create the nodes*/
-        make_nodes();
-        /*next, change the triangle to point data to triangle to nodes*/
-        tripts = FALSE;
-        tri_to_node();
-    } else {
-        /*make Gas nodes for points if they need them and don't have them*/
-        for (i = 0; i < np; i++)
-            if (is_surf(i) && (node_mat(nd_pt(i, 0), GAS) == -1))
-                mk_nd(i, GAS);
+	/*if we have no nodes read in*/
+	if (mk_nodes) {
+		/*first order of business is to create the nodes*/
+		make_nodes();
+		/*next, change the triangle to point data to triangle to nodes*/
+		tripts = FALSE;
+		tri_to_node();
+	} else {
+		/*make Gas nodes for points if they need them and don't have them*/
+		for (i = 0; i < np; i++)
+			if (is_surf(i) && (node_mat(nd_pt(i, 0), GAS) == -1))
+				mk_nd(i, GAS);
 
-        /*get the point to node lists set up*/
-        pt_to_node();
-    }
+		/*get the point to node lists set up*/
+		pt_to_node();
+	}
 
-    /*next, change the triangle to point data to triangle to nodes*/
-    if (tripts) {
-        tripts = FALSE;
-        tri_to_node();
-    }
+	/*next, change the triangle to point data to triangle to nodes*/
+	if (tripts) {
+		tripts = FALSE;
+		tri_to_node();
+	}
 
-    /*next build the connectivity pieces that are not fundamental*/
-    bd_connect("Mesh Creation");
-    EXIT;
+	/*next build the connectivity pieces that are not fundamental*/
+	bd_connect("Mesh Creation");
+	EXIT;
 }
 
 /************************************************************************
@@ -107,48 +107,48 @@ void create_db(int mk_nodes) {
  ************************************************************************/
 void bd_connect(char *when) {
 
-    int r;
-    ENTER;
+	int r;
+	ENTER;
 
-    /*free all existing skeletons*/
-    while (nsreg > 0)
-        free_skel(0);
+	/*free all existing skeletons*/
+	while (nsreg > 0)
+		free_skel(0);
 
-    /*clean up any dead stuff first*/
-    if (need_waste) {
-        need_waste = FALSE;
-        waste();
-    }
+	/*clean up any dead stuff first*/
+	if (need_waste) {
+		need_waste = FALSE;
+		waste();
+	}
 
-    /*make sure the damn triangles are clockwise ordered*/
-    if (clkws_dirty) {
-        clkws_dirty = FALSE;
-        clock_tri();
-    }
+	/*make sure the damn triangles are clockwise ordered*/
+	if (clkws_dirty) {
+		clkws_dirty = FALSE;
+		clock_tri();
+	}
 
-    /*next, generate the node to triangle lists*/
-    node_to_tri();
+	/*next, generate the node to triangle lists*/
+	node_to_tri();
 
-    /*finally, generate the neighbor lists*/
-    if (neigh_dirty) {
-        neigh_dirty = FALSE;
-        nxtel();
-    }
+	/*finally, generate the neighbor lists*/
+	if (neigh_dirty) {
+		neigh_dirty = FALSE;
+		nxtel();
+	}
 
-    /*generate edges*/
-    build_edg();
+	/*generate edges*/
+	build_edg();
 
-    /*build geometry*/
-    geom(when);
-    geom_dirty = FALSE;
+	/*build geometry*/
+	geom(when);
+	geom_dirty = FALSE;
 
-    /*generate regions*/
-    for (r = 0; r < nreg; r++)
-        build_reg(r);
+	/*generate regions*/
+	for (r = 0; r < nreg; r++)
+		build_reg(r);
 
-    /*check for consistency*/
-    mtest1(when);
-    mtest2(when);
+	/*check for consistency*/
+	mtest1(when);
+	mtest2(when);
 
-    EXIT;
+	EXIT;
 }

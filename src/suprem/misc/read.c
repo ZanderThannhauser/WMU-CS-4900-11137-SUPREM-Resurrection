@@ -43,33 +43,33 @@
  *									*
  ************************************************************************/
 int read_ukfile(char *name) {
-    FILE *fd;
-    char *file;
-    int status;
-    int i, j;
+	FILE *fd;
+	char *file;
+	int status;
+	int i, j;
 
-    /*try several places to get the key file name*/
-    if ((file = (char *)getenv("KEYFILE")) == NULL)
-        /*use the system wide one*/
-        file = name;
+	/*try several places to get the key file name*/
+	if ((file = (char *)getenv("KEYFILE")) == NULL)
+		/*use the system wide one*/
+		file = name;
 
-    fd = fopen(file, "r");
-    if (fd == NULL) {
-        fprintf(stderr, "where is the unformatted key file???\n");
-        return (-1);
-    }
+	fd = fopen(file, "r");
+	if (fd == NULL) {
+		fprintf(stderr, "where is the unformatted key file???\n");
+		return (-1);
+	}
 
-    status = read_list(cards - 1, fd);
+	status = read_list(cards - 1, fd);
 
-    /*now match up the command names with the card names*/
-    for (i = 0; cards[i] && strlen(cards[i]->name) != 0; i++) {
-        j = get_proc(cards[i]->name);
-        if (j != -1)
-            command[j].param = i;
-        else
-            fprintf(stderr, "no command defined for name %s\n", cards[i]->name);
-    }
+	/*now match up the command names with the card names*/
+	for (i = 0; cards[i] && strlen(cards[i]->name) != 0; i++) {
+		j = get_proc(cards[i]->name);
+		if (j != -1)
+			command[j].param = i;
+		else
+			fprintf(stderr, "no command defined for name %s\n", cards[i]->name);
+	}
 
-    fclose(fd);
-    return (status);
+	fclose(fd);
+	return (status);
 }

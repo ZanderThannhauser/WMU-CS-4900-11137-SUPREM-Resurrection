@@ -47,29 +47,29 @@ int get_value(par, name, value) struct par_str **par;
 char *name;
 val_str *value;
 {
-    int i;
-    register char *s, *ss;
+	int i;
+	register char *s, *ss;
 
-    /*check each parameter*/
-    for (; par[0] != NULL; par++) {
+	/*check each parameter*/
+	for (; par[0] != NULL; par++) {
 
-        if (*(par[0]->name) == *name) {
-            for (s = par[0]->name, ss = name; *ss == *s && *s; s++, ss++)
-                ;
-            if (!*ss || !*s) {
-                /*found it go home*/
-                *value = par[0]->value;
-                return (par[0]->type & SPECIFIED);
-            }
-        }
-        /*check any subparameters...*/
-        if (par[0]->param != NULL) {
-            if ((i = get_value(par[0]->param, name, value)) >= 0)
-                return (i);
-        }
-    }
-    value->ival = 0;
-    return (-1);
+		if (*(par[0]->name) == *name) {
+			for (s = par[0]->name, ss = name; *ss == *s && *s; s++, ss++)
+				;
+			if (!*ss || !*s) {
+				/*found it go home*/
+				*value = par[0]->value;
+				return (par[0]->type & SPECIFIED);
+			}
+		}
+		/*check any subparameters...*/
+		if (par[0]->param != NULL) {
+			if ((i = get_value(par[0]->param, name, value)) >= 0)
+				return (i);
+		}
+	}
+	value->ival = 0;
+	return (-1);
 }
 
 /************************************************************************
@@ -81,12 +81,12 @@ val_str *value;
  *									*
  ************************************************************************/
 int get_bool(struct par_str *par, char *name) {
-    val_str value;
+	val_str value;
 
-    if (get_value(par->param, name, &value) != -1)
-        return (value.ival);
+	if (get_value(par->param, name, &value) != -1)
+		return (value.ival);
 
-    return (0);
+	return (0);
 }
 
 /************************************************************************
@@ -98,11 +98,11 @@ int get_bool(struct par_str *par, char *name) {
  *									*
  ************************************************************************/
 char *get_string(struct par_str *par, char *name) {
-    val_str value;
+	val_str value;
 
-    if (get_value(par->param, name, &value) != -1)
-        return (value.sval);
-    return (NULL);
+	if (get_value(par->param, name, &value) != -1)
+		return (value.sval);
+	return (NULL);
 }
 
 /************************************************************************
@@ -114,11 +114,11 @@ char *get_string(struct par_str *par, char *name) {
  *									*
  ************************************************************************/
 int get_int(struct par_str *par, char *name) {
-    val_str value;
+	val_str value;
 
-    if (get_value(par->param, name, &value) != -1)
-        return (value.ival);
-    return (0);
+	if (get_value(par->param, name, &value) != -1)
+		return (value.ival);
+	return (0);
 }
 
 /************************************************************************
@@ -130,11 +130,11 @@ int get_int(struct par_str *par, char *name) {
  *									*
  ************************************************************************/
 float get_float(struct par_str *par, char *name) {
-    val_str value;
+	val_str value;
 
-    if (get_value(par->param, name, &value) != -1)
-        return (value.dval);
-    return (0);
+	if (get_value(par->param, name, &value) != -1)
+		return (value.dval);
+	return (0);
 }
 
 /************************************************************************
@@ -147,11 +147,11 @@ float get_float(struct par_str *par, char *name) {
  *									*
  ************************************************************************/
 int is_specified(struct par_str *par, char *name) {
-    int temp;
-    val_str value;
+	int temp;
+	val_str value;
 
-    if ((temp = get_value(par->param, name, &value)) != -1)
-        return (temp);
+	if ((temp = get_value(par->param, name, &value)) != -1)
+		return (temp);
 
-    return (0);
+	return (0);
 }

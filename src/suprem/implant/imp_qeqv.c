@@ -36,37 +36,25 @@
 /* end of declarations*/
 
 double qeqv(double xst, double xen, double qtot, double dx,
-            struct imp_info *data) {
-    double x, val, ov;
-    double q = 0.0;
-    ENTER;
+			struct imp_info *data) {
+	double x, val, ov;
+	double q = 0.0;
 
-    HERE;
-    verpv(xst);
-    HERE;
+	/*integrate from x = 0 until we get the correct dose*/
+	ov = imp_vert(xst, data);
 
-    /*integrate from x = 0 until we get the correct dose*/
-    HERE;
-    ov = imp_vert(xst, data);
-    HERE;
+	for (x = xst + dx; (x < xen - dx) && (x < data->maxz); x += dx) {
+		val = imp_vert(x, data);
+		q += 0.5 * (val + ov) * dx;
+		ov = val;
+	}
 
-    for (x = xst + dx; (x < xen - dx) && (x < data->maxz); x += dx) {
-        HERE;
-        val = imp_vert(x, data);
-        HERE;
-        q += 0.5 * (val + ov) * dx;
-        ov = val;
-    }
+	/*add the excess for the last bit*/
+	if (x > (xen - dx)) {
+		val = imp_vert(xen, data);
+		q += 0.5 * (val + ov) * (xen - x);
+	}
 
-    /*add the excess for the last bit*/
-    if (x > (xen - dx)) {
-        HERE;
-        val = imp_vert(xen, data);
-        HERE;
-        q += 0.5 * (val + ov) * (xen - x);
-    }
-
-    q = q * 1e-4;
-    EXIT;
-    return (q * qtot / data->area);
+	q = q * 1e-4;
+	return (q * qtot / data->area);
 }

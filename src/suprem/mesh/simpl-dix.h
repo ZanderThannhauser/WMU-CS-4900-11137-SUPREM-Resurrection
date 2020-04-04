@@ -108,31 +108,31 @@
 #define Alloc(type) ((type *)CheckPtr((char *)malloc(sizeof(type))))
 
 #define AllocN(n, type)                                                        \
-    ((type *)CheckPtr((char *)malloc((unsigned)(n * sizeof(type)))))
+	((type *)CheckPtr((char *)malloc((unsigned)(n * sizeof(type)))))
 
 #define SwapInt(Int1, Int2)                                                    \
-    {                                                                          \
-        int IntTmp;                                                            \
-        IntTmp = Int1;                                                         \
-        Int1 = Int2;                                                           \
-        Int2 = IntTmp;                                                         \
-    }
+	{                                                                          \
+		int IntTmp;                                                            \
+		IntTmp = Int1;                                                         \
+		Int1 = Int2;                                                           \
+		Int2 = IntTmp;                                                         \
+	}
 
 #define SwapFloat(Float1, Float2)                                              \
-    {                                                                          \
-        float FloatTmp;                                                        \
-        FloatTmp = Float1;                                                     \
-        Float1 = Float2;                                                       \
-        Float2 = FloatTmp;                                                     \
-    }
+	{                                                                          \
+		float FloatTmp;                                                        \
+		FloatTmp = Float1;                                                     \
+		Float1 = Float2;                                                       \
+		Float2 = FloatTmp;                                                     \
+	}
 
 #define SwapPtr(Ptr1, Ptr2)                                                    \
-    {                                                                          \
-        char *PtrTmp;                                                          \
-        PtrTmp = Ptr1;                                                         \
-        Ptr1 = Ptr2;                                                           \
-        Ptr2 = PtrTmp;                                                         \
-    }
+	{                                                                          \
+		char *PtrTmp;                                                          \
+		PtrTmp = Ptr1;                                                         \
+		Ptr1 = Ptr2;                                                           \
+		Ptr2 = PtrTmp;                                                         \
+	}
 
 #define loop for (;;)
 #define not(A)(A == TRUE ? FALSE : TRUE)
@@ -150,33 +150,33 @@
 #define VertexDrawLastPoint 0x0020
 
 typedef struct {
-    float top, bottom;
-    float left, right;
+	float top, bottom;
+	float left, right;
 } floatBound;
 
 typedef struct float_point {
-    float x;
-    float y;
+	float x;
+	float y;
 } floatPoint;
 
 typedef struct float_path {
-    struct float_point point;
-    struct float_path *next;
+	struct float_point point;
+	struct float_path *next;
 } floatPath;
 
 typedef struct {
-    int top, bottom;
-    int left, right;
+	int top, bottom;
+	int left, right;
 } intBound;
 
 typedef struct int_point {
-    int x;
-    int y;
+	int x;
+	int y;
 } intPoint;
 
 typedef struct int_path {
-    struct int_point point;
-    struct int_path *next;
+	struct int_point point;
+	struct int_path *next;
 } intPath;
 
 /*

@@ -35,19 +35,19 @@
 /* end of declarations*/
 
 void gtprs(double rp, double sigp, double gam1, double kurt,
-           struct imp_info *cvals) {
+		   struct imp_info *cvals) {
 
-    double ca, gam1sq;
+	double ca, gam1sq;
 
-    /* ---- start of gtprs ---- */
+	/* ---- start of gtprs ---- */
 
-    /* The 4th moment is in the tables, just get it.  */
+	/* The 4th moment is in the tables, just get it.  */
 
-    /* now the Pearson coefficients.... */
-    gam1sq = gam1 * gam1;
-    ca = 10. * kurt - 12. * gam1sq - 18.; /* cap A.  */
+	/* now the Pearson coefficients.... */
+	gam1sq = gam1 * gam1;
+	ca = 10. * kurt - 12. * gam1sq - 18.; /* cap A.  */
 
-    cvals->vert[PRS_A0] = -gam1 * sigp * (kurt + 3.) / ca;
-    cvals->vert[PRS_B0] = -sigp * sigp * (4. * kurt - 3. * gam1sq) / ca;
-    cvals->vert[PRS_B2] = -(2. * kurt - 3. * gam1sq - 6.) / ca;
+	cvals->vert[PRS_A0] = -gam1 * sigp * (kurt + 3.) / ca;
+	cvals->vert[PRS_B0] = -sigp * sigp * (4. * kurt - 3. * gam1sq) / ca;
+	cvals->vert[PRS_B2] = -(2. * kurt - 3. * gam1sq - 6.) / ca;
 }

@@ -69,111 +69,111 @@
  *									*
  ************************************************************************/
 char *eval_real(struct vec_str *expr, float *val) {
-    float lval, rval;
-    char *err;
-    ENTER;
+	float lval, rval;
+	char *err;
+	ENTER;
 
-    /* 2020: to fix error: "may be used uninitialized in this function"*/
-    lval = 0, rval = 0;
+	/* 2020: to fix error: "may be used uninitialized in this function"*/
+	lval = 0, rval = 0;
 
-    /*evaluate the kids*/
-    if (expr->left != NULL)
-        if ((err = eval_real(expr->left, &lval)) != NULL) {
-            EXIT;
-            return (err);
-        }
+	/*evaluate the kids*/
+	if (expr->left != NULL)
+		if ((err = eval_real(expr->left, &lval)) != NULL) {
+			EXIT;
+			return (err);
+		}
 
-    if (expr->right != NULL)
-        if ((err = eval_real(expr->right, &rval)) != NULL) {
-            EXIT;
-            return (err);
-        }
+	if (expr->right != NULL)
+		if ((err = eval_real(expr->right, &rval)) != NULL) {
+			EXIT;
+			return (err);
+		}
 
-    /*switch on the type of value contained in the passed argument*/
-    switch (expr->type) {
-    case OP1: /*plus or minus*/
-        /*check the unary case out*/
-        if (expr->left == NULL) {
-            if (expr->value.ival == '+')
-                *val = rval;
-            if (expr->value.ival == '-')
-                *val = -rval;
-        } else {
-            if (expr->value.ival == '+')
-                *val = lval + rval;
-            if (expr->value.ival == '-')
-                *val = lval - rval;
-        }
-        break;
-    case OP2: /*multiplication / division*/
-        if (expr->value.ival == '*')
-            *val = lval * rval;
-        if (expr->value.ival == '/')
-            *val = lval / rval;
-        break;
-    case OP3: /*exponentiation*/
-        if (expr->value.ival == '^')
-            *val = pow(lval, rval);
-        break;
-    case FN: /*a function specifier*/
-        switch (expr->value.ival) {
-        case LOG10:
-            *val = log10(rval);
-            break;
-        case LOG:
-            *val = log(rval);
-            break;
-        case EXP:
-            *val = exp(rval);
-            break;
-        case ERF:
-            *val = (double)erf(rval);
-            break;
-        case ERFC:
-            *val = (double)erfc(rval);
-            break;
-        case ABS:
-            *val = (rval > 0.0) ? (rval) : (-rval);
-            break;
-        case SQRT:
-            *val = (double)sqrt(rval);
-            break;
-        case SIGN:
-            if (rval > 0.0)
-                *val = 1.0;
-            else if (rval < 0.0)
-                *val = -1.0;
-            else
-                *val = 0.0;
-            break;
-        case X:
-        case Y:
-        case Z:
-            if ((expr->left == NULL) || (expr->right == NULL)) {
-                EXIT;
-                return ("x,y,and z functions require two arguments\n");
-            } else
-                *val = sol_interp(expr->value.ival, lval, rval);
-            break;
-        default:
-            *val = interface(expr->value.ival, rval);
-        }
-        break;
-    case RCONST:
-        *val = expr->value.dval;
-        break;
-    case VFN:
-    case SOLVAL:
-        EXIT;
-        return ("a vector solution value is illegal here\n");
-        break;
-    case STRING:
-        EXIT;
-        return ("string not allowed in expression\n");
-        break;
-    }
-    EXIT;
-    return (NULL);
+	/*switch on the type of value contained in the passed argument*/
+	switch (expr->type) {
+	case OP1: /*plus or minus*/
+		/*check the unary case out*/
+		if (expr->left == NULL) {
+			if (expr->value.ival == '+')
+				*val = rval;
+			if (expr->value.ival == '-')
+				*val = -rval;
+		} else {
+			if (expr->value.ival == '+')
+				*val = lval + rval;
+			if (expr->value.ival == '-')
+				*val = lval - rval;
+		}
+		break;
+	case OP2: /*multiplication / division*/
+		if (expr->value.ival == '*')
+			*val = lval * rval;
+		if (expr->value.ival == '/')
+			*val = lval / rval;
+		break;
+	case OP3: /*exponentiation*/
+		if (expr->value.ival == '^')
+			*val = pow(lval, rval);
+		break;
+	case FN: /*a function specifier*/
+		switch (expr->value.ival) {
+		case LOG10:
+			*val = log10(rval);
+			break;
+		case LOG:
+			*val = log(rval);
+			break;
+		case EXP:
+			*val = exp(rval);
+			break;
+		case ERF:
+			*val = (double)erf(rval);
+			break;
+		case ERFC:
+			*val = (double)erfc(rval);
+			break;
+		case ABS:
+			*val = (rval > 0.0) ? (rval) : (-rval);
+			break;
+		case SQRT:
+			*val = (double)sqrt(rval);
+			break;
+		case SIGN:
+			if (rval > 0.0)
+				*val = 1.0;
+			else if (rval < 0.0)
+				*val = -1.0;
+			else
+				*val = 0.0;
+			break;
+		case X:
+		case Y:
+		case Z:
+			if ((expr->left == NULL) || (expr->right == NULL)) {
+				EXIT;
+				return ("x,y,and z functions require two arguments\n");
+			} else
+				*val = sol_interp(expr->value.ival, lval, rval);
+			break;
+		default:
+			*val = interface(expr->value.ival, rval);
+		}
+		break;
+	case RCONST:
+		*val = expr->value.dval;
+		break;
+	case VFN:
+	case SOLVAL:
+		EXIT;
+		return ("a vector solution value is illegal here\n");
+		break;
+	case STRING:
+		EXIT;
+		return ("string not allowed in expression\n");
+		break;
+	}
+	EXIT;
+	return (NULL);
 }
 
 /************************************************************************
@@ -186,139 +186,139 @@ char *eval_real(struct vec_str *expr, float *val) {
  *									*
  ************************************************************************/
 char *eval_vec(struct vec_str *expr, float *val) {
-    float *lval, *rval;
-    float tmp;
-    char *err = NULL;
-    int i;
+	float *lval, *rval;
+	float tmp;
+	char *err = NULL;
+	int i;
 
-    lval = salloc(float, nn);
-    rval = salloc(float, nn);
+	lval = salloc(float, nn);
+	rval = salloc(float, nn);
 
-    /*evaluate the kids*/
-    if (expr->type != VFN) {
-        if (expr->left != NULL)
-            if ((err = eval_vec(expr->left, lval)) != NULL) {
-                sfree(lval);
-                sfree(rval);
-                return (err);
-            }
-        if (expr->right != NULL)
-            if ((err = eval_vec(expr->right, rval)) != NULL) {
-                sfree(lval);
-                sfree(rval);
-                return (err);
-            }
-    }
+	/*evaluate the kids*/
+	if (expr->type != VFN) {
+		if (expr->left != NULL)
+			if ((err = eval_vec(expr->left, lval)) != NULL) {
+				sfree(lval);
+				sfree(rval);
+				return (err);
+			}
+		if (expr->right != NULL)
+			if ((err = eval_vec(expr->right, rval)) != NULL) {
+				sfree(lval);
+				sfree(rval);
+				return (err);
+			}
+	}
 
-    /*switch on the type of value contained in the passed argument*/
-    switch (expr->type) {
-    case OP1: /*plus or minus*/
-        /*check the unary case out*/
-        if (expr->left == NULL) {
-            if (expr->value.ival == '+')
-                for (i = 0; i < nn; i++)
-                    val[i] = rval[i];
-            if (expr->value.ival == '-')
-                for (i = 0; i < nn; i++)
-                    val[i] = -rval[i];
-        } else {
-            if (expr->value.ival == '+')
-                for (i = 0; i < nn; i++)
-                    val[i] = lval[i] + rval[i];
-            if (expr->value.ival == '-')
-                for (i = 0; i < nn; i++)
-                    val[i] = lval[i] - rval[i];
-        }
-        break;
-    case OP2: /*multiplication / division*/
-        if (expr->value.ival == '*')
-            for (i = 0; i < nn; i++)
-                val[i] = lval[i] * rval[i];
-        if (expr->value.ival == '/')
-            for (i = 0; i < nn; i++)
-                val[i] = lval[i] / rval[i];
-        break;
-    case OP3: /*exponentiation*/
-        if (expr->value.ival == '^')
-            for (i = 0; i < nn; i++)
-                val[i] = pow(lval[i], rval[i]);
-        break;
-    case FN: /*a function specifier*/
-        switch (expr->value.ival) {
-        case LOG10:
-            for (i = 0; i < nn; i++)
-                val[i] = log10(rval[i]);
-            break;
-        case LOG:
-            for (i = 0; i < nn; i++)
-                val[i] = log(rval[i]);
-            break;
-        case EXP:
-            for (i = 0; i < nn; i++)
-                val[i] = exp(rval[i]);
-            break;
-        case ERF:
-            for (i = 0; i < nn; i++)
-                val[i] = erf(rval[i]);
-            break;
-        case ERFC:
-            for (i = 0; i < nn; i++)
-                val[i] = erfc(rval[i]);
-            break;
-        case ABS:
-            for (i = 0; i < nn; i++)
-                val[i] = (rval[i] > 0.0) ? (rval[i]) : (-rval[i]);
-            break;
-        case SQRT:
-            for (i = 0; i < nn; i++)
-                val[i] = (double)sqrt(rval[i]);
-            break;
-        case SIGN:
-            for (i = 0; i < nn; i++) {
-                if (rval[i] > 0.0)
-                    val[i] = 1.0;
-                else if (rval[i] < 0.0)
-                    val[i] = -1.0;
-                else
-                    val[i] = 0.0;
-            }
-            break;
-        case X:
-        case Y:
-        case Z:
-            if ((expr->left == NULL) || (expr->right == NULL))
-                err = "x,y,and z functions require two arguments\n";
-            else {
-                tmp = sol_interp(expr->value.ival, *lval, *rval);
-                for (i = 0; i < nn; i++)
-                    val[i] = tmp;
-            }
-            break;
-        }
-        break;
+	/*switch on the type of value contained in the passed argument*/
+	switch (expr->type) {
+	case OP1: /*plus or minus*/
+		/*check the unary case out*/
+		if (expr->left == NULL) {
+			if (expr->value.ival == '+')
+				for (i = 0; i < nn; i++)
+					val[i] = rval[i];
+			if (expr->value.ival == '-')
+				for (i = 0; i < nn; i++)
+					val[i] = -rval[i];
+		} else {
+			if (expr->value.ival == '+')
+				for (i = 0; i < nn; i++)
+					val[i] = lval[i] + rval[i];
+			if (expr->value.ival == '-')
+				for (i = 0; i < nn; i++)
+					val[i] = lval[i] - rval[i];
+		}
+		break;
+	case OP2: /*multiplication / division*/
+		if (expr->value.ival == '*')
+			for (i = 0; i < nn; i++)
+				val[i] = lval[i] * rval[i];
+		if (expr->value.ival == '/')
+			for (i = 0; i < nn; i++)
+				val[i] = lval[i] / rval[i];
+		break;
+	case OP3: /*exponentiation*/
+		if (expr->value.ival == '^')
+			for (i = 0; i < nn; i++)
+				val[i] = pow(lval[i], rval[i]);
+		break;
+	case FN: /*a function specifier*/
+		switch (expr->value.ival) {
+		case LOG10:
+			for (i = 0; i < nn; i++)
+				val[i] = log10(rval[i]);
+			break;
+		case LOG:
+			for (i = 0; i < nn; i++)
+				val[i] = log(rval[i]);
+			break;
+		case EXP:
+			for (i = 0; i < nn; i++)
+				val[i] = exp(rval[i]);
+			break;
+		case ERF:
+			for (i = 0; i < nn; i++)
+				val[i] = erf(rval[i]);
+			break;
+		case ERFC:
+			for (i = 0; i < nn; i++)
+				val[i] = erfc(rval[i]);
+			break;
+		case ABS:
+			for (i = 0; i < nn; i++)
+				val[i] = (rval[i] > 0.0) ? (rval[i]) : (-rval[i]);
+			break;
+		case SQRT:
+			for (i = 0; i < nn; i++)
+				val[i] = (double)sqrt(rval[i]);
+			break;
+		case SIGN:
+			for (i = 0; i < nn; i++) {
+				if (rval[i] > 0.0)
+					val[i] = 1.0;
+				else if (rval[i] < 0.0)
+					val[i] = -1.0;
+				else
+					val[i] = 0.0;
+			}
+			break;
+		case X:
+		case Y:
+		case Z:
+			if ((expr->left == NULL) || (expr->right == NULL))
+				err = "x,y,and z functions require two arguments\n";
+			else {
+				tmp = sol_interp(expr->value.ival, *lval, *rval);
+				for (i = 0; i < nn; i++)
+					val[i] = tmp;
+			}
+			break;
+		}
+		break;
 
-    case RCONST:
-        for (i = 0; i < nn; i++)
-            val[i] = expr->value.dval;
-        break;
+	case RCONST:
+		for (i = 0; i < nn; i++)
+			val[i] = expr->value.dval;
+		break;
 
-    case SOLVAL:
-        err = get_solval(val, expr->value.ival);
-        break;
+	case SOLVAL:
+		err = get_solval(val, expr->value.ival);
+		break;
 
-    case VFN:
-        if ((err = vfunc(rval, expr->value.ival, expr)) == NULL)
-            for (i = 0; i < nn; i++)
-                val[i] = rval[i];
-        break;
+	case VFN:
+		if ((err = vfunc(rval, expr->value.ival, expr)) == NULL)
+			for (i = 0; i < nn; i++)
+				val[i] = rval[i];
+		break;
 
-    case STRING:
-        err = "string not allowed in expression";
-        break;
-    }
-    sfree(lval);
-    sfree(rval);
-    return (err);
+	case STRING:
+		err = "string not allowed in expression";
+		break;
+	}
+	sfree(lval);
+	sfree(rval);
+	return (err);
 }
 
 /************************************************************************
@@ -330,7 +330,7 @@ char *eval_vec(struct vec_str *expr, float *val) {
  *									*
  ************************************************************************/
 int islogexp(struct vec_str *expr) {
-    return ((expr->type == FN) && (expr->value.ival == LOG10));
+	return ((expr->type == FN) && (expr->value.ival == LOG10));
 }
 
 /************************************************************************
@@ -341,11 +341,11 @@ int islogexp(struct vec_str *expr) {
  *									*
  ************************************************************************/
 void free_expr(struct vec_str *t) {
-    if (t == NULL)
-        return;
-    free_expr(t->left);
-    free_expr(t->right);
-    if (t->type == STRING)
-        sfree(t->value.sval);
-    sfree(t);
+	if (t == NULL)
+		return;
+	free_expr(t->left);
+	free_expr(t->right);
+	if (t->type == STRING)
+		sfree(t->value.sval);
+	sfree(t);
 }

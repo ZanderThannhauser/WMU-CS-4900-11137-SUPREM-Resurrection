@@ -38,26 +38,26 @@ void lineseg(int ir, int rbn);
  * Triangulate a region. The core routine.
  *----------------------------------------------------------------------*/
 void grid(int ir, int rbn, int bflag, int spflag) {
-    if (mode == TWOD)
-        triang(ir, rbn, bflag, spflag);
-    else if (mode == ONED)
-        lineseg(ir, rbn);
-    else
-        panic("Three dimensional regrid is not yet supported");
+	if (mode == TWOD)
+		triang(ir, rbn, bflag, spflag);
+	else if (mode == ONED)
+		lineseg(ir, rbn);
+	else
+		panic("Three dimensional regrid is not yet supported");
 }
 
 /*
  * 	Generate the line segments on a skeleton into elements
  */
 void lineseg(int ir, int rbn) {
-    struct LLedge *bp;
-    int i;
-    int n[2];
+	struct LLedge *bp;
+	int i;
+	int n[2];
 
-    for (i = 1, bp = sreg[ir]->bnd; i || bp != sreg[ir]->bnd;
-         i = 0, bp = bp->next) {
-        n[0] = nd_edg(bp->edge, 0);
-        n[1] = nd_edg(bp->edge, 1);
-        (void)mk_ele_nd(2, n, rbn);
-    }
+	for (i = 1, bp = sreg[ir]->bnd; i || bp != sreg[ir]->bnd;
+		 i = 0, bp = bp->next) {
+		n[0] = nd_edg(bp->edge, 0);
+		n[1] = nd_edg(bp->edge, 1);
+		(void)mk_ele_nd(2, n, rbn);
+	}
 }

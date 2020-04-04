@@ -37,14 +37,14 @@ typedef int (*PTR_FNC)();
 typedef double (*PTR_DBLFNC)();
 
 /*define constants for each impurity*/
-#define V 0    /*Vacancies*/
-#define I 1    /*Interstitials*/
+#define V 0	/*Vacancies*/
+#define I 1	/*Interstitials*/
 #define As 2   /*Arsenic*/
-#define P 3    /*Phosphorus*/
+#define P 3	/*Phosphorus*/
 #define Sb 4   /*antimony*/
-#define B 5    /*Boron*/
-#define N 6    /*electron concentration*/
-#define H 7    /*hole concentration*/
+#define B 5	/*Boron*/
+#define N 6	/*electron concentration*/
+#define H 7	/*hole concentration*/
 #define XVEL 8 /*X velocity*/
 #define YVEL 9 /*Y velocity*/
 #define O2 10  /*Dry O2*/
@@ -95,45 +95,45 @@ struct bound_str;
 
 /*declare an structure for each impurity of all its needed data*/
 struct imp_str {
-    double constant[MAXMAT][25][2]; /*diffusion and generation constants*/
-    double seg[8][MAXMAT][MAXMAT];  /*the segregation coefficients*/
-    int flags;                      /*steady state, diffusing, or mobile*/
+	double constant[MAXMAT][25][2]; /*diffusion and generation constants*/
+	double seg[8][MAXMAT][MAXMAT];  /*the segregation coefficients*/
+	int flags;						/*steady state, diffusing, or mobile*/
 
-    /* 2020: putting this union here to remove some*/
-    /* 'assignment from incompatible pointer type' errors!*/
-    union {
-        double (*bad_diff_coeff)();
-        void (*diff_coeff)(float, double **, double **, double *, double *,
-                           double *, double *, double *);
-    }; /*routine which calculates diff coeffs*/
+	/* 2020: putting this union here to remove some*/
+	/* 'assignment from incompatible pointer type' errors!*/
+	union {
+		double (*bad_diff_coeff)();
+		void (*diff_coeff)(float, double **, double **, double *, double *,
+						   double *, double *, double *);
+	}; /*routine which calculates diff coeffs*/
 
-    void (*coupling)(float, double *, double **, double **, double **,
-                     double **);
-    void (*boundary)(struct bound_str *); /*set up boundary conditions*/
-    PTR_FNC algebc;                       /*set up boundary conditions*/
-    /* 2020: putting this union here to remove some*/
-    /* 'assignment from incompatible pointer type' errors!*/
-    union {
-        PTR_FNC bad_active;
-        void (*active)(int, int, float, double **, double **, double **,
-                       double *);
-    }; /*active concentration calculator*/
-    void (*time_val)(int, double *,
-                     struct call_str *); /*time term calculation function*/
-    void (*block_set)(int sol, float nu1, int nu2, int *nu3, double *coeff,
-                      double **chem, double **nu4, double *nu5,
-                      double *nu6); /*block jacobian terms*/
+	void (*coupling)(float, double *, double **, double **, double **,
+					 double **);
+	void (*boundary)(struct bound_str *); /*set up boundary conditions*/
+	PTR_FNC algebc;						  /*set up boundary conditions*/
+	/* 2020: putting this union here to remove some*/
+	/* 'assignment from incompatible pointer type' errors!*/
+	union {
+		PTR_FNC bad_active;
+		void (*active)(int, int, float, double **, double **, double **,
+					   double *);
+	}; /*active concentration calculator*/
+	void (*time_val)(int, double *,
+					 struct call_str *); /*time term calculation function*/
+	void (*block_set)(int sol, float nu1, int nu2, int *nu3, double *coeff,
+					  double **chem, double **nu4, double *nu5,
+					  double *nu6); /*block jacobian terms*/
 };
 
 /*flag values and flag tests*/
-#define STEADY 0x001          /*is this a time dependent variable*/
-#define DIFFUSING 0x002       /*is this a spatial dependent variable*/
-#define MOBILE 0x004          /*is this a variable with del * D del C terms*/
-#define LOCKSTEP 0x008        /*does this have to be solved in lock step*/
-#define PSIACT 0x010          /*does the active concentration depend on psi*/
-#define PSEUDO 0x020          /*pseudo variable for diffusion?*/
+#define STEADY 0x001		  /*is this a time dependent variable*/
+#define DIFFUSING 0x002		  /*is this a spatial dependent variable*/
+#define MOBILE 0x004		  /*is this a variable with del * D del C terms*/
+#define LOCKSTEP 0x008		  /*does this have to be solved in lock step*/
+#define PSIACT 0x010		  /*does the active concentration depend on psi*/
+#define PSEUDO 0x020		  /*pseudo variable for diffusion?*/
 #define ACTIVE_ACCEPTOR 0x040 /*active acceptor*/
-#define ACTIVE 0x080          /*active distribution*/
+#define ACTIVE 0x080		  /*active distribution*/
 #define IMPLANTED_IMP 0x100   /*implanted impurity*/
 #define ALL_FLAGS 0x1ff
 #define GET_FLAGS(A) (impur[A].flags)
@@ -163,19 +163,19 @@ EXTERN int n_imp;
 
 /*structure for the parameters to be passed to the boundary code routine*/
 struct bound_str {
-    int nx[2];      /*the node numbers involved*/
-    double delta;   /*timestep*/
-    float temp;     /*temperature*/
-    double vel[2];  /*boundary velocity*/
-    double conc[2]; /*solution values*/
-    double eq[2];   /*equilibrium values*/
-    int mat[2];     /*material values*/
-    int loc[2][2];  /*coupling locations*/
-    double cpl;     /*coupling length*/
-    double **rhs;   /*right hand side*/
-    float cord[2];  /*location of the nodes*/
-    double vmax;    /*maximum velocity*/
-    double dela[2]; /*change in the area*/
+	int nx[2];		/*the node numbers involved*/
+	double delta;   /*timestep*/
+	float temp;		/*temperature*/
+	double vel[2];  /*boundary velocity*/
+	double conc[2]; /*solution values*/
+	double eq[2];   /*equilibrium values*/
+	int mat[2];		/*material values*/
+	int loc[2][2];  /*coupling locations*/
+	double cpl;		/*coupling length*/
+	double **rhs;   /*right hand side*/
+	float cord[2];  /*location of the nodes*/
+	double vmax;	/*maximum velocity*/
+	double dela[2]; /*change in the area*/
 } * bval;
 EXTERN int bcnum;
 
@@ -208,8 +208,8 @@ EXTERN int oxide_model;
  */
 
 #define add_couple(A, B, C, D, E)                                              \
-    a[B][B][A] += D;                                                           \
-    a[B][C][A] = E
+	a[B][B][A] += D;                                                           \
+	a[B][C][A] = E
 
 /*define aids for use in the one/two dimensional decisions for defects*/
 #define TWODIM 0x00

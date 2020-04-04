@@ -40,64 +40,64 @@ char *read_line(char *prompt);
  *									*
  ************************************************************************/
 void get_input(FILE *in, int per) {
-    int i;
-    char *s;
+	int i;
+	char *s;
 
-    /*if nothing left in the super buffer*/
-    if (!*(supbuf + supbpt)) {
+	/*if nothing left in the super buffer*/
+	if (!*(supbuf + supbpt)) {
 
-        /*clear the current pointers*/
-        supbpt = 0;
+		/*clear the current pointers*/
+		supbpt = 0;
 
-        /*read input until and end of file or end of line*/
-        if (isatty(fileno(in))) {
-            s = read_line(prompt);
-            strcpy(supbuf, s);
-            strcat(supbuf, "\n");
-            i = strlen(supbuf);
-            free(s);
-        } else {
-            if (fgets(supbuf, supbln, in) == NULL)
-                i = 0;
-            else
-                i = 1;
-        }
+		/*read input until and end of file or end of line*/
+		if (isatty(fileno(in))) {
+			s = read_line(prompt);
+			strcpy(supbuf, s);
+			strcat(supbuf, "\n");
+			i = strlen(supbuf);
+			free(s);
+		} else {
+			if (fgets(supbuf, supbln, in) == NULL)
+				i = 0;
+			else
+				i = 1;
+		}
 
-        /*fix up the values*/
-        if (i == 0) {
-            /*add on the newline or eof*/
-            supbuf[0] = '\001';
-            supbuf[1] = '\0';
-        }
-    }
+		/*fix up the values*/
+		if (i == 0) {
+			/*add on the newline or eof*/
+			supbuf[0] = '\001';
+			supbuf[1] = '\0';
+		}
+	}
 
-    /*read an input line into the lex buffer and macro expand*/
-    for (bufptr = 0;
-         supbuf[supbpt] && (buffer[bufptr] = supbuf[supbpt]) != '\n';
-         bufptr++, supbpt++)
-        ;
-    if (supbuf[supbpt] == '\n') {
-        buffer[bufptr++] = '\n';
-        supbpt++;
-    }
-    buffer[bufptr++] = '\0';
-    bufptr = 0;
+	/*read an input line into the lex buffer and macro expand*/
+	for (bufptr = 0;
+		 supbuf[supbpt] && (buffer[bufptr] = supbuf[supbpt]) != '\n';
+		 bufptr++, supbpt++)
+		;
+	if (supbuf[supbpt] == '\n') {
+		buffer[bufptr++] = '\n';
+		supbpt++;
+	}
+	buffer[bufptr++] = '\0';
+	bufptr = 0;
 
-    /*only macro expand a new line if we are reading and executing*/
-    if ((depth == -1) && per) {
-        /*do the macro expansions*/
-        if (expand_macro(&buffer, &buflen, macro) == -1) {
-            strcpy(buffer, "\n");
-        }
-    }
+	/*only macro expand a new line if we are reading and executing*/
+	if ((depth == -1) && per) {
+		/*do the macro expansions*/
+		if (expand_macro(&buffer, &buflen, macro) == -1) {
+			strcpy(buffer, "\n");
+		}
+	}
 }
 
 #ifndef HAVE_KSH
 char *read_line(char *prompt) {
-    char *s = malloc(128);
+	char *s = malloc(128);
 
-    fputs(prompt, stderr);
-    assert(fgets(s, 128, stdin));
-    return (s);
+	fputs(prompt, stderr);
+	assert(fgets(s, 128, stdin));
+	return (s);
 }
 #endif

@@ -49,23 +49,23 @@ int write_param(struct par_str *par, int fd);
  ************************************************************************/
 int write_list(struct par_str **param, int fd) {
 
-    while (param[0]->name[0] != '\0') {
-        /*process this parameter*/
-        if (write_param(param[0], fd) == -1)
-            return (-1);
+	while (param[0]->name[0] != '\0') {
+		/*process this parameter*/
+		if (write_param(param[0], fd) == -1)
+			return (-1);
 
-        /*does this sucker have sub parameters??*/
-        if (param[0]->param != NULL) {
-            depth++;
-            if (write_list(param[0]->param, fd) == -1)
-                return (-1);
-            depth--;
-        }
+		/*does this sucker have sub parameters??*/
+		if (param[0]->param != NULL) {
+			depth++;
+			if (write_list(param[0]->param, fd) == -1)
+				return (-1);
+			depth--;
+		}
 
-        /*advance the counter*/
-        param++;
-    }
-    return 0;
+		/*advance the counter*/
+		param++;
+	}
+	return 0;
 }
 
 /************************************************************************
@@ -79,38 +79,38 @@ int write_list(struct par_str **param, int fd) {
  ************************************************************************/
 int write_boolean(struct bool_exp *bexp, int fd) {
 
-    /*first write out the current structure*/
-    assert(write(fd, &(bexp->type), sizeof(int)) == sizeof(int));
+	/*first write out the current structure*/
+	assert(write(fd, &(bexp->type), sizeof(int)) == sizeof(int));
 
-    /*write out the value based on the type of data stored*/
-    switch (bexp->type) {
-    case OPER: /*write out the four byte descriptor*/
-        if (write(fd, &bexp->value.ival, sizeof(int)) == -1)
-            return (-1);
-        break;
-    case REAL: /*write out the real number*/
-        if (write(fd, &bexp->value.dval, sizeof(float)) == -1)
-            return (-1);
-        break;
-    case PARVAL: /*write out the descriptor string*/
-        if (write(fd, bexp->value.sval, strlen(bexp->value.sval) + 1) == -1)
-            return (-1);
-        break;
-    default:
-        return (-1);
-        break;
-    }
+	/*write out the value based on the type of data stored*/
+	switch (bexp->type) {
+	case OPER: /*write out the four byte descriptor*/
+		if (write(fd, &bexp->value.ival, sizeof(int)) == -1)
+			return (-1);
+		break;
+	case REAL: /*write out the real number*/
+		if (write(fd, &bexp->value.dval, sizeof(float)) == -1)
+			return (-1);
+		break;
+	case PARVAL: /*write out the descriptor string*/
+		if (write(fd, bexp->value.sval, strlen(bexp->value.sval) + 1) == -1)
+			return (-1);
+		break;
+	default:
+		return (-1);
+		break;
+	}
 
-    /*write out the left and right kids*/
-    if (bexp->left != NULL) {
-        if (write_boolean(bexp->left, fd) == -1)
-            return (-1);
-    }
-    if (bexp->right != NULL) {
-        if (write_boolean(bexp->right, fd) == -1)
-            return (-1);
-    }
-    return (0);
+	/*write out the left and right kids*/
+	if (bexp->left != NULL) {
+		if (write_boolean(bexp->left, fd) == -1)
+			return (-1);
+	}
+	if (bexp->right != NULL) {
+		if (write_boolean(bexp->right, fd) == -1)
+			return (-1);
+	}
+	return (0);
 }
 
 /************************************************************************
@@ -122,70 +122,70 @@ int write_boolean(struct bool_exp *bexp, int fd) {
  *									*
  ************************************************************************/
 int write_param(struct par_str *par, int fd) {
-    char nullstr[2];
-    int i;
+	char nullstr[2];
+	int i;
 
-    nullstr[0] = '\0';
-    i = 0;
-    /*first write out the current depth*/
-    if (write(fd, &depth, sizeof(int)) == -1)
-        return (-1);
+	nullstr[0] = '\0';
+	i = 0;
+	/*first write out the current depth*/
+	if (write(fd, &depth, sizeof(int)) == -1)
+		return (-1);
 
-    /*begin by writing out all of the fixed length crap*/
-    if (write(fd, par->name, 12) == -1)
-        return (-1);
-    if (write(fd, &par->type, sizeof(int)) == -1)
-        return (-1);
+	/*begin by writing out all of the fixed length crap*/
+	if (write(fd, par->name, 12) == -1)
+		return (-1);
+	if (write(fd, &par->type, sizeof(int)) == -1)
+		return (-1);
 
-    /*write out the default based on type data*/
-    switch (par->type & ~MASK) {
-    case REAL:
-        if (write(fd, &par->def.dval, sizeof(float)) == -1)
-            return (-1);
-        break;
-    case COMM:
-    case BOOL:
-    case CHOICE:
-    case INT:
-        if (write(fd, &par->def.ival, sizeof(int)) == -1)
-            return (-1);
-        break;
-    case STR:
-        if (par->def.sval != NULL) {
-            if (write(fd, par->def.sval, strlen(par->def.sval) + 1) == -1)
-                return (-1);
-        } else {
-            if (write(fd, nullstr, 1) == -1)
-                return (-1);
-        }
-        break;
-    default:
-        return (-1);
-    }
+	/*write out the default based on type data*/
+	switch (par->type & ~MASK) {
+	case REAL:
+		if (write(fd, &par->def.dval, sizeof(float)) == -1)
+			return (-1);
+		break;
+	case COMM:
+	case BOOL:
+	case CHOICE:
+	case INT:
+		if (write(fd, &par->def.ival, sizeof(int)) == -1)
+			return (-1);
+		break;
+	case STR:
+		if (par->def.sval != NULL) {
+			if (write(fd, par->def.sval, strlen(par->def.sval) + 1) == -1)
+				return (-1);
+		} else {
+			if (write(fd, nullstr, 1) == -1)
+				return (-1);
+		}
+		break;
+	default:
+		return (-1);
+	}
 
-    /*write out the units and the error message*/
-    if (par->units != NULL) {
-        if (write(fd, par->units, strlen(par->units) + 1) == -1)
-            return (-1);
-    } else {
-        if (write(fd, nullstr, 1) == -1)
-            return (-1);
-    }
-    if (par->err_msg != NULL) {
-        if (write(fd, par->err_msg, strlen(par->err_msg) + 1) == -1)
-            return (-1);
-    } else {
-        if (write(fd, nullstr, 1) == -1)
-            return (-1);
-    }
+	/*write out the units and the error message*/
+	if (par->units != NULL) {
+		if (write(fd, par->units, strlen(par->units) + 1) == -1)
+			return (-1);
+	} else {
+		if (write(fd, nullstr, 1) == -1)
+			return (-1);
+	}
+	if (par->err_msg != NULL) {
+		if (write(fd, par->err_msg, strlen(par->err_msg) + 1) == -1)
+			return (-1);
+	} else {
+		if (write(fd, nullstr, 1) == -1)
+			return (-1);
+	}
 
-    /*write out the boolean expression*/
-    if (par->bexp != NULL) {
-        if (write_boolean(par->bexp, fd) == -1)
-            return (-1);
-    } else {
-        if (write(fd, &i, sizeof(int)) == -1)
-            return (-1);
-    }
-    return (0);
+	/*write out the boolean expression*/
+	if (par->bexp != NULL) {
+		if (write_boolean(par->bexp, fd) == -1)
+			return (-1);
+	} else {
+		if (write(fd, &i, sizeof(int)) == -1)
+			return (-1);
+	}
+	return (0);
 }

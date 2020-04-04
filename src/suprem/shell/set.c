@@ -38,53 +38,53 @@
  ************************************************************************/
 void do_set(char *par, int on) {
 
-    char *s;
+	char *s;
 
-    /*first test for print or set mode*/
-    if (par == NULL) {
-        if (interactive)
-            printf("interactive\n");
-        if (noexecute)
-            printf("noexecute\n");
-        if (echoall)
-            printf("echoall\n");
-        printf("prompt\t%s\n", prompt);
-        return;
-    }
+	/*first test for print or set mode*/
+	if (par == NULL) {
+		if (interactive)
+			printf("interactive\n");
+		if (noexecute)
+			printf("noexecute\n");
+		if (echoall)
+			printf("echoall\n");
+		printf("prompt\t%s\n", prompt);
+		return;
+	}
 
-    /*handle the parsing of the others*/
+	/*handle the parsing of the others*/
 
-    /*skip leading white space*/
-    while (isspace(*par))
-        par++;
+	/*skip leading white space*/
+	while (isspace(*par))
+		par++;
 
-    /*begin to parse things off the front*/
-    if (substring("interactive", par))
-        interactive = on;
-    if (substring("noexecute", par))
-        noexecute = on;
-    if (substring("echo", par))
-        echoall = on;
-    if (substring(par, "prompt")) {
-        par += strlen("prompt");
+	/*begin to parse things off the front*/
+	if (substring("interactive", par))
+		interactive = on;
+	if (substring("noexecute", par))
+		noexecute = on;
+	if (substring("echo", par))
+		echoall = on;
+	if (substring(par, "prompt")) {
+		par += strlen("prompt");
 
-        /*strip white space*/
-        while (isspace(*par))
-            par++;
+		/*strip white space*/
+		while (isspace(*par))
+			par++;
 
-        /*do we have a leading quote??*/
-        if ((*par == '"') || (*par == '\'')) {
-            par++;
-            for (s = par; (*s && (*s != '"') && (*s != '\'')); s++)
-                ;
-            if ((*s == '"') || (*s == '\''))
-                *s = '\0';
-        }
+		/*do we have a leading quote??*/
+		if ((*par == '"') || (*par == '\'')) {
+			par++;
+			for (s = par; (*s && (*s != '"') && (*s != '\'')); s++)
+				;
+			if ((*s == '"') || (*s == '\''))
+				*s = '\0';
+		}
 
-        /*prompt is the rest of the line*/
-        sfree(prompt);
-        prompt = salloc(char, strlen(par) + 1);
-        strcpy(prompt, par);
-    }
-    return;
+		/*prompt is the rest of the line*/
+		sfree(prompt);
+		prompt = salloc(char, strlen(par) + 1);
+		strcpy(prompt, par);
+	}
+	return;
 }

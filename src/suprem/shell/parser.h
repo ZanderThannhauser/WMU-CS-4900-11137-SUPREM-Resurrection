@@ -44,29 +44,29 @@ extern int yydebug;
 #ifndef YYTOKENTYPE
 #define YYTOKENTYPE
 enum yytokentype {
-    PARAMETER = 258,
-    COMMAND = 259,
-    NAME = 260,
-    LIST = 261,
-    SOURCE = 262,
-    EOL = 263,
-    ENDFILE = 264,
-    QUIT = 265,
-    BACK = 266,
-    REDIRECT = 267,
-    BANG = 268,
-    HELP = 269,
-    BG_GRP = 270,
-    END_GRP = 271,
-    DELIMIT = 272,
-    DEFINE = 273,
-    COMMENT = 274,
-    UNDEF = 275,
-    SET = 276,
-    UNSET = 277,
-    FOR = 278,
-    END = 279,
-    CHDIR = 280
+	PARAMETER = 258,
+	COMMAND = 259,
+	NAME = 260,
+	LIST = 261,
+	SOURCE = 262,
+	EOL = 263,
+	ENDFILE = 264,
+	QUIT = 265,
+	BACK = 266,
+	REDIRECT = 267,
+	BANG = 268,
+	HELP = 269,
+	BG_GRP = 270,
+	END_GRP = 271,
+	DELIMIT = 272,
+	DEFINE = 273,
+	COMMENT = 274,
+	UNDEF = 275,
+	SET = 276,
+	UNSET = 277,
+	FOR = 278,
+	END = 279,
+	CHDIR = 280
 };
 #endif
 /* Tokens.  */
@@ -100,8 +100,8 @@ enum yytokentype {
 union YYSTYPE {
 #line 73 "src/suprem/shell/parser.y" /* yacc.c:1909  */
 
-    int ival;
-    char *sval;
+	int ival;
+	char *sval;
 
 #line 110 "y.tab.h" /* yacc.c:1909  */
 };

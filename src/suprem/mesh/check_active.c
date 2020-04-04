@@ -37,56 +37,56 @@
 /* end of declarations*/
 
 void check_active() {
-    int i, imp, impa;
+	int i, imp, impa;
 
-    for (i = 0; i < n_imp; i++) {
-        switch ((imp = soltoimp[i])) {
-        case As:
-            impa = Asa;
-            break;
-        case Sb:
-            impa = Sba;
-            break;
-        case B:
-            impa = Ba;
-            break;
-        case P:
-            impa = Pa;
-            break;
-        case iBe:
-            impa = iBea;
-            break;
-        case iMg:
-            impa = iMga;
-            break;
-        case iSe:
-            impa = iSea;
-            break;
-        case iSi:
-            impa = iSia;
-            break;
-        case iSn:
-            impa = iSna;
-            break;
-        case iGe:
-            impa = iGea;
-            break;
-        case iZn:
-            impa = iZna;
-            break;
-        case iC:
-            impa = iCa;
-            break;
-        case iG:
-            impa = iGa;
-            break;
-        default:
-            impa = 0;
-            break;
-        }
-        if (impa && (imptosol[imp] != -1) && (imptosol[impa] == -1)) {
-            add_impurity(impa, 1.0, -1);
-            SET_FLAGS(impa, ACTIVE);
-        }
-    }
+	for (i = 0; i < n_imp; i++) {
+		switch ((imp = soltoimp[i])) {
+		case As:
+			impa = Asa;
+			break;
+		case Sb:
+			impa = Sba;
+			break;
+		case B:
+			impa = Ba;
+			break;
+		case P:
+			impa = Pa;
+			break;
+		case iBe:
+			impa = iBea;
+			break;
+		case iMg:
+			impa = iMga;
+			break;
+		case iSe:
+			impa = iSea;
+			break;
+		case iSi:
+			impa = iSia;
+			break;
+		case iSn:
+			impa = iSna;
+			break;
+		case iGe:
+			impa = iGea;
+			break;
+		case iZn:
+			impa = iZna;
+			break;
+		case iC:
+			impa = iCa;
+			break;
+		case iG:
+			impa = iGa;
+			break;
+		default:
+			impa = 0;
+			break;
+		}
+		if (impa && (imptosol[imp] != -1) && (imptosol[impa] == -1)) {
+			add_impurity(impa, 1.0, -1);
+			SET_FLAGS(impa, ACTIVE);
+		}
+	}
 }

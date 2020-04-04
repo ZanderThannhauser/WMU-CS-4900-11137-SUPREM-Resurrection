@@ -8,4 +8,4 @@ void rect_boot();
 int squares(float new_mr);
 
 void dvpram(double hl, double hr, double el, int *nnew, double *ratio,
-            double *first);
+			double *first);

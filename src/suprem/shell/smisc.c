@@ -32,27 +32,27 @@
  * Hide everything from the innocent users
  *----------------------------------------------------------------------*/
 float string_to_real(char *expr, float defval) {
-    char *err, *dexpr;
-    struct vec_str *rexp;
-    int len;
-    float val;
+	char *err, *dexpr;
+	struct vec_str *rexp;
+	int len;
+	float val;
 
-    /* First make a copy that we can write all over */
-    len = 1 + strlen(expr);
-    dexpr = salloc(char, len);
-    strcpy(dexpr, expr);
+	/* First make a copy that we can write all over */
+	len = 1 + strlen(expr);
+	dexpr = salloc(char, len);
+	strcpy(dexpr, expr);
 
-    /* Expand macros */
-    (void)expand_macro(&dexpr, &len, macro);
+	/* Expand macros */
+	(void)expand_macro(&dexpr, &len, macro);
 
-    /* Try to parse */
-    if ((err = parse_expr(dexpr, &rexp)) || (err = eval_real(rexp, &val))) {
-        fprintf(stderr, "bad expression: %s\n", err);
-        val = defval;
-    }
-    free_expr(rexp);
-    sfree(dexpr);
-    return (val);
+	/* Try to parse */
+	if ((err = parse_expr(dexpr, &rexp)) || (err = eval_real(rexp, &val))) {
+		fprintf(stderr, "bad expression: %s\n", err);
+		val = defval;
+	}
+	free_expr(rexp);
+	sfree(dexpr);
+	return (val);
 }
 
 /*-----------------SMACRO, FMACRO, UMACRO-------------------------------
@@ -60,17 +60,17 @@ float string_to_real(char *expr, float defval) {
  *----------------------------------------------------------------------*/
 
 void smacro(char *name, char *def) {
-    char buffer[512];
-    sprintf(buffer, "%s %s", name, def);
-    define_macro(buffer, &macro);
+	char buffer[512];
+	sprintf(buffer, "%s %s", name, def);
+	define_macro(buffer, &macro);
 }
 
 void fmacro(char *name, float val, char *format) {
-    char buffer[512], formbuf[512];
-    strcpy(formbuf, "%s ");
-    strcat(formbuf, format);
-    sprintf(buffer, formbuf, name, val);
-    define_macro(buffer, &macro);
+	char buffer[512], formbuf[512];
+	strcpy(formbuf, "%s ");
+	strcat(formbuf, format);
+	sprintf(buffer, formbuf, name, val);
+	define_macro(buffer, &macro);
 }
 
 void umacro(char *name) { (void)undef_macro(name, &macro); }

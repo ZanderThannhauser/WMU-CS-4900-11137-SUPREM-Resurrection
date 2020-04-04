@@ -43,22 +43,22 @@ static int r1 = -1;
 void par(first, last) int first;
 int last;
 {
-    r0 = first;
-    r1 = last;
+	r0 = first;
+	r1 = last;
 }
 
 void pa(dp, first, last) double *dp;
 int first, last;
 {
-    int i = 0;
-    if (i)
-        par(i, i);
+	int i = 0;
+	if (i)
+		par(i, i);
 
-    if (r0 >= 0)
-        first = r0;
-    if (r1 >= 0)
-        last = r1;
-    for (i = first; i <= last; i++) {
-        printf("**[%d] = %G\n", i, dp[i]);
-    }
+	if (r0 >= 0)
+		first = r0;
+	if (r1 >= 0)
+		last = r1;
+	for (i = first; i <= last; i++) {
+		printf("**[%d] = %G\n", i, dp[i]);
+	}
 }

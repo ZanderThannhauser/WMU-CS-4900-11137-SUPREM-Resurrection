@@ -67,32 +67,32 @@
  *									*
  ************************************************************************/
 void Audiff_coeff(float temp, double **new, double **equil, double *noni,
-                  double *idf, double *vdf, double *iprt, double *vprt) {
-    register int i;
-    int mat;
-    int sol = imptosol[Au];
-    double Kval[MAXMAT];
-    double c, diff, part;
+				  double *idf, double *vdf, double *iprt, double *vprt) {
+	register int i;
+	int mat;
+	int sol = imptosol[Au];
+	double Kval[MAXMAT];
+	double c, diff, part;
 
-    /*first calculate the fixed stuff*/
-    for (i = 0; i < MAXMAT; i++) {
-        Kval[i] = K0(i) * exp(-KE(i) / (kb * temp));
-    }
+	/*first calculate the fixed stuff*/
+	for (i = 0; i < MAXMAT; i++) {
+		Kval[i] = K0(i) * exp(-KE(i) / (kb * temp));
+	}
 
-    for (i = 0; i < nn; i++) {
-        mat = nd[i]->mater;
+	for (i = 0; i < nn; i++) {
+		mat = nd[i]->mater;
 
-        /*calculate the total diffusivity*/
-        c = new[sol][i] * new[sol][i];
-        diff = Kval[mat] / c;
-        part = -Kval[mat] / (c * new[sol][i]);
+		/*calculate the total diffusivity*/
+		c = new[sol][i] * new[sol][i];
+		diff = Kval[mat] / c;
+		part = -Kval[mat] / (c * new[sol][i]);
 
-        idf[i] = diff;
-        vdf[i] = 0.0;
+		idf[i] = diff;
+		vdf[i] = 0.0;
 
-        iprt[i] = part;
-        vprt[i] = 0.0;
-    }
+		iprt[i] = part;
+		vprt[i] = 0.0;
+	}
 }
 
 /************************************************************************
@@ -106,51 +106,51 @@ void Audiff_coeff(float temp, double **new, double **equil, double *noni,
  *									*
  ************************************************************************/
 void Auboundary(struct bound_str *bval) {
-    double f;
-    double h, m;
-    int sol; /*the solution location of antimony*/
-    int row0 = bval->loc[0][0];
-    int row1 = bval->loc[1][1];
-    int cp0 = bval->loc[0][1];
-    int cp1 = bval->loc[1][0];
-    int mat0 = bval->mat[0];
-    int mat1 = bval->mat[1];
-    float temp = bval->temp;
+	double f;
+	double h, m;
+	int sol; /*the solution location of antimony*/
+	int row0 = bval->loc[0][0];
+	int row1 = bval->loc[1][1];
+	int cp0 = bval->loc[0][1];
+	int cp1 = bval->loc[1][0];
+	int mat0 = bval->mat[0];
+	int mat1 = bval->mat[1];
+	float temp = bval->temp;
 
-    sol = imptosol[Au];
+	sol = imptosol[Au];
 
-    /*calculate the transport terms*/
-    m = Seg0(mat0, mat1) * exp(-SegE(mat0, mat1) / (kb * temp));
-    h = sqrt(m) * Trn0(mat0, mat1) * exp(-TrnE(mat0, mat1) / (kb * temp));
+	/*calculate the transport terms*/
+	m = Seg0(mat0, mat1) * exp(-SegE(mat0, mat1) / (kb * temp));
+	h = sqrt(m) * Trn0(mat0, mat1) * exp(-TrnE(mat0, mat1) / (kb * temp));
 
-    /*material 1 side derivative of segregation terms*/
-    f = h * bval->cpl;
-    left_side(row0, sol, f);
-    a[sol][sol][cp1] -= f;
+	/*material 1 side derivative of segregation terms*/
+	f = h * bval->cpl;
+	left_side(row0, sol, f);
+	a[sol][sol][cp1] -= f;
 
-    /*material 2 side derivative of segregation terms*/
-    f = h * bval->cpl / m;
-    left_side(row1, sol, f);
-    a[sol][sol][cp0] -= f;
+	/*material 2 side derivative of segregation terms*/
+	f = h * bval->cpl / m;
+	left_side(row1, sol, f);
+	a[sol][sol][cp0] -= f;
 
-    /*right hand side of segregation terms*/
-    f = bval->cpl * h * (bval->conc[0] - bval->conc[1] / m);
-    right_side(row0, sol, bval->rhs, -f);
-    right_side(row1, sol, bval->rhs, f);
+	/*right hand side of segregation terms*/
+	f = bval->cpl * h * (bval->conc[0] - bval->conc[1] / m);
+	right_side(row0, sol, bval->rhs, -f);
+	right_side(row1, sol, bval->rhs, f);
 
-    /*if either side is gas, disallow any update*/
-    if (mat0 == GAS) {
-        clear_row(row0, sol);
-        left_side(row0, sol, 1.0);
-    }
-    if (mat1 == GAS) {
-        clear_row(row1, sol);
-        left_side(row1, sol, 1.0);
-    }
+	/*if either side is gas, disallow any update*/
+	if (mat0 == GAS) {
+		clear_row(row0, sol);
+		left_side(row0, sol, 1.0);
+	}
+	if (mat1 == GAS) {
+		clear_row(row1, sol);
+		left_side(row1, sol, 1.0);
+	}
 }
 
 void Aucoupling(float unused_0, double *unused_1, double **unused_2,
-                double **unused_3, double **unused_4, double **unused_5) {}
+				double **unused_3, double **unused_4, double **unused_5) {}
 
 /************************************************************************
  *									*
@@ -162,83 +162,83 @@ void Aucoupling(float unused_0, double *unused_1, double **unused_2,
  *									*
  ************************************************************************/
 void gold(char *par, struct par_str *param) {
-    int i, j;
-    int tmpfl, imp_flag, gro_flag;
-    int mat;
-    int mat2 = -1;
+	int i, j;
+	int tmpfl, imp_flag, gro_flag;
+	int mat;
+	int mat2 = -1;
 
-    /*get the material number specified*/
-    if (get_bool(param, "silicon"))
-        mat = Si;
-    if (get_bool(param, "oxide"))
-        mat = SiO2;
-    if (get_bool(param, "oxynitride"))
-        mat = OxNi;
-    if (get_bool(param, "poly"))
-        mat = Poly;
-    if (get_bool(param, "nitride"))
-        mat = SiNi;
-    if (get_bool(param, "gas"))
-        mat = GAS;
-    if (get_bool(param, "gaas"))
-        mat = GaAs;
+	/*get the material number specified*/
+	if (get_bool(param, "silicon"))
+		mat = Si;
+	if (get_bool(param, "oxide"))
+		mat = SiO2;
+	if (get_bool(param, "oxynitride"))
+		mat = OxNi;
+	if (get_bool(param, "poly"))
+		mat = Poly;
+	if (get_bool(param, "nitride"))
+		mat = SiNi;
+	if (get_bool(param, "gas"))
+		mat = GAS;
+	if (get_bool(param, "gaas"))
+		mat = GaAs;
 
-    /*fetch the values for each constant in this material*/
-    i = 0;
-    j = 1;
-    imp_flag = get_bool(param, "implanted");
-    gro_flag = get_bool(param, "grown.in");
-    if (gro_flag & !imp_flag)
-        j = 0; /* parameters for grown.in only */
-    if (imp_flag & !gro_flag)
-        i = 1; /* parameters for implanted only */
+	/*fetch the values for each constant in this material*/
+	i = 0;
+	j = 1;
+	imp_flag = get_bool(param, "implanted");
+	gro_flag = get_bool(param, "grown.in");
+	if (gro_flag & !imp_flag)
+		j = 0; /* parameters for grown.in only */
+	if (imp_flag & !gro_flag)
+		i = 1; /* parameters for implanted only */
 
-    tmpfl = GET_FLAGS(Au); /* save state */
-    for (; i <= j; i++) {
-        if (i == 0)
-            CLEAR_FLAGS(Au, IMPLANTED_IMP);
-        else
-            SET_FLAGS(Au, IMPLANTED_IMP);
-        Fetch(K0(mat), "K.0");
-        Fetch(KE(mat), "K.E");
-    }
+	tmpfl = GET_FLAGS(Au); /* save state */
+	for (; i <= j; i++) {
+		if (i == 0)
+			CLEAR_FLAGS(Au, IMPLANTED_IMP);
+		else
+			SET_FLAGS(Au, IMPLANTED_IMP);
+		Fetch(K0(mat), "K.0");
+		Fetch(KE(mat), "K.E");
+	}
 
-    /* reset implanted source state */
-    CLEAR_FLAGS(Au, ALL_FLAGS);
-    SET_FLAGS(Au, tmpfl);
+	/* reset implanted source state */
+	CLEAR_FLAGS(Au, ALL_FLAGS);
+	SET_FLAGS(Au, tmpfl);
 
-    /*now fetch any segregation data that comes our way*/
-    if (Listed("/silicon"))
-        mat2 = Si;
-    if (Listed("/oxide"))
-        mat2 = SiO2;
-    if (Listed("/oxynitride"))
-        mat2 = OxNi;
-    if (Listed("/poly"))
-        mat2 = Poly;
-    if (Listed("/nitride"))
-        mat2 = SiNi;
-    if (Listed("/gas"))
-        mat2 = GAS;
-    if (Listed("/gaas"))
-        mat2 = GaAs;
+	/*now fetch any segregation data that comes our way*/
+	if (Listed("/silicon"))
+		mat2 = Si;
+	if (Listed("/oxide"))
+		mat2 = SiO2;
+	if (Listed("/oxynitride"))
+		mat2 = OxNi;
+	if (Listed("/poly"))
+		mat2 = Poly;
+	if (Listed("/nitride"))
+		mat2 = SiNi;
+	if (Listed("/gas"))
+		mat2 = GAS;
+	if (Listed("/gaas"))
+		mat2 = GaAs;
 
-    if (mat2 != -1) {
-        if (is_specified(param, "Seg.0")) {
-            Seg0(mat2, mat) = get_float(param, "Seg.0");
-            Seg0(mat, mat2) = 1.0 / Seg0(mat2, mat);
-        }
-        if (is_specified(param, "Seg.E")) {
-            SegE(mat2, mat) = get_float(param, "Seg.E");
-            SegE(mat, mat2) = -SegE(mat2, mat);
-        }
-        if (is_specified(param, "Trn.0")) {
-            Trn0(mat, mat2) = get_float(param, "Trn.0");
-            Trn0(mat2, mat) = Trn0(mat, mat2);
-        }
-        if (is_specified(param, "Trn.E")) {
-            TrnE(mat, mat2) = get_float(param, "Trn.E");
-            TrnE(mat2, mat) = TrnE(mat, mat2);
-        }
-    }
+	if (mat2 != -1) {
+		if (is_specified(param, "Seg.0")) {
+			Seg0(mat2, mat) = get_float(param, "Seg.0");
+			Seg0(mat, mat2) = 1.0 / Seg0(mat2, mat);
+		}
+		if (is_specified(param, "Seg.E")) {
+			SegE(mat2, mat) = get_float(param, "Seg.E");
+			SegE(mat, mat2) = -SegE(mat2, mat);
+		}
+		if (is_specified(param, "Trn.0")) {
+			Trn0(mat, mat2) = get_float(param, "Trn.0");
+			Trn0(mat2, mat) = Trn0(mat, mat2);
+		}
+		if (is_specified(param, "Trn.E")) {
+			TrnE(mat, mat2) = get_float(param, "Trn.E");
+			TrnE(mat2, mat) = TrnE(mat, mat2);
+		}
+	}
 }

@@ -4,8 +4,8 @@
 
 #define argh temp, new, equil, noni, idf, vdf, iprt, vprt
 #define argl                                                                   \
-    float temp, double **new, double **equil, double *noni, double *idf,       \
-        double *vdf, double *iprt, double *vprt
+	float temp, double **new, double **equil, double *noni, double *idf,       \
+		double *vdf, double *iprt, double *vprt
 
 #include "./src/suprem/include/impurity.h"
 

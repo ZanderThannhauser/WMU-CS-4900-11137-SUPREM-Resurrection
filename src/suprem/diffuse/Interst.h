@@ -4,10 +4,10 @@
 void comp_intparam(float temp);
 
 void Icoupling(float temp, double *area, double **new, double **equil,
-               double **dequ, double **rhs);
+			   double **dequ, double **rhs);
 
 void Idiff_coeff(float temp, double **new, double **equil, double *noni,
-                 double *idf, double *vdf, double *iprt, double *vprt);
+				 double *idf, double *vdf, double *iprt, double *vprt);
 
 void Iboundary(struct bound_str *bval);
 

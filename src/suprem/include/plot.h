@@ -41,9 +41,9 @@ EXTERN float *z;
 
 /*This structure is used to hold the data for 1d extracter*/
 struct d_str {
-    float x;
-    float y;
-    int mat;
+	float x;
+	float y;
+	int mat;
 };
 
 /*type of one d plot to make*/

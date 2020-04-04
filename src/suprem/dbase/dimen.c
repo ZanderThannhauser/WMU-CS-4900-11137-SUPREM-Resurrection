@@ -37,19 +37,19 @@
  *									*
  ************************************************************************/
 void set_dim(int dim) {
-    switch (dim) {
-    case 1:
-        mode = ONED;
-        nvrt = 2;
-        nedg = 2;
-        oxide_model = O_VERTICAL;
-        break;
-    case 2:
-        mode = TWOD;
-        nvrt = 3;
-        nedg = 3;
-        break;
-    default:
-        panic("three dimensions are net yet supported");
-    }
+	switch (dim) {
+	case 1:
+		mode = ONED;
+		nvrt = 2;
+		nedg = 2;
+		oxide_model = O_VERTICAL;
+		break;
+	case 2:
+		mode = TWOD;
+		nvrt = 3;
+		nedg = 3;
+		break;
+	default:
+		panic("three dimensions are net yet supported");
+	}
 }

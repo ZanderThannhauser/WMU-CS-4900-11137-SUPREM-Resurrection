@@ -36,62 +36,62 @@
  ************************************************************************/
 
 int generate(int nn, int symb_var, int symm, int (*get_connect)(), int **pia,
-             int *aoff) {
-    int i, j;     /*indices*/
-    int cnt;      /*first empty space in ia*/
-    short *neigh; /*neighbors of the current point*/
-    int len;
-    int num; /*#of entries in neigh*/
-    int ih, il, row, col, iamax = *aoff, *ia = *pia;
+			 int *aoff) {
+	int i, j;	 /*indices*/
+	int cnt;	  /*first empty space in ia*/
+	short *neigh; /*neighbors of the current point*/
+	int len;
+	int num; /*#of entries in neigh*/
+	int ih, il, row, col, iamax = *aoff, *ia = *pia;
 
-    len = 100;
-    neigh = salloc(short, 100);
+	len = 100;
+	neigh = salloc(short, 100);
 
-    /*symbolic entries for each node begin just beyond the head pointers */
-    /*or to put it another way, ja[0] == ia[neq]+1*/
-    ia[0] = symb_var * nn + 1;
-    cnt = ia[0];
+	/*symbolic entries for each node begin just beyond the head pointers */
+	/*or to put it another way, ja[0] == ia[neq]+1*/
+	ia[0] = symb_var * nn + 1;
+	cnt = ia[0];
 
-    /*foreach node in the mesh*/
-    for (i = 0; i < nn; i++) {
+	/*foreach node in the mesh*/
+	for (i = 0; i < nn; i++) {
 
-        /*call the connection routine for a list of the node's neighbors */
-        num = len;
-        while (!(0 == (*get_connect)(i, neigh, &num))) {
-            len *= 2;
-            num = len;
-            neigh = sralloc(short, len, neigh);
-        }
+		/*call the connection routine for a list of the node's neighbors */
+		num = len;
+		while (!(0 == (*get_connect)(i, neigh, &num))) {
+			len *= 2;
+			num = len;
+			neigh = sralloc(short, len, neigh);
+		}
 
-        /*put this fine group into the ia, ja list*/
-        /*remember each node may have multiple variables*/
-        for (ih = 0; ih < symb_var; ih++) {
-            row = symb_var * i + ih;
+		/*put this fine group into the ia, ja list*/
+		/*remember each node may have multiple variables*/
+		for (ih = 0; ih < symb_var; ih++) {
+			row = symb_var * i + ih;
 
-            for (j = 0; j < num; j++)
+			for (j = 0; j < num; j++)
 
-                for (il = 0; il < symb_var; il++) {
-                    col = symb_var * neigh[j] + il;
+				for (il = 0; il < symb_var; il++) {
+					col = symb_var * neigh[j] + il;
 
-                    /*Symmetry: just keep the upper triangle */
-                    if (symm || col > row) {
-                        ia[cnt] = col;
-                        if (cnt++ >= iamax - 10) {
-                            /* Ooops. Sure hope the caller malloc'ed ia... */
-                            iamax *= 1.5;
-                            ia = *pia = sralloc(int, iamax, *pia);
-                        }
-                    }
-                }
-            ia[row + 1] = cnt;
-        }
-    }
+					/*Symmetry: just keep the upper triangle */
+					if (symm || col > row) {
+						ia[cnt] = col;
+						if (cnt++ >= iamax - 10) {
+							/* Ooops. Sure hope the caller malloc'ed ia... */
+							iamax *= 1.5;
+							ia = *pia = sralloc(int, iamax, *pia);
+						}
+					}
+				}
+			ia[row + 1] = cnt;
+		}
+	}
 
-    *aoff = ia[symb_var * nn] - ia[0];
-    return (0);
+	*aoff = ia[symb_var * nn] - ia[0];
+	return (0);
 
 #ifdef DEBUG
-    check_db();
+	check_db();
 #endif
 }
 
@@ -101,29 +101,29 @@ int generate(int nn, int symb_var, int symm, int (*get_connect)(), int **pia,
  *									*
  ************************************************************************/
 int iaja(int *ia, int aoff, int row, int col) {
-    int i, off;
+	int i, off;
 
-    /* Diagonal comes first */
-    if (row == col)
-        return (row);
+	/* Diagonal comes first */
+	if (row == col)
+		return (row);
 
-    /* Off-diagonal entries: only store half the connectivity*/
-    if (row < col)
-        off = aoff;
-    else {
-        i = col;
-        col = row;
-        row = i;
-        off = 0;
-    }
+	/* Off-diagonal entries: only store half the connectivity*/
+	if (row < col)
+		off = aoff;
+	else {
+		i = col;
+		col = row;
+		row = i;
+		off = 0;
+	}
 
-    /* Your basic linear search of the elements in this row */
-    for (i = ia[row]; i < ia[row + 1]; i++)
-        if (ia[i] == col)
-            return (i + off);
+	/* Your basic linear search of the elements in this row */
+	for (i = ia[row]; i < ia[row + 1]; i++)
+		if (ia[i] == col)
+			return (i + off);
 
-    /* Trouble right here in river city */
-    return (-32767);
+	/* Trouble right here in river city */
+	return (-32767);
 }
 
 #ifdef DEBUG
@@ -141,47 +141,47 @@ int iaja(int *ia, int aoff, int row, int col) {
 
 dump_ij(ia) int *ia;
 {
-    int i, j;
-    for (i = 0; i < ia[0]; i++)
-        printf("ia[ %d] =  %d\n", i, ia[i]);
+	int i, j;
+	for (i = 0; i < ia[0]; i++)
+		printf("ia[ %d] =  %d\n", i, ia[i]);
 
-    for (j = 0; j < ia[0] - 1; j++) {
-        printf("row %d of ja: ", j);
-        for (i = ia[j]; i < ia[j + 1]; i++)
-            printf("%d ", ia[i]);
-        printf("\n");
-    }
+	for (j = 0; j < ia[0] - 1; j++) {
+		printf("row %d of ja: ", j);
+		for (i = ia[j]; i < ia[j + 1]; i++)
+			printf("%d ", ia[i]);
+		printf("\n");
+	}
 }
 
 dump_a(ia, a, rhs) int *ia;
 double *a;
 double *rhs;
 {
-    int i, j;
-    float yo;
-    for (i = 0; i < ia[0]; i++)
-        printf("a[ %d] =  %g \twrk[ %d] = %g\n", i, a[i], i, rhs[i]);
+	int i, j;
+	float yo;
+	for (i = 0; i < ia[0]; i++)
+		printf("a[ %d] =  %g \twrk[ %d] = %g\n", i, a[i], i, rhs[i]);
 
-    for (j = 0; j < ia[0] - 1; j++) {
-        printf("col %d of a: ", j);
-        for (i = ia[j]; i < ia[j + 1]; i++) {
-            yo = a[i];
-            if (yo)
-                printf("a[%d,%d] = %9.2g ", ia[i], j, yo);
-            else
-                printf("a[%d,%d] ", ia[i], j);
-        }
-        printf("\n");
-        printf("row %d of a: ", j);
-        for (i = ia[j]; i < ia[j + 1]; i++) {
-            yo = a[i + aoff];
-            if (yo)
-                printf("a[%d,%d] = %9.2g ", j, ia[i], yo);
-            else
-                printf("a[%d,%d] ", j, ia[i]);
-        }
-        printf("\n");
-    }
+	for (j = 0; j < ia[0] - 1; j++) {
+		printf("col %d of a: ", j);
+		for (i = ia[j]; i < ia[j + 1]; i++) {
+			yo = a[i];
+			if (yo)
+				printf("a[%d,%d] = %9.2g ", ia[i], j, yo);
+			else
+				printf("a[%d,%d] ", ia[i], j);
+		}
+		printf("\n");
+		printf("row %d of a: ", j);
+		for (i = ia[j]; i < ia[j + 1]; i++) {
+			yo = a[i + aoff];
+			if (yo)
+				printf("a[%d,%d] = %9.2g ", j, ia[i], yo);
+			else
+				printf("a[%d,%d] ", j, ia[i]);
+		}
+		printf("\n");
+	}
 }
 
 #endif

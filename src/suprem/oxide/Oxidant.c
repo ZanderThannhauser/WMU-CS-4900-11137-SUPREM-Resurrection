@@ -93,36 +93,36 @@ void exp_l(double arg, double *f, double *dfda, double lambda);
    As a (misguided) performance hack, it calculates all materials upfront.*/
 
 double Odiff_coeff(int m, int s, float temp) {
-    static double Dix[MAXMAT];
-    static double o_temp = 0, o_press = 0, o_s = (-1);
-    int i;
+	static double Dix[MAXMAT];
+	static double o_temp = 0, o_press = 0, o_s = (-1);
+	int i;
 
-    do_deal_grove(temp, s);
+	do_deal_grove(temp, s);
 
-    if (o_temp != temp || o_press != pressure || o_s != s) {
-        o_temp = temp;
-        o_press = pressure;
-        o_s = s;
+	if (o_temp != temp || o_press != pressure || o_s != s) {
+		o_temp = temp;
+		o_press = pressure;
+		o_s = s;
 
-        for (i = 0; i < MAXMAT; i++) {
-            /* Default arrhenius model */
-            Dix[i] = D0(s, i) * exp(-DE(s, i) / (kb * temp));
+		for (i = 0; i < MAXMAT; i++) {
+			/* Default arrhenius model */
+			Dix[i] = D0(s, i) * exp(-DE(s, i) / (kb * temp));
 
-            /* Special case for SiO2: D = B/2 * N1/C */
-            if (i == SiO2)
-                Dix[i] = B_DealGrove / 2 * N1(s, i) / (H(s, i) * pressure);
-        }
-    }
-    return (Dix[m]);
+			/* Special case for SiO2: D = B/2 * N1/C */
+			if (i == SiO2)
+				Dix[i] = B_DealGrove / 2 * N1(s, i) / (H(s, i) * pressure);
+		}
+	}
+	return (Dix[m]);
 }
 
 /* Vector version to write diffusivity into each node cell */
 void Odiff_vcoeff(int s, argl) {
-    int i;
-    for (i = 0; i < nn; i++) {
-        idf[i] = Odiff_coeff(nd[i]->mater, s, temp);
-        vdf[i] = iprt[i] = vprt[i] = 0.0;
-    }
+	int i;
+	for (i = 0; i < nn; i++) {
+		idf[i] = Odiff_coeff(nd[i]->mater, s, temp);
+		vdf[i] = iprt[i] = vprt[i] = 0.0;
+	}
 }
 
 /* Interface to impurity table */
@@ -142,80 +142,80 @@ void H2Odiff_coeff(argl) { Odiff_vcoeff(H2O, argh); }
  *									*
  ************************************************************************/
 void Oboundary(int s, struct bound_str *bval) {
-    double f;
-    double h, m;
-    int sol; /*the solution location of oxidant*/
-    int O2sol, Nsol;
-    int mat0, mat1, nx0;
-    int row0, row1, cp0, cp1;
-    double dln[2];
+	double f;
+	double h, m;
+	int sol; /*the solution location of oxidant*/
+	int O2sol, Nsol;
+	int mat0, mat1, nx0;
+	int row0, row1, cp0, cp1;
+	double dln[2];
 
-    sol = imptosol[s];
+	sol = imptosol[s];
 
-    /*avoid a lot of "if" statements by making mat0 oxide if either is*/
-    if (bval->mat[1] == SiO2) {
-        O2sol = 1;
-        Nsol = 0;
-    } else {
-        O2sol = 0;
-        Nsol = 1;
-    }
+	/*avoid a lot of "if" statements by making mat0 oxide if either is*/
+	if (bval->mat[1] == SiO2) {
+		O2sol = 1;
+		Nsol = 0;
+	} else {
+		O2sol = 0;
+		Nsol = 1;
+	}
 
-    mat0 = bval->mat[O2sol];
-    mat1 = bval->mat[Nsol];
-    row0 = bval->loc[O2sol][O2sol];
-    row1 = bval->loc[Nsol][Nsol];
-    cp0 = bval->loc[O2sol][Nsol];
-    cp1 = bval->loc[Nsol][O2sol];
-    nx0 = bval->nx[O2sol];
+	mat0 = bval->mat[O2sol];
+	mat1 = bval->mat[Nsol];
+	row0 = bval->loc[O2sol][O2sol];
+	row1 = bval->loc[Nsol][Nsol];
+	cp0 = bval->loc[O2sol][Nsol];
+	cp1 = bval->loc[Nsol][O2sol];
+	nx0 = bval->nx[O2sol];
 
-    /*calculate the transport fluxes*/
-    h = Trn0(s, mat0, mat1) * exp(-TrnE(s, mat0, mat1) / (kb * bval->temp));
-    m = Seg0(s, mat0, mat1) * exp(-SegE(s, mat0, mat1) / (kb * bval->temp));
+	/*calculate the transport fluxes*/
+	h = Trn0(s, mat0, mat1) * exp(-TrnE(s, mat0, mat1) / (kb * bval->temp));
+	m = Seg0(s, mat0, mat1) * exp(-SegE(s, mat0, mat1) / (kb * bval->temp));
 
-    /*special case when mat1 is silicon and mat0 is oxide*/
-    if (mat1 == Si && mat0 == SiO2) {
+	/*special case when mat1 is silicon and mat0 is oxide*/
+	if (mat1 == Si && mat0 == SiO2) {
 
-        /*to compute the reaction rate, need the orientation.*/
-        (void)dlocal_normal(nx0, Si, dln);
-        h = Orr(bval->temp, s, dln, noni[bval->nx[Nsol]]);
+		/*to compute the reaction rate, need the orientation.*/
+		(void)dlocal_normal(nx0, Si, dln);
+		h = Orr(bval->temp, s, dln, noni[bval->nx[Nsol]]);
 
-        /*material 1 side derivitive*/
-        f = h * bval->cpl;
-        left_side(row0, sol, f);
+		/*material 1 side derivitive*/
+		f = h * bval->cpl;
+		left_side(row0, sol, f);
 
-        /*right side terms*/
-        f = bval->cpl * h * bval->conc[O2sol];
-        right_side(row0, sol, bval->rhs, -f);
-    } else {
+		/*right side terms*/
+		f = bval->cpl * h * bval->conc[O2sol];
+		right_side(row0, sol, bval->rhs, -f);
+	} else {
 
-        if (h == 0.0) {
-            clear_row(row1, sol);
-            left_side(row1, sol, 1.0);
-            right_side(row1, sol, bval->rhs, 0.0);
-        } else {
-            /*material 1 side derivative*/
-            f = h * bval->cpl;
-            left_side(row0, sol, f);
-            a[sol][sol][cp1] -= f;
+		if (h == 0.0) {
+			clear_row(row1, sol);
+			left_side(row1, sol, 1.0);
+			right_side(row1, sol, bval->rhs, 0.0);
+		} else {
+			/*material 1 side derivative*/
+			f = h * bval->cpl;
+			left_side(row0, sol, f);
+			a[sol][sol][cp1] -= f;
 
-            /*material 2 side term*/
-            f = h * bval->cpl / m;
-            left_side(row1, sol, f);
-            a[sol][sol][cp0] -= f;
+			/*material 2 side term*/
+			f = h * bval->cpl / m;
+			left_side(row1, sol, f);
+			a[sol][sol][cp0] -= f;
 
-            /*right hand side terms*/
-            f = bval->cpl * h * (bval->conc[O2sol] - bval->conc[Nsol] / m);
-            right_side(row0, sol, bval->rhs, -f);
-            right_side(row1, sol, bval->rhs, f);
-        }
-    }
-    /*disallow update to gas or silicon side*/
-    if (mat1 == Si || mat1 == GAS) {
-        clear_row(row1, sol);
-        left_side(row1, sol, 1.0);
-        right_side(row1, sol, bval->rhs, 0.0);
-    }
+			/*right hand side terms*/
+			f = bval->cpl * h * (bval->conc[O2sol] - bval->conc[Nsol] / m);
+			right_side(row0, sol, bval->rhs, -f);
+			right_side(row1, sol, bval->rhs, f);
+		}
+	}
+	/*disallow update to gas or silicon side*/
+	if (mat1 == Si || mat1 == GAS) {
+		clear_row(row1, sol);
+		left_side(row1, sol, 1.0);
+		right_side(row1, sol, bval->rhs, 0.0);
+	}
 }
 
 void O2boundary(struct bound_str *bval) { Oboundary(O2, bval); }
@@ -227,8 +227,8 @@ void H2Oboundary(struct bound_str *bval) { Oboundary(H2O, bval); }
  * Original: CSR 4/86
  *----------------------------------------------------------------------*/
 float Oss(int s, int mat) {
-    /* Henry's law rules OK */
-    return (H(s, mat) * pressure);
+	/* Henry's law rules OK */
+	return (H(s, mat) * pressure);
 }
 
 /*-----------------Orr--------------------------------------------------
@@ -236,23 +236,23 @@ float Oss(int s, int mat) {
  * Original: CSR 8/87
  *----------------------------------------------------------------------*/
 float Orr(float temp, int s, double *normal, double noni) {
-    float val;
-    double XtalDir[3];
+	float val;
+	double XtalDir[3];
 
-    /* B, B/A at this temperature */
-    do_deal_grove(temp, s);
+	/* B, B/A at this temperature */
+	do_deal_grove(temp, s);
 
-    /* Convert to ks */
-    val = B_DealGrove / A_DealGrove * N1(s, SiO2) / (H(s, SiO2) * pressure);
+	/* Convert to ks */
+	val = B_DealGrove / A_DealGrove * N1(s, SiO2) / (H(s, SiO2) * pressure);
 
-    /* Add in orientation dependence */
-    SupToXtal(normal, XtalDir);
-    val *= DoOriDep(XtalDir, oridep);
+	/* Add in orientation dependence */
+	SupToXtal(normal, XtalDir);
+	val *= DoOriDep(XtalDir, oridep);
 
-    /* Add in fermi-level enhancement */
-    val *= KsFermiDep(noni, temp);
+	/* Add in fermi-level enhancement */
+	val *= KsFermiDep(noni, temp);
 
-    return (val);
+	return (val);
 }
 
 /*-----------------Ovel-------------------------------------------------
@@ -260,21 +260,21 @@ float Orr(float temp, int s, double *normal, double noni) {
  * Original: CSR 4/86
  *----------------------------------------------------------------------*/
 float Ovel(float temp, int s, float conc, double *n, double noni) {
-    float v, l, orr;
+	float v, l, orr;
 
-    /* ks C / N1 */
-    orr = Orr(temp, s, n, noni);
-    v = orr * conc / N1(s, SiO2);
+	/* ks C / N1 */
+	orr = Orr(temp, s, n, noni);
+	v = orr * conc / N1(s, SiO2);
 
-    if (s == O2) {
-        /* The thin oxide correction: figure an effective length
-         * and plug it into the thin oxide correction term.
-         * Note conc is lagged one timestep.  Oh, well.
-         */
-        l = LenEff(conc, orr);
-        v += ThinOxideCorr(l, n);
-    }
-    return (v);
+	if (s == O2) {
+		/* The thin oxide correction: figure an effective length
+		 * and plug it into the thin oxide correction term.
+		 * Note conc is lagged one timestep.  Oh, well.
+		 */
+		l = LenEff(conc, orr);
+		v += ThinOxideCorr(l, n);
+	}
+	return (v);
 }
 
 /*-----------------LenEff-----------------------------------------------
@@ -285,16 +285,16 @@ float Ovel(float temp, int s, float conc, double *n, double noni) {
  * Hassle: B/A can depend on position so it has to be passed in.
  *----------------------------------------------------------------------*/
 float LenEff(float conc, float ks) {
-    /* -D(C-C*) = kC .:.  X=D/ks(C* / C-1) */
-    float D, Cstar;
+	/* -D(C-C*) = kC .:.  X=D/ks(C* / C-1) */
+	float D, Cstar;
 
-    if (ks <= 0 || conc <= 0)
-        return (MAXFLOAT);
+	if (ks <= 0 || conc <= 0)
+		return (MAXFLOAT);
 
-    Cstar = H(gas_type, SiO2) * pressure;
-    D = B_DealGrove / 2 * N1(gas_type, SiO2) / Cstar;
+	Cstar = H(gas_type, SiO2) * pressure;
+	D = B_DealGrove / 2 * N1(gas_type, SiO2) / Cstar;
 
-    return (D / ks * (Cstar / conc - 1));
+	return (D / ks * (Cstar / conc - 1));
 }
 
 /*-----------------KsFermiDep-------------------------------------------
@@ -310,35 +310,35 @@ float LenEff(float conc, float ks) {
 #define mabs(a) (((a) >= 0) ? (a) : (-(a)))
 
 double KsFermiDep(double noni, double temp) {
-    double Vratio, Kratio;
-    static double oTemp, iVp, iVpp, iVn, iVnn, Kco;
+	double Vratio, Kratio;
+	static double oTemp, iVp, iVpp, iVn, iVnn, Kco;
 
-    /* If the diffusion code hasn't calculated the Fermi level yet, forget it*/
-    if (noni == 0)
-        return (1.0);
-    if (!BAf_dep)
-        return (1.0);
+	/* If the diffusion code hasn't calculated the Fermi level yet, forget it*/
+	if (noni == 0)
+		return (1.0);
+	if (!BAf_dep)
+		return (1.0);
 
-    if (mabs(temp - oTemp) > 0.01) {
-        /* Calculate intrinsic vacancy concentrations at this temperature */
-        oTemp = temp;
-        iVp = BAf_ebkr * exp(-BAf_Vp / (KB * temp));
-        iVpp = BAf_ebk * exp(-BAf_Vpp / (KB * temp));
-        iVn = BAf_ebkr * exp(-BAf_Vn / (KB * temp));
-        iVnn = BAf_ebk * exp(-BAf_Vnn / (KB * temp));
+	if (mabs(temp - oTemp) > 0.01) {
+		/* Calculate intrinsic vacancy concentrations at this temperature */
+		oTemp = temp;
+		iVp = BAf_ebkr * exp(-BAf_Vp / (KB * temp));
+		iVpp = BAf_ebk * exp(-BAf_Vpp / (KB * temp));
+		iVn = BAf_ebkr * exp(-BAf_Vn / (KB * temp));
+		iVnn = BAf_ebk * exp(-BAf_Vnn / (KB * temp));
 
-        /* Temperature dependent rate coeff */
-        Kco = BAf_Kco0 * exp(-BAf_Kcoe / (KB * temp));
-    }
+		/* Temperature dependent rate coeff */
+		Kco = BAf_Kco0 * exp(-BAf_Kcoe / (KB * temp));
+	}
 
-    /* Fermi level dependent concentration */
-    Vratio = (1 + iVp / noni + iVpp / (noni * noni) + iVn * noni +
-              iVnn * noni * noni) /
-             (1 + iVp + iVpp + iVn + iVnn);
+	/* Fermi level dependent concentration */
+	Vratio = (1 + iVp / noni + iVpp / (noni * noni) + iVn * noni +
+			  iVnn * noni * noni) /
+			 (1 + iVp + iVpp + iVn + iVnn);
 
-    Kratio = 1 + Kco * (Vratio - 1);
+	Kratio = 1 + Kco * (Vratio - 1);
 
-    return (Kratio);
+	return (Kratio);
 }
 
 #include "./src/suprem/include/FEgeom.h" /* for maxdof... */
@@ -359,151 +359,151 @@ static int xjacob = 1;
 #define YY 1
 #define XY 2
 void FE_oxbulk(double *matco, int mat, double *eps, double *sig) {
-    double mu, nu, Eyoung, tau, sigc, exx = eps[XX], eyy = eps[YY],
-                                      exy = eps[XY];
-    double s0xx, s0yy, s0xy, s0dp;
-    double f, dfda, d0, d1, d2, dfdx, dfdy, dfdt;
-    double de00, de01, de02, de10, de11, de12, de20, de21, de22;
-    double dfds, sigd;
-    int do_stress;
-    extern float proc_temp;
-    double clam, dlam;
-    int nmu;
+	double mu, nu, Eyoung, tau, sigc, exx = eps[XX], eyy = eps[YY],
+									  exy = eps[XY];
+	double s0xx, s0yy, s0xy, s0dp;
+	double f, dfda, d0, d1, d2, dfdx, dfdy, dfdt;
+	double de00, de01, de02, de10, de11, de12, de20, de21, de22;
+	double dfds, sigd;
+	int do_stress;
+	extern float proc_temp;
+	double clam, dlam;
+	int nmu;
 
-    if (mat != SiO2)
-        nmu = mat;
-    else if (gas_type != H2O)
-        nmu = SiO2;
-    else
-        nmu = MAXMAT;
+	if (mat != SiO2)
+		nmu = mat;
+	else if (gas_type != H2O)
+		nmu = SiO2;
+	else
+		nmu = MAXMAT;
 
-    mu = mu0[nmu] * exp(mue[nmu] / (KB * proc_temp));
+	mu = mu0[nmu] * exp(mue[nmu] / (KB * proc_temp));
 
-    /*Calculate the corresponding Young's modulus,
-     *using the shear modulus == viscosity analogy*/
-    nu = nux[mat];
-    Eyoung = mu * 2 * (1 + nu);
+	/*Calculate the corresponding Young's modulus,
+	 *using the shear modulus == viscosity analogy*/
+	nu = nux[mat];
+	Eyoung = mu * 2 * (1 + nu);
 
-    /*Put in plane strain coefficients into the first three positions*/
-    plane_strain(Eyoung, nu, matco);
-    sig[XX] = s0xx = matco[0] * exx + matco[1] * eyy;
-    sig[YY] = s0yy = matco[1] * exx + matco[0] * eyy;
-    sig[XY] = s0xy = matco[2] * exy;
+	/*Put in plane strain coefficients into the first three positions*/
+	plane_strain(Eyoung, nu, matco);
+	sig[XX] = s0xx = matco[0] * exx + matco[1] * eyy;
+	sig[YY] = s0yy = matco[1] * exx + matco[0] * eyy;
+	sig[XY] = s0xy = matco[2] * exy;
 
-    do_stress = stress_dep && (mat == SiO2);
-    if (do_stress) {
-        if (byhalves) {
-            clam = lambda / 0.25;
-            if (clam > 1)
-                clam = 1;
-        } else {
-            clam = lambda;
-        }
-        /* The critical stress at this temperature */
-        sigc = (clam * Vc != 0)
-                   ? 2 * 8.62e-5 * 1.6e-12 * proc_temp / (clam * Vc)
-                   : MAXFLOAT;
+	do_stress = stress_dep && (mat == SiO2);
+	if (do_stress) {
+		if (byhalves) {
+			clam = lambda / 0.25;
+			if (clam > 1)
+				clam = 1;
+		} else {
+			clam = lambda;
+		}
+		/* The critical stress at this temperature */
+		sigc = (clam * Vc != 0)
+				   ? 2 * 8.62e-5 * 1.6e-12 * proc_temp / (clam * Vc)
+				   : MAXFLOAT;
 
-        /* let's be quite certain about it */
-        s0dp = s0xx - s0yy;
-        tau = sqrt(0.25 * s0dp * s0dp + s0xy * s0xy);
-        if (tau / sigc < 1e-6)
-            do_stress = 0;
-    }
+		/* let's be quite certain about it */
+		s0dp = s0xx - s0yy;
+		tau = sqrt(0.25 * s0dp * s0dp + s0xy * s0xy);
+		if (tau / sigc < 1e-6)
+			do_stress = 0;
+	}
 
-    if (!do_stress) {
-        /*tangential stiffness matrix*/
-        matco[10] = matco[14] = matco[0];
-        matco[11] = matco[13] = matco[1];
-        matco[12] = matco[15] = matco[16] = matco[17] = 0;
-        matco[18] = matco[2];
-    } else {
-        /*Just watch me now!*/
-        d0 = matco[0];
-        d1 = matco[1];
-        d2 = matco[2];
+	if (!do_stress) {
+		/*tangential stiffness matrix*/
+		matco[10] = matco[14] = matco[0];
+		matco[11] = matco[13] = matco[1];
+		matco[12] = matco[15] = matco[16] = matco[17] = 0;
+		matco[18] = matco[2];
+	} else {
+		/*Just watch me now!*/
+		d0 = matco[0];
+		d1 = matco[1];
+		d2 = matco[2];
 
-        synch2(tau / sigc, &f, &dfda);
-        sig[XX] = s0xx * f;
-        sig[YY] = s0yy * f;
-        sig[XY] = s0xy * f;
+		synch2(tau / sigc, &f, &dfda);
+		sig[XX] = s0xx * f;
+		sig[YY] = s0yy * f;
+		sig[XY] = s0xy * f;
 
-        if (!noderiv) {
+		if (!noderiv) {
 
-            dfdx = dfda / sigc * 0.25 * s0dp / tau * (d0 - d1);
-            dfdy = dfda / sigc * -0.25 * s0dp / tau * (d0 - d1);
-            dfdt = dfda / sigc * s0xy / tau * d2;
+			dfdx = dfda / sigc * 0.25 * s0dp / tau * (d0 - d1);
+			dfdy = dfda / sigc * -0.25 * s0dp / tau * (d0 - d1);
+			dfdt = dfda / sigc * s0xy / tau * d2;
 
-            /* dsig/deps = D0 ( fI + Df.eps ) */
-            de00 = f + dfdx * exx;
-            de01 = dfdy * exx;
-            de02 = dfdt * exx;
-            de10 = dfdx * eyy;
-            de11 = f + dfdy * eyy;
-            de12 = dfdt * eyy;
-            de20 = dfdx * exy;
-            de21 = dfdy * exy;
-            de22 = f + dfdt * exy;
-            matco[10] = d0 * de00 + d1 * de10;
-            matco[11] = d0 * de01 + d1 * de11;
-            matco[12] = d0 * de02 + d1 * de12;
-            matco[13] = d1 * de00 + d0 * de10;
-            matco[14] = d1 * de01 + d0 * de11;
-            matco[15] = d1 * de02 + d0 * de12;
-            matco[16] = d2 * de20;
-            matco[17] = d2 * de21;
-            matco[18] = d2 * de22;
-            matco[0] *= f;
-            matco[1] *= f;
-            matco[2] *= f;
-        }
-    }
+			/* dsig/deps = D0 ( fI + Df.eps ) */
+			de00 = f + dfdx * exx;
+			de01 = dfdy * exx;
+			de02 = dfdt * exx;
+			de10 = dfdx * eyy;
+			de11 = f + dfdy * eyy;
+			de12 = dfdt * eyy;
+			de20 = dfdx * exy;
+			de21 = dfdy * exy;
+			de22 = f + dfdt * exy;
+			matco[10] = d0 * de00 + d1 * de10;
+			matco[11] = d0 * de01 + d1 * de11;
+			matco[12] = d0 * de02 + d1 * de12;
+			matco[13] = d1 * de00 + d0 * de10;
+			matco[14] = d1 * de01 + d0 * de11;
+			matco[15] = d1 * de02 + d0 * de12;
+			matco[16] = d2 * de20;
+			matco[17] = d2 * de21;
+			matco[18] = d2 * de22;
+			matco[0] *= f;
+			matco[1] *= f;
+			matco[2] *= f;
+		}
+	}
 
-    /* The oxidant diffusivity from B */
-    matco[5] = Odiff_coeff(mat, gas_type, proc_temp);
+	/* The oxidant diffusivity from B */
+	matco[5] = Odiff_coeff(mat, gas_type, proc_temp);
 
-    /* Stress dependent reduction */
-    if (stress_dep) {
-        if (byhalves) {
-            if (lambda < 0.5)
-                dlam = 0;
-            else
-                dlam = (lambda - 0.5) / 0.5;
-        } else {
-            dlam = lambda;
-        }
-        if (dlam * Vd != 0) {
-            sigd = 8.62e-5 * 1.6e-12 * proc_temp / (dlam * Vd);
-            /* expl is reserved word in C Standard ISO90 and conflicts with
-             * mathcalls
-             */
-            /* DClark - 18Oct98 */
-            exp_l(0.5 * (sig[XX] + sig[YY]) / sigd, &f, &dfda, dlam);
-            if (f > Dlim) {
-                f = Dlim;
-                dfda = 0;
-            }
-            dfds = 0.5 * dfda / sigd;
-        } else {
-            f = 1.0;
-            dfds = 0.0;
-        }
-        matco[20] = f;
-        if (!noderiv) {
-            if (xjacob) {
-                matco[21 + XX] = dfds * (matco[10] + matco[13]);
-                matco[21 + YY] = dfds * (matco[11] + matco[14]);
-                matco[21 + XY] = dfds * (matco[12] + matco[15]);
-            } else {
-                matco[21 + XX] = 0;
-                matco[21 + YY] = 0;
-                matco[21 + XY] = 0;
-            }
-        }
-    } else {
-        matco[20] = 1.0;
-        matco[21 + XX] = matco[21 + YY] = matco[21 + XY] = 0;
-    }
+	/* Stress dependent reduction */
+	if (stress_dep) {
+		if (byhalves) {
+			if (lambda < 0.5)
+				dlam = 0;
+			else
+				dlam = (lambda - 0.5) / 0.5;
+		} else {
+			dlam = lambda;
+		}
+		if (dlam * Vd != 0) {
+			sigd = 8.62e-5 * 1.6e-12 * proc_temp / (dlam * Vd);
+			/* expl is reserved word in C Standard ISO90 and conflicts with
+			 * mathcalls
+			 */
+			/* DClark - 18Oct98 */
+			exp_l(0.5 * (sig[XX] + sig[YY]) / sigd, &f, &dfda, dlam);
+			if (f > Dlim) {
+				f = Dlim;
+				dfda = 0;
+			}
+			dfds = 0.5 * dfda / sigd;
+		} else {
+			f = 1.0;
+			dfds = 0.0;
+		}
+		matco[20] = f;
+		if (!noderiv) {
+			if (xjacob) {
+				matco[21 + XX] = dfds * (matco[10] + matco[13]);
+				matco[21 + YY] = dfds * (matco[11] + matco[14]);
+				matco[21 + XY] = dfds * (matco[12] + matco[15]);
+			} else {
+				matco[21 + XX] = 0;
+				matco[21 + YY] = 0;
+				matco[21 + XY] = 0;
+			}
+		}
+	} else {
+		matco[20] = 1.0;
+		matco[21 + XX] = matco[21 + YY] = matco[21 + XY] = 0;
+	}
 }
 
 /*-----------------KSUBS------------------------------------------------
@@ -511,88 +511,88 @@ void FE_oxbulk(double *matco, int mat, double *eps, double *sig) {
  * Original: CSR 7/87
  *----------------------------------------------------------------------*/
 void ksubs(double *rval, double *sig, double *n, double *extra) {
-    extern float proc_temp;
-    double sigr, sign, arg, f1, dfda, dfds1, f2, dfds2, sigt, sigh;
-    double rlam, noni = extra[0], conc = extra[1], rho;
+	extern float proc_temp;
+	double sigr, sign, arg, f1, dfda, dfds1, f2, dfds2, sigt, sigh;
+	double rlam, noni = extra[0], conc = extra[1], rho;
 
-    rval[3] = Orr(proc_temp, gas_type, n, noni);
-    rho = (1 - alpha[SiO2][Si]) / alpha[SiO2][Si];
-    rval[4] = rho / N1(gas_type, SiO2);
-    if (gas_type == O2)
-        rval[10] = rho * ThinOxideCorr(LenEff((float)conc, (float)rval[3]), n);
-    else
-        rval[10] = 0.0;
+	rval[3] = Orr(proc_temp, gas_type, n, noni);
+	rho = (1 - alpha[SiO2][Si]) / alpha[SiO2][Si];
+	rval[4] = rho / N1(gas_type, SiO2);
+	if (gas_type == O2)
+		rval[10] = rho * ThinOxideCorr(LenEff((float)conc, (float)rval[3]), n);
+	else
+		rval[10] = 0.0;
 
-    /* Stress dependent reduction */
-    if (stress_dep) {
-        if (byhalves) {
-            if (lambda < 0.25)
-                rlam = 0;
-            else if (lambda > 0.5)
-                rlam = 1;
-            else
-                rlam = (lambda - 0.25) / 0.25;
-        } else {
-            rlam = lambda;
-        }
-        if (rlam * Vr != 0) {
-            sigr = 8.62e-5 * 1.6e-12 * proc_temp / (rlam * Vr);
-            sign = sig[XX] * n[X] * n[X] + sig[YY] * n[Y] * n[Y] +
-                   2 * sig[XY] * n[X] * n[Y];
+	/* Stress dependent reduction */
+	if (stress_dep) {
+		if (byhalves) {
+			if (lambda < 0.25)
+				rlam = 0;
+			else if (lambda > 0.5)
+				rlam = 1;
+			else
+				rlam = (lambda - 0.25) / 0.25;
+		} else {
+			rlam = lambda;
+		}
+		if (rlam * Vr != 0) {
+			sigr = 8.62e-5 * 1.6e-12 * proc_temp / (rlam * Vr);
+			sign = sig[XX] * n[X] * n[X] + sig[YY] * n[Y] * n[Y] +
+				   2 * sig[XY] * n[X] * n[Y];
 
-            arg = sign / sigr;
-            /* expl is reserved word in C Standard ISO90 and conflicts with
-             * mathcalls
-             */
-            /* DClark - 18Oct98 */
-            exp_l(arg, &f1, &dfda, rlam);
-            if (f1 > 1) {
-                f1 = 1;
-                dfda = 0;
-            }
+			arg = sign / sigr;
+			/* expl is reserved word in C Standard ISO90 and conflicts with
+			 * mathcalls
+			 */
+			/* DClark - 18Oct98 */
+			exp_l(arg, &f1, &dfda, rlam);
+			if (f1 > 1) {
+				f1 = 1;
+				dfda = 0;
+			}
 
-            dfds1 = dfda / sigr;
+			dfds1 = dfda / sigr;
 
-        } else {
-            f1 = 1.0;
-            dfds1 = 0;
-        }
-        if (rlam * Vt != 0) {
-            sigt = 8.62e-5 * 1.6e-12 * proc_temp / (rlam * Vt);
-            sigh = sig[XX] * n[Y] * n[Y] + sig[YY] * n[X] * n[X] -
-                   2 * sig[XY] * n[X] * n[Y];
+		} else {
+			f1 = 1.0;
+			dfds1 = 0;
+		}
+		if (rlam * Vt != 0) {
+			sigt = 8.62e-5 * 1.6e-12 * proc_temp / (rlam * Vt);
+			sigh = sig[XX] * n[Y] * n[Y] + sig[YY] * n[X] * n[X] -
+				   2 * sig[XY] * n[X] * n[Y];
 
-            arg = sigh / sigt;
-            /* expl is reserved word in C Standard ISO90 and conflicts with
-             * mathcalls
-             */
-            /* DClark - 18Oct98 */
-            exp_l(arg, &f2, &dfda, rlam);
-            if (f2 > 1) {
-                f2 = 1;
-                dfda = 0;
-            }
+			arg = sigh / sigt;
+			/* expl is reserved word in C Standard ISO90 and conflicts with
+			 * mathcalls
+			 */
+			/* DClark - 18Oct98 */
+			exp_l(arg, &f2, &dfda, rlam);
+			if (f2 > 1) {
+				f2 = 1;
+				dfda = 0;
+			}
 
-            dfds2 = dfda / sigt;
+			dfds2 = dfda / sigt;
 
-        } else {
-            f2 = 1.0;
-            dfds2 = 0;
-        }
-        if (xjacob) {
-            rval[XX] =
-                rval[3] * (f2 * dfds1 * n[X] * n[X] + f1 * dfds2 * n[Y] * n[Y]);
-            rval[YY] =
-                rval[3] * (f2 * dfds1 * n[Y] * n[Y] + f1 * dfds2 * n[X] * n[X]);
-            rval[XY] = rval[3] * (f2 * dfds1 - f1 * dfds2) * 2 * n[X] * n[Y];
-        } else {
-            rval[XX] = rval[YY] = rval[XY] = 0;
-        }
-        rval[5] = f1 * f2;
-    } else {
-        rval[XX] = rval[YY] = rval[XY] = 0;
-        rval[5] = 1.0;
-    }
+		} else {
+			f2 = 1.0;
+			dfds2 = 0;
+		}
+		if (xjacob) {
+			rval[XX] =
+				rval[3] * (f2 * dfds1 * n[X] * n[X] + f1 * dfds2 * n[Y] * n[Y]);
+			rval[YY] =
+				rval[3] * (f2 * dfds1 * n[Y] * n[Y] + f1 * dfds2 * n[X] * n[X]);
+			rval[XY] = rval[3] * (f2 * dfds1 - f1 * dfds2) * 2 * n[X] * n[Y];
+		} else {
+			rval[XX] = rval[YY] = rval[XY] = 0;
+		}
+		rval[5] = f1 * f2;
+	} else {
+		rval[XX] = rval[YY] = rval[XY] = 0;
+		rval[5] = 1.0;
+	}
 }
 
 /*-----------------ThermSig---------------------------------------------
@@ -602,59 +602,59 @@ static double istrain[MAXMAT][3];
 static double istress[MAXMAT][3];
 
 void ThermSig(float temp1, float temp2) {
-    int r, m, l;
-    float Ta, dT, exp, temp, alph;
-    static float wg3[3] = {5.0 / 9.0, 8.0 / 9.0, 5.0 / 9.0},
-                 lg3[3] = {-0.7745966692, 0, 0.7745966692};
-    int used[MAXMAT];
+	int r, m, l;
+	float Ta, dT, exp, temp, alph;
+	static float wg3[3] = {5.0 / 9.0, 8.0 / 9.0, 5.0 / 9.0},
+				 lg3[3] = {-0.7745966692, 0, 0.7745966692};
+	int used[MAXMAT];
 
-    for (m = 0; m < MAXMAT; m++) {
-        istrain[m][XX] = istrain[m][YY] = istrain[m][XY] = 0;
-        used[m] = 0;
-    }
-    for (r = 0; r < nreg; r++)
-        used[mat_reg(r)] = 1;
+	for (m = 0; m < MAXMAT; m++) {
+		istrain[m][XX] = istrain[m][YY] = istrain[m][XY] = 0;
+		used[m] = 0;
+	}
+	for (r = 0; r < nreg; r++)
+		used[mat_reg(r)] = 1;
 
-    Ta = 0.5 * (temp1 + temp2);
-    dT = 0.5 * (temp2 - temp1);
-    if (dT > -1e-3 && dT < 1e-3)
-        return;
+	Ta = 0.5 * (temp1 + temp2);
+	dT = 0.5 * (temp2 - temp1);
+	if (dT > -1e-3 && dT < 1e-3)
+		return;
 
-    /* For each material, integrate the lcte from temp1 to temp2 */
-    /* Use simple 3-pt Gaussian integration */
-    for (m = 0; m < MAXMAT; m++) {
-        if (!used[m])
-            continue;
-        if (!atherm[m])
-            continue;
-        exp = 0;
-        for (l = 0; l < 3; l++) {
-            temp = Ta + lg3[l] * dT;
-            fmacro("T", temp, "%12e");
-            alph = string_to_real(atherm[m], -1.0);
-            umacro("T");
-            if (alph < 0)
-                return;
-            exp += wg3[l] * alph;
-        }
-        exp *= dT;
-        istrain[m][XX] = istrain[m][YY] = exp;
-    }
+	/* For each material, integrate the lcte from temp1 to temp2 */
+	/* Use simple 3-pt Gaussian integration */
+	for (m = 0; m < MAXMAT; m++) {
+		if (!used[m])
+			continue;
+		if (!atherm[m])
+			continue;
+		exp = 0;
+		for (l = 0; l < 3; l++) {
+			temp = Ta + lg3[l] * dT;
+			fmacro("T", temp, "%12e");
+			alph = string_to_real(atherm[m], -1.0);
+			umacro("T");
+			if (alph < 0)
+				return;
+			exp += wg3[l] * alph;
+		}
+		exp *= dT;
+		istrain[m][XX] = istrain[m][YY] = exp;
+	}
 }
 
 /*-----------------AddIntSig--------------------------------------------
  * Add nitride intrinsic stress, assuming it is all Sxx.
  *----------------------------------------------------------------------*/
 void AddIntSig() {
-    int m;
-    for (m = 0; m < MAXMAT; m++)
-        istress[m][XX] = IntStress[m];
+	int m;
+	for (m = 0; m < MAXMAT; m++)
+		istress[m][XX] = IntStress[m];
 }
 
 void plane_strain(double E, double v, double *matco) {
-    matco[0] = E * (1 - v) / ((1 + v) * (1 - 2 * v));
-    matco[1] = E * v / ((1 + v) * (1 - 2 * v));
-    matco[2] = E / ((1 + v) * 2);
+	matco[0] = E * (1 - v) / ((1 + v) * (1 - 2 * v));
+	matco[1] = E * v / ((1 + v) * (1 - 2 * v));
+	matco[2] = E / ((1 + v) * 2);
 }
 
 /*-----------------SUP4_ECOEFF------------------------------------------
@@ -662,105 +662,105 @@ void plane_strain(double E, double v, double *matco) {
  * Original: CSR 7/87
  *----------------------------------------------------------------------*/
 void sup4_ecoeff(double *matco, int mat, double *eps, double *sig) {
-    int i;
-    double feps[3];
-    for (i = 10; i < 20; i++)
-        matco[i] = 0;
+	int i;
+	double feps[3];
+	for (i = 10; i < 20; i++)
+		matco[i] = 0;
 
-    feps[XX] = eps[XX] + istrain[mat][XX];
-    feps[YY] = eps[YY] + istrain[mat][YY];
-    feps[XY] = eps[XY] + istrain[mat][XY];
+	feps[XX] = eps[XX] + istrain[mat][XX];
+	feps[YY] = eps[YY] + istrain[mat][YY];
+	feps[XY] = eps[XY] + istrain[mat][XY];
 
-    plane_strain(E[mat], pr[mat], matco);
+	plane_strain(E[mat], pr[mat], matco);
 
-    sig[XX] = matco[0] * feps[XX] + matco[1] * feps[YY];
-    sig[YY] = matco[1] * feps[XX] + matco[0] * feps[YY];
-    sig[XY] = matco[2] * feps[XY];
+	sig[XX] = matco[0] * feps[XX] + matco[1] * feps[YY];
+	sig[YY] = matco[1] * feps[XX] + matco[0] * feps[YY];
+	sig[XY] = matco[2] * feps[XY];
 
-    sig[XX] += istress[mat][XX];
-    sig[XY] += istress[mat][XY];
-    sig[YY] += istress[mat][YY];
+	sig[XX] += istress[mat][XX];
+	sig[XY] += istress[mat][XY];
+	sig[YY] += istress[mat][YY];
 }
 
 void synch2(double arg, double *val, double *deriv) {
-    double s;
-    if (arg > -1e-6 && arg < 1e-6) {
-        *val = 1;
-        *deriv = 0;
-    } else {
-        s = asinh(arg);
-        *val = s / arg;
-        *deriv = (1 / cosh(s) - *val) / arg;
-    }
+	double s;
+	if (arg > -1e-6 && arg < 1e-6) {
+		*val = 1;
+		*deriv = 0;
+	} else {
+		s = asinh(arg);
+		*val = s / arg;
+		*deriv = (1 / cosh(s) - *val) / arg;
+	}
 }
 
 /* expl is reserved word in C Standard ISO90 and conflicts with mathcalls */
 /* DClark - 18Oct98 */
 void exp_l(double arg, double *f, double *dfda, double lambda) {
-    double argLim, eargl;
-    argLim = 4.6;
-    eargl = exp(argLim);
+	double argLim, eargl;
+	argLim = 4.6;
+	eargl = exp(argLim);
 
-    if (arg < -argLim) {
-        *f = -1 / (eargl * (arg + 1));
-        *dfda = 1 / (eargl * (arg + 1) * (arg + 1));
-    } else {
-        *f = exp(arg);
-        *dfda = *f;
-    }
+	if (arg < -argLim) {
+		*f = -1 / (eargl * (arg + 1));
+		*dfda = 1 / (eargl * (arg + 1) * (arg + 1));
+	} else {
+		*f = exp(arg);
+		*dfda = *f;
+	}
 }
 
 #ifdef DEBUG
 test_bulk(ex, ey, ez, dx, dy, dz) double ex, ey, ez, dx, dy, dz;
 {
-    double matco[30], matco1[30], sig[3], eps[3], sig1[3], a, b, c, det, i0, i1,
-        i2;
-    nux[SiO2] = 0.499;
-    mu0[SiO2] = 2413.9;
-    mue[SiO2] = 2.525;
-    proc_temp = 1273;
-    Vc = 200e-24;
-    stress_dep = 1;
+	double matco[30], matco1[30], sig[3], eps[3], sig1[3], a, b, c, det, i0, i1,
+		i2;
+	nux[SiO2] = 0.499;
+	mu0[SiO2] = 2413.9;
+	mue[SiO2] = 2.525;
+	proc_temp = 1273;
+	Vc = 200e-24;
+	stress_dep = 1;
 
-    eps[XX] = ex;
-    eps[YY] = ey;
-    eps[XY] = ez;
-    FE_oxbulk(matco, SiO2, eps, sig);
+	eps[XX] = ex;
+	eps[YY] = ey;
+	eps[XY] = ez;
+	FE_oxbulk(matco, SiO2, eps, sig);
 
-    eps[XX] += dx;
-    eps[YY] += dy;
-    eps[XY] += dz;
-    FE_oxbulk(matco1, SiO2, eps, sig1);
+	eps[XX] += dx;
+	eps[YY] += dy;
+	eps[XY] += dz;
+	FE_oxbulk(matco1, SiO2, eps, sig1);
 
-    printf("%g %g\n", sig1[XX] - sig[XX],
-           matco[10] * dx + matco[11] * dy + matco[12] * dz);
-    printf("%g %g\n", sig1[YY] - sig[YY],
-           matco[13] * dx + matco[14] * dy + matco[15] * dz);
-    printf("%g %g\n", sig1[XY] - sig[XY],
-           matco[16] * dx + matco[17] * dy + matco[18] * dz);
-    printf("%g %g\n", matco1[20] - matco[20],
-           matco[21 + XX] * dx + matco[21 + YY] * dy + matco[21 + XY] * dz);
+	printf("%g %g\n", sig1[XX] - sig[XX],
+		   matco[10] * dx + matco[11] * dy + matco[12] * dz);
+	printf("%g %g\n", sig1[YY] - sig[YY],
+		   matco[13] * dx + matco[14] * dy + matco[15] * dz);
+	printf("%g %g\n", sig1[XY] - sig[XY],
+		   matco[16] * dx + matco[17] * dy + matco[18] * dz);
+	printf("%g %g\n", matco1[20] - matco[20],
+		   matco[21 + XX] * dx + matco[21 + YY] * dy + matco[21 + XY] * dz);
 }
 #endif
 
 #ifndef HAVE_ASINH
 double asinh(arg) double arg;
 {
-    double s, delta;
+	double s, delta;
 
-    /* Initial guess */
-    if (arg > 2)
-        s = log(2 * arg);
-    else if (arg < -2)
-        s = -log(-2 * arg);
-    else
-        s = arg;
+	/* Initial guess */
+	if (arg > 2)
+		s = log(2 * arg);
+	else if (arg < -2)
+		s = -log(-2 * arg);
+	else
+		s = arg;
 
-    /* Newton loop */
-    do {
-        delta = (arg - sinh(s)) / cosh(s);
-        s += delta;
-    } while (delta > 1e-12 || delta < -1e-12);
-    return (s);
+	/* Newton loop */
+	do {
+		delta = (arg - sinh(s)) / cosh(s);
+		s += delta;
+	} while (delta > 1e-12 || delta < -1e-12);
+	return (s);
 }
 #endif

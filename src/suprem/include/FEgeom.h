@@ -21,39 +21,39 @@
 #define MAXGP 8   /* 8 integration points in the cube */
 
 struct FEnd_str {
-    double cord[MAXDIM]; /* x,y,z coordinates */
-    double sol[MAXDOF];  /* Solution values */
-    int fixity[MAXDOF];  /* BC of x,y velocity */
-    double bc[MAXDOF];   /* Some BC info */
-    double sig[MAXSC];   /* Stress and strain */
-    double eps[MAXSC];
-    double garbage[20]; /* Normal vector, reaction rates, blah... */
-    int valence;
-    char *user; /* Anything the user wants to put here */
+	double cord[MAXDIM]; /* x,y,z coordinates */
+	double sol[MAXDOF];  /* Solution values */
+	int fixity[MAXDOF];  /* BC of x,y velocity */
+	double bc[MAXDOF];   /* Some BC info */
+	double sig[MAXSC];   /* Stress and strain */
+	double eps[MAXSC];
+	double garbage[20]; /* Normal vector, reaction rates, blah... */
+	int valence;
+	char *user; /* Anything the user wants to put here */
 };
 typedef struct FEnd_str FEnd_typ;
 
 struct FEelt_str {
-    int nd[MAXNEL]; /* The global node numbers */
-    int face[6];    /* B.C. info for each face (or nbr) */
-    int desc;       /* What element this is */
-    int mat;        /* Material code of element */
+	int nd[MAXNEL]; /* The global node numbers */
+	int face[6];	/* B.C. info for each face (or nbr) */
+	int desc;		/* What element this is */
+	int mat;		/* Material code of element */
 };
 typedef struct FEelt_str FEelt_typ;
 
 /* Descriptor for finite elements */
 struct FEdesc_str {
-    int nel;    /* Number of nodes per element */
-    int gaussp; /* Number of gauss points */
-    int (*stiff)();
-    void (*coeff)(double *matco, int mat, double *eps, double *sig);
-    int (*bound)();
-    void (*nodal_stress)();
+	int nel;	/* Number of nodes per element */
+	int gaussp; /* Number of gauss points */
+	int (*stiff)();
+	void (*coeff)(double *matco, int mat, double *eps, double *sig);
+	int (*bound)();
+	void (*nodal_stress)();
 };
 typedef struct FEdesc_str FEdesc_typ;
 
 struct FEmat_str {
-    double coeff[20]; /* Routines use it as they like */
+	double coeff[20]; /* Routines use it as they like */
 };
 typedef struct FEmat_str FEmat_typ;
 

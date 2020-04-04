@@ -36,19 +36,19 @@
 /*a contact is a semiconductor material touching an Exposed or backside or
   anything touching aluminum*/
 #define IS_CONT(A, B)                                                          \
-    ((IS_SEMI(mat_reg(reg_tri((A)))) &&                                        \
-      ((NBR(A, B) == EX) || (NBR(A, B) == BC))) ||                             \
-     ((NBR(A, B) > 0) && (mat_reg(reg_tri(NBR(A, B))) == Al)))
+	((IS_SEMI(mat_reg(reg_tri((A)))) &&                                        \
+	  ((NBR(A, B) == EX) || (NBR(A, B) == BC))) ||                             \
+	 ((NBR(A, B) > 0) && (mat_reg(reg_tri(NBR(A, B))) == Al)))
 
 /*Contact information*/
 struct contact_str {
-    char *name;    /*name of the contact*/
-    int np;        /*the number of points*/
-    int *pt;       /*list of the points involved*/
-    int *ndc;      /*list of the contact material nodes involved*/
-    int curnod;    /*circuit node for current out this contact*/
-    int volnod;    /*circuit node for voltage at this boundary*/
-    double conres; /*the contact resistance in ohm/cm2*/
+	char *name;	/*name of the contact*/
+	int np;		   /*the number of points*/
+	int *pt;	   /*list of the points involved*/
+	int *ndc;	  /*list of the contact material nodes involved*/
+	int curnod;	/*circuit node for current out this contact*/
+	int volnod;	/*circuit node for voltage at this boundary*/
+	double conres; /*the contact resistance in ohm/cm2*/
 };
 
 /*ten is the most external contacts allowed*/
@@ -69,17 +69,17 @@ EXTERN int n_ckt; /*the number of circuit nodes*/
 
 /*various branch relationships*/
 struct vss_str { /*voltage supply*/
-    int con;     /*the contact it is attached to*/
-    double val;  /*the voltage value of v(con)*/
+	int con;	 /*the contact it is attached to*/
+	double val;  /*the voltage value of v(con)*/
 };
 EXTERN int n_vss;
 EXTERN struct vss_str vss[MAXCKT];
 
-EXTERN int *dev_il;          /*column index pointers for steady state solve*/
-EXTERN int dev_loff;         /*upper triangular offset for steady state solve*/
-EXTERN double *dev_l;        /*the lower triangular values for steady state*/
+EXTERN int *dev_il;			 /*column index pointers for steady state solve*/
+EXTERN int dev_loff;		 /*upper triangular offset for steady state solve*/
+EXTERN double *dev_l;		 /*the lower triangular values for steady state*/
 EXTERN int dev_sol[MAXIMP];  /*solution numbers of those being worked on*/
-EXTERN int dev_nsol;         /*number of those being worked on*/
+EXTERN int dev_nsol;		 /*number of those being worked on*/
 EXTERN int dev_elim[MAXIMP]; /*eliminate stuff*/
 
 /*some circuit connectivity pieces*/

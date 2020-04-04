@@ -43,29 +43,29 @@
  *									*
  ************************************************************************/
 void clear_row(int n, int sol) {
-    register int j, k;
+	register int j, k;
 
-    for (j = 0; j < n_imp; j++) {
+	for (j = 0; j < n_imp; j++) {
 
-        switch (blktype[sol][j]) {
+		switch (blktype[sol][j]) {
 
-        case B_NONE:
-            break;
+		case B_NONE:
+			break;
 
-        case B_DIAG:
-            a[sol][j][n] = 0.0;
-            for (k = irow_d[n]; k < irow_d[n + 1]; k++)
-                a[sol][j][jrow_d[k]] = 0.0;
-            break;
+		case B_DIAG:
+			a[sol][j][n] = 0.0;
+			for (k = irow_d[n]; k < irow_d[n + 1]; k++)
+				a[sol][j][jrow_d[k]] = 0.0;
+			break;
 
-        case B_TRI:
-        case B_BLCK:
-            a[sol][j][n] = 0.0;
-            for (k = irow[n]; k < irow[n + 1]; k++)
-                a[sol][j][jrow[k]] = 0.0;
-            break;
-        }
-    }
+		case B_TRI:
+		case B_BLCK:
+			a[sol][j][n] = 0.0;
+			for (k = irow[n]; k < irow[n + 1]; k++)
+				a[sol][j][jrow[k]] = 0.0;
+			break;
+		}
+	}
 
-    newb[sol][n] = 0.0;
+	newb[sol][n] = 0.0;
 }

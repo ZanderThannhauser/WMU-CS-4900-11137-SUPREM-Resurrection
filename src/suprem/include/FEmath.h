@@ -25,13 +25,13 @@
 #define F_DIAG 8
 #define F_IDENTITY 16
 
-EXTERN float FErel;            /* Relative error criterion */
-EXTERN float FEabe[MAXDOF];    /* Abs error crit / FErel */
-EXTERN int FEsymm;             /* Is the matrix symmetric? */
-EXTERN int FElinmeth;          /* What linear method */
-EXTERN int FEnonloop;          /* How many nonlinear loops */
+EXTERN float FErel;			   /* Relative error criterion */
+EXTERN float FEabe[MAXDOF];	/* Abs error crit / FErel */
+EXTERN int FEsymm;			   /* Is the matrix symmetric? */
+EXTERN int FElinmeth;		   /* What linear method */
+EXTERN int FEnonloop;		   /* How many nonlinear loops */
 EXTERN int FEorder, FEorder_u; /* What ordering to use */
-EXTERN int FEcheck;            /* Check iccg against direct? */
+EXTERN int FEcheck;			   /* Check iccg against direct? */
 
 EXTERN int noderiv;   /* Skip jacobian while computing residual? */
 EXTERN double lambda; /* Continuation parameter */

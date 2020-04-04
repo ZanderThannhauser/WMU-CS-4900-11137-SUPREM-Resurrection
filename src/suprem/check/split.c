@@ -41,99 +41,99 @@
  *									*
  ************************************************************************/
 int split(char *line, char **argv, int parnames) {
-    int i;
-    char *s;
-    int parcnt;
+	int i;
+	char *s;
+	int parcnt;
 
-    i = 0;
+	i = 0;
 
-    /*eat any leading white space up*/
-    while (isspace(*line))
-        line++;
+	/*eat any leading white space up*/
+	while (isspace(*line))
+		line++;
 
-    /*repeat until we are at end of line*/
-    while (*line != '\0') {
+	/*repeat until we are at end of line*/
+	while (*line != '\0') {
 
-        /*allocate space for the pair*/
-        argv[i] = (char *)malloc(strlen(line) + 1);
+		/*allocate space for the pair*/
+		argv[i] = (char *)malloc(strlen(line) + 1);
 
-        /*eat a parameter name - non blanks followed by a blank or =*/
-        if (parnames) {
-            for (s = argv[i];
-                 (*line != '\0') && (*line != '=') && (!isspace(*line)); line++)
-                *s++ = *line;
-        } else
-            s = argv[i];
+		/*eat a parameter name - non blanks followed by a blank or =*/
+		if (parnames) {
+			for (s = argv[i];
+				 (*line != '\0') && (*line != '=') && (!isspace(*line)); line++)
+				*s++ = *line;
+		} else
+			s = argv[i];
 
-        /*handle a possible assignement*/
-        if (*line == ' ')
-            /*eat any leading white space up*/
-            while (isspace(*line))
-                line++;
+		/*handle a possible assignement*/
+		if (*line == ' ')
+			/*eat any leading white space up*/
+			while (isspace(*line))
+				line++;
 
-        if ((*line == '=') || !parnames) {
-            /*add the parameter assignment*/
-            if (parnames)
-                *s++ = *line++; /*add the equal sign in*/
+		if ((*line == '=') || !parnames) {
+			/*add the parameter assignment*/
+			if (parnames)
+				*s++ = *line++; /*add the equal sign in*/
 
-            /*eat white space after the equal*/
-            while ((*line != '\0') && isspace(*line))
-                line++;
+			/*eat white space after the equal*/
+			while ((*line != '\0') && isspace(*line))
+				line++;
 
-            /*handle differently if we found a ", (, or something else*/
-            switch (*line) {
-            case '"': /*skip over the quote we found*/
-                line++;
-                /*read until we find the end quote*/
-                while ((*line) && (*line != '"'))
-                    *s++ = *line++;
-                if (*line != '"') {
-                    fprintf(stderr, "unmatched quotes in input\n");
-                    return (-1);
-                }
-                line++;
-                break;
-            case '\'': /*skip over the quote we found*/
-                line++;
-                /*read until we find the end quote*/
-                while ((*line) && (*line != '\''))
-                    *s++ = *line++;
-                if (*line != '\'') {
-                    fprintf(stderr, "unmatched quotes in input\n");
-                    return (-1);
-                }
-                line++;
-                break;
-            case '(': /*add one to the paren count read until matched set*/
-                parcnt = 1;
-                *s++ = *line++;
-                while ((*line) && (parcnt != 0)) {
-                    if (*line == '(')
-                        parcnt++;
-                    if (*line == ')')
-                        parcnt--;
-                    *s++ = *line++;
-                }
-                if (parcnt != 0) {
-                    fprintf(stderr, "unmatched parenthesis in input\n");
-                    return (-1);
-                }
-                break;
-            default: /*now eat until a non space*/
-                while ((*line != '\0') && !isspace(*line))
-                    *s++ = *line++;
-            }
-        }
-        /*add a terminator to the string*/
-        *s = '\0';
-        /*advance the argument pointer*/
-        i++;
+			/*handle differently if we found a ", (, or something else*/
+			switch (*line) {
+			case '"': /*skip over the quote we found*/
+				line++;
+				/*read until we find the end quote*/
+				while ((*line) && (*line != '"'))
+					*s++ = *line++;
+				if (*line != '"') {
+					fprintf(stderr, "unmatched quotes in input\n");
+					return (-1);
+				}
+				line++;
+				break;
+			case '\'': /*skip over the quote we found*/
+				line++;
+				/*read until we find the end quote*/
+				while ((*line) && (*line != '\''))
+					*s++ = *line++;
+				if (*line != '\'') {
+					fprintf(stderr, "unmatched quotes in input\n");
+					return (-1);
+				}
+				line++;
+				break;
+			case '(': /*add one to the paren count read until matched set*/
+				parcnt = 1;
+				*s++ = *line++;
+				while ((*line) && (parcnt != 0)) {
+					if (*line == '(')
+						parcnt++;
+					if (*line == ')')
+						parcnt--;
+					*s++ = *line++;
+				}
+				if (parcnt != 0) {
+					fprintf(stderr, "unmatched parenthesis in input\n");
+					return (-1);
+				}
+				break;
+			default: /*now eat until a non space*/
+				while ((*line != '\0') && !isspace(*line))
+					*s++ = *line++;
+			}
+		}
+		/*add a terminator to the string*/
+		*s = '\0';
+		/*advance the argument pointer*/
+		i++;
 
-        /*eat any white space before the next parameter*/
-        while (isspace(*line))
-            line++;
-    }
-    /*terminate the list of arguments*/
-    argv[i] = NULL;
-    return (0);
+		/*eat any white space before the next parameter*/
+		while (isspace(*line))
+			line++;
+	}
+	/*terminate the list of arguments*/
+	argv[i] = NULL;
+	return (0);
 }

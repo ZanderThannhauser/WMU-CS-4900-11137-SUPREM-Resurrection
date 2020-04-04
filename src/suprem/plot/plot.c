@@ -41,12 +41,12 @@ void edge_pl(int i) {}
 void reg_pl(int i) {}
 
 void surf_pl(int color) {
-    int i;
+	int i;
 
-    for (i = 0; i < ned; i++) {
-        if (is_surf(pt_edg(i, 0)) && is_surf(pt_edg(i, 1)))
-            edge_pl(i);
-    }
+	for (i = 0; i < ned; i++) {
+		if (is_surf(pt_edg(i, 0)) && is_surf(pt_edg(i, 1)))
+			edge_pl(i);
+	}
 }
 
 void xgdebug() {}

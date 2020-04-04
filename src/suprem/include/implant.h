@@ -24,24 +24,24 @@
 
 /*the structures for the rectangular mesh*/
 struct rect_nd {
-    int mat;
-    double conc;
-    double dam;
+	int mat;
+	double conc;
+	double dam;
 };
 
 struct rect_pt {
-    int nn;
-    struct rect_nd *nd;
+	int nn;
+	struct rect_nd *nd;
 };
 
 struct surf_info {
-    int nmat;
-    int mat[MAXMAT];    /*materials*/
-    double top[MAXMAT]; /*effective depth for material*/
-    double bot[MAXMAT]; /*effective depth for material*/
-    double lft[MAXDIM]; /*the left and right edges*/
-    double rht[MAXDIM]; /*the left and right edges*/
-    struct surf_info *next;
+	int nmat;
+	int mat[MAXMAT];	/*materials*/
+	double top[MAXMAT]; /*effective depth for material*/
+	double bot[MAXMAT]; /*effective depth for material*/
+	double lft[MAXDIM]; /*the left and right edges*/
+	double rht[MAXDIM]; /*the left and right edges*/
+	struct surf_info *next;
 };
 
 /*define ions which are not also impurities*/
@@ -62,11 +62,11 @@ double Rp, delRp, Rgam, Rkurt;
 
 /*a data structure to hold the various interesting constants*/
 struct imp_info {
-    double maxz;    /* Max allowable input to Pearson func */
-    double area;    /* Area for this Pearson curve */
-    double lat[2];  /* The lateral standard deviation*/
-    double vert[5]; /* Vertical information array*/
-    double dam[8];  /* Damage characterization */
+	double maxz;	/* Max allowable input to Pearson func */
+	double area;	/* Area for this Pearson curve */
+	double lat[2];  /* The lateral standard deviation*/
+	double vert[5]; /* Vertical information array*/
+	double dam[8];  /* Damage characterization */
 };
 
 /*lateral distribution*/
@@ -101,7 +101,7 @@ EXTERN int imp_model;
 
 /* undefine this if your machine doesn't like register vars (esp. with -O) */
 #define Y_SLICE TRUE /* get_edge() direction, want a y-slice */
-#define X_VAL 0      /* cord[X_VAL] is an X value */
-#define Y_VAL 1      /*   .... similar idea .... */
+#define X_VAL 0		 /* cord[X_VAL] is an X value */
+#define Y_VAL 1		 /*   .... similar idea .... */
 
 #define IMP_LAT(A, B, C) (0.5 * (erf((B) / (A)) - erf((C) / (A))))

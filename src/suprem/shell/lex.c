@@ -74,49 +74,49 @@ char *read_until(char *str);
  *									*
  ************************************************************************/
 char fetchc(FILE *in, int per) {
-    char c;
-    int i;
+	char c;
+	int i;
 
-    /*this routine is very simple, just return character in the buffer*/
-    c = *(buffer + bufptr++);
+	/*this routine is very simple, just return character in the buffer*/
+	c = *(buffer + bufptr++);
 
-    if (c == '\0') {
-        /*get and process some more input*/
-        get_input(in, per);
-        c = *(buffer + bufptr++);
-    }
+	if (c == '\0') {
+		/*get and process some more input*/
+		get_input(in, per);
+		c = *(buffer + bufptr++);
+	}
 
-    *(echo_buffer + echo_bufptr++) = c;
-    if (echo_bufptr == echo_buflen) {
-        echo_buflen = 2 * echo_buflen;
-        echo_buffer = sralloc(char, echo_buflen, echo_buffer);
-    }
+	*(echo_buffer + echo_bufptr++) = c;
+	if (echo_bufptr == echo_buflen) {
+		echo_buflen = 2 * echo_buflen;
+		echo_buffer = sralloc(char, echo_buflen, echo_buffer);
+	}
 
-    /*store away any data that may be neccessary for the commands*/
-    for (i = 0; i <= depth; i++) {
-        *(store[i] + (store_ptr[i])++) = c;
-        if (store_ptr[i] == store_len[i]) {
-            store_len[i] = 2 * store_len[i];
-            store[i] = sralloc(char, store_len[i], store[i]);
-        }
-    }
+	/*store away any data that may be neccessary for the commands*/
+	for (i = 0; i <= depth; i++) {
+		*(store[i] + (store_ptr[i])++) = c;
+		if (store_ptr[i] == store_len[i]) {
+			store_len[i] = 2 * store_len[i];
+			store[i] = sralloc(char, store_len[i], store[i]);
+		}
+	}
 
-    /*nobody wants to see percent signs*/
-    if ((c == '%') && per)
-        c = ' ';
+	/*nobody wants to see percent signs*/
+	if ((c == '%') && per)
+		c = ' ';
 
-    return (c);
+	return (c);
 }
 
 /*define a macro to push characters back on the input buffer*/
 #define pushc(c)                                                               \
-    {                                                                          \
-        int i;                                                                 \
-        echo_bufptr--;                                                         \
-        *(buffer + --bufptr) = c;                                              \
-        for (i = 0; i <= depth; i++)                                           \
-            store_ptr[i]--;                                                    \
-    }
+	{                                                                          \
+		int i;                                                                 \
+		echo_bufptr--;                                                         \
+		*(buffer + --bufptr) = c;                                              \
+		for (i = 0; i <= depth; i++)                                           \
+			store_ptr[i]--;                                                    \
+	}
 
 /************************************************************************
  *									*
@@ -130,83 +130,83 @@ char fetchc(FILE *in, int per) {
  ************************************************************************/
 int yylex() {
 
-    static int for_spot = FALSE;
-    char s;
-    int error = FALSE, len;
+	static int for_spot = FALSE;
+	char s;
+	int error = FALSE, len;
 
-    /*a legal return will end this night mare*/
-    while (TRUE) {
-        switch (ylstate) {
-        case C_STATE:
-            return (lex_command());
-            break;
+	/*a legal return will end this night mare*/
+	while (TRUE) {
+		switch (ylstate) {
+		case C_STATE:
+			return (lex_command());
+			break;
 
-        case PAR_STATE: /*read until a separator character*/
-            yylval.sval = read_quote(par_sep);
-            ylstate = C_STATE;
-            if (strlen(yylval.sval) != 0)
-                return (PARAMETER);
-            break;
+		case PAR_STATE: /*read until a separator character*/
+			yylval.sval = read_quote(par_sep);
+			ylstate = C_STATE;
+			if (strlen(yylval.sval) != 0)
+				return (PARAMETER);
+			break;
 
-        case READ_STATE: /*read until the end of a line*/
-            yylval.sval = read_until("\n\001");
-            ylstate = C_STATE;
-            if (strlen(yylval.sval) != 0)
-                return (PARAMETER);
-            break;
+		case READ_STATE: /*read until the end of a line*/
+			yylval.sval = read_until("\n\001");
+			ylstate = C_STATE;
+			if (strlen(yylval.sval) != 0)
+				return (PARAMETER);
+			break;
 
-        case FOR_STATE: /*if for state is false, we just got here*/
-            if (!for_spot) {
-                /*skip leading white space*/
-                while (isspace(s = fetchc(in_file, TRUE)))
-                    ;
-                pushc(s);
+		case FOR_STATE: /*if for state is false, we just got here*/
+			if (!for_spot) {
+				/*skip leading white space*/
+				while (isspace(s = fetchc(in_file, TRUE)))
+					;
+				pushc(s);
 
-                /*read off the name first*/
-                yylval.sval = (char *)read_until("\n\t (\001");
-                for_spot = TRUE;
-                if (strlen(yylval.sval) != 0)
-                    return (NAME);
-                else {
-                    for_spot = FALSE;
-                    return (PARAMETER);
-                }
-            } else {
-                /*skip leading white space*/
-                while (isspace(s = fetchc(in_file, TRUE)))
-                    ;
+				/*read off the name first*/
+				yylval.sval = (char *)read_until("\n\t (\001");
+				for_spot = TRUE;
+				if (strlen(yylval.sval) != 0)
+					return (NAME);
+				else {
+					for_spot = FALSE;
+					return (PARAMETER);
+				}
+			} else {
+				/*skip leading white space*/
+				while (isspace(s = fetchc(in_file, TRUE)))
+					;
 
-                /*this had best be a paren*/
-                if (s == '(') {
-                    /*stick it back so it leads the string*/
-                    pushc(s);
-                } else
-                    error = TRUE;
+				/*this had best be a paren*/
+				if (s == '(') {
+					/*stick it back so it leads the string*/
+					pushc(s);
+				} else
+					error = TRUE;
 
-                yylval.sval = (char *)read_until("\n)\001");
+				yylval.sval = (char *)read_until("\n)\001");
 
-                /*character at the end better be right paren*/
-                if ((s = fetchc(in_file, TRUE)) != ')') {
-                    error = TRUE;
-                    pushc(s);
-                } else {
-                    len = strlen(yylval.sval);
-                    *(yylval.sval + len) = s;
-                    *(yylval.sval + len + 1) = '\0';
-                }
+				/*character at the end better be right paren*/
+				if ((s = fetchc(in_file, TRUE)) != ')') {
+					error = TRUE;
+					pushc(s);
+				} else {
+					len = strlen(yylval.sval);
+					*(yylval.sval + len) = s;
+					*(yylval.sval + len + 1) = '\0';
+				}
 
-                for_spot = FALSE;
-                ylstate = C_STATE;
-                if (strlen(yylval.sval) != 0) {
-                    if (error)
-                        return (PARAMETER);
-                    else
-                        return (LIST);
-                }
-            }
-            break;
-        }
-    }
+				for_spot = FALSE;
+				ylstate = C_STATE;
+				if (strlen(yylval.sval) != 0) {
+					if (error)
+						return (PARAMETER);
+					else
+						return (LIST);
+				}
+			}
+			break;
+		}
+	}
 }
 
 /************************************************************************
@@ -219,134 +219,134 @@ int yylex() {
  *									*
  ************************************************************************/
 int lex_command() {
-    ENTER;
-    char c;
-    char *s;
+	ENTER;
+	char c;
+	char *s;
 
-    while (!isalnum(c = fetchc(in_file, TRUE))) {
-        /*do single character tests*/
-        switch (c) {
-        case '#': /*return the comment*/
-            ylstate = READ_STATE;
-            EXIT;
-            return (COMMENT);
-            break;
-        case '!': /*return the shell escape*/
-            ylstate = READ_STATE;
-            EXIT;
-            return (BANG);
-            break;
-        case '\n': /*return the end of line*/
-            EXIT;
-            return (EOL);
-            break;
-        case '\01':      /*return the end of file characted*/
-            pushc('\n'); /*get yacc all resynced*/
-            EXIT;
-            return (ENDFILE);
-            break;
-        case '>': /*return redirection request*/
-            ylstate = PAR_STATE;
-            EXIT;
-            return (REDIRECT);
-            break;
-        case '&': /*return background*/
-            EXIT;
-            return (BACK);
-            break;
-        case '{': /*this is the beginning of the grouping stuff*/
-            EXIT;
-            return (BG_GRP);
-            break;
-        case '}': /*this is the end of the grouping stuff*/
-            EXIT;
-            return (END_GRP);
-            break;
-        case ';': /*command delimiter*/
-            EXIT;
-            return (DELIMIT);
-            break;
-        case '?': /*help command*/
-            ylstate = PAR_STATE;
-            EXIT;
-            return (HELP);
-            break;
-        default: /*ignore any other bizarre characters*/
-            break;
-        }
-    }
+	while (!isalnum(c = fetchc(in_file, TRUE))) {
+		/*do single character tests*/
+		switch (c) {
+		case '#': /*return the comment*/
+			ylstate = READ_STATE;
+			EXIT;
+			return (COMMENT);
+			break;
+		case '!': /*return the shell escape*/
+			ylstate = READ_STATE;
+			EXIT;
+			return (BANG);
+			break;
+		case '\n': /*return the end of line*/
+			EXIT;
+			return (EOL);
+			break;
+		case '\01':		 /*return the end of file characted*/
+			pushc('\n'); /*get yacc all resynced*/
+			EXIT;
+			return (ENDFILE);
+			break;
+		case '>': /*return redirection request*/
+			ylstate = PAR_STATE;
+			EXIT;
+			return (REDIRECT);
+			break;
+		case '&': /*return background*/
+			EXIT;
+			return (BACK);
+			break;
+		case '{': /*this is the beginning of the grouping stuff*/
+			EXIT;
+			return (BG_GRP);
+			break;
+		case '}': /*this is the end of the grouping stuff*/
+			EXIT;
+			return (END_GRP);
+			break;
+		case ';': /*command delimiter*/
+			EXIT;
+			return (DELIMIT);
+			break;
+		case '?': /*help command*/
+			ylstate = PAR_STATE;
+			EXIT;
+			return (HELP);
+			break;
+		default: /*ignore any other bizarre characters*/
+			break;
+		}
+	}
 
-    /*if we are here, we got a alphanumeric*/
+	/*if we are here, we got a alphanumeric*/
 
-    /*push the character back on the stack*/
-    pushc(c);
+	/*push the character back on the stack*/
+	pushc(c);
 
-    /*read until a commadn separator*/
-    s = (char *)read_until(";&>{} \t\n");
+	/*read until a commadn separator*/
+	s = (char *)read_until(";&>{} \t\n");
 
-    /*now parse this string with respect to all the builtins*/
-    if (strcmp(s, "quit") == 0) {
-        EXIT;
-        return (QUIT);
-    } else if (strcmp(s, "exit") == 0) {
-        EXIT;
-        return (QUIT);
-    } else if (strcmp(s, "bye") == 0) {
-        EXIT;
-        return (QUIT);
-    } else if (strcmp(s, "logout") == 0) {
-        EXIT;
-        return (QUIT);
-    } else if (strcmp(s, "end") == 0) {
-        EXIT;
-        return (END);
-    } else if (strcmp(s, "source") == 0) {
-        ylstate = PAR_STATE;
-        EXIT;
-        return (SOURCE);
-    } else if (strcmp(s, "for") == 0) {
-        ylstate = FOR_STATE;
-        EXIT;
-        return (FOR);
-    } else if (strcmp(s, "foreach") == 0) {
-        ylstate = FOR_STATE;
-        EXIT;
-        return (FOR);
-    } else if (strcmp(s, "end") == 0) {
-        EXIT;
-        return (END);
-    } else if (strcmp(s, "undef") == 0) {
-        ylstate = READ_STATE;
-        EXIT;
-        return (UNDEF);
-    } else if (strcmp(s, "define") == 0) {
-        ylstate = READ_STATE;
-        EXIT;
-        return (DEFINE);
-    } else if (strcmp(s, "set") == 0) {
-        ylstate = PAR_STATE;
-        EXIT;
-        return (SET);
-    } else if (strcmp(s, "unset") == 0) {
-        ylstate = PAR_STATE;
-        EXIT;
-        return (UNSET);
-    } else if (strcmp(s, "cd") == 0) {
-        ylstate = PAR_STATE;
-        EXIT;
-        return (CHDIR);
-    } else if (strcmp(s, "help") == 0) {
-        ylstate = PAR_STATE;
-        EXIT;
-        return (HELP);
-    } else { /*other non built in command*/
-        ylstate = PAR_STATE;
-        yylval.sval = s;
-        EXIT;
-        return (COMMAND);
-    }
-    EXIT;
-    return (-1);
+	/*now parse this string with respect to all the builtins*/
+	if (strcmp(s, "quit") == 0) {
+		EXIT;
+		return (QUIT);
+	} else if (strcmp(s, "exit") == 0) {
+		EXIT;
+		return (QUIT);
+	} else if (strcmp(s, "bye") == 0) {
+		EXIT;
+		return (QUIT);
+	} else if (strcmp(s, "logout") == 0) {
+		EXIT;
+		return (QUIT);
+	} else if (strcmp(s, "end") == 0) {
+		EXIT;
+		return (END);
+	} else if (strcmp(s, "source") == 0) {
+		ylstate = PAR_STATE;
+		EXIT;
+		return (SOURCE);
+	} else if (strcmp(s, "for") == 0) {
+		ylstate = FOR_STATE;
+		EXIT;
+		return (FOR);
+	} else if (strcmp(s, "foreach") == 0) {
+		ylstate = FOR_STATE;
+		EXIT;
+		return (FOR);
+	} else if (strcmp(s, "end") == 0) {
+		EXIT;
+		return (END);
+	} else if (strcmp(s, "undef") == 0) {
+		ylstate = READ_STATE;
+		EXIT;
+		return (UNDEF);
+	} else if (strcmp(s, "define") == 0) {
+		ylstate = READ_STATE;
+		EXIT;
+		return (DEFINE);
+	} else if (strcmp(s, "set") == 0) {
+		ylstate = PAR_STATE;
+		EXIT;
+		return (SET);
+	} else if (strcmp(s, "unset") == 0) {
+		ylstate = PAR_STATE;
+		EXIT;
+		return (UNSET);
+	} else if (strcmp(s, "cd") == 0) {
+		ylstate = PAR_STATE;
+		EXIT;
+		return (CHDIR);
+	} else if (strcmp(s, "help") == 0) {
+		ylstate = PAR_STATE;
+		EXIT;
+		return (HELP);
+	} else { /*other non built in command*/
+		ylstate = PAR_STATE;
+		yylval.sval = s;
+		EXIT;
+		return (COMMAND);
+	}
+	EXIT;
+	return (-1);
 }
 
 /************************************************************************
@@ -360,33 +360,33 @@ int lex_command() {
  ************************************************************************/
 char *read_until(str) char *str;
 {
-    register char *s;
-    char *s0;
-    int cnt;
-    int len;
-    char *list;
+	register char *s;
+	char *s0;
+	int cnt;
+	int len;
+	char *list;
 
-    len = 80;
-    s0 = salloc(char, len);
-    list = str;
+	len = 80;
+	s0 = salloc(char, len);
+	list = str;
 
-    /*read into the string until we see a terminator*/
-    for (s = s0; (*s = fetchc(in_file, TRUE)); s++) {
-        if (index(list, *s) != 0)
-            break;
+	/*read into the string until we see a terminator*/
+	for (s = s0; (*s = fetchc(in_file, TRUE)); s++) {
+		if (index(list, *s) != 0)
+			break;
 
-        /*check length*/
-        if (s - s0 == (len - 1)) {
-            len *= 2;
-            cnt = s - s0;
-            s0 = sralloc(char, len, s0);
-            s = s0 + cnt;
-        }
-    }
-    pushc(*s);
-    *s = '\0';
+		/*check length*/
+		if (s - s0 == (len - 1)) {
+			len *= 2;
+			cnt = s - s0;
+			s0 = sralloc(char, len, s0);
+			s = s0 + cnt;
+		}
+	}
+	pushc(*s);
+	*s = '\0';
 
-    return (s0);
+	return (s0);
 }
 
 /************************************************************************
@@ -402,57 +402,57 @@ char *read_until(str) char *str;
  ************************************************************************/
 char *read_quote(str) char *str;
 {
-    register char *s;
-    char *s0;
-    int cnt;
-    int len;
-    char *list;
-    char *tp;
-    char quote;
+	register char *s;
+	char *s0;
+	int cnt;
+	int len;
+	char *list;
+	char *tp;
+	char quote;
 
-    len = 80;
-    s0 = salloc(char, len);
-    list = str;
+	len = 80;
+	s0 = salloc(char, len);
+	list = str;
 
-    /*read into the string until we see a terminator*/
-    for (s = s0; (*s = fetchc(in_file, TRUE)); s++) {
-        if (index(list, *s) != 0)
-            break;
+	/*read into the string until we see a terminator*/
+	for (s = s0; (*s = fetchc(in_file, TRUE)); s++) {
+		if (index(list, *s) != 0)
+			break;
 
-        /*if we find a quote, read until matching quote*/
-        if ((*s == '"') || (*s == '\'')) {
-            tp = prompt;
-            prompt = "> ";
-            quote = *s;
-            for (s++; (*s = fetchc(in_file, FALSE)); s++) {
-                if ((*s == quote) || (*s == '\001'))
-                    break;
-                /*check length*/
-                if (s - s0 == (len - 1)) {
-                    len *= 2;
-                    cnt = s - s0;
-                    s0 = sralloc(char, len, s0);
-                    s = s0 + cnt;
-                }
-            }
-            if (*s != quote) {
-                pushc(*s);
-                s--;
-            }
-            prompt = tp;
-        }
+		/*if we find a quote, read until matching quote*/
+		if ((*s == '"') || (*s == '\'')) {
+			tp = prompt;
+			prompt = "> ";
+			quote = *s;
+			for (s++; (*s = fetchc(in_file, FALSE)); s++) {
+				if ((*s == quote) || (*s == '\001'))
+					break;
+				/*check length*/
+				if (s - s0 == (len - 1)) {
+					len *= 2;
+					cnt = s - s0;
+					s0 = sralloc(char, len, s0);
+					s = s0 + cnt;
+				}
+			}
+			if (*s != quote) {
+				pushc(*s);
+				s--;
+			}
+			prompt = tp;
+		}
 
-        /*check length*/
-        if (s - s0 == (len - 1)) {
-            len *= 2;
-            cnt = s - s0;
-            s0 = sralloc(char, len, s0);
-            s = s0 + cnt;
-        }
-    }
-    pushc(*s);
-    *s = '\0';
-    return (s0);
+		/*check length*/
+		if (s - s0 == (len - 1)) {
+			len *= 2;
+			cnt = s - s0;
+			s0 = sralloc(char, len, s0);
+			s = s0 + cnt;
+		}
+	}
+	pushc(*s);
+	*s = '\0';
+	return (s0);
 }
 
 /************************************************************************
@@ -464,17 +464,17 @@ char *read_quote(str) char *str;
  ************************************************************************/
 void do_echo() {
 
-    if (*(echo_buffer + echo_bufptr - 1) != '\n')
-        *(echo_buffer + echo_bufptr++) = '\n';
+	if (*(echo_buffer + echo_bufptr - 1) != '\n')
+		*(echo_buffer + echo_bufptr++) = '\n';
 
-    if (echo_bufptr == echo_buflen) {
-        echo_buflen = 2 * echo_buflen;
-        echo_buffer = sralloc(char, echo_buflen, echo_buffer);
-    }
+	if (echo_bufptr == echo_buflen) {
+		echo_buflen = 2 * echo_buflen;
+		echo_buffer = sralloc(char, echo_buflen, echo_buffer);
+	}
 
-    *(echo_buffer + echo_bufptr) = '\0';
-    echo_bufptr = 0;
+	*(echo_buffer + echo_bufptr) = '\0';
+	echo_bufptr = 0;
 
-    if (echoall)
-        fprintf(stdout, "%s", echo_buffer);
+	if (echoall)
+		fprintf(stdout, "%s", echo_buffer);
 }

@@ -39,25 +39,25 @@
 /* end of declarations*/
 
 double zeqv(double dose, double qtot, double dx, double bt,
-            struct imp_info *data) {
+			struct imp_info *data) {
 
-    double x, val, ov;
-    double q = 0.0; /* Accumulating dose */
-    double qtarg;   /* target dose */
+	double x, val, ov;
+	double q = 0.0; /* Accumulating dose */
+	double qtarg;   /* target dose */
 
-    qtarg = (dose / qtot) * data->area / dx * 1e4;
+	qtarg = (dose / qtot) * data->area / dx * 1e4;
 
-    ov = imp_vert(0.0, data);
-    for (x = dx; x < data->maxz; x += dx) {
-        val = imp_vert(x, data);
+	ov = imp_vert(0.0, data);
+	for (x = dx; x < data->maxz; x += dx) {
+		val = imp_vert(x, data);
 
-        q += 0.5 * (val + ov);
-        if (q >= qtarg) {
-            x -= dx * (q - qtarg) / val;
-            break;
-        }
-        ov = val;
-    }
+		q += 0.5 * (val + ov);
+		if (q >= qtarg) {
+			x -= dx * (q - qtarg) / val;
+			break;
+		}
+		ov = val;
+	}
 
-    return (x);
+	return (x);
 }

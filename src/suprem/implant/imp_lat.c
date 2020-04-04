@@ -40,9 +40,9 @@
  *									*
  ************************************************************************/
 double imp_latr(double pos, struct imp_info *data) {
-    double val;
+	double val;
 
-    val = exp(-(pos * pos) / (2.0 * data->lat[LATSIG] * data->lat[LATSIG]));
-    val /= data->lat[LATAREA] * 1.0e-4;
-    return (val);
+	val = exp(-(pos * pos) / (2.0 * data->lat[LATSIG] * data->lat[LATSIG]));
+	val /= data->lat[LATAREA] * 1.0e-4;
+	return (val);
 }

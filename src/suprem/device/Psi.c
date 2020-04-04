@@ -31,8 +31,8 @@
 /* end of declarations*/
 
 #define fetch(N, V, S, A)                                                      \
-    if (is_specified(param, N))                                                \
-    V = S * get_float(param, N) + A
+	if (is_specified(param, N))                                                \
+	V = S * get_float(param, N) + A
 
 /*definitions for impurity constants as a function of material*/
 #define eps(M) impur[Psi].constant[M][1][0] /*material relative permitivitty*/
@@ -49,28 +49,28 @@
  *									*
  ************************************************************************/
 void Psiboundary(struct bound_str *bval) {
-    int mat0 = bval->mat[0];
-    int mat1 = bval->mat[1];
-    int row0 = bval->loc[0][0];
-    int row1 = bval->loc[1][1];
-    int cp0 = bval->loc[0][1];
-    int cp1 = bval->loc[1][0];
-    double f;
-    int Ps = imptosol[Psi];
+	int mat0 = bval->mat[0];
+	int mat1 = bval->mat[1];
+	int row0 = bval->loc[0][0];
+	int row1 = bval->loc[1][1];
+	int cp0 = bval->loc[0][1];
+	int cp1 = bval->loc[1][0];
+	double f;
+	int Ps = imptosol[Psi];
 
-    right_side(bval->loc[0][0], imptosol[Psi], bval->rhs,
-               bval->cpl * Qss(mat0, mat1));
+	right_side(bval->loc[0][0], imptosol[Psi], bval->rhs,
+			   bval->cpl * Qss(mat0, mat1));
 
-    /*make sure the values are the same across materials*/
-    f = 1.0e20 * bval->cpl;
-    left_side(row0, Ps, f);
-    a[Ps][Ps][cp1] -= f;
-    left_side(row1, Ps, f);
-    a[Ps][Ps][cp0] -= f;
+	/*make sure the values are the same across materials*/
+	f = 1.0e20 * bval->cpl;
+	left_side(row0, Ps, f);
+	a[Ps][Ps][cp1] -= f;
+	left_side(row1, Ps, f);
+	a[Ps][Ps][cp0] -= f;
 
-    f *= (bval->conc[0] - bval->conc[1]);
-    right_side(row0, Ps, bval->rhs, -f);
-    right_side(row1, Ps, bval->rhs, f);
+	f *= (bval->conc[0] - bval->conc[1]);
+	right_side(row0, Ps, bval->rhs, -f);
+	right_side(row1, Ps, bval->rhs, f);
 }
 
 /************************************************************************
@@ -82,47 +82,47 @@ void Psiboundary(struct bound_str *bval) {
  *									*
  ************************************************************************/
 void psi_card(char *par, struct par_str *param) {
-    int mat;
-    int mat2 = -1;
+	int mat;
+	int mat2 = -1;
 
-    /*get the material number specified*/
-    if (get_bool(param, "silicon"))
-        mat = Si;
-    if (get_bool(param, "oxide"))
-        mat = SiO2;
-    if (get_bool(param, "oxynitride"))
-        mat = OxNi;
-    if (get_bool(param, "poly"))
-        mat = Poly;
-    if (get_bool(param, "nitride"))
-        mat = SiNi;
-    if (get_bool(param, "gas"))
-        mat = GAS;
-    if (get_bool(param, "aluminum"))
-        mat = Al;
-    if (get_bool(param, "gaas"))
-        mat = GaAs;
+	/*get the material number specified*/
+	if (get_bool(param, "silicon"))
+		mat = Si;
+	if (get_bool(param, "oxide"))
+		mat = SiO2;
+	if (get_bool(param, "oxynitride"))
+		mat = OxNi;
+	if (get_bool(param, "poly"))
+		mat = Poly;
+	if (get_bool(param, "nitride"))
+		mat = SiNi;
+	if (get_bool(param, "gas"))
+		mat = GAS;
+	if (get_bool(param, "aluminum"))
+		mat = Al;
+	if (get_bool(param, "gaas"))
+		mat = GaAs;
 
-    /*fetch the values for each constant in this material*/
-    fetch("eps", eps(mat), 8.85418e-14, 0.0);
+	/*fetch the values for each constant in this material*/
+	fetch("eps", eps(mat), 8.85418e-14, 0.0);
 
-    /*now fetch any segregation data that comes our way*/
-    if (get_bool(param, "/silicon") && (is_specified(param, "/silicon")))
-        mat2 = Si;
-    if (get_bool(param, "/oxide") && (is_specified(param, "/oxide")))
-        mat2 = SiO2;
-    if (get_bool(param, "/oxynitride") && (is_specified(param, "/oxynitride")))
-        mat2 = OxNi;
-    if (get_bool(param, "/poly") && (is_specified(param, "/poly")))
-        mat2 = Poly;
-    if (get_bool(param, "/nitride") && (is_specified(param, "/nitride")))
-        mat2 = SiNi;
-    if (get_bool(param, "/gas") && (is_specified(param, "/gas")))
-        mat2 = GAS;
-    if (get_bool(param, "/gaas") && (is_specified(param, "/gaas")))
-        mat2 = GaAs;
+	/*now fetch any segregation data that comes our way*/
+	if (get_bool(param, "/silicon") && (is_specified(param, "/silicon")))
+		mat2 = Si;
+	if (get_bool(param, "/oxide") && (is_specified(param, "/oxide")))
+		mat2 = SiO2;
+	if (get_bool(param, "/oxynitride") && (is_specified(param, "/oxynitride")))
+		mat2 = OxNi;
+	if (get_bool(param, "/poly") && (is_specified(param, "/poly")))
+		mat2 = Poly;
+	if (get_bool(param, "/nitride") && (is_specified(param, "/nitride")))
+		mat2 = SiNi;
+	if (get_bool(param, "/gas") && (is_specified(param, "/gas")))
+		mat2 = GAS;
+	if (get_bool(param, "/gaas") && (is_specified(param, "/gaas")))
+		mat2 = GaAs;
 
-    if (mat2 != -1) {
-        fetch("Qss", Qss(mat, mat2) = Qss(mat2, mat), 1.0, 0.0);
-    }
+	if (mat2 != -1) {
+		fetch("Qss", Qss(mat, mat2) = Qss(mat2, mat), 1.0, 0.0);
+	}
 }

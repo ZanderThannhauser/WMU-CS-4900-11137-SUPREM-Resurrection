@@ -54,137 +54,137 @@ int imp_select(struct par_str *param, int *imp, int *ion);
  *									*
  ************************************************************************/
 void implant(char *par, struct par_str *param) {
-    register int i, j;
-    int imp, impa, ion, sol;
-    int isol, vsol;
-    int damage;
-    double dose, energy;
-    struct tms before, after;
-    double ang;
-    ENTER;
+	register int i, j;
+	int imp, impa, ion, sol;
+	int isol, vsol;
+	int damage;
+	double dose, energy;
+	struct tms before, after;
+	double ang;
+	ENTER;
 
-    if (InvalidMeshCheck()) {
-        EXIT;
-        return;
-    }
+	if (InvalidMeshCheck()) {
+		EXIT;
+		return;
+	}
 
-    /*get the impurity number of the place to put the implant*/
-    if (imp_select(param, &imp, &ion) == -1) {
-        EXIT;
-        return;
-    }
-    sol = imptosol[imp];
+	/*get the impurity number of the place to put the implant*/
+	if (imp_select(param, &imp, &ion) == -1) {
+		EXIT;
+		return;
+	}
+	sol = imptosol[imp];
 
-    /*get the main descriptive values for the implant*/
-    dose = get_float(param, "dose");
-    energy = get_float(param, "energy");
+	/*get the main descriptive values for the implant*/
+	dose = get_float(param, "dose");
+	energy = get_float(param, "energy");
 
-    /*get the model type for this implant*/
-    if (get_bool(param, "pearson"))
-        imp_model = PEARS;
-    else if (get_bool(param, "gaussian"))
-        imp_model = GAUSS;
+	/*get the model type for this implant*/
+	if (get_bool(param, "pearson"))
+		imp_model = PEARS;
+	else if (get_bool(param, "gaussian"))
+		imp_model = GAUSS;
 
-    /*check for override of the model values*/
-    if (is_specified(param, "range") && is_specified(param, "std.dev")) {
-        override = TRUE;
-        Rp = get_float(param, "range");
-        delRp = get_float(param, "std.dev");
-        Rgam = get_float(param, "gamma");
-        Rkurt = get_float(param, "kurtosis");
-    } else
-        override = FALSE;
+	/*check for override of the model values*/
+	if (is_specified(param, "range") && is_specified(param, "std.dev")) {
+		override = TRUE;
+		Rp = get_float(param, "range");
+		delRp = get_float(param, "std.dev");
+		Rgam = get_float(param, "gamma");
+		Rkurt = get_float(param, "kurtosis");
+	} else
+		override = FALSE;
 
-    /*do a damage calculation??*/
-    if (is_specified(param, "damage") && get_bool(param, "damage"))
-        damage = TRUE;
-    else
-        damage = FALSE;
+	/*do a damage calculation??*/
+	if (is_specified(param, "damage") && get_bool(param, "damage"))
+		damage = TRUE;
+	else
+		damage = FALSE;
 
-    /*check out the angle of the implant*/
-    if (is_specified(param, "angle"))
-        ang = get_float(param, "angle") * PI / 180.0;
-    else
-        ang = 0.0;
+	/*check out the angle of the implant*/
+	if (is_specified(param, "angle"))
+		ang = get_float(param, "angle") * PI / 180.0;
+	else
+		ang = 0.0;
 
-    /*get defects created*/
-    if (damage) {
+	/*get defects created*/
+	if (damage) {
 
-        if (last_temp != 0.0)
-            init_pseudo(last_temp);
-        else
-            init_pseudo(1173.0);
-        get_defaults(V);
+		if (last_temp != 0.0)
+			init_pseudo(last_temp);
+		else
+			init_pseudo(1173.0);
+		get_defaults(V);
 
-        isol = imptosol[I];
-        vsol = imptosol[V];
-        damage_read = TRUE;
-    }
+		isol = imptosol[I];
+		vsol = imptosol[V];
+		damage_read = TRUE;
+	}
 
-    times(&before);
-    do_implant(ion, ang, dose, energy, damage, sol, isol, vsol);
-    times(&after);
-    print_time("Implantation calculation", &before, &after);
+	times(&before);
+	do_implant(ion, ang, dose, energy, damage, sol, isol, vsol);
+	times(&after);
+	print_time("Implantation calculation", &before, &after);
 
-    /*untranslate the mesh onto the new angle coordinates*/
-    for (i = 0; i < np; i++) {
-        for (j = 0; j < mode; j++)
-            pt[i]->cord[j] = pt[i]->cordo[j];
-    }
+	/*untranslate the mesh onto the new angle coordinates*/
+	for (i = 0; i < np; i++) {
+		for (j = 0; j < mode; j++)
+			pt[i]->cord[j] = pt[i]->cordo[j];
+	}
 
-    /*initialize the active concentration*/
-    switch (imp) {
-    case As:
-        impa = Asa;
-        break;
-    case Sb:
-        impa = Sba;
-        break;
-    case B:
-        impa = Ba;
-        break;
-    case P:
-        impa = Pa;
-        break;
-    case iBe:
-        impa = iBea;
-        break;
-    case iMg:
-        impa = iMga;
-        break;
-    case iSe:
-        impa = iSea;
-        break;
-    case iSi:
-        impa = iSia;
-        break;
-    case iSn:
-        impa = iSna;
-        break;
-    case iGe:
-        impa = iGea;
-        break;
-    case iZn:
-        impa = iZna;
-        break;
-    case iG:
-        impa = iGa;
-        break;
-    default:
-        impa = 0;
-        break;
-    }
+	/*initialize the active concentration*/
+	switch (imp) {
+	case As:
+		impa = Asa;
+		break;
+	case Sb:
+		impa = Sba;
+		break;
+	case B:
+		impa = Ba;
+		break;
+	case P:
+		impa = Pa;
+		break;
+	case iBe:
+		impa = iBea;
+		break;
+	case iMg:
+		impa = iMga;
+		break;
+	case iSe:
+		impa = iSea;
+		break;
+	case iSi:
+		impa = iSia;
+		break;
+	case iSn:
+		impa = iSna;
+		break;
+	case iGe:
+		impa = iGea;
+		break;
+	case iZn:
+		impa = iZna;
+		break;
+	case iG:
+		impa = iGa;
+		break;
+	default:
+		impa = 0;
+		break;
+	}
 
-    /* mark the impurity as implanted */
-    SET_FLAGS(imp, IMPLANTED_IMP);
-    if (impa) {
-        add_impurity(impa, 1.0, -1);
-        SET_FLAGS(impa, ACTIVE | IMPLANTED_IMP);
-    }
+	/* mark the impurity as implanted */
+	SET_FLAGS(imp, IMPLANTED_IMP);
+	if (impa) {
+		add_impurity(impa, 1.0, -1);
+		SET_FLAGS(impa, ACTIVE | IMPLANTED_IMP);
+	}
 
-    /*clean up the malloc space*/
-    EXIT;
-    return;
+	/*clean up the malloc space*/
+	EXIT;
+	return;
 }
 
 /************************************************************************
@@ -197,44 +197,44 @@ void implant(char *par, struct par_str *param) {
  *									*
  ************************************************************************/
 int imp_select(struct par_str *param, int *imp, int *ion) {
-    ENTER;
-    if (get_bool(param, "silicon")) {
-        *ion = *imp = I;
-    } else if (get_bool(param, "arsenic")) {
-        *ion = *imp = As;
-    } else if (get_bool(param, "phosphorus")) {
-        *ion = *imp = P;
-    } else if (get_bool(param, "antimony")) {
-        *ion = *imp = Sb;
-    } else if (get_bool(param, "boron")) {
-        *ion = *imp = B;
-    } else if (get_bool(param, "bf2")) {
-        *imp = B;
-        *ion = BF2;
-    } else if (get_bool(param, "cesium")) {
-        *ion = *imp = Cs;
-    } else if (get_bool(param, "beryllium")) {
-        *ion = *imp = iBe;
-    } else if (get_bool(param, "magnesium")) {
-        *ion = *imp = iMg;
-    } else if (get_bool(param, "selenium")) {
-        *ion = *imp = iSe;
-    } else if (get_bool(param, "isilicon")) {
-        *ion = *imp = iSi;
-    } else if (get_bool(param, "tin")) {
-        *ion = *imp = iSn;
-    } else if (get_bool(param, "germanium")) {
-        *ion = *imp = iGe;
-    } else if (get_bool(param, "zinc")) {
-        *ion = *imp = iZn;
-    } else if (get_bool(param, "carbon")) {
-        *ion = *imp = iC;
-    } else if (get_bool(param, "generic")) {
-        *ion = *imp = iG;
-    }
+	ENTER;
+	if (get_bool(param, "silicon")) {
+		*ion = *imp = I;
+	} else if (get_bool(param, "arsenic")) {
+		*ion = *imp = As;
+	} else if (get_bool(param, "phosphorus")) {
+		*ion = *imp = P;
+	} else if (get_bool(param, "antimony")) {
+		*ion = *imp = Sb;
+	} else if (get_bool(param, "boron")) {
+		*ion = *imp = B;
+	} else if (get_bool(param, "bf2")) {
+		*imp = B;
+		*ion = BF2;
+	} else if (get_bool(param, "cesium")) {
+		*ion = *imp = Cs;
+	} else if (get_bool(param, "beryllium")) {
+		*ion = *imp = iBe;
+	} else if (get_bool(param, "magnesium")) {
+		*ion = *imp = iMg;
+	} else if (get_bool(param, "selenium")) {
+		*ion = *imp = iSe;
+	} else if (get_bool(param, "isilicon")) {
+		*ion = *imp = iSi;
+	} else if (get_bool(param, "tin")) {
+		*ion = *imp = iSn;
+	} else if (get_bool(param, "germanium")) {
+		*ion = *imp = iGe;
+	} else if (get_bool(param, "zinc")) {
+		*ion = *imp = iZn;
+	} else if (get_bool(param, "carbon")) {
+		*ion = *imp = iC;
+	} else if (get_bool(param, "generic")) {
+		*ion = *imp = iG;
+	}
 
-    /*then add a new one*/
-    add_impurity(*imp, 1.0e+5, -1);
-    EXIT;
-    return (0);
+	/*then add a new one*/
+	add_impurity(*imp, 1.0e+5, -1);
+	EXIT;
+	return (0);
 }

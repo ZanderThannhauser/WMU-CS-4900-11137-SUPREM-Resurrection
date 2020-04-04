@@ -54,86 +54,86 @@ void do_exec(char *par, int intr, int index, int no_exec);
  *									*
  ************************************************************************/
 void do_source(char *file,  /*the file to be sourced*/
-               char *redir, /*the filename for redirection, if any*/
-               int back,    /*flag for backgorund execution*/
-               int reperr)  /*report errors in the file open?*/
+			   char *redir, /*the filename for redirection, if any*/
+			   int back,	/*flag for backgorund execution*/
+			   int reperr)  /*report errors in the file open?*/
 {
-    FILE *tinf, *tsrc;
-    FILE tout, *t1;
-    char *redirect;
-    char *oldbuf;
-    ENTER;
+	FILE *tinf, *tsrc;
+	FILE tout, *t1;
+	char *redirect;
+	char *oldbuf;
+	ENTER;
 
-    verpv(file);
-    verpv(redir);
-    verpv(back);
-    verpv(reperr);
+	verpv(file);
+	verpv(redir);
+	verpv(back);
+	verpv(reperr);
 
-    redirect = NULL;
+	redirect = NULL;
 
-    /*if we have not been given a file, save a lot of hassle*/
-    if (file == NULL) {
-        fprintf(stderr, "must specify a file to source\n");
-        EXIT;
-        return;
-    }
+	/*if we have not been given a file, save a lot of hassle*/
+	if (file == NULL) {
+		fprintf(stderr, "must specify a file to source\n");
+		EXIT;
+		return;
+	}
 
-    /*save the old input file pointer, set up the new*/
-    tinf = in_file;
-    tsrc = file_parse(file, "r");
+	/*save the old input file pointer, set up the new*/
+	tinf = in_file;
+	tsrc = file_parse(file, "r");
 
-    /*if a legal file get specified*/
-    if (tsrc != NULL) {
-        /*save the old output file pointer, set up the new*/
-        tout = *stdout;
-        if (redir != NULL) {
-            t1 = file_parse(redir, "a");
-            redirect = redir;
-            *stdout = *t1;
-        }
+	/*if a legal file get specified*/
+	if (tsrc != NULL) {
+		/*save the old output file pointer, set up the new*/
+		tout = *stdout;
+		if (redir != NULL) {
+			t1 = file_parse(redir, "a");
+			redirect = redir;
+			*stdout = *t1;
+		}
 
-        /*save the old buffer away*/
-        oldbuf = salloc(char, strlen(buffer + bufptr) + 1);
-        strcpy(oldbuf, buffer + bufptr);
+		/*save the old buffer away*/
+		oldbuf = salloc(char, strlen(buffer + bufptr) + 1);
+		strcpy(oldbuf, buffer + bufptr);
 
-        /*null the input buffer*/
-        bufptr = 0;
-        buffer[bufptr] = '\0';
+		/*null the input buffer*/
+		bufptr = 0;
+		buffer[bufptr] = '\0';
 
-        /*if background job, handle it*/
-        in_file = tsrc;
-        if (back) {
-            if (fork() == 0) {
-                /*save this location*/
-                while (yyparse() != -1)
-                    ;
-                exit(0);
-            }
-        } else {
-            HERE;
-            while (yyparse() != -1)
-                ;
-            HERE;
-        }
-        fclose(tsrc);
-        in_file = tinf;
+		/*if background job, handle it*/
+		in_file = tsrc;
+		if (back) {
+			if (fork() == 0) {
+				/*save this location*/
+				while (yyparse() != -1)
+					;
+				exit(0);
+			}
+		} else {
+			HERE;
+			while (yyparse() != -1)
+				;
+			HERE;
+		}
+		fclose(tsrc);
+		in_file = tinf;
 
-        /*restore the buffer*/
-        strcpy(buffer, oldbuf);
-        bufptr = 0;
-        sfree(oldbuf);
+		/*restore the buffer*/
+		strcpy(buffer, oldbuf);
+		bufptr = 0;
+		sfree(oldbuf);
 
-    } else if (reperr)
-        fprintf(stderr, "Could not find file %s to open\n", file);
+	} else if (reperr)
+		fprintf(stderr, "Could not find file %s to open\n", file);
 
-    /*clean up the output buffer*/
-    if (redirect != NULL) {
-        fclose(stdout);
-        *stdout = tout;
-        sfree(redirect);
-    }
-    EXIT;
-    return;
+	/*clean up the output buffer*/
+	if (redirect != NULL) {
+		fclose(stdout);
+		*stdout = tout;
+		sfree(redirect);
+	}
+	EXIT;
+	return;
 }
 
 /************************************************************************
@@ -146,76 +146,76 @@ void do_source(char *file,  /*the file to be sourced*/
  ************************************************************************/
 void do_string(char *instr, char *redir, int back) {
 
-    FILE tout, *t1;
-    int len;
-    char *redirect;
-    char *oldbuf;
+	FILE tout, *t1;
+	int len;
+	char *redirect;
+	char *oldbuf;
 
-    ENTER;
+	ENTER;
 
-    redirect = NULL;
+	redirect = NULL;
 
-    /*save the old output file pointer, set up the new*/
-    tout = *stdout;
-    if (redir != NULL) {
-        t1 = file_parse(redir, "a");
-        redirect = redir;
-        *stdout = *t1;
-    }
+	/*save the old output file pointer, set up the new*/
+	tout = *stdout;
+	if (redir != NULL) {
+		t1 = file_parse(redir, "a");
+		redirect = redir;
+		*stdout = *t1;
+	}
 
-    /*if background job, handle it*/
-    if (back) {
-        if (fork() == 0) {
+	/*if background job, handle it*/
+	if (back) {
+		if (fork() == 0) {
 
-            /*make sure there is enough space*/
-            if ((len = (strlen(instr) + 3)) > supbln) {
-                supbln = len;
-                supbuf = sralloc(char, len * sizeof(int), supbuf);
-            }
+			/*make sure there is enough space*/
+			if ((len = (strlen(instr) + 3)) > supbln) {
+				supbln = len;
+				supbuf = sralloc(char, len * sizeof(int), supbuf);
+			}
 
-            /*copy the string int line size pieces into the buffer*/
-            strcpy(supbuf, instr);
-            strcat(supbuf, "\n\001");
-            supbpt = 0;
+			/*copy the string int line size pieces into the buffer*/
+			strcpy(supbuf, instr);
+			strcat(supbuf, "\n\001");
+			supbpt = 0;
 
-            /*parse it*/
-            while (yyparse() != -1)
-                ;
-        }
-    } else {
-        /*save the old buffer away*/
-        oldbuf = salloc(char, strlen(supbuf + supbpt) + 1);
-        strcpy(oldbuf, supbuf + supbpt);
+			/*parse it*/
+			while (yyparse() != -1)
+				;
+		}
+	} else {
+		/*save the old buffer away*/
+		oldbuf = salloc(char, strlen(supbuf + supbpt) + 1);
+		strcpy(oldbuf, supbuf + supbpt);
 
-        /*make sure there is enough space*/
-        if ((len = (strlen(instr) + 3)) > supbln) {
-            supbln = len;
-            supbuf = sralloc(char, len * sizeof(int), supbuf);
-        }
+		/*make sure there is enough space*/
+		if ((len = (strlen(instr) + 3)) > supbln) {
+			supbln = len;
+			supbuf = sralloc(char, len * sizeof(int), supbuf);
+		}
 
-        /*copy the string int line size pieces into the buffer*/
-        strcpy(supbuf, instr);
-        strcat(supbuf, "\n\001");
-        supbpt = 0;
+		/*copy the string int line size pieces into the buffer*/
+		strcpy(supbuf, instr);
+		strcat(supbuf, "\n\001");
+		supbpt = 0;
 
-        /*parse it*/
-        while (yyparse() != -1)
-            ;
+		/*parse it*/
+		while (yyparse() != -1)
+			;
 
-        /*restore the buffer*/
-        strcpy(supbuf, oldbuf);
-        supbpt = 0;
-        sfree(oldbuf);
-    }
+		/*restore the buffer*/
+		strcpy(supbuf, oldbuf);
+		supbpt = 0;
+		sfree(oldbuf);
+	}
 
-    /*clean up the output buffer*/
-    if (redirect != NULL) {
-        fclose(stdout);
-        *stdout = tout;
-        sfree(redirect);
-    }
+	/*clean up the output buffer*/
+	if (redirect != NULL) {
+		fclose(stdout);
+		*stdout = tout;
+		sfree(redirect);
+	}
 
-    EXIT;
+	EXIT;
 }
 
 /* for the perennially broken dbx */
@@ -236,81 +236,81 @@ void do_str(char *instr) { do_string(instr, NULL, 0); }
  ************************************************************************/
 void do_command(char *name, char *param, int intr, char *file, int back) {
 
-    FILE tout, *t1;
-    int index;
-    ENTER;
+	FILE tout, *t1;
+	int index;
+	ENTER;
 
-    /*get proc parses the string associated with command*/
-    index = get_proc(name);
+	/*get proc parses the string associated with command*/
+	index = get_proc(name);
 
-    /*if command is -1, an illegal input was typed*/
-    if (index != -1) {
+	/*if command is -1, an illegal input was typed*/
+	if (index != -1) {
 
-        tout = *stdout;
-        if (file != NULL) {
-            t1 = file_parse(file, "a");
-            *stdout = *t1;
-        }
+		tout = *stdout;
+		if (file != NULL) {
+			t1 = file_parse(file, "a");
+			*stdout = *t1;
+		}
 
-        if (back) {
-            /*background the process*/
-            if (fork() == 0) {
-                /*in the child, do the command*/
-                do_exec(param, FALSE, index, noexecute);
-                exit(0);
-            }
-        } else
-            do_exec(param, intr, index, noexecute);
+		if (back) {
+			/*background the process*/
+			if (fork() == 0) {
+				/*in the child, do the command*/
+				do_exec(param, FALSE, index, noexecute);
+				exit(0);
+			}
+		} else
+			do_exec(param, intr, index, noexecute);
 
-        if (file != NULL) {
-            fclose(stdout);
-            *stdout = tout;
-        }
-    } else {
-        char *sh = (char *)getenv("SHELL");
-        char *str;
-        int pid, w;
-        int status;
+		if (file != NULL) {
+			fclose(stdout);
+			*stdout = tout;
+		}
+	} else {
+		char *sh = (char *)getenv("SHELL");
+		char *str;
+		int pid, w;
+		int status;
 
-        if (file != NULL)
-            if (param != NULL)
-                str = malloc(strlen(file) + strlen(name) + strlen(param) + 20);
-            else
-                str = malloc(strlen(file) + strlen(name) + 20);
-        else if (param != NULL)
-            str = malloc(strlen(name) + strlen(param) + 20);
-        else
-            str = malloc(strlen(name) + 20);
+		if (file != NULL)
+			if (param != NULL)
+				str = malloc(strlen(file) + strlen(name) + strlen(param) + 20);
+			else
+				str = malloc(strlen(file) + strlen(name) + 20);
+		else if (param != NULL)
+			str = malloc(strlen(name) + strlen(param) + 20);
+		else
+			str = malloc(strlen(name) + 20);
 
-        if (sh == NULL)
-            sh = "/bin/sh";
+		if (sh == NULL)
+			sh = "/bin/sh";
 
-        strcpy(str, name);
-        if (param != NULL)
-            strcat(str, param);
+		strcpy(str, name);
+		if (param != NULL)
+			strcat(str, param);
 
-        /*if a redirect add that on*/
-        if (file != NULL) {
-            strcat(str, ">");
-            strcat(str, file);
-        }
+		/*if a redirect add that on*/
+		if (file != NULL) {
+			strcat(str, ">");
+			strcat(str, file);
+		}
 
-        /*add background on*/
-        if (back)
-            strcat(str, "&");
+		/*add background on*/
+		if (back)
+			strcat(str, "&");
 
-        /*exec a shell to handle the request*/
-        if ((pid = vfork()) == 0) {
-            if (execl(sh, sh, "-c", str, NULL) == -1)
-                printf("error number %d\n", 127);
-            _exit(127);
-        }
+		/*exec a shell to handle the request*/
+		if ((pid = vfork()) == 0) {
+			if (execl(sh, sh, "-c", str, NULL) == -1)
+				printf("error number %d\n", 127);
+			_exit(127);
+		}
 
-        /*wait for the process to finish*/
-        while ((w = wait(&status)) != pid && w != -1)
-            ;
-    }
-    EXIT;
+		/*wait for the process to finish*/
+		while ((w = wait(&status)) != pid && w != -1)
+			;
+	}
+	EXIT;
 }
 
 /************************************************************************
@@ -325,21 +325,21 @@ void do_command(char *name, char *param, int intr, char *file, int back) {
  ************************************************************************/
 void do_exec(char *par, int intr, int index, int no_exec) {
 
-    ENTER;
-    if (check(par, cards[command[index].param]) == -1) {
-        fprintf(stderr, "errors detected on command input\n");
-        EXIT;
-        return;
-    } else if (no_exec)
-        fprintf(stderr, "no error in %s command input\n", command[index].name);
+	ENTER;
+	if (check(par, cards[command[index].param]) == -1) {
+		fprintf(stderr, "errors detected on command input\n");
+		EXIT;
+		return;
+	} else if (no_exec)
+		fprintf(stderr, "no error in %s command input\n", command[index].name);
 
-    if (intr)
-        printf("invoked interactively\n");
+	if (intr)
+		printf("invoked interactively\n");
 
-    /*if not in no exec mode, do the work*/
-    if (!no_exec) {
-        command[index].func(par, cards[command[index].param]);
-    }
-    EXIT;
-    return;
+	/*if not in no exec mode, do the work*/
+	if (!no_exec) {
+		command[index].func(par, cards[command[index].param]);
+	}
+	EXIT;
+	return;
 }

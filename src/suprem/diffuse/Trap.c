@@ -51,32 +51,32 @@
  *									*
  ************************************************************************/
 void trap(char *par, struct par_str *param) {
-    int mat;
+	int mat;
 
-    /*get the material number specified*/
-    if (get_bool(param, "silicon"))
-        mat = Si;
-    if (get_bool(param, "oxide"))
-        mat = SiO2;
-    if (get_bool(param, "oxynitride"))
-        mat = OxNi;
-    if (get_bool(param, "poly"))
-        mat = Poly;
-    if (get_bool(param, "nitride"))
-        mat = SiNi;
-    if (get_bool(param, "gas"))
-        mat = GAS;
-    if (get_bool(param, "aluminum"))
-        mat = Al;
-    if (get_bool(param, "photoresist"))
-        mat = PhRs;
-    if (get_bool(param, "gaas"))
-        mat = GaAs;
+	/*get the material number specified*/
+	if (get_bool(param, "silicon"))
+		mat = Si;
+	if (get_bool(param, "oxide"))
+		mat = SiO2;
+	if (get_bool(param, "oxynitride"))
+		mat = OxNi;
+	if (get_bool(param, "poly"))
+		mat = Poly;
+	if (get_bool(param, "nitride"))
+		mat = SiNi;
+	if (get_bool(param, "gas"))
+		mat = GAS;
+	if (get_bool(param, "aluminum"))
+		mat = Al;
+	if (get_bool(param, "photoresist"))
+		mat = PhRs;
+	if (get_bool(param, "gaas"))
+		mat = GaAs;
 
-    Fetch(Tfrac0(mat), "frac.0");
-    Fetch(TfracE(mat), "frac.E");
-    Fetch(Ttot(mat), "total");
+	Fetch(Tfrac0(mat), "frac.0");
+	Fetch(TfracE(mat), "frac.E");
+	Fetch(Ttot(mat), "total");
 
-    if (is_specified(param, "enable"))
-        trap_on = get_bool(param, "enable");
+	if (is_specified(param, "enable"))
+		trap_on = get_bool(param, "enable");
 }

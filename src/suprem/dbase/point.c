@@ -39,75 +39,75 @@ static int maxpt = 0;
  * A good place to put malloc smarts.
  *---------------------------------------------------------------------*/
 char *alloc_pt() {
-    int j;
+	int j;
 
-    if (np + 1 >= maxpt) {
-        if (maxpt == 0) {
-            maxpt = 3000;
-            pt = salloc(pt_typ *, maxpt);
-        } else {
-            maxpt += 1000;
-            pt = sralloc(pt_typ *, maxpt, pt);
-        }
-    }
-    pt[np] = (pt_typ *)malloc(sizeof(pt_typ));
-    if (!pt[np])
-        return ("Out of storage in alloc_pt");
+	if (np + 1 >= maxpt) {
+		if (maxpt == 0) {
+			maxpt = 3000;
+			pt = salloc(pt_typ *, maxpt);
+		} else {
+			maxpt += 1000;
+			pt = sralloc(pt_typ *, maxpt, pt);
+		}
+	}
+	pt[np] = (pt_typ *)malloc(sizeof(pt_typ));
+	if (!pt[np])
+		return ("Out of storage in alloc_pt");
 
-    pt[np]->cord[0] = pt[np]->cordo[0] = MAXFLOAT;
-    pt[np]->cord[1] = pt[np]->cordo[1] = MAXFLOAT;
-    pt[np]->cord[2] = pt[np]->cordo[2] = MAXFLOAT;
+	pt[np]->cord[0] = pt[np]->cordo[0] = MAXFLOAT;
+	pt[np]->cord[1] = pt[np]->cordo[1] = MAXFLOAT;
+	pt[np]->cord[2] = pt[np]->cordo[2] = MAXFLOAT;
 
-    pt[np]->vel[0] = pt[np]->ovel[0] = 0.0;
-    pt[np]->vel[1] = pt[np]->ovel[1] = 0.0;
-    pt[np]->vel[2] = pt[np]->ovel[2] = 0.0;
+	pt[np]->vel[0] = pt[np]->ovel[0] = 0.0;
+	pt[np]->vel[1] = pt[np]->ovel[1] = 0.0;
+	pt[np]->vel[2] = pt[np]->ovel[2] = 0.0;
 
-    set_space(np, MAXFLOAT);
-    pt[np]->flags = 0;
-    pt[np]->nn = 0;
+	set_space(np, MAXFLOAT);
+	pt[np]->flags = 0;
+	pt[np]->nn = 0;
 
-    for (j = 0; j < MAXMAT; j++)
-        pt[np]->nd[j] = -1;
+	for (j = 0; j < MAXMAT; j++)
+		pt[np]->nd[j] = -1;
 
-    np++;
-    return (0);
+	np++;
+	return (0);
 }
 
 /*
  *  Create a point out of the minimal information required for it.
  */
 int mk_pt(int nc, float *cord) {
-    char *err;
-    int i;
+	char *err;
+	int i;
 
-    if ((err = alloc_pt()) != NULL)
-        panic(err);
+	if ((err = alloc_pt()) != NULL)
+		panic(err);
 
-    for (i = 0; i < nc; i++)
-        pt[np - 1]->cord[i] = cord[i];
+	for (i = 0; i < nc; i++)
+		pt[np - 1]->cord[i] = cord[i];
 
-    return (np - 1);
+	return (np - 1);
 }
 
 /*
  * destroy all points
  */
 void dis_pt() {
-    int i;
-    for (i = 0; i < np; i++)
-        dis_1pt(&(pt[i]));
-    np = 0;
+	int i;
+	for (i = 0; i < np; i++)
+		dis_1pt(&(pt[i]));
+	np = 0;
 }
 
 /*
  * destroy a single pooint
  */
 void dis_1pt(struct pt_str **p) {
-    /*free the rest of the structure*/
-    free(p[0]);
+	/*free the rest of the structure*/
+	free(p[0]);
 
-    /*null the pointer so that we have no future problems*/
-    p[0] = NULL;
+	/*null the pointer so that we have no future problems*/
+	p[0] = NULL;
 }
 
 /************************************************************************
@@ -119,13 +119,13 @@ void dis_1pt(struct pt_str **p) {
  *									*
  ************************************************************************/
 void pt_to_node() {
-    int i;
+	int i;
 
-    /*clear the number of nodes list*/
-    for (i = 0; i < np; i++)
-        pt[i]->nn = 0;
+	/*clear the number of nodes list*/
+	for (i = 0; i < np; i++)
+		pt[i]->nn = 0;
 
-    /*step through the node list and build the pt to node stuff*/
-    for (i = 0; i < nn; i++)
-        add_nd_pt(pt_nd(i), i);
+	/*step through the node list and build the pt to node stuff*/
+	for (i = 0; i < nn; i++)
+		add_nd_pt(pt_nd(i), i);
 }

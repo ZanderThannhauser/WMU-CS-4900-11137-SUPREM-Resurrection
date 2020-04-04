@@ -56,10 +56,10 @@ EXTERN FILE *in_file;
 
 /*this structure is for use in the macro preprocessor*/
 struct macro_table {
-    char *name;               /*the name of the macro*/
-    char *args;               /*the argument list if any for this macro*/
-    char *replace;            /*the replacement string*/
-    struct macro_table *next; /*line pointer*/
+	char *name;				  /*the name of the macro*/
+	char *args;				  /*the argument list if any for this macro*/
+	char *replace;			  /*the replacement string*/
+	struct macro_table *next; /*line pointer*/
 };
 
 EXTERN struct macro_table *macro;
@@ -79,9 +79,9 @@ EXTERN int depth;
 
 /*this structure and information is used to keep pointers to functions*/
 struct command_table {
-    char *name;
-    void (*func)(char *, struct par_str *);
-    int param;
+	char *name;
+	void (*func)(char *, struct par_str *);
+	int param;
 };
 
 #define NUMCMD 50
@@ -89,12 +89,12 @@ extern struct command_table command[NUMCMD];
 
 /*this table is used only with the fortran version*/
 struct fort_str {
-    int keyid;
-    char *par;
-    int back;
-    char *rdir;
-    int intr;
-    struct fort_str *next;
+	int keyid;
+	char *par;
+	int back;
+	char *rdir;
+	int intr;
+	struct fort_str *next;
 };
 
 /*pointers to the top and bottom of the command stack*/

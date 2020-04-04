@@ -47,13 +47,13 @@
 void option(char *par, struct par_str *param) {
 
 #define CHOSEN(x) (is_specified(param, x) && get_bool(param, x))
-    /*how much barfola the user wants*/
-    if (CHOSEN("quiet"))
-        verbose = V_QUIET;
-    if (CHOSEN("normal"))
-        verbose = V_NORMAL;
-    if (CHOSEN("chat"))
-        verbose = V_CHAT;
-    if (CHOSEN("barf"))
-        verbose = V_BARF;
+	/*how much barfola the user wants*/
+	if (CHOSEN("quiet"))
+		verbose = V_QUIET;
+	if (CHOSEN("normal"))
+		verbose = V_NORMAL;
+	if (CHOSEN("chat"))
+		verbose = V_CHAT;
+	if (CHOSEN("barf"))
+		verbose = V_BARF;
 }

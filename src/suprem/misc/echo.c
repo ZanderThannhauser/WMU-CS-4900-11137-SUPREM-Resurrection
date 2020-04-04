@@ -35,40 +35,40 @@
  *									*
  ************************************************************************/
 void echo(char *par, struct par_str *param) {
-    char tmp[512];
-    char *err;
-    struct vec_str *out;
-    float val;
-    ENTER;
+	char tmp[512];
+	char *err;
+	struct vec_str *out;
+	float val;
+	ENTER;
 
-    if (par == NULL) {
-        fprintf(stdout, "\n");
-        fflush(stdout);
-        EXIT;
-        return;
-    }
+	if (par == NULL) {
+		fprintf(stdout, "\n");
+		fflush(stdout);
+		EXIT;
+		return;
+	}
 
-    /*strip the leading spaces*/
-    while (isspace(*par))
-        par++;
+	/*strip the leading spaces*/
+	while (isspace(*par))
+		par++;
 
-    /*check for a real number expression*/
-    strcpy(tmp, par);
+	/*check for a real number expression*/
+	strcpy(tmp, par);
 
-    if ((err = parse_expr(par, &out)) != NULL) {
-        fprintf(stdout, "%s\n", tmp);
-        fprintf(stdout, "%s\n", err);
-    } else if ((err = eval_real(out, &val)) != NULL) {
-        fprintf(stdout, "%s\n", tmp);
-        fprintf(stdout, "%s\n", err);
-    } else
-        fprintf(stdout, "%g\n", val);
+	if ((err = parse_expr(par, &out)) != NULL) {
+		fprintf(stdout, "%s\n", tmp);
+		fprintf(stdout, "%s\n", err);
+	} else if ((err = eval_real(out, &val)) != NULL) {
+		fprintf(stdout, "%s\n", tmp);
+		fprintf(stdout, "%s\n", err);
+	} else
+		fprintf(stdout, "%g\n", val);
 
-    fflush(stdout);
-    if (out != NULL)
-        free_expr(out);
+	fflush(stdout);
+	if (out != NULL)
+		free_expr(out);
 
-    EXIT;
+	EXIT;
 }
 
 /*-----------------uPause-----------------------------------------------
@@ -77,35 +77,35 @@ void echo(char *par, struct par_str *param) {
  * the fly.
  *----------------------------------------------------------------------*/
 void uPause(char *unused_0, struct par_str *unused_1) {
-    char *CommandBuf;
+	char *CommandBuf;
 
-    if (isatty(fileno(stdin))) {
-        for (;;) {
+	if (isatty(fileno(stdin))) {
+		for (;;) {
 
-            printf("Type <RETURN> to continue, or a command to be executed: ");
-            fflush(stdout);
+			printf("Type <RETURN> to continue, or a command to be executed: ");
+			fflush(stdout);
 
 #ifdef HAVE_KSH
-            s = read_line(NULL);
-            CommandBuf = salloc(char, strlen(s) + 2);
-            if (strlen(s) == 0)
-                break;
-            strcpy(CommandBuf, s);
-            strcat(CommandBuf, "\n");
+			s = read_line(NULL);
+			CommandBuf = salloc(char, strlen(s) + 2);
+			if (strlen(s) == 0)
+				break;
+			strcpy(CommandBuf, s);
+			strcat(CommandBuf, "\n");
 #else
-            CommandBuf = salloc(char, 256);
-            if (fgets(CommandBuf, 256, stdin))
-                if (!CommandBuf[0])
-                    break;
+			CommandBuf = salloc(char, 256);
+			if (fgets(CommandBuf, 256, stdin))
+				if (!CommandBuf[0])
+					break;
 #endif
 
-            do_string(CommandBuf, NULL, 0);
-            fflush(stdout);
-            fflush(stderr);
-        }
-    }
+			do_string(CommandBuf, NULL, 0);
+			fflush(stdout);
+			fflush(stderr);
+		}
+	}
 
-    return; /*(0);*/
+	return; /*(0);*/
 }
 
 /************************************************************************
@@ -114,38 +114,38 @@ void uPause(char *unused_0, struct par_str *unused_1) {
  *									*
  ************************************************************************/
 void user_print(char *par, struct par_str *param) {
-    char *argv[50];
-    char tmp[512];
-    struct vec_str *out;
-    float val;
-    int i;
+	char *argv[50];
+	char tmp[512];
+	struct vec_str *out;
+	float val;
+	int i;
 
-    if (par == NULL) {
-        fprintf(stdout, "\n");
-        fflush(stdout);
-        return; /* (0);*/
-    }
+	if (par == NULL) {
+		fprintf(stdout, "\n");
+		fflush(stdout);
+		return; /* (0);*/
+	}
 
-    if (par != NULL)
-        if (split(par, argv, FALSE) == -1)
-            return; /*(-1);*/
+	if (par != NULL)
+		if (split(par, argv, FALSE) == -1)
+			return; /*(-1);*/
 
-    for (i = 0; argv[i] != NULL; i++) {
+	for (i = 0; argv[i] != NULL; i++) {
 
-        /*check for a real number expression*/
-        strcpy(tmp, argv[i]);
+		/*check for a real number expression*/
+		strcpy(tmp, argv[i]);
 
-        if ((parse_expr(tmp, &out)) != NULL)
-            fprintf(stdout, "%s ", argv[i]);
-        else if ((eval_real(out, &val)) != NULL)
-            fprintf(stdout, "%s ", argv[i]);
-        else
-            fprintf(stdout, "%g ", val);
+		if ((parse_expr(tmp, &out)) != NULL)
+			fprintf(stdout, "%s ", argv[i]);
+		else if ((eval_real(out, &val)) != NULL)
+			fprintf(stdout, "%s ", argv[i]);
+		else
+			fprintf(stdout, "%g ", val);
 
-        if (out != NULL)
-            free_expr(out);
-        free(argv[i]);
-    }
-    fprintf(stdout, "\n");
-    return; /* (0);*/
+		if (out != NULL)
+			free_expr(out);
+		free(argv[i]);
+	}
+	fprintf(stdout, "\n");
+	return; /* (0);*/
 }

@@ -37,50 +37,50 @@ void loop_check(char **str);
  *									*
  ************************************************************************/
 char *list_parse(char **s, int first) {
-    char *value, *str;
-    int count, i;
+	char *value, *str;
+	int count, i;
 
-    /*if we are on the first pass preprocess for stepping loops*/
-    if (first)
-        loop_check(s);
+	/*if we are on the first pass preprocess for stepping loops*/
+	if (first)
+		loop_check(s);
 
-    str = s[0];
+	str = s[0];
 
-    /*if str has zero length, return NULL*/
-    if (strlen(str) == 0)
-        return (NULL);
+	/*if str has zero length, return NULL*/
+	if (strlen(str) == 0)
+		return (NULL);
 
-    /*step over any leading parens*/
-    if (*str == '(')
-        strcpy(str, str + 1);
+	/*step over any leading parens*/
+	if (*str == '(')
+		strcpy(str, str + 1);
 
-    while (isspace(*str))
-        strcpy(str, str + 1);
+	while (isspace(*str))
+		strcpy(str, str + 1);
 
-    if (*str == 0)
-        return (NULL);
+	if (*str == 0)
+		return (NULL);
 
-    /*find the end of the argument*/
-    for (count = 0;
-         (str[count] != ' ') && (str[count] != ')') && (str[count] != ',');
-         count++)
-        ;
+	/*find the end of the argument*/
+	for (count = 0;
+		 (str[count] != ' ') && (str[count] != ')') && (str[count] != ',');
+		 count++)
+		;
 
-    /*malloc off space to hold the result*/
-    value = salloc(char, strlen(str) + 1);
+	/*malloc off space to hold the result*/
+	value = salloc(char, strlen(str) + 1);
 
-    /*copy the string in*/
-    for (i = 0; i < count; i++)
-        value[i] = str[i];
-    value[i] = '\0';
+	/*copy the string in*/
+	for (i = 0; i < count; i++)
+		value[i] = str[i];
+	value[i] = '\0';
 
-    /*update the list value*/
-    strcpy(str, (str + count + 1));
+	/*update the list value*/
+	strcpy(str, (str + count + 1));
 
-    if (strlen(value) == 0)
-        return (NULL);
-    else
-        return (value);
+	if (strlen(value) == 0)
+		return (NULL);
+	else
+		return (value);
 }
 
 /************************************************************************
@@ -93,36 +93,36 @@ char *list_parse(char **s, int first) {
  *									*
  ************************************************************************/
 void loop_check(char **str) {
-    float start, stop, step;
-    float index;
-    int length;
-    int pos;
+	float start, stop, step;
+	float index;
+	int length;
+	int pos;
 #define SIZE 17
 
-    /*check to see if we have float to float type of line*/
-    if (sscanf(str[0], "(%e to %e", &start, &stop) != 2) {
-        /*the string does not look right at all*/
-        return;
-    }
+	/*check to see if we have float to float type of line*/
+	if (sscanf(str[0], "(%e to %e", &start, &stop) != 2) {
+		/*the string does not look right at all*/
+		return;
+	}
 
-    /*if we got here, everything is all right*/
-    if (sscanf(str[0], "(%e to %e step %e", &start, &stop, &step) != 3)
-        step = 1.0;
+	/*if we got here, everything is all right*/
+	if (sscanf(str[0], "(%e to %e step %e", &start, &stop, &step) != 3)
+		step = 1.0;
 
-    /*build a new string*/
-    length = (stop - start) / step * SIZE + 2 * SIZE;
-    if (length < SIZE)
-        length = SIZE;
-    str[0] = sralloc(char, length, str[0]);
+	/*build a new string*/
+	length = (stop - start) / step * SIZE + 2 * SIZE;
+	if (length < SIZE)
+		length = SIZE;
+	str[0] = sralloc(char, length, str[0]);
 
-    strcpy(str[0], "(");
-    if (step < 0) {
-        for (pos = 0, index = start; index >= stop; index += step, pos += SIZE)
-            sprintf(&str[0][pos + 1], "%16e ", index);
-    } else {
-        for (pos = 0, index = start; index <= stop; index += step, pos += SIZE)
-            sprintf(&str[0][pos + 1], "%16e ", index);
-    }
+	strcpy(str[0], "(");
+	if (step < 0) {
+		for (pos = 0, index = start; index >= stop; index += step, pos += SIZE)
+			sprintf(&str[0][pos + 1], "%16e ", index);
+	} else {
+		for (pos = 0, index = start; index <= stop; index += step, pos += SIZE)
+			sprintf(&str[0][pos + 1], "%16e ", index);
+	}
 
-    strcat(str[0], ")");
+	strcat(str[0], ")");
 }

@@ -79,32 +79,32 @@ static double Sbsstemp = 0.0;
  *									*
  ************************************************************************/
 void Sbdiff_coeff(float temp, double **new, double **equil, double *noni,
-                  double *idf, double *vdf, double *iprt, double *vprt) {
-    register int i;
-    int mat;
-    static double Dix[MAXMAT];
-    static double Dim[MAXMAT];
-    double diff, part, Vt = kb * temp;
+				  double *idf, double *vdf, double *iprt, double *vprt) {
+	register int i;
+	int mat;
+	static double Dix[MAXMAT];
+	static double Dim[MAXMAT];
+	double diff, part, Vt = kb * temp;
 
-    /*first calculate the fixed stuff*/
-    for (i = 0; i < MAXMAT; i++) {
-        Dix[i] = Dix0(i) * exp(-DixE(i) / (kb * temp));
-        Dim[i] = Dim0(i) * exp(-DimE(i) / (kb * temp));
-    }
+	/*first calculate the fixed stuff*/
+	for (i = 0; i < MAXMAT; i++) {
+		Dix[i] = Dix0(i) * exp(-DixE(i) / (kb * temp));
+		Dim[i] = Dim0(i) * exp(-DimE(i) / (kb * temp));
+	}
 
-    for (i = 0; i < nn; i++) {
-        mat = nd[i]->mater;
+	for (i = 0; i < nn; i++) {
+		mat = nd[i]->mater;
 
-        /*calculate the total diffusivity*/
-        diff = Dix[mat] + Dim[mat] * noni[i];
-        part = Dim[mat] * noni[i] / Vt;
+		/*calculate the total diffusivity*/
+		diff = Dix[mat] + Dim[mat] * noni[i];
+		part = Dim[mat] * noni[i] / Vt;
 
-        idf[i] = Fi(mat) * diff;
-        vdf[i] = (1.0 - Fi(mat)) * diff;
+		idf[i] = Fi(mat) * diff;
+		vdf[i] = (1.0 - Fi(mat)) * diff;
 
-        iprt[i] = Fi(mat) * part;
-        vprt[i] = (1.0 - Fi(mat)) * part;
-    }
+		iprt[i] = Fi(mat) * part;
+		vprt[i] = (1.0 - Fi(mat)) * part;
+	}
 }
 
 /************************************************************************
@@ -118,63 +118,63 @@ void Sbdiff_coeff(float temp, double **new, double **equil, double *noni,
  *									*
  ************************************************************************/
 void Sbboundary(struct bound_str *bval) {
-    double f;
-    double h, m;
-    int sol; /*the solution location of antimony*/
-    int row0 = bval->loc[0][0];
-    int row1 = bval->loc[1][1];
-    int cp0 = bval->loc[0][1];
-    int cp1 = bval->loc[1][0];
-    int mat0 = bval->mat[0];
-    int mat1 = bval->mat[1];
-    float temp = bval->temp;
+	double f;
+	double h, m;
+	int sol; /*the solution location of antimony*/
+	int row0 = bval->loc[0][0];
+	int row1 = bval->loc[1][1];
+	int cp0 = bval->loc[0][1];
+	int cp1 = bval->loc[1][0];
+	int mat0 = bval->mat[0];
+	int mat1 = bval->mat[1];
+	float temp = bval->temp;
 
-    sol = imptosol[Sb];
+	sol = imptosol[Sb];
 
-    /*calculate the transport terms*/
-    m = Seg0(mat0, mat1) * exp(-SegE(mat0, mat1) / (kb * temp));
-    h = sqrt(m) * Trn0(mat0, mat1) * exp(-TrnE(mat0, mat1) / (kb * temp));
+	/*calculate the transport terms*/
+	m = Seg0(mat0, mat1) * exp(-SegE(mat0, mat1) / (kb * temp));
+	h = sqrt(m) * Trn0(mat0, mat1) * exp(-TrnE(mat0, mat1) / (kb * temp));
 
-    /*material 1 side derivative of segregation terms*/
-    f = h * bval->cpl;
-    left_side(row0, sol, f);
-    a[sol][sol][cp1] -= f;
+	/*material 1 side derivative of segregation terms*/
+	f = h * bval->cpl;
+	left_side(row0, sol, f);
+	a[sol][sol][cp1] -= f;
 
-    /*material 2 side derivative of segregation terms*/
-    f = h * bval->cpl / m;
-    left_side(row1, sol, f);
-    a[sol][sol][cp0] -= f;
+	/*material 2 side derivative of segregation terms*/
+	f = h * bval->cpl / m;
+	left_side(row1, sol, f);
+	a[sol][sol][cp0] -= f;
 
-    /*right hand side of segregation terms*/
-    f = bval->cpl * h * (bval->conc[0] - bval->conc[1] / m);
-    right_side(row0, sol, bval->rhs, -f);
-    right_side(row1, sol, bval->rhs, f);
+	/*right hand side of segregation terms*/
+	f = bval->cpl * h * (bval->conc[0] - bval->conc[1] / m);
+	right_side(row0, sol, bval->rhs, -f);
+	right_side(row1, sol, bval->rhs, f);
 
-    /*compute the moving boundary flux - if required*/
-    if ((bval->dela[0] != 0.0) && (mat1 == SiO2)) {
-        a[sol][sol][row0] -= bval->dela[0];
-        a[sol][sol][cp1] += bval->dela[0];
-        f = bval->dela[0] * bval->conc[0];
-        right_side(row0, sol, bval->rhs, f);
-        right_side(row1, sol, bval->rhs, -f);
-    }
-    if ((bval->dela[1] != 0.0) && (mat0 == SiO2)) {
-        a[sol][sol][row1] -= bval->dela[1];
-        a[sol][sol][cp0] += bval->dela[1];
-        f = bval->dela[1] * bval->conc[1];
-        right_side(row1, sol, bval->rhs, f);
-        right_side(row0, sol, bval->rhs, -f);
-    }
+	/*compute the moving boundary flux - if required*/
+	if ((bval->dela[0] != 0.0) && (mat1 == SiO2)) {
+		a[sol][sol][row0] -= bval->dela[0];
+		a[sol][sol][cp1] += bval->dela[0];
+		f = bval->dela[0] * bval->conc[0];
+		right_side(row0, sol, bval->rhs, f);
+		right_side(row1, sol, bval->rhs, -f);
+	}
+	if ((bval->dela[1] != 0.0) && (mat0 == SiO2)) {
+		a[sol][sol][row1] -= bval->dela[1];
+		a[sol][sol][cp0] += bval->dela[1];
+		f = bval->dela[1] * bval->conc[1];
+		right_side(row1, sol, bval->rhs, f);
+		right_side(row0, sol, bval->rhs, -f);
+	}
 
-    /*if either side is gas, disallow any update*/
-    if (mat0 == GAS) {
-        clear_row(row0, sol);
-        left_side(row0, sol, 1.0);
-    }
-    if (mat1 == GAS) {
-        clear_row(row1, sol);
-        left_side(row1, sol, 1.0);
-    }
+	/*if either side is gas, disallow any update*/
+	if (mat0 == GAS) {
+		clear_row(row0, sol);
+		left_side(row0, sol, 1.0);
+	}
+	if (mat1 == GAS) {
+		clear_row(row1, sol);
+		left_side(row1, sol, 1.0);
+	}
 }
 
 /************************************************************************
@@ -186,69 +186,69 @@ void Sbboundary(struct bound_str *bval) {
  *									*
  ************************************************************************/
 void Sbactive(int simple, int nn, float temp, double **chem, double **act,
-              double **equil, double *noni) {
-    register int i;
-    register int j;
-    register int ss = imptosol[Sb];
-    double f;
-    double p, a, Sbss, bSbss;
-    double b = 0.90;
-    double tmp;
+			  double **equil, double *noni) {
+	register int i;
+	register int j;
+	register int ss = imptosol[Sb];
+	double f;
+	double p, a, Sbss, bSbss;
+	double b = 0.90;
+	double tmp;
 
-    /*compute the solid solubility at this temperature*/
-    for (i = 0; (i < Sbssmax) && (Sbsolid[0][i] < temp); i++)
-        ;
+	/*compute the solid solubility at this temperature*/
+	for (i = 0; (i < Sbssmax) && (Sbsolid[0][i] < temp); i++)
+		;
 
-    /*if we are at the low end*/
-    if (i == 0) {
-        tmp = (temp - Sbsolid[0][0]) / (Sbsolid[0][1] - Sbsolid[0][0]);
-        Sbss = tmp * (Sbsolid[1][1] - Sbsolid[1][0]) + Sbsolid[1][0];
-    } else if (i == Sbssmax) {
-        j = Sbssmax - 1;
-        tmp = (temp - Sbsolid[0][j]) / (Sbsolid[0][j - 1] - Sbsolid[0][j]);
-        Sbss = tmp * (Sbsolid[1][j - 1] - Sbsolid[1][j]) + Sbsolid[1][j];
-    } else {
-        tmp = (temp - Sbsolid[0][i - 1]) / (Sbsolid[0][i] - Sbsolid[0][i - 1]);
-        Sbss = tmp * (Sbsolid[1][i] - Sbsolid[1][i - 1]) + Sbsolid[1][i - 1];
-    }
+	/*if we are at the low end*/
+	if (i == 0) {
+		tmp = (temp - Sbsolid[0][0]) / (Sbsolid[0][1] - Sbsolid[0][0]);
+		Sbss = tmp * (Sbsolid[1][1] - Sbsolid[1][0]) + Sbsolid[1][0];
+	} else if (i == Sbssmax) {
+		j = Sbssmax - 1;
+		tmp = (temp - Sbsolid[0][j]) / (Sbsolid[0][j - 1] - Sbsolid[0][j]);
+		Sbss = tmp * (Sbsolid[1][j - 1] - Sbsolid[1][j]) + Sbsolid[1][j];
+	} else {
+		tmp = (temp - Sbsolid[0][i - 1]) / (Sbsolid[0][i] - Sbsolid[0][i - 1]);
+		Sbss = tmp * (Sbsolid[1][i] - Sbsolid[1][i - 1]) + Sbsolid[1][i - 1];
+	}
 
-    /*for each node, compute the value of the active concentration*/
-    f = 1.0;
-    p = Sbss * (1.0 - b);
-    a = Sbss - p * log(p);
-    bSbss = b * Sbss;
+	/*for each node, compute the value of the active concentration*/
+	f = 1.0;
+	p = Sbss * (1.0 - b);
+	a = Sbss - p * log(p);
+	bSbss = b * Sbss;
 
-    /*comput the derivatives or not?*/
-    if (!simple) {
-        for (i = 0; i < nn; i++) {
-            if (INSULATE(nd[i]->mater)) {
-                act[ss][i] = chem[ss][i];
-                dact[ss][ss][i] = 1.0;
-            } else {
-                if (chem[ss][i] > Sbss) {
-                    act[ss][i] = a + p * log(chem[ss][i] - bSbss);
-                    dact[ss][ss][i] = f * p / (chem[ss][i] - bSbss);
-                    act[ss][i] *= f;
-                } else {
-                    act[ss][i] = f * chem[ss][i];
-                    dact[ss][ss][i] = f;
-                }
-            }
-        }
-    } else {
-        for (i = 0; i < nn; i++) {
-            if (INSULATE(nd[i]->mater)) {
-                act[ss][i] = chem[ss][i];
-            } else {
-                if (chem[ss][i] > Sbss) {
-                    act[ss][i] = a + p * log(chem[ss][i] - bSbss);
-                    act[ss][i] *= f;
-                } else {
-                    act[ss][i] = f * chem[ss][i];
-                }
-            }
-        }
-    }
+	/*comput the derivatives or not?*/
+	if (!simple) {
+		for (i = 0; i < nn; i++) {
+			if (INSULATE(nd[i]->mater)) {
+				act[ss][i] = chem[ss][i];
+				dact[ss][ss][i] = 1.0;
+			} else {
+				if (chem[ss][i] > Sbss) {
+					act[ss][i] = a + p * log(chem[ss][i] - bSbss);
+					dact[ss][ss][i] = f * p / (chem[ss][i] - bSbss);
+					act[ss][i] *= f;
+				} else {
+					act[ss][i] = f * chem[ss][i];
+					dact[ss][ss][i] = f;
+				}
+			}
+		}
+	} else {
+		for (i = 0; i < nn; i++) {
+			if (INSULATE(nd[i]->mater)) {
+				act[ss][i] = chem[ss][i];
+			} else {
+				if (chem[ss][i] > Sbss) {
+					act[ss][i] = a + p * log(chem[ss][i] - bSbss);
+					act[ss][i] *= f;
+				} else {
+					act[ss][i] = f * chem[ss][i];
+				}
+			}
+		}
+	}
 }
 
 /************************************************************************
@@ -261,129 +261,129 @@ void Sbactive(int simple, int nn, float temp, double **chem, double **act,
  *									*
  ************************************************************************/
 void antimony(char *par, struct par_str *param) {
-    int mat;
-    int mat2 = -1;
-    register int i, j;
-    int tmpfl, imp_flag, gro_flag;
-    double t, c;
+	int mat;
+	int mat2 = -1;
+	register int i, j;
+	int tmpfl, imp_flag, gro_flag;
+	double t, c;
 
-    /* get type */
-    if (Listed("acceptor")) {
-        SET_FLAGS(Sb, ACTIVE_ACCEPTOR);
-        SET_FLAGS(Sba, ACTIVE_ACCEPTOR);
-    }
-    if (Listed("donor")) {
-        CLEAR_FLAGS(Sb, ACTIVE_ACCEPTOR);
-        CLEAR_FLAGS(Sba, ACTIVE_ACCEPTOR);
-    }
+	/* get type */
+	if (Listed("acceptor")) {
+		SET_FLAGS(Sb, ACTIVE_ACCEPTOR);
+		SET_FLAGS(Sba, ACTIVE_ACCEPTOR);
+	}
+	if (Listed("donor")) {
+		CLEAR_FLAGS(Sb, ACTIVE_ACCEPTOR);
+		CLEAR_FLAGS(Sba, ACTIVE_ACCEPTOR);
+	}
 
-    /*get the material number specified*/
-    if (get_bool(param, "silicon"))
-        mat = Si;
-    if (get_bool(param, "oxide"))
-        mat = SiO2;
-    if (get_bool(param, "oxynitride"))
-        mat = OxNi;
-    if (get_bool(param, "poly"))
-        mat = Poly;
-    if (get_bool(param, "nitride"))
-        mat = SiNi;
-    if (get_bool(param, "gas"))
-        mat = GAS;
-    if (get_bool(param, "gaas"))
-        mat = GaAs;
+	/*get the material number specified*/
+	if (get_bool(param, "silicon"))
+		mat = Si;
+	if (get_bool(param, "oxide"))
+		mat = SiO2;
+	if (get_bool(param, "oxynitride"))
+		mat = OxNi;
+	if (get_bool(param, "poly"))
+		mat = Poly;
+	if (get_bool(param, "nitride"))
+		mat = SiNi;
+	if (get_bool(param, "gas"))
+		mat = GAS;
+	if (get_bool(param, "gaas"))
+		mat = GaAs;
 
-    /*fetch the values for each constant in this material*/
-    i = 0;
-    j = 1;
-    imp_flag = get_bool(param, "implanted");
-    gro_flag = get_bool(param, "grown.in");
-    if (gro_flag & !imp_flag)
-        j = 0; /* parameters for grown.in only */
-    if (imp_flag & !gro_flag)
-        i = 1; /* parameters for implanted only */
+	/*fetch the values for each constant in this material*/
+	i = 0;
+	j = 1;
+	imp_flag = get_bool(param, "implanted");
+	gro_flag = get_bool(param, "grown.in");
+	if (gro_flag & !imp_flag)
+		j = 0; /* parameters for grown.in only */
+	if (imp_flag & !gro_flag)
+		i = 1; /* parameters for implanted only */
 
-    tmpfl = GET_FLAGS(Sb); /* save state */
-    for (; i <= j; i++) {
-        if (i == 0)
-            CLEAR_FLAGS(Sb, IMPLANTED_IMP);
-        else
-            SET_FLAGS(Sb, IMPLANTED_IMP);
-        Fetch(Dix0(mat), "Dix.0");
-        Fetch(DixE(mat), "Dix.E");
-        Fetch(Dim0(mat), "Dim.0");
-        Fetch(DimE(mat), "Dim.E");
-        Fetch(Fi(mat), "Fi");
-    }
+	tmpfl = GET_FLAGS(Sb); /* save state */
+	for (; i <= j; i++) {
+		if (i == 0)
+			CLEAR_FLAGS(Sb, IMPLANTED_IMP);
+		else
+			SET_FLAGS(Sb, IMPLANTED_IMP);
+		Fetch(Dix0(mat), "Dix.0");
+		Fetch(DixE(mat), "Dix.E");
+		Fetch(Dim0(mat), "Dim.0");
+		Fetch(DimE(mat), "Dim.E");
+		Fetch(Fi(mat), "Fi");
+	}
 
-    /* reset implanted source state */
-    CLEAR_FLAGS(Sb, ALL_FLAGS);
-    SET_FLAGS(Sb, tmpfl);
+	/* reset implanted source state */
+	CLEAR_FLAGS(Sb, ALL_FLAGS);
+	SET_FLAGS(Sb, tmpfl);
 
-    /*deal with the solid solubility numbers*/
-    if (get_bool(param, "ss.clear") && is_specified(param, "ss.clear")) {
-        Sbssmax = 0;
-        Sbsstemp = 0.0;
-        Sbsolid[0][0] = 0.0;
-    }
-    if (is_specified(param, "ss.conc") && is_specified(param, "ss.temp")) {
-        t = get_float(param, "ss.temp") + 273.0;
-        c = get_float(param, "ss.conc");
+	/*deal with the solid solubility numbers*/
+	if (get_bool(param, "ss.clear") && is_specified(param, "ss.clear")) {
+		Sbssmax = 0;
+		Sbsstemp = 0.0;
+		Sbsolid[0][0] = 0.0;
+	}
+	if (is_specified(param, "ss.conc") && is_specified(param, "ss.temp")) {
+		t = get_float(param, "ss.temp") + 273.0;
+		c = get_float(param, "ss.conc");
 
-        /*find the spot to store these at*/
-        for (i = 0; (i < Sbssmax) && (t > Sbsolid[0][i]); i++)
-            ;
+		/*find the spot to store these at*/
+		for (i = 0; (i < Sbssmax) && (t > Sbsolid[0][i]); i++)
+			;
 
-        /*is this guy equal?*/
-        if (t == Sbsolid[0][i])
-            Sbsolid[1][i] = c;
-        else {
-            /*move everyone after up a spot*/
-            for (j = Sbssmax - 1; j >= i; j--) {
-                Sbsolid[0][j + 1] = Sbsolid[0][j];
-                Sbsolid[1][j + 1] = Sbsolid[1][j];
-            }
-            Sbssmax++;
+		/*is this guy equal?*/
+		if (t == Sbsolid[0][i])
+			Sbsolid[1][i] = c;
+		else {
+			/*move everyone after up a spot*/
+			for (j = Sbssmax - 1; j >= i; j--) {
+				Sbsolid[0][j + 1] = Sbsolid[0][j];
+				Sbsolid[1][j + 1] = Sbsolid[1][j];
+			}
+			Sbssmax++;
 
-            /*insert the new one*/
-            Sbsolid[0][i] = t;
-            Sbsolid[1][i] = c;
-        }
-        Sbsstemp = 0.0;
-    }
+			/*insert the new one*/
+			Sbsolid[0][i] = t;
+			Sbsolid[1][i] = c;
+		}
+		Sbsstemp = 0.0;
+	}
 
-    /*now fetch any segregation data that comes our way*/
-    if (Listed("/silicon"))
-        mat2 = Si;
-    if (Listed("/oxide"))
-        mat2 = SiO2;
-    if (Listed("/oxynitride"))
-        mat2 = OxNi;
-    if (Listed("/poly"))
-        mat2 = Poly;
-    if (Listed("/nitride"))
-        mat2 = SiNi;
-    if (Listed("/gas"))
-        mat2 = GAS;
-    if (Listed("/gaas"))
-        mat2 = GaAs;
+	/*now fetch any segregation data that comes our way*/
+	if (Listed("/silicon"))
+		mat2 = Si;
+	if (Listed("/oxide"))
+		mat2 = SiO2;
+	if (Listed("/oxynitride"))
+		mat2 = OxNi;
+	if (Listed("/poly"))
+		mat2 = Poly;
+	if (Listed("/nitride"))
+		mat2 = SiNi;
+	if (Listed("/gas"))
+		mat2 = GAS;
+	if (Listed("/gaas"))
+		mat2 = GaAs;
 
-    if (mat2 != -1) {
-        if (is_specified(param, "Seg.0")) {
-            Seg0(mat2, mat) = get_float(param, "Seg.0");
-            Seg0(mat, mat2) = 1.0 / Seg0(mat2, mat);
-        }
-        if (is_specified(param, "Seg.E")) {
-            SegE(mat2, mat) = get_float(param, "Seg.E");
-            SegE(mat, mat2) = -SegE(mat2, mat);
-        }
-        if (is_specified(param, "Trn.0")) {
-            Trn0(mat, mat2) = get_float(param, "Trn.0");
-            Trn0(mat2, mat) = Trn0(mat, mat2);
-        }
-        if (is_specified(param, "Trn.E")) {
-            TrnE(mat, mat2) = get_float(param, "Trn.E");
-            TrnE(mat2, mat) = TrnE(mat, mat2);
-        }
-    }
+	if (mat2 != -1) {
+		if (is_specified(param, "Seg.0")) {
+			Seg0(mat2, mat) = get_float(param, "Seg.0");
+			Seg0(mat, mat2) = 1.0 / Seg0(mat2, mat);
+		}
+		if (is_specified(param, "Seg.E")) {
+			SegE(mat2, mat) = get_float(param, "Seg.E");
+			SegE(mat, mat2) = -SegE(mat2, mat);
+		}
+		if (is_specified(param, "Trn.0")) {
+			Trn0(mat, mat2) = get_float(param, "Trn.0");
+			Trn0(mat2, mat) = Trn0(mat, mat2);
+		}
+		if (is_specified(param, "Trn.E")) {
+			TrnE(mat, mat2) = get_float(param, "Trn.E");
+			TrnE(mat2, mat) = TrnE(mat, mat2);
+		}
+	}
 }

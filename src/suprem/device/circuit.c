@@ -37,37 +37,37 @@
  *									*
  ************************************************************************/
 void circuit_setup(int ss, float temp, int nsol, int *solve, double *coeff,
-                   double **val, double **nu1, double *nu2, double *nu3) {
-    register int i, ve;
-    int Cl = imptosol[CKT];
+				   double **val, double **nu1, double *nu2, double *nu3) {
+	register int i, ve;
+	int Cl = imptosol[CKT];
 
-    /*step through currents through contacts*/
+	/*step through currents through contacts*/
 #ifdef FOO
-    for (c = 0; c < n_con; c++) {
-        ve = contacts[c].volnod;
-        ce = contacts[c].curnod;
+	for (c = 0; c < n_con; c++) {
+		ve = contacts[c].volnod;
+		ce = contacts[c].curnod;
 
-        if (ce < ve) {
-            for (l = ia_cc[ce]; ia_cc[l] != ve; l++)
-                ;
-            vcl = l;
-            cvl = l + ao_cc;
-        } else {
-            for (l = ia_cc[ve]; ia_cc[l] != ce; l++)
-                ;
-            vcl = l + ao_cc;
-            cvl = l;
-        }
+		if (ce < ve) {
+			for (l = ia_cc[ce]; ia_cc[l] != ve; l++)
+				;
+			vcl = l;
+			cvl = l + ao_cc;
+		} else {
+			for (l = ia_cc[ve]; ia_cc[l] != ce; l++)
+				;
+			vcl = l + ao_cc;
+			cvl = l;
+		}
 
-        newb[Cl][ve] += val[Cl][ce];
-        a[Cl][Cl][vcl] -= 1.0;
-    }
+		newb[Cl][ve] += val[Cl][ce];
+		a[Cl][Cl][vcl] -= 1.0;
+	}
 #endif
 
-    /*step through the coltage supplies*/
-    for (i = 0; i < n_vss; i++) {
-        ve = vss[i].con;
-        newb[Cl][ve] = vss[i].val - val[Cl][ve];
-        a[Cl][Cl][ve] = 1.0;
-    }
+	/*step through the coltage supplies*/
+	for (i = 0; i < n_vss; i++) {
+		ve = vss[i].con;
+		newb[Cl][ve] = vss[i].val - val[Cl][ve];
+		a[Cl][Cl][ve] = 1.0;
+	}
 }

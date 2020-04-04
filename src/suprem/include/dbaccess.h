@@ -118,11 +118,11 @@ EXTERN int dbi;
 #define clr_back(A) pt[A]->flags &= ~BACKSID
 #define is_back(A) pt[A]->flags &BACKSID
 #define mk_surf(A)                                                             \
-    {                                                                          \
-        set_surf(A);                                                           \
-        if (node_mat(nd_pt(A, 0), GAS) == -1)                                  \
-            (void)mk_nd(A, GAS);                                               \
-    }
+	{                                                                          \
+		set_surf(A);                                                           \
+		if (node_mat(nd_pt(A, 0), GAS) == -1)                                  \
+			(void)mk_nd(A, GAS);                                               \
+	}
 
 /*spacing operations*/
 #define get_space(A) pt[A]->spac
@@ -130,8 +130,8 @@ EXTERN int dbi;
 
 #define dead_pt(N) ask(pt[N], KILL_ME)
 #define fing_pt(N)                                                             \
-    set(pt[N], KILL_ME);                                                       \
-    need_waste = TRUE
+	set(pt[N], KILL_ME);                                                       \
+	need_waste = TRUE
 
 #define pdist(A, B) dist(cord_arr(A), cord_arr(B))
 
@@ -152,8 +152,8 @@ EXTERN int dbi;
 #define set_sol_nd(A, B, C) nd[A]->sol[B] = C
 
 #define copy_sol(A, B)                                                         \
-    for (dbi = 0; dbi < n_imp; dbi++)                                          \
-        nd[B]->sol[dbi] = nd[A]->sol[dbi];
+	for (dbi = 0; dbi < n_imp; dbi++)                                          \
+		nd[B]->sol[dbi] = nd[A]->sol[dbi];
 
 #define num_edge_nd(A) nd[A]->edg.num
 #define edge_nd(A, B) nd[A]->edg.list[B]
@@ -163,8 +163,8 @@ EXTERN int dbi;
 
 #define dead_nd(N) ask(nd[N], KILL_ME)
 #define fing_nd(N)                                                             \
-    set(nd[N], KILL_ME);                                                       \
-    need_waste = TRUE
+	set(nd[N], KILL_ME);                                                       \
+	need_waste = TRUE
 
 /*returns the distance between two nodes*/
 #define ndist(A, B) dist(cord_arr(pt_nd(A)), cord_arr(pt_nd(B)))
@@ -172,7 +172,7 @@ EXTERN int dbi;
 /*for looping....*/
 #define done_tri(A) A < ne
 #define next_tri(A)                                                            \
-    for (A++; (A < ne) && (tri[A]->son != NO_TRIANGLE) && (dead_tri(A)); A++)
+	for (A++; (A < ne) && (tri[A]->son != NO_TRIANGLE) && (dead_tri(A)); A++)
 
 /*vertex functions*/
 #define num_vert(A) nvrt
@@ -217,8 +217,8 @@ EXTERN int dbi;
 
 #define dead_tri(N) ask(tri[N], KILL_ME)
 #define fing_tri(N)                                                            \
-    set(tri[N], KILL_ME);                                                      \
-    need_waste = TRUE
+	set(tri[N], KILL_ME);                                                      \
+	need_waste = TRUE
 
 #define nd_edg(A, B) edg[A]->nd[B]
 #define pt_edg(A, B) pt_nd(edg[A]->nd[B])
@@ -237,14 +237,14 @@ EXTERN int dbi;
 #define add_skel_edg(A, B) add_list(&(edg[A]->skel), B)
 #define sub_skel_edg(A, B) sub_list(&(edg[A]->skel), B)
 #define is_border(A)                                                           \
-    ((num_tri_edg(A) == 1) ||                                                  \
-     (reg_tri(tri_edg(e, 0)) != (reg_tri(tri_edg(e, 1)))))
+	((num_tri_edg(A) == 1) ||                                                  \
+	 (reg_tri(tri_edg(e, 0)) != (reg_tri(tri_edg(e, 1)))))
 
 #define dead_edg(N) ask(edg[N], KILL_ME)
 #define fing_edg(N)                                                            \
-    set(edg[N], KILL_ME);                                                      \
-    need_waste = TRUE;                                                         \
-    edge_dirty = TRUE
+	set(edg[N], KILL_ME);                                                      \
+	need_waste = TRUE;                                                         \
+	edge_dirty = TRUE
 
 /*REGION STUFF*/
 #define num_reg nreg
@@ -258,8 +258,8 @@ EXTERN int dbi;
 #define num_bnd_reg(A) reg[A]->fac.num
 #define add_bnd_reg(A, B, C) add_list(&(reg[A]->fac), (B << 4) | (C & 0x0F))
 #define bnd_reg(A, B, T, F)                                                    \
-    T = reg[A]->fac.list[B] >> 4;                                              \
-    F = reg[A]->fac.list[B] & 0x0F
+	T = reg[A]->fac.list[B] >> 4;                                              \
+	F = reg[A]->fac.list[B] & 0x0F
 
 #define num_tri_reg(A) reg[A]->tri.num
 #define tri_reg(A, B) reg[A]->tri.list[B]
@@ -275,5 +275,5 @@ EXTERN int dbi;
 
 #define dead_reg(N) ask(reg[N], KILL_ME)
 #define fing_reg(N)                                                            \
-    set(reg[N], KILL_ME);                                                      \
-    need_waste = TRUE
+	set(reg[N], KILL_ME);                                                      \
+	need_waste = TRUE

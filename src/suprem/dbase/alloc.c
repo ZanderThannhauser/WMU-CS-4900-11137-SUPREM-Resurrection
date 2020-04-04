@@ -32,14 +32,14 @@
  * Adds a new impurity to the solution set...
  *----------------------------------------------------------------------*/
 void add_impurity(int imp, float background, int mat) {
-    int i, sol;
+	int i, sol;
 
-    if (imptosol[imp] == -1) {
-        soltoimp[n_imp] = imp;
-        imptosol[imp] = n_imp;
-        sol = n_imp++;
-        for (i = 0; i < nn; i++)
-            if (mat < 0 || nd[i]->mater == mat)
-                nd[i]->sol[sol] = background;
-    }
+	if (imptosol[imp] == -1) {
+		soltoimp[n_imp] = imp;
+		imptosol[imp] = n_imp;
+		sol = n_imp++;
+		for (i = 0; i < nn; i++)
+			if (mat < 0 || nd[i]->mater == mat)
+				nd[i]->sol[sol] = background;
+	}
 }

@@ -41,28 +41,28 @@ static int work_pt;
  * neighbors.
  */
 int num_neigh_nd(int n) {
-    int i, j, p, t;
+	int i, j, p, t;
 
-    num_neigh = 0;
-    work_nd = n;
+	num_neigh = 0;
+	work_nd = n;
 
-    /*there is always coupling between the different solutions at a node*/
-    p = pt_nd(n);
-    for (i = 0; i < num_nd(p); i++) {
-        neigh_list[num_neigh++] = nd_pt(p, i);
-    }
+	/*there is always coupling between the different solutions at a node*/
+	p = pt_nd(n);
+	for (i = 0; i < num_nd(p); i++) {
+		neigh_list[num_neigh++] = nd_pt(p, i);
+	}
 
-    /*step through all the triangles and mark their spots true*/
-    for (i = 0; i < num_tri_nd(n); i++) {
-        t = tri_nd(n, i);
-        for (j = 0; j < num_vert(t); j++) {
-            neigh_list[num_neigh++] = vert_tri(t, j);
-        }
-    }
+	/*step through all the triangles and mark their spots true*/
+	for (i = 0; i < num_tri_nd(n); i++) {
+		t = tri_nd(n, i);
+		for (j = 0; j < num_vert(t); j++) {
+			neigh_list[num_neigh++] = vert_tri(t, j);
+		}
+	}
 
-    elim_dups(neigh_list, &num_neigh);
+	elim_dups(neigh_list, &num_neigh);
 
-    return (num_neigh);
+	return (num_neigh);
 }
 
 /*
@@ -71,9 +71,9 @@ int num_neigh_nd(int n) {
  * neighbors.
  */
 int neigh_nd(int n, int i) {
-    if (n != work_nd)
-        (void)num_neigh_nd(n);
-    return (neigh_list[i]);
+	if (n != work_nd)
+		(void)num_neigh_nd(n);
+	return (neigh_list[i]);
 }
 
 /*
@@ -82,28 +82,28 @@ int neigh_nd(int n, int i) {
  * neighbors.
  */
 int num_neigh_pt(int p) {
-    int i, j, n, t;
+	int i, j, n, t;
 
-    num_neighp = 0;
-    work_pt = p;
+	num_neighp = 0;
+	work_pt = p;
 
-    /*there is always coupling between the different solutions at a node*/
-    for (i = 0; i < num_nd(p); i++) {
-        n = nd_pt(p, i);
-        neigh_plist[num_neighp++] = pt_nd(n);
+	/*there is always coupling between the different solutions at a node*/
+	for (i = 0; i < num_nd(p); i++) {
+		n = nd_pt(p, i);
+		neigh_plist[num_neighp++] = pt_nd(n);
 
-        /*step through all the triangles and mark their spots true*/
-        for (i = 0; i < num_tri_nd(n); i++) {
-            t = tri_nd(n, i);
-            for (j = 0; j < num_vert(t); j++) {
-                neigh_plist[num_neighp++] = pt_nd(vert_tri(t, j));
-            }
-        }
-    }
+		/*step through all the triangles and mark their spots true*/
+		for (i = 0; i < num_tri_nd(n); i++) {
+			t = tri_nd(n, i);
+			for (j = 0; j < num_vert(t); j++) {
+				neigh_plist[num_neighp++] = pt_nd(vert_tri(t, j));
+			}
+		}
+	}
 
-    elim_dups(neigh_plist, &num_neighp);
+	elim_dups(neigh_plist, &num_neighp);
 
-    return (num_neighp);
+	return (num_neighp);
 }
 
 /*
@@ -112,9 +112,9 @@ int num_neigh_pt(int p) {
  * neighbors.
  */
 int neigh_pt(int p, int i) {
-    if (p != work_pt)
-        (void)num_neigh_pt(p);
-    return (neigh_plist[i]);
+	if (p != work_pt)
+		(void)num_neigh_pt(p);
+	return (neigh_plist[i]);
 }
 
 /************************************************************************
@@ -125,24 +125,24 @@ int neigh_pt(int p, int i) {
  ************************************************************************/
 
 void elim_dups(int *taken, int *num) {
-    int i, j, swap, ndup;
+	int i, j, swap, ndup;
 
-    ndup = *num;
+	ndup = *num;
 
-    /*sort the neighbor list (bubble sort since lists are short)*/
-    for (i = 0; i < ndup; i++) {
-        for (j = i + 1; j < ndup; j++) {
-            if (taken[i] > taken[j]) {
-                swap = taken[i];
-                taken[i] = taken[j];
-                taken[j] = swap;
-            }
-        }
-    }
+	/*sort the neighbor list (bubble sort since lists are short)*/
+	for (i = 0; i < ndup; i++) {
+		for (j = i + 1; j < ndup; j++) {
+			if (taken[i] > taken[j]) {
+				swap = taken[i];
+				taken[i] = taken[j];
+				taken[j] = swap;
+			}
+		}
+	}
 
-    /*eliminate duplicates*/
-    *num = 1;
-    for (i = 1; i < ndup; i++)
-        if (taken[i] != taken[*num - 1])
-            taken[(*num)++] = taken[i];
+	/*eliminate duplicates*/
+	*num = 1;
+	for (i = 1; i < ndup; i++)
+		if (taken[i] != taken[*num - 1])
+			taken[(*num)++] = taken[i];
 }

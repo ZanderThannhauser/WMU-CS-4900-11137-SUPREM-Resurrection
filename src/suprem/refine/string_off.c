@@ -33,43 +33,43 @@
 #define BUFFERSIZE 80
 
 int string_offset(char *infile, struct line **poffset_array) {
-    char *buffer;
-    int nump;
-    float xcord;
-    float ycord;
-    struct line *offset_array;
-    int maxop;
-    FILE *inf;
+	char *buffer;
+	int nump;
+	float xcord;
+	float ycord;
+	struct line *offset_array;
+	int maxop;
+	FILE *inf;
 
-    maxop = 100;
-    *poffset_array = salloc(struct line, maxop);
-    offset_array = *poffset_array;
+	maxop = 100;
+	*poffset_array = salloc(struct line, maxop);
+	offset_array = *poffset_array;
 
-    if ((buffer = malloc(BUFFERSIZE)) == NULL)
-        panic("can't malloc space for buffer\n");
+	if ((buffer = malloc(BUFFERSIZE)) == NULL)
+		panic("can't malloc space for buffer\n");
 
-    if ((inf = fopen(infile, "r")) == NULL)
-        panic("can't open for read in gen_file_offset\n");
-    else {
+	if ((inf = fopen(infile, "r")) == NULL)
+		panic("can't open for read in gen_file_offset\n");
+	else {
 
-        /* read in data */
-        nump = 0;
+		/* read in data */
+		nump = 0;
 
-        while ((buffer = fgets(buffer, BUFFERSIZE, inf)) != NULL) {
-            sscanf(buffer, "%f %f", &xcord, &ycord);
-            offset_array[nump].x = xcord * 1.0e-4;
-            offset_array[nump].y = ycord * 1.0e-4;
-            offset_array[nump].map = 0;
-            offset_array[nump].p = -1;
-            nump++;
-            if (nump == maxop) {
-                maxop += 100;
-                *poffset_array = sralloc(struct line, maxop, offset_array);
-                offset_array = *poffset_array;
-            }
-        }
-        free(buffer);
-        fclose(inf);
-    }
-    return (nump);
+		while ((buffer = fgets(buffer, BUFFERSIZE, inf)) != NULL) {
+			sscanf(buffer, "%f %f", &xcord, &ycord);
+			offset_array[nump].x = xcord * 1.0e-4;
+			offset_array[nump].y = ycord * 1.0e-4;
+			offset_array[nump].map = 0;
+			offset_array[nump].p = -1;
+			nump++;
+			if (nump == maxop) {
+				maxop += 100;
+				*poffset_array = sralloc(struct line, maxop, offset_array);
+				offset_array = *poffset_array;
+			}
+		}
+		free(buffer);
+		fclose(inf);
+	}
+	return (nump);
 }
