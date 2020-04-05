@@ -54,6 +54,7 @@ void sel_var(char *par, struct par_str *param)
 	struct vec_str *zexp;
 	char *			err;
 	char *			tmp;
+	ENTER;
 
 	zstr = get_string(param, "z");
 	znn = nn;
@@ -105,6 +106,7 @@ void sel_var(char *par, struct par_str *param)
 	if ((err = (char *)parse_expr(zstr, &zexp)) != NULL)
 	{
 		fprintf(stderr, "%s\n", err);
+		EXIT;
 		return; /*(-1);*/
 	}
 
@@ -112,11 +114,14 @@ void sel_var(char *par, struct par_str *param)
 	if ((err = (char *)eval_vec(zexp, z)) != NULL)
 	{
 		fprintf(stderr, "%s\n", err);
+		EXIT;
 		return; /*(-1);*/
 	}
 
 	sel_log = islogexp(zexp);
 
 	free_expr(zexp);
+	
+	EXIT;
 	return; /*(0);*/
 }

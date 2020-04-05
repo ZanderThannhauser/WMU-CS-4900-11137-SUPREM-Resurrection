@@ -20,6 +20,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "../diffuse/species.h"
 #include "Gold.h"
@@ -120,6 +121,7 @@ void Auboundary(struct bound_str *bval)
 	int	mat0 = bval->mat[0];
 	int	mat1 = bval->mat[1];
 	float  temp = bval->temp;
+	ENTER;
 
 	sol = imptosol[Au];
 
@@ -153,6 +155,8 @@ void Auboundary(struct bound_str *bval)
 		clear_row(row1, sol);
 		left_side(row1, sol, 1.0);
 	}
+	
+	EXIT;
 }
 
 void Aucoupling(float unused_0, double *unused_1, double **unused_2,
@@ -175,6 +179,7 @@ void gold(char *par, struct par_str *param)
 	int tmpfl, imp_flag, gro_flag;
 	int mat;
 	int mat2 = -1;
+	ENTER;
 
 	/*get the material number specified*/
 	if (get_bool(param, "silicon"))
@@ -256,4 +261,12 @@ void gold(char *par, struct par_str *param)
 			TrnE(mat2, mat) = TrnE(mat, mat2);
 		}
 	}
+	
+	EXIT;
 }
+
+
+
+
+
+

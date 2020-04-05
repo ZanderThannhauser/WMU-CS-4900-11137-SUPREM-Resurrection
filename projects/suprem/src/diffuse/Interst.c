@@ -297,6 +297,7 @@ void Itime_val(int is, double *rhsnm, struct call_str *cs)
 	double		 expa, dnda, dndb, jac;
 	register int ts = imptosol[T];
 	register int ps = imptosol[Psi];
+	ENTER;
 
 	/* 2020: if (cs->type == BDF): then this value will be overwritten before*/
 	/* it is used, otherwise, it will never be used.*/
@@ -307,6 +308,8 @@ void Itime_val(int is, double *rhsnm, struct call_str *cs)
 	{
 		for (i = 0; i < nn; i++)
 			rhs[is][i] = newb[is][i];
+		
+		EXIT;
 		return;
 	}
 
@@ -352,7 +355,8 @@ void Itime_val(int is, double *rhsnm, struct call_str *cs)
 	}
 	else
 	{
-		NOPE;
+		/*2020: this is here to get GCC to stop complianing*/
+		NOPE; 
 	}
 
 	/*since we can't get it vectorized anyway, one big outer loop*/
@@ -514,6 +518,7 @@ void interstitial(char *par, struct par_str *param)
 	int   mat, mat2 = -1;
 	int   imp = -1;
 	char *tmp;
+	ENTER;
 
 	/*get the material number specified*/
 	if (get_bool(param, "silicon"))
@@ -786,6 +791,8 @@ void interstitial(char *par, struct par_str *param)
 		Fetch(DfracE[which(I)][mat][CDP], "dpos.E");
 		Fetch(DfracE[which(I)][mat][CTP], "tpos.E");
 	}
+	
+	EXIT;
 }
 
 /************************************************************************

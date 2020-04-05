@@ -129,17 +129,22 @@ void user_print(char *par, struct par_str *param)
 	struct vec_str *out;
 	float			val;
 	int				i;
+	ENTER;
 
 	if (par == NULL)
 	{
 		fprintf(stdout, "\n");
 		fflush(stdout);
+		EXIT;
 		return; /* (0);*/
 	}
 
 	if (par != NULL)
 		if (split(par, argv, FALSE) == -1)
+		{
+			EXIT;
 			return; /*(-1);*/
+		}
 
 	for (i = 0; argv[i] != NULL; i++)
 	{
@@ -159,5 +164,25 @@ void user_print(char *par, struct par_str *param)
 		free(argv[i]);
 	}
 	fprintf(stdout, "\n");
+	
+	EXIT;
 	return; /* (0);*/
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -20,6 +20,7 @@
 #include "suprem/include/material.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "../oxide/mater.h"
 #include "../misc/panic.h"
@@ -48,12 +49,14 @@ void c_mater(char *par, struct par_str *param)
 	int mat = -1;
 	int wd = -1;
 	int type = -1;
+	ENTER;
 
 	/*figure out which material was picked*/
 	mat = ChosenMater(par, param, 0);
 	if (mat == -1)
 	{
 		fprintf(stderr, "A material must be selected on the material card\n");
+		EXIT;
 		return; /* (-1);*/
 	}
 	if (mat == SiO2)
@@ -67,6 +70,7 @@ void c_mater(char *par, struct par_str *param)
 			(wd == -1))
 		{
 			fprintf(stderr, "Wet/dry must be specified with oxide viscosity\n");
+			EXIT;
 			return; /* (-1);*/
 		}
 	}
@@ -104,6 +108,7 @@ void c_mater(char *par, struct par_str *param)
 		type < 0)
 	{
 		fprintf(stderr, "n.type or p.type must be specified with act.a\n");
+		EXIT;
 		return; /* (-1);*/
 	}
 	if (is_specified(param, "act.a"))
@@ -122,6 +127,7 @@ void c_mater(char *par, struct par_str *param)
 		act_b[mat][type] = (char *)malloc(strlen(s) + 1);
 		(void)strcpy(act_b[mat][type], s);
 	}
+	EXIT;
 	return; /* (0);*/
 }
 
@@ -132,19 +138,29 @@ void c_mater(char *par, struct par_str *param)
 int ChosenMater(char *par, struct par_str *param, int other)
 {
 	int i, offset = other ? 0 : 1;
+	ENTER;
 	for (i = 0; i < MAXMAT; i++)
 		if (MatNames[i] && *MatNames[i] &&
 			get_bool(param, MatNames[i] + offset))
+		{
+			EXIT;
 			return (i);
+		}
+	EXIT;
 	return (-1);
 }
 
 int ChosenBC(char *par, struct par_str *param, int other)
 {
 	int i, offset = other ? 0 : 1;
+	ENTER;
 	for (i = 0; i < 3; i++)
 		if (get_bool(param, BCNames[i] + offset))
+		{
+			EXIT;
 			return (i + BC_OFFSET);
+		}
+	EXIT;
 	return (-1 + BC_OFFSET);
 }
 
@@ -177,6 +193,8 @@ void set_crystal()
 	float  ortho, norm;
 	int	i, j;
 	double swap;
+	ENTER;
+	
 #define X 0
 #define Y 1
 #define Z 2
@@ -248,6 +266,8 @@ void set_crystal()
 			xcrystal[i][j] = xcrystal[j][i];
 			xcrystal[j][i] = swap;
 		}
+	
+	EXIT;
 	return;
 }
 
@@ -257,7 +277,8 @@ void set_crystal()
 void SupToXtal(double *normal, double *vec3)
 {
 	double vec2[2], nlen;
-
+	ENTER;
+	
 	if (mode == TWOD)
 	{
 		/* Use the normal if given unless told otherwise */
@@ -284,6 +305,8 @@ void SupToXtal(double *normal, double *vec3)
 		vec3[Y] = xcrystal[Y][X] * vec2[X] + xcrystal[Y][Y] * vec2[Y];
 		vec3[Z] = xcrystal[Z][X] * vec2[X] + xcrystal[Z][Y] * vec2[Y];
 	}
+	
+	EXIT;
 }
 
 /*-----------------DoOriDep---------------------------------------------
@@ -295,6 +318,7 @@ void SupToXtal(double *normal, double *vec3)
  *----------------------------------------------------------------------*/
 float DoOriDep(double *dir, float valOri[3])
 {
+	ENTER;
 	/* Known values: */
 	/*100,   110,      111*/
 	static float fval[Nornt] = {1.0, 0.70710678, 0.57735027};
@@ -305,6 +329,7 @@ float DoOriDep(double *dir, float valOri[3])
 	if (len == 0)
 	{
 		fprintf(stderr, "DoOriDep: bad direction supplied\n");
+		EXIT;
 		return (1.0);
 	}
 
@@ -328,6 +353,8 @@ float DoOriDep(double *dir, float valOri[3])
 		return (valOri[2]);
 	if (i < 0)
 		panic("bad interpolation");
+	
+	EXIT;
 	return (valOri[i] + (valOri[i + 1] - valOri[i]) * (func - fval[i]) /
 							(fval[i + 1] - fval[i]));
 }

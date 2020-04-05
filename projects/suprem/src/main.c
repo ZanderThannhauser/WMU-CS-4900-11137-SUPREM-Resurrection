@@ -47,6 +47,7 @@
 #endif
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "dbase/dimen.h"
 #include "device/device.h"
 #include "diffuse/Antimony.h"
@@ -107,7 +108,7 @@ int debugging_depth;
 
 void mode_cmd(char *par, struct par_str *param)
 {
-
+	ENTER;
 #define CHOSEN(x) (is_specified(param, x) && get_bool(param, x))
 
 	/*how much barfola the user wants*/
@@ -119,6 +120,8 @@ void mode_cmd(char *par, struct par_str *param)
 	{
 		set_dim(2);
 	}
+	
+	EXIT;
 }
 
 int yyparse();

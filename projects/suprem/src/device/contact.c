@@ -22,6 +22,7 @@
 #include "suprem/include/material.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "suprem/include/device.h"
 #include "../dbase/dispose.h"
 #include "../misc/get.h"
@@ -256,6 +257,7 @@ void find_con(int n, int nc, int *chk[3], int *len)
 {
 	register int i, ie, j, p, k;
 	register int n1, n2, nt, mat1;
+	ENTER;
 
 	/*check all the triangles this node is connected to*/
 	for (i = 0; i < num_tri_nd(n); i++)
@@ -321,4 +323,10 @@ void find_con(int n, int nc, int *chk[3], int *len)
 			}
 		}
 	}
+	
+	EXIT;
 }
+
+
+
+

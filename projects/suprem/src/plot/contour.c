@@ -31,6 +31,7 @@
 #include "suprem/include/plot.h"
 
 /* 2020 includes*/
+#include "debug.h"
 #include "../dbase/dispose.h"
 #include "../misc/get.h"
 #include "contour.h"
@@ -44,4 +45,9 @@
  *  Original:	MEL	1/85						*
  *									*
  ************************************************************************/
-void contour(char *par, struct par_str *param) { ; }
+void contour(char *par, struct par_str *param)
+{
+	ENTER;
+	/* 2020: this function is empty*/
+	EXIT;
+}

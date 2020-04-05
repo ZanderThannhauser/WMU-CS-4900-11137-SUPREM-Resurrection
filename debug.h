@@ -10,11 +10,11 @@ extern int debugging_depth;
 #include <assert.h>
 #include <stdio.h>
 
-#define D(...) __VA_ARGS__
-#define ND(...)
+#define D_2020(...) __VA_ARGS__
+#define ND_2020(...)
 #else
-#define D(...)
-#define ND(...) __VA_ARGS__
+#define D_2020(...)
+#define ND_2020(...) __VA_ARGS__
 #endif
 
 #define TODO assert(!"TODO");
@@ -24,36 +24,36 @@ extern int debugging_depth;
 #define NOPE assert(!"NOPE");
 
 #define HERE                                                                   \
-	D(printf("%*sHERE: File: %s Line: %i\n", debugging_depth, "",         \
+	D_2020(printf("%*sHERE: File: %s Line: %i\n", debugging_depth, "",         \
 			 __FILE__, __LINE__));
 
 #define ENTER                                                                  \
-	D(printf("%*s<%s>\n", debugging_depth, "", __PRETTY_FUNCTION__),      \
+	D_2020(printf("%*s<%s>\n", debugging_depth, "", __PRETTY_FUNCTION__),      \
 	  debugging_depth++);
 
 #define EXIT                                                                   \
-	D(debugging_depth--,                                                  \
+	D_2020(debugging_depth--,                                                  \
 	  printf("%*s</%s>\n", debugging_depth, "", __PRETTY_FUNCTION__));
 
 #define verpv(val) dprint(val)
 
-#define dprint(val) D(print(val))
+#define dprint(val) D_2020(print(val))
 
 #define verprintf(...)                                                         \
-	D(printf("%*s", debugging_depth, ""), printf(__VA_ARGS__))
+	D_2020(printf("%*s", debugging_depth, ""), printf(__VA_ARGS__))
 
 #define verpvb(b)                                                              \
-	D(printf("%*s" #b " == %s\n", debugging_depth, "",                    \
+	D_2020(printf("%*s" #b " == %s\n", debugging_depth, "",                    \
 			 (b) ? "true" : "false"))
 
 #define verpvc(ch)                                                             \
-	D(printf("%*s" #ch " == '%c'\n", debugging_depth, "", ch))
+	D_2020(printf("%*s" #ch " == '%c'\n", debugging_depth, "", ch))
 
 #define verpvs(str)                                                            \
-	D(printf("%*s" #str " == \"%s\"\n", debugging_depth, "", str))
+	D_2020(printf("%*s" #str " == \"%s\"\n", debugging_depth, "", str))
 
 #define verpvsn(str, len)                                                      \
-	D(printf("%*s" #str " == \"%.*s\"\n", debugging_depth, "",            \
+	D_2020(printf("%*s" #str " == \"%.*s\"\n", debugging_depth, "",            \
 			 (int)(len), str))
 
 #define print(val)                                                             \
@@ -70,5 +70,12 @@ extern int debugging_depth;
 						 : "%%ul: %lu\n", float                                \
 						 : "%%f: %f\n", double                                 \
 						 : "%%lf: %lf\n", default                              \
-						 : "%%p: %p\n")),                                      \
-			   val)
+						 : "%%p: %p\n")), val)                                 \
+
+
+
+
+
+
+
+

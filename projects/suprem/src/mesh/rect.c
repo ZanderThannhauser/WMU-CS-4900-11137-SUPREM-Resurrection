@@ -588,6 +588,7 @@ int squares(float new_mr)
 void rregion(char *par, struct par_str *param)
 {
 	int mater;
+	ENTER;
 
 	/* There is a new region */
 	nur++;
@@ -607,6 +608,7 @@ void rregion(char *par, struct par_str *param)
 	{
 		fprintf(stderr, "No material specified for region %d\n", nur);
 		++rect_err;
+		EXIT;
 		return; /* (-++rect_err) && 0;*/
 	}
 
@@ -628,6 +630,7 @@ void rregion(char *par, struct par_str *param)
 	if (chosen("gaas"))
 		mater = GaAs;
 	umattyp[nur - 1] = mater;
+	EXIT;
 }
 
 /*-----------------REDGE------------------------------------------------
@@ -635,6 +638,7 @@ void rregion(char *par, struct par_str *param)
  *----------------------------------------------------------------------*/
 void redge(char *par, struct par_str *param)
 {
+	ENTER;
 	/* There is a new edge */
 	nuj++;
 
@@ -652,6 +656,7 @@ void redge(char *par, struct par_str *param)
 	if (is_specified(param, "code"))
 		uedge[nuj - 1][TYPLOC] = BC_OFFSET + get_int(param, "code");
 
+	EXIT;
 	return; /* (0);*/
 }
 
@@ -662,13 +667,17 @@ char *names[6] = {"xlo", "xhi", "ylo", "yhi", "zlo", "zhi"};
 int   read_bound(struct par_str *param, int where[MAXBNDS], int what)
 {
 	int i;
+	ENTER;
 
 	/* tag_look does its own error handling */
 	for (i = 0; i < mode; i++)
 	{
 		if ((where[2 * i] = tag_look(param, names[2 * i], i)) < 0 ||
 			(where[2 * i + 1] = tag_look(param, names[2 * i + 1], i)) < 0)
+		{
+			EXIT;
 			return (-1);
+		}
 	}
 
 	for (i = 0; i < mode; i++)
@@ -677,9 +686,12 @@ int   read_bound(struct par_str *param, int where[MAXBNDS], int what)
 		{
 			fprintf(stderr, "non-increasing bounds for %s %d\n",
 					what ? "region" : "edge", what ? nur : nuj);
+			EXIT;
 			return (-++rect_err);
 		}
 	}
+	
+	EXIT;
 	return (0);
 }
 
@@ -690,19 +702,45 @@ int tag_look(struct par_str *param, char *name, int dim)
 {
 	int   i;
 	char *s;
+	ENTER;
 
 	s = get_string(param, name);
 	if (!s)
 	{
 		fprintf(stderr, "no value specified for %s\n", name);
+		ENTER;
 		return (-++rect_err);
 	}
 
 	for (i = 0; i < und[dim]; i++)
 		if (utag[dim][i])
 			if (!strcmp(s, utag[dim][i]))
+			{
+				EXIT;
 				return (i);
+			}
 
 	fprintf(stderr, "no such %c tag: %s\n", XY[dim], s);
+	
+	EXIT;
 	return (-++rect_err);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

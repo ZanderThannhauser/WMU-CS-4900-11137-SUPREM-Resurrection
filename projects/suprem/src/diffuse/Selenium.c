@@ -23,6 +23,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "../diffuse/species.h"
 #include "Selenium.h"
@@ -243,6 +244,7 @@ void Seboundary(struct bound_str *bval)
 	int	mat0 = bval->mat[0];
 	int	mat1 = bval->mat[1];
 	float  temp = bval->temp;
+	ENTER;
 
 	sol = imptosol[iSe];
 
@@ -294,6 +296,8 @@ void Seboundary(struct bound_str *bval)
 		clear_row(row1, sol);
 		left_side(row1, sol, 1.0);
 	}
+	
+	EXIT;
 }
 
 /************************************************************************
@@ -312,6 +316,7 @@ void selenium(char *par, struct par_str *param)
 	register int i, j;
 	int			 tmpfl, imp_flag, gro_flag;
 	double		 t, c;
+	ENTER;
 
 	/* get type */
 	if (Listed("acceptor"))
@@ -446,4 +451,11 @@ void selenium(char *par, struct par_str *param)
 			TrnE(mat2, mat) = TrnE(mat, mat2);
 		}
 	}
+	
+	EXIT;
 }
+
+
+
+
+

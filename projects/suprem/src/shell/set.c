@@ -20,6 +20,7 @@
 #include "./suprem/include/shell.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "proc.h"
 #include "set.h"
 /* end of includes*/
@@ -40,6 +41,7 @@ void do_set(char *par, int on)
 {
 
 	char *s;
+	ENTER;
 
 	/*first test for print or set mode*/
 	if (par == NULL)
@@ -51,6 +53,7 @@ void do_set(char *par, int on)
 		if (echoall)
 			printf("echoall\n");
 		printf("prompt\t%s\n", prompt);
+		EXIT;
 		return;
 	}
 
@@ -90,5 +93,6 @@ void do_set(char *par, int on)
 		prompt = salloc(char, strlen(par) + 1);
 		strcpy(prompt, par);
 	}
+	EXIT;
 	return;
 }

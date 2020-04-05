@@ -31,6 +31,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../diffuse/Interst.h"
 #include "../misc/get.h"
 #include "../diffuse/species.h"
@@ -431,6 +432,7 @@ void vacancy(char *par, struct par_str *param)
 	int   mat, mat2 = -1;
 	int   imp = -1;
 	char *tmp;
+	ENTER;
 
 	/*get the material number specified*/
 	if (get_bool(param, "silicon"))
@@ -688,6 +690,8 @@ void vacancy(char *par, struct par_str *param)
 		Fetch(DfracE[which(V)][mat][CDP], "dpos.E");
 		Fetch(DfracE[which(V)][mat][CTP], "tpos.E");
 	}
+	
+	EXIT;
 }
 
 /************************************************************************

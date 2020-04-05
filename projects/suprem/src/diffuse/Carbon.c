@@ -23,6 +23,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "../diffuse/species.h"
 #include "Carbon.h"
@@ -135,6 +136,7 @@ void Cactive(int simple, int nn, float temp, double **conc, double **act,
 	double		 p, a, Css, bCss;
 	double		 b = 0.90;
 	double		 tmp;
+	ENTER;
 
 	/*compute the solid solubility at this temperature*/
 	Csstemp = temp;
@@ -218,6 +220,8 @@ void Cactive(int simple, int nn, float temp, double **conc, double **act,
 			}
 		}
 	}
+	
+	EXIT;
 }
 
 /************************************************************************
@@ -311,6 +315,7 @@ void carbon(char *par, struct par_str *param)
 	register int i, j;
 	int			 tmpfl, imp_flag, gro_flag;
 	double		 t, c;
+	ENTER;
 
 	/* get type */
 	if (Listed("acceptor"))
@@ -445,4 +450,6 @@ void carbon(char *par, struct par_str *param)
 			TrnE(mat2, mat) = TrnE(mat, mat2);
 		}
 	}
+	
+	EXIT;
 }

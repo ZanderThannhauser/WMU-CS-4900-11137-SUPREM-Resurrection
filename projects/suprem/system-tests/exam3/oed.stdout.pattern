@@ -1,4 +1,4 @@
-SUPREM-IV.GS B.9305
+"SUPREM-IV.GS B.9305
 	(c) 1991-1993 Stanford University
 	(c) 1991 University of Florida
 Reading Models...
@@ -42,3 +42,4 @@ Solving      8497.88 +      3114.92 =      11612.8,  110.726%, np 70
 Data 193.547 2.89165 1.53193 
 Solving      11612.8 +      2787.21 =        14400,  89.4793%, np 69
 Data 240 2.83454 1.67415 
+"

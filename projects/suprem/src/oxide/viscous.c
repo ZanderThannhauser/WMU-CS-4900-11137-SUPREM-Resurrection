@@ -24,6 +24,7 @@
 #include "suprem/include/material.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../oxide/FEconvert.h"
 #include "../oxide/FEbc.h"
 #include "../finel/FEsolve.h"
@@ -104,10 +105,14 @@ void stress_analysis(char *par, struct par_str *param)
 {
 	float temp1 = 1000, temp2 = 1000;
 	int   element;
+	ENTER;
 
 	if (InvalidMeshCheck())
+	{
+		EXIT;
 		return; /* -1;*/
-
+	}
+	
 	if (is_specified(param, "temp1"))
 		temp1 = 273 + get_float(param, "temp1");
 	if (is_specified(param, "temp2"))
@@ -125,6 +130,7 @@ void stress_analysis(char *par, struct par_str *param)
 	else
 	{
 		fprintf(stderr, "Only know 6 & 7 noded elements\n");
+		EXIT;
 		return; /* (-1);*/
 	}
 
@@ -169,8 +175,11 @@ void stress_analysis(char *par, struct par_str *param)
 
 	/* Generate appropriate data structures for the FE method */
 	if (FEconvert(element, 2) < 0)
+	{
+		EXIT;
 		return; /* (-1);*/
-
+	}
+	
 	/*
 	 * Set up boundary conditions.
 	 */
@@ -184,6 +193,8 @@ void stress_analysis(char *par, struct par_str *param)
 	FE2s4all();
 
 	FEfree();
+	
+	EXIT;
 	return; /* (0);*/
 }
 

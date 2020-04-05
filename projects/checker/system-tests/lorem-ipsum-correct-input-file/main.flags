@@ -1,0 +1,4 @@
+-i
+projects/checker/system-tests/lorem-ipsum-correct-input-file/main.input
+-p
+projects/checker/system-tests/lorem-ipsum-correct-input-file/main.pattern

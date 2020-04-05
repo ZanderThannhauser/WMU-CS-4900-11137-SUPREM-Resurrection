@@ -20,6 +20,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "../diffuse/species.h"
 #include "Cesium.h"
@@ -173,6 +174,7 @@ void cesium(char *par, struct par_str *param)
 	int tmpfl, imp_flag, gro_flag;
 	int mat;
 	int mat2 = -1;
+	ENTER;
 
 	/*get the material number specified*/
 	if (get_bool(param, "silicon"))
@@ -264,4 +266,6 @@ void cesium(char *par, struct par_str *param)
 			gE(mat2, mat) = gE(mat, mat2);
 		}
 	}
+	
+	EXIT;
 }

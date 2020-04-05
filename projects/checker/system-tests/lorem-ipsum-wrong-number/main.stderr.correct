@@ -1,0 +1,1 @@
+./bin/checker: input's parsed number (3.340000) is not in range (0.000000 < X < 3.000000)!

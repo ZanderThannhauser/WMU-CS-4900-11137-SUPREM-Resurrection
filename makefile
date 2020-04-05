@@ -18,7 +18,7 @@ CFLAGS += -std=c90
 
 CFLAGS += -Wall
 CFLAGS += -Werror
-CFLAGS += -Wfatal-errors
+#CFLAGS += -Wfatal-errors
 CFLAGS += -Wno-maybe-uninitialized
 CFLAGS += -Wno-array-bounds
 #CFLAGS += -O2
@@ -28,46 +28,33 @@ DFLAGS += -D DEBUGGING_2020
 
 LDLIBS += -lm
 
-keyread-srclist.mk:
-	find ./projects/keyread -name '*.c' | sed 's/^/KYRD_SRCS += /' > $@
-	
-preprocessor-srclist.mk:
-	find ./projects/preprocessor -name '*.c' | sed 's/^/PPSR_SRCS += /' > $@
-	
-scraper-srclist.mk:
-	find ./projects/scraper -name '*.c' | sed 's/^/SCPR_SRCS += /' > $@
-	
-suprem-srclist.mk:
-	find ./projects/suprem -name '*.c' | sed 's/^/SPRM_SRCS += /' > $@
+.%-srclist.mk:
+	find ./projects/$* -name '*.c' | sed 's/^/'$*'_src += /' > $@
 
-include keyread-srclist.mk
-include preprocessor-srclist.mk
-include scraper-srclist.mk
-include suprem-srclist.mk
+include .checker-srclist.mk
+include .keyread-srclist.mk
+include .preprocessor-srclist.mk
+include .scraper-srclist.mk
+include .suprem-srclist.mk
 
-KYRD_OBJS = $(KYRD_SRCS:.c=.o)
-KYRD_DOBJS = $(KYRD_SRCS:.c=.d.o)
-KYRD_DEPENDS = $(KYRD_SRCS:.c=.mk)
+.%-othervars.mk:
+	echo > $@
+	echo $*'_objs = $$('$*'_src:.c=.o)' >> $@
+	echo $*'_dobjs = $$('$*'_src:.c=.d.o)' >> $@
+	echo $*'_depends = $$('$*'_src:.c=.mk)' >> $@
 
-PPSR_OBJS = $(PPSR_SRCS:.c=.o)
-PPSR_DOBJS = $(PPSR_SRCS:.c=.d.o)
-PPSR_DEPENDS = $(PPSR_SRCS:.c=.mk)
-
-SCPR_OBJS = $(SCPR_SRCS:.c=.o)
-SCPR_DOBJS = $(SCPR_SRCS:.c=.d.o)
-SCPR_DEPENDS = $(SCPR_SRCS:.c=.mk)
-
-SPRM_OBJS = $(SPRM_SRCS:.c=.o)
-SPRM_DOBJS = $(SPRM_SRCS:.c=.d.o)
-SPRM_DEPENDS = $(SPRM_SRCS:.c=.mk)
-
+include .checker-othervars.mk
+include .keyread-othervars.mk
+include .preprocessor-othervars.mk
+include .scraper-othervars.mk
+include .suprem-othervars.mk
 
 #ARGS += ./projects/suprem/system-tests/exam1/boron.in
 #ARGS += ./projects/suprem/system-tests/exam2/oed.in
 #ARGS += ./projects/suprem/system-tests/exam3/oed.in
-ARGS += ./projects/suprem/system-tests/exam4/oed.in
+#ARGS += ./projects/suprem/system-tests/exam4/oed.in
 #ARGS += ./projects/suprem/system-tests/exam5/sup2pis.in
-#ARGS += ./projects/suprem/system-tests/exam5/whole.in
+ARGS += ./projects/suprem/system-tests/exam5/whole.in
 #ARGS += ./projects/suprem/system-tests/exam6/oxcalib.in
 #ARGS += ./projects/suprem/system-tests/exam7/fullrox.in
 #ARGS += ./projects/suprem/system-tests/exam8/nit-stress.in
@@ -111,19 +98,19 @@ bin/%:
 	mkdir -p bin
 	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
-bin/keyread: $(KYRD_OBJS) 
-bin/keyread.d: $(KYRD_DOBJS) 
-bin/preprocessor: $(PPSR_OBJS) 
-bin/preprocessor.d: $(PPSR_DOBJS) 
-bin/scraper: $(SCPR_OBJS) 
-bin/scraper.d: $(SCPR_DOBJS) 
-bin/suprem: $(SPRM_OBJS) 
-bin/suprem.d: $(SPRM_DOBJS) 
+.%-executable.mk:
+	echo > $@
+	echo 'bin/'$*': $$('$*'_objs)' >> $@
+	echo 'bin/'$*'.d: $$('$*'_dobjs)' >> $@
 
+include .checker-executable.mk
+include .keyread-executable.mk
+include .preprocessor-executable.mk
+include .scraper-executable.mk
+include .suprem-executable.mk
 
 data/suprem.uk: ./bin/keyread ./data/suprem.key
 	./bin/keyread ./data/suprem.uk < ./data/suprem.key
-
 
 %.mk: %.c
 	$(CPP) -MM -MT $@ $(CPPFLAGS) -MF $@ $< || (gedit $< && false)
@@ -143,55 +130,57 @@ data/suprem.uk: ./bin/keyread ./data/suprem.key
 .PHONY: test open-all-suprem format clean-successes clean
 .PHONY: test-keyread test-preprocessor test-scraper test-suprem
 
-keyread-systestlist.mk:
-	find ./projects/keyread -name '*.in' \
-		| sort | sed 's/^/KYRD_SYSTST += /' > $@
-	
-preprocessor-systestlist.mk:
-	find ./projects/preprocessor -name '*.in' \
-		| sort | sed 's/^/PPSR_SYSTST += /' > $@
-	
-scraper-systestlist.mk:
-	find ./projects/scraper -name '*.in' \
-		| sort | sed 's/^/SCPR_SYSTST += /' > $@
-	
-suprem-systestlist.mk:
-	find ./projects/suprem -name '*.in' \
-		| sort -V | sed 's/^/SPRM_SYSTST += /' > $@
+.%-systestlist.mk:
+	find ./projects/$* -name '*.stdin' | sort | sed 's/^/'$*'_systests += /' > $@
 
-include keyread-systestlist.mk
-include preprocessor-systestlist.mk
-include scraper-systestlist.mk
-include suprem-systestlist.mk
+include .checker-systestlist.mk
+include .keyread-systestlist.mk
+include .preprocessor-systestlist.mk
+include .scraper-systestlist.mk
+include .suprem-systestlist.mk
 
-KYRD_SYSTST_SUCCESSES = $(KYRD_SYSTST:.in=.success)
-PPSR_SYSTST_SUCCESSES = $(PPSR_SYSTST:.in=.success)
-SCPR_SYSTST_SUCCESSES = $(SCPR_SYSTST:.in=.success)
-SPRM_SYSTST_SUCCESSES = $(SPRM_SYSTST:.in=.success)
-
-$(KYRD_SYSTST_SUCCESSES): bin/keyread
-$(PPSR_SYSTST_SUCCESSES): bin/preprocessor
-$(SCPR_SYSTST_SUCCESSES): bin/scraper
-$(SPRM_SYSTST_SUCCESSES): bin/suprem data/suprem.uk
-
-%.success: %.in %.stdout.correct
-	./bin/suprem $*.in < /dev/null > $*.stdout.actual
+%.success: bin/checker %.flags %.stdin \
+	%.stdout.actual %.stderr.actual %.exit-code.actual
+	xargs -a $*.flags -d \\n ./bin/checker < $*.stdin \
+		1> $*.stdout.actual \
+		2> $*.stderr.actual; \
+		echo $$? > $*.exit-code.actual
 	cmp $*.stdout.actual $*.stdout.correct
+	cmp $*.stderr.actual $*.stderr.correct
+	cmp $*.exit-code.actual $*.exit-code.correct
 	touch $@
 
-#%.success: ./bin/suprem data/suprem.uk %.in %.stdout.correct %.str.correct
-#	./bin/suprem $*.in < /dev/null > $*.stdout.actual
-#	cmp $*.stdout.actual $*.stdout.correct
-#	cmp $*.str.actual $*.str.correct
-#	touch $@
+projects/suprem/%.success: bin/suprem data/suprem.uk bin/checker \
+	projects/suprem/%.stdout.actual \
+	projects/suprem/%.stderr.actual \
+	projects/suprem/%.exit-code.actual
+	xargs -a projects/suprem/$*.flags -d \\n ./$< < projects/suprem/$*.stdin \
+		1> projects/suprem/$*.stdout.actual \
+		2> projects/suprem/$*.stderr.actual; \
+		echo $$? > projects/suprem/$*.exit-code.actual
+	./bin/checker \
+		-i projects/suprem/$*.stdout.actual \
+		-p projects/suprem/$*.stdout.pattern
+	cmp projects/suprem/$*.stderr.actual projects/suprem/$*.stderr.correct
+	cmp projects/suprem/$*.exit-code.actual projects/suprem/$*.exit-code.correct
+	touch $@
 
-systest-keyread: $(KYRD_SYSTST_SUCCESSES)
-systest-preprocessor: $(PPSR_SYSTST_SUCCESSES)
-systest-scraper: $(SCPR_SYSTST_SUCCESSES)
-systest-suprem: $(SPRM_SYSTST_SUCCESSES)
+.%-systest-othervars.mk:
+	echo '' > $@
+	echo $*'_systests_success = $$('$*'_systests:.stdin=.success)' >> $@
+	echo 'systest_'$*': $$('$*'_systests_success)' >> $@
 
-systest: systest-keyread systest-preprocessor systest-scraper systest-suprem
-#test: unit-test-keyread unit-test-preprocessor unit-test-scraper unit-test-suprem
+include .checker-systest-othervars.mk
+include .keyread-systest-othervars.mk
+include .preprocessor-systest-othervars.mk
+include .scraper-systest-othervars.mk
+include .suprem-systest-othervars.mk
+
+systest: systest_checker
+systest: systest_keyread
+systest: systest_preprocessor
+systest: systest_scraper
+systest: systest_suprem
 
 test: systest
 
@@ -207,14 +196,11 @@ clean:
 	find -name '*.mk' -exec 'rm' '-v' '{}' \;
 	find -executable -a -type f -exec 'rm' '-v' '{}' \;
 
-include $(KYRD_DEPENDS)
-include $(PPSR_DEPENDS)
-include $(SCPR_DEPENDS)
-include $(SPRM_DEPENDS)
-
-
-
-
+include $(checker_depends)
+include $(keyread_depends)
+include $(preprocessor_depends)
+include $(scraper_depends)
+include $(suprem_depends)
 
 
 

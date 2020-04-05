@@ -21,6 +21,7 @@
 #include "suprem/include/material.h"
 
 /* 2020 function includes*/
+#include "debug.h"
 #include "../oxide/FEconvert.h"
 #include "../shell/smisc.h"
 #include "../dbase/locate.h"
@@ -58,6 +59,7 @@ void face_ache(FEelt_typ *ae, int j);
  *----------------------------------------------------------------------*/
 void FEoxbc()
 {
+	ENTER;
 	clear_bc();
 
 	/* Mark silicon nodes as special */
@@ -71,6 +73,7 @@ void FEoxbc()
 	refl_disp();
 
 	/* Ready to SOLVE! */
+	EXIT;
 }
 
 /*-----------------FEsilbc----------------------------------------------
@@ -78,6 +81,7 @@ void FEoxbc()
  *----------------------------------------------------------------------*/
 void FEsilbc()
 {
+	ENTER;
 	clear_bc();
 
 	/* Solve silicon and only silicon */
@@ -91,6 +95,7 @@ void FEsilbc()
 	refl_disp();
 
 	/* Go away and solve it */
+	EXIT;
 }
 
 /*-----------------FEbc-------------------------------------------------
@@ -98,9 +103,11 @@ void FEsilbc()
  *----------------------------------------------------------------------*/
 void FEbc(float temp, char *par, struct par_str *param)
 {
+	ENTER;
 	clear_bc();
 	FEdirichlet(par, param);
 	refl_disp();
+	EXIT;
 }
 
 /*-----------------REFL_DISP------------------------------------------*
@@ -181,6 +188,7 @@ void FEdirichlet(char *par, struct par_str *param)
 	FEelt_typ *ae;
 	FEnd_typ * an;
 	char *	 s, *ubc[10], *vbc[10], name[256];
+	ENTER;
 
 	for (i = 3; i < 10; i++)
 	{
@@ -269,6 +277,7 @@ void FEdirichlet(char *par, struct par_str *param)
 		if (vbc[i])
 			free(vbc[i]);
 	}
+	EXIT;
 }
 
 void face_ache(FEelt_typ *ae, int j)

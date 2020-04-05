@@ -22,6 +22,7 @@
 #include "suprem/include/material.h"
 
 /* 2020 function includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "../oxide/mater.h"
 #include "coeffox.h"
@@ -76,6 +77,7 @@ void coeffox(char *par, struct par_str *param)
 	int   tmp;
 	float oxyconc;
 	char *s;
+	ENTER;
 
 #define given(a) is_specified(param, a)
 #define fetch(N, V, S, A)                                                      \
@@ -320,6 +322,7 @@ void coeffox(char *par, struct par_str *param)
 	fetchd("trn.E", TrnE(spes, mat2, mat) = TrnE(spes, mat, mat2), 1, 0, spes,
 		   "wet/dry", mat2 * mat, "materials 1 and 2");
 
+	EXIT;
 	return; /* (0);*/
 }
 

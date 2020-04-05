@@ -22,6 +22,7 @@
 #include "suprem/include/global.h"
 
 /* 2020 includes*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "option.h"
 /* end of includes*/
@@ -46,7 +47,8 @@
  ************************************************************************/
 void option(char *par, struct par_str *param)
 {
-
+	ENTER;
+	
 #define CHOSEN(x) (is_specified(param, x) && get_bool(param, x))
 	/*how much barfola the user wants*/
 	if (CHOSEN("quiet"))
@@ -57,4 +59,21 @@ void option(char *par, struct par_str *param)
 		verbose = V_CHAT;
 	if (CHOSEN("barf"))
 		verbose = V_BARF;
+	
+	EXIT;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

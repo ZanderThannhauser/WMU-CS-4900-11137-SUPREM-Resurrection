@@ -22,6 +22,7 @@
 #include "suprem/include/key.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "write.h"
 /* end of includes*/
 
@@ -49,25 +50,35 @@ int write_param(struct par_str *par, int fd);
  ************************************************************************/
 int write_list(struct par_str **param, int fd)
 {
-
+	ENTER;
+	
 	while (param[0]->name[0] != '\0')
 	{
 		/*process this parameter*/
 		if (write_param(param[0], fd) == -1)
+		{
+			EXIT;
 			return (-1);
+		}
 
 		/*does this sucker have sub parameters??*/
 		if (param[0]->param != NULL)
 		{
 			depth++;
 			if (write_list(param[0]->param, fd) == -1)
+			{
+				EXIT;
 				return (-1);
+			}
+			
 			depth--;
 		}
 
 		/*advance the counter*/
 		param++;
 	}
+	
+	EXIT;
 	return 0;
 }
 

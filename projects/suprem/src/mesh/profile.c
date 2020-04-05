@@ -29,6 +29,7 @@
 #include "suprem/include/material.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "../diffuse/defect.h"
 #include "../dbase/alloc.h"
@@ -53,6 +54,7 @@ void profile(char *par, struct par_str *param)
 	float *		 val;
 	int			 imp, sol;
 	double		 offset;
+	ENTER;
 
 	/*get the type of mesh to be read, and the filename*/
 	infile = get_string(param, "infile");
@@ -91,6 +93,7 @@ void profile(char *par, struct par_str *param)
 	if (imp == -1)
 	{
 		fprintf(stderr, "Must specify impurity to read in!\n");
+		EXIT;
 		return; /* (-1);*/
 	}
 	if (is_specified(param, "offset"))
@@ -100,8 +103,11 @@ void profile(char *par, struct par_str *param)
 
 	val = salloc(float, nn);
 	if (read_data(val, infile, 2, offset) == -1)
+	{
+		EXIT;
 		return; /* (-1);*/
-
+	}
+	
 	if ((imp == I) || (imp == V))
 	{
 		if (last_temp != 0.0)
@@ -136,6 +142,7 @@ void profile(char *par, struct par_str *param)
 	}
 
 	free(val);
+	EXIT;
 	return; /* (0);*/
 }
 

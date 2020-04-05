@@ -95,6 +95,7 @@ void user_etch(char *par, struct par_str *param)
 	struct line * surf;
 	int			  nums;
 	char *		  sfile;
+	ENTER;
 
 	HERE;
 	verpv(p);
@@ -107,7 +108,11 @@ void user_etch(char *par, struct par_str *param)
 
 	sfile = NULL;
 	if (InvalidMeshCheck())
+	{
+		EXIT;
 		return; /* -1;*/
+	}
+	
 	GridSave();
 
 	/* check for a string file for deposit */
@@ -389,7 +394,8 @@ void user_etch(char *par, struct par_str *param)
 	}
 	else if (sfile)
 		string_etch(sfile, mater);
-
+	
+	EXIT;
 	return; /* (0);*/
 }
 

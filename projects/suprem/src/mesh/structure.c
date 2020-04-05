@@ -30,6 +30,7 @@
 #include "suprem/include/impurity.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "../mesh/ig2_meshio.h"
 #include "../dbase/make_db.h"
@@ -101,6 +102,7 @@ void structure(char *par, struct par_str *param)
 	char *piffile;
 	char *instr;
 	char  ext[4];
+	ENTER;
 
 	/*get the type of mesh to be read, and the filename*/
 	infile = get_string(param, "infile");
@@ -149,15 +151,20 @@ void structure(char *par, struct par_str *param)
 	if (infile)
 	{
 		if ((ier = ig2_read(infile, lflip, scale) < 0))
+		{
+			EXIT;
 			return; /* (ier);*/
-
+		}
 		create_db((nn == 0));
 	}
 
 	/*write out the file if that is asked for*/
 	if (outfile)
 		if ((ier = ig2_write(outfile, lflip, scale)) < 0)
+		{
+			EXIT;
 			return; /* (ier);*/
+		}
 
 	/*etcetc*/
 	if (pifile)
@@ -166,9 +173,17 @@ void structure(char *par, struct par_str *param)
 		backside = get_float(param, "backside.y");
 		if (backside > 0.0)
 			if ((ier = newbackside(backside)) < 0)
+			{
+				EXIT;
 				return; /* (ier);*/
+			}
+		
 		if ((ier = pi_write(pifile, show)) < 0)
+		{
+			EXIT;
 			return; /* (ier);*/
+		}
+		
 		if (backside > 0.0)
 		{
 			instr = "structure inf=suprem4temp.str";
@@ -179,27 +194,42 @@ void structure(char *par, struct par_str *param)
 	if (imagefile)
 	{
 		if ((ier = image_write(imagefile, par, param)) < 0)
+		{
+			EXIT;
 			return; /* (ier);*/
+		}
 	}
 
 	if (simplfile)
 		if ((ier = simpl_write(simplfile, headerfile)) < 0)
+		{
+			EXIT;
 			return; /* (ier);*/
+		}
 
 	if (etchfile)
 	{
 		skip = get_int(param, "line");
 		if ((ier = polygon_etch(etchfile, skip)) < 0)
+		{
+			EXIT;
 			return; /* (ier);*/
+		}
 	}
 
 	if (skelfile)
 		if ((ier = skel_write(skelfile, lflip, scale)) < 0)
+		{
+			EXIT;
 			return; /* (ier);*/
+		}
 
 	if (piffile)
 		if ((ier = pif_write(piffile)) < 0)
+		{
+			EXIT;
 			return; /* (ier);*/
+		}
 
 	/*was this a reflection command?*/
 	if (get_bool(param, "mirror"))
@@ -220,6 +250,8 @@ void structure(char *par, struct par_str *param)
 		}
 		reflect_grid(sign, xy);
 	}
+	
+	EXIT;
 	return; /* (0);*/
 }
 

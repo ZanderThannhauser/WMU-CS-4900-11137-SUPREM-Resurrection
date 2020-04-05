@@ -35,6 +35,7 @@
 #include "suprem/include/poly.h"   /* for FErel */
 
 /* 2020: header file includes:*/
+#include "debug.h"
 #include "suprem/include/check.h"
 #include "suprem/include/impurity.h"
 #include "../math/blklu.h"
@@ -67,6 +68,7 @@ void method(char *par, struct par_str *param)
 	char *s;
 	float tmpf;
 	int   imp = -1;
+	ENTER;
 
 	/*get the impurity type for all this stuff*/
 	if (TURNEDON(param, "vacancies"))
@@ -340,6 +342,7 @@ void method(char *par, struct par_str *param)
 		LTE[YVEL] = LTE[XVEL];
 		ABE[YVEL] = ABE[XVEL];
 	}
+	EXIT;
 }
 
 /************************************************************************

@@ -21,6 +21,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "../diffuse/species.h"
 #include "Antimony.h"
@@ -298,6 +299,7 @@ void antimony(char *par, struct par_str *param)
 	register int i, j;
 	int			 tmpfl, imp_flag, gro_flag;
 	double		 t, c;
+	ENTER;
 
 	/* get type */
 	if (Listed("acceptor"))
@@ -430,4 +432,11 @@ void antimony(char *par, struct par_str *param)
 			TrnE(mat2, mat) = TrnE(mat, mat2);
 		}
 	}
+	
+	EXIT;
 }
+
+
+
+
+

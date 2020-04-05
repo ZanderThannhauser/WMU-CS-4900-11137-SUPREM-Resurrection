@@ -31,6 +31,7 @@
 #include "suprem/include/plot.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "../dbase/dispose.h"
 #include "../oxide/mater.h"
@@ -63,9 +64,13 @@ void print_1d(char *par, struct par_str *param)
 	double		  dose;
 	double		  tmp;
 	int			  mat1, mat2, byarc;
+	ENTER;
 
 	if (InvalidMeshCheck())
+	{
+		EXIT;
 		return;
+	}
 
 	data = salloc(struct d_str, 2 * ne);
 
@@ -221,6 +226,9 @@ void print_1d(char *par, struct par_str *param)
 			}
 		}
 	}
+	
 	free(data);
+	
+	EXIT;
 	return;
 }

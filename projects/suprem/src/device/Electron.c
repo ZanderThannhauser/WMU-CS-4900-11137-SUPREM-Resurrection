@@ -23,6 +23,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "Electron.h"
 /* end of includes*/
@@ -107,6 +108,7 @@ double Phi_n(double elec, double psi, double ec, int mat, double *dqdp,
 void electron(char *par, struct par_str *param)
 {
 	int mat, mat2 = -1;
+	ENTER;
 
 #define fetch(V, S, F)                                                         \
 	if (is_specified(param, S))                                                \
@@ -147,4 +149,20 @@ void electron(char *par, struct par_str *param)
 	if (mat2 != -1)
 	{
 	}
+	
+	EXIT;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

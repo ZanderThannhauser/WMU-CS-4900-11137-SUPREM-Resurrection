@@ -22,6 +22,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/get.h"
 #include "Trap.h"
 /* end of includes*/
@@ -53,6 +54,7 @@
 void trap(char *par, struct par_str *param)
 {
 	int mat;
+	ENTER;
 
 	/*get the material number specified*/
 	if (get_bool(param, "silicon"))
@@ -80,4 +82,24 @@ void trap(char *par, struct par_str *param)
 
 	if (is_specified(param, "enable"))
 		trap_on = get_bool(param, "enable");
+	
+	EXIT;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
