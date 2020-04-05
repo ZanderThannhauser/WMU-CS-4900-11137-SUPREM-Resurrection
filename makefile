@@ -151,9 +151,9 @@ include .suprem-systestlist.mk
 	touch $@
 
 projects/suprem/%.success: bin/suprem data/suprem.uk bin/checker \
-	projects/suprem/%.stdout.actual \
-	projects/suprem/%.stderr.actual \
-	projects/suprem/%.exit-code.actual
+	projects/suprem/%.stdout.correct \
+	projects/suprem/%.stderr.correct \
+	projects/suprem/%.exit-code.correct
 	xargs -a projects/suprem/$*.flags -d \\n ./$< < projects/suprem/$*.stdin \
 		1> projects/suprem/$*.stdout.actual \
 		2> projects/suprem/$*.stderr.actual; \
