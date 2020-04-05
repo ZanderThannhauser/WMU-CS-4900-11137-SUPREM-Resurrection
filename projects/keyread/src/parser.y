@@ -17,8 +17,8 @@
 #include <string.h>
 #include <ctype.h>
 
-#include <projects/suprem/src/include/check.h>
-#include <projects/suprem/src/include/key.h>
+#include <projects/suprem/include/check.h>
+#include <projects/suprem/include/key.h>
 
 /* 2020 includes: */
 #include "main.h"

@@ -31,10 +31,10 @@
    version 2.2 of Bison.  */
 
 #ifndef YY_YY_Y_TAB_H_INCLUDED
-#define YY_YY_Y_TAB_H_INCLUDED
+# define YY_YY_Y_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-#define YYDEBUG 0
+# define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -42,36 +42,36 @@ extern int yydebug;
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
-#define YYTOKENTYPE
-enum yytokentype
-{
-	CARD = 258,
-	BG_GRP = 259,
-	END_GRP = 260,
-	PARTYPE = 261,
-	EOL = 262,
-	BOOLSTART = 263,
-	GRT = 264,
-	LES = 265,
-	GRTE = 266,
-	LESE = 267,
-	OR = 268,
-	AND = 269,
-	EQU = 270,
-	NOTEQU = 271,
-	NOT = 272,
-	PLUS = 273,
-	TIMES = 274,
-	RCONST = 275,
-	STRING = 276,
-	INTEGER = 277,
-	NUMB = 278,
-	NAME = 279,
-	UNITS = 280,
-	ERR_MSG = 281,
-	COMMENT = 282,
-	PARNAME = 283
-};
+# define YYTOKENTYPE
+  enum yytokentype
+  {
+    CARD = 258,
+    BG_GRP = 259,
+    END_GRP = 260,
+    PARTYPE = 261,
+    EOL = 262,
+    BOOLSTART = 263,
+    GRT = 264,
+    LES = 265,
+    GRTE = 266,
+    LESE = 267,
+    OR = 268,
+    AND = 269,
+    EQU = 270,
+    NOTEQU = 271,
+    NOT = 272,
+    PLUS = 273,
+    TIMES = 274,
+    RCONST = 275,
+    STRING = 276,
+    INTEGER = 277,
+    NUMB = 278,
+    NAME = 279,
+    UNITS = 280,
+    ERR_MSG = 281,
+    COMMENT = 282,
+    PARNAME = 283
+  };
 #endif
 /* Tokens.  */
 #define CARD 258
@@ -102,26 +102,29 @@ enum yytokentype
 #define PARNAME 283
 
 /* Value type.  */
-#if !defined YYSTYPE && !defined YYSTYPE_IS_DECLARED
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
-union YYSTYPE {
-#line 51 "projects/keyread/src/./parser.y" /* yacc.c:1909  */
+union YYSTYPE
+{
+#line 51 "projects/keyread/src/parser.y" /* yacc.c:1909  */
 
-	int				 ival;
-	float			 dval;
-	char *			 sval;
-	struct bool_exp *bval;
+    int ival;
+    float dval;
+    char *sval;
+    struct bool_exp *bval;
+    
 
 #line 118 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
-#define YYSTYPE_IS_TRIVIAL 1
-#define YYSTYPE_IS_DECLARED 1
+# define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
 #endif
+
 
 extern YYSTYPE yylval;
 
-int yyparse(void);
+int yyparse (void);
 
 #endif /* !YY_YY_Y_TAB_H_INCLUDED  */

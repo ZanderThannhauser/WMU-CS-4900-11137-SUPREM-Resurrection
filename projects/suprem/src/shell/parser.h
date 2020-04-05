@@ -31,10 +31,10 @@
    version 2.2 of Bison.  */
 
 #ifndef YY_YY_Y_TAB_H_INCLUDED
-#define YY_YY_Y_TAB_H_INCLUDED
+# define YY_YY_Y_TAB_H_INCLUDED
 /* Debug traces.  */
 #ifndef YYDEBUG
-#define YYDEBUG 0
+# define YYDEBUG 0
 #endif
 #if YYDEBUG
 extern int yydebug;
@@ -42,33 +42,33 @@ extern int yydebug;
 
 /* Token type.  */
 #ifndef YYTOKENTYPE
-#define YYTOKENTYPE
-enum yytokentype
-{
-	PARAMETER = 258,
-	COMMAND = 259,
-	NAME = 260,
-	LIST = 261,
-	SOURCE = 262,
-	EOL = 263,
-	ENDFILE = 264,
-	QUIT = 265,
-	BACK = 266,
-	REDIRECT = 267,
-	BANG = 268,
-	HELP = 269,
-	BG_GRP = 270,
-	END_GRP = 271,
-	DELIMIT = 272,
-	DEFINE = 273,
-	COMMENT = 274,
-	UNDEF = 275,
-	SET = 276,
-	UNSET = 277,
-	FOR = 278,
-	END = 279,
-	CHDIR = 280
-};
+# define YYTOKENTYPE
+  enum yytokentype
+  {
+    PARAMETER = 258,
+    COMMAND = 259,
+    NAME = 260,
+    LIST = 261,
+    SOURCE = 262,
+    EOL = 263,
+    ENDFILE = 264,
+    QUIT = 265,
+    BACK = 266,
+    REDIRECT = 267,
+    BANG = 268,
+    HELP = 269,
+    BG_GRP = 270,
+    END_GRP = 271,
+    DELIMIT = 272,
+    DEFINE = 273,
+    COMMENT = 274,
+    UNDEF = 275,
+    SET = 276,
+    UNSET = 277,
+    FOR = 278,
+    END = 279,
+    CHDIR = 280
+  };
 #endif
 /* Tokens.  */
 #define PARAMETER 258
@@ -96,24 +96,27 @@ enum yytokentype
 #define CHDIR 280
 
 /* Value type.  */
-#if !defined YYSTYPE && !defined YYSTYPE_IS_DECLARED
+#if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
 
-union YYSTYPE {
+union YYSTYPE
+{
 #line 73 "projects/suprem/src/shell/parser.y" /* yacc.c:1909  */
 
-	int   ival;
-	char *sval;
+    int ival;
+    char *sval;
+    
 
 #line 110 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;
-#define YYSTYPE_IS_TRIVIAL 1
-#define YYSTYPE_IS_DECLARED 1
+# define YYSTYPE_IS_TRIVIAL 1
+# define YYSTYPE_IS_DECLARED 1
 #endif
+
 
 extern YYSTYPE yylval;
 
-int yyparse(void);
+int yyparse (void);
 
 #endif /* !YY_YY_Y_TAB_H_INCLUDED  */

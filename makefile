@@ -140,7 +140,7 @@ include .scraper-systestlist.mk
 include .suprem-systestlist.mk
 
 %.success: bin/checker %.flags %.stdin \
-	%.stdout.actual %.stderr.actual %.exit-code.actual
+	%.stdout.correct %.stderr.correct %.exit-code.correct
 	xargs -a $*.flags -d \\n ./bin/checker < $*.stdin \
 		1> $*.stdout.actual \
 		2> $*.stderr.actual; \
@@ -189,6 +189,7 @@ format:
 	find -name '*.h' -exec 'clang-format' '-i' '-verbose' '{}' \;
 
 clean-successes:
+	find -name '*.actual' -exec 'rm' '-v' '{}' \;
 	find -name '*.success' -exec 'rm' '-v' '{}' \;
 	
 clean:
