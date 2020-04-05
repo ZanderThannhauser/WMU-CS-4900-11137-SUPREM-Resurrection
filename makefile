@@ -139,19 +139,19 @@ include .preprocessor-systestlist.mk
 include .scraper-systestlist.mk
 include .suprem-systestlist.mk
 
-%.success: bin/checker %.flags %.stdin \
-	%.stdout.correct %.stderr.correct %.exit-code.correct
-	xargs -a $*.flags -d \\n ./bin/checker < $*.stdin \
-		1> $*.stdout.actual \
-		2> $*.stderr.actual; \
-		echo $$? > $*.exit-code.actual
-	cmp $*.stdout.actual $*.stdout.correct
-	cmp $*.stderr.actual $*.stderr.correct
-	cmp $*.exit-code.actual $*.exit-code.correct
-	touch $@
+#%.success: bin/checker %.flags %.stdin \
+#	%.stdout.correct %.stderr.correct %.exit-code.correct
+#	xargs -a $*.flags -d \\n ./bin/checker < $*.stdin \
+#		1> $*.stdout.actual \
+#		2> $*.stderr.actual; \
+#		echo $$? > $*.exit-code.actual
+#	cmp $*.stdout.actual $*.stdout.correct
+#	cmp $*.stderr.actual $*.stderr.correct
+#	cmp $*.exit-code.actual $*.exit-code.correct
+#	touch $@
 
 projects/suprem/%.success: bin/suprem data/suprem.uk bin/checker \
-	projects/suprem/%.stdout.correct \
+	projects/suprem/%.stdout.pattern \
 	projects/suprem/%.stderr.correct \
 	projects/suprem/%.exit-code.correct
 	xargs -a projects/suprem/$*.flags -d \\n ./$< < projects/suprem/$*.stdin \
