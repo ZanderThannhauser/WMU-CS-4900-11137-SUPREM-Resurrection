@@ -12,5 +12,5 @@ jobs:
         uses: actions/checkout@v2
       - name: make bin/scraper
         run: make bin/scraper
-      - name: make systest-scraper
-        run: make systest-scraper
+      - name: make systest_scraper
+        run: make systest_scraper

@@ -12,5 +12,5 @@ jobs:
         uses: actions/checkout@v2
       - name: make bin/preprocessor
         run: make bin/preprocessor
-      - name: make systest-preprocessor
-        run: make systest-preprocessor
+      - name: make systest_preprocessor
+        run: make systest_preprocessor
