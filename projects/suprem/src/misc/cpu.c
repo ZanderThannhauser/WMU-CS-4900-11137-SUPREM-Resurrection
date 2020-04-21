@@ -36,7 +36,6 @@ void cpu(char *par, struct par_str *param)
 {
 	char *f;
 	int   on;
-	long  i;
 	ENTER;
 
 	f = get_string(param, "cpufile");
@@ -60,12 +59,17 @@ void cpu(char *par, struct par_str *param)
 			setlinebuf(cpufile);
 #endif
 		}
+		
+		/* 2020: Lets not print numbers that will always be different into
+		   2020: an output file that we need to be consistent! */
+		#if !2020
 		/*write a header into it*/
 		fprintf(cpufile, "\n\nSUPREM IV cpu usage summary");
 
 		i = time(NULL);
 		f = (char *)ctime(&i);
 		fprintf(cpufile, "\t%s\n", f);
+		#endif
 	}
 	else
 	{

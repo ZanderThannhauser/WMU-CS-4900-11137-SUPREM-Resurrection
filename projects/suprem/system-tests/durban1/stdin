@@ -1,0 +1,43 @@
+
+#some set stuff
+set echo
+
+#This limits the anount of output data about the simulation is shown
+option quiet
+
+#This simulation will be one dimensional
+mode one.dim
+
+#the vertical definition
+#the thickness of the area being monitored for the diffusion region in micro-neters
+#even though the diffusion should be the 0.6 monitored will be 1
+
+line x loc = 0		spacing = 0.01	tag = top
+line x loc = 0.3	spacing = 0.01
+line x loc = 0.6	spacing = 0.01
+line x loc = 0.9	spacing = 0.01
+line x loc = 380	spacing = 100	tag = bottom
+
+#This defines where the diffusion witl start and end at based on the vertical
+#definition tags
+
+region silicon xlo = top xhi = bottom
+
+#This tells the simulation which surface is the exposed surface
+bound exposed xlo = top xhi = top
+
+#calculate the mesh
+#This is where the simulation is told which dopant and concentration of the
+#silicon wafer is being used
+init conc=1.0e16 boron
+
+#the diffusion card
+#this ts where the time and temperature of the diffusion are entered
+#also this is where the concentration of the phosphorous dopant is used
+#note that the dopant is simulated as 0 gas and not as a Liquid
+
+diffuse time=24 temp=1050 phosphorus gas.conc=1e20
+
+#save the data
+structure out=./str.actual
+

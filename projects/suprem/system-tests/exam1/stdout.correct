@@ -1,0 +1,54 @@
+SUPREM-IV.GS B.9305
+	(c) 1991-1993 Stanford University
+	(c) 1991 University of Florida
+Reading Models...
+option quiet
+mode one.dim
+#the vertical definition
+line x loc = 0     spacing = 0.02 tag = top
+line x loc = 0.50  spacing = 0.02
+line x loc = 2.0   spacing = 0.25 tag=bottom
+#the silicon wafer
+region silicon xlo = top xhi = bottom
+#set up the exposed surfaces
+bound exposed  xlo = top  xhi = top
+#calculate the mesh
+init boron conc=1.0e14
+#the pad oxide
+deposit oxide thick=0.075
+#the uniform boron implant
+implant boron dose=3e14 energy=70 pearson
+#plot the initial profile
+select z=log10(boron)
+plot.1d x.ma=2.0 y.mi=14.0 y.max=20.0
+#the diffusion card
+diffuse time=30 temp=1100 
+estimated first time step -0.000000e+00
+Solving            0 +          0.1 =          0.1,      100%, np 43
+Solving          0.1 +     0.488986 =     0.588986,  488.986%, np 43
+Solving     0.588986 +       2.9165 =      3.50548,  596.438%, np 43
+Solving      3.50548 +      5.36005 =      8.86554,  183.784%, np 43
+Solving      8.86554 +      8.54232 =      17.4079,   159.37%, np 43
+Solving      17.4079 +      3.80138 =      21.2092,  44.5005%, np 43
+Solving      21.2092 +       12.795 =      34.0042,  336.588%, np 43
+Solving      34.0042 +      15.4141 =      49.4183,   120.47%, np 43
+Solving      49.4183 +      22.2639 =      71.6822,  144.439%, np 43
+Solving      71.6822 +      28.0168 =       99.699,  125.839%, np 43
+Solving       99.699 +      26.4923 =      126.191,  94.5586%, np 43
+Solving      126.191 +      41.1269 =      167.318,  155.241%, np 43
+Solving      167.318 +       29.629 =      196.947,  72.0429%, np 43
+Solving      196.947 +      56.4872 =      253.434,  190.649%, np 43
+Solving      253.434 +      60.4027 =      313.837,  106.932%, np 43
+Solving      313.837 +      92.0295 =      405.867,   152.36%, np 43
+Solving      405.867 +      103.787 =      509.654,  112.776%, np 43
+Solving      509.654 +      73.6803 =      583.334,  70.9916%, np 43
+Solving      583.334 +      175.487 =      758.821,  238.174%, np 43
+Solving      758.821 +      205.108 =       963.93,  116.879%, np 43
+Solving       963.93 +       265.71 =      1229.64,  129.546%, np 43
+Solving      1229.64 +      376.381 =      1606.02,  141.651%, np 43
+Solving      1606.02 +      193.979 =         1800,  51.5381%, np 43
+#save the data
+structure out=./str.actual
+#plot the final profile
+select z=log10(bor)
+plot.1d x.v=0.1 cle=f axi=f

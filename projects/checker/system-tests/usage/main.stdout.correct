@@ -1,3 +1,0 @@
-usage: ./bin/checker: [-i <input filepath>] [-p <pattern filepath>]
-Checks input file against pattern file, either can be '-', which tells
-the program to read from stdin

@@ -47,6 +47,9 @@
  ************************************************************************/
 void print_time(char *name, struct tms *before, struct tms *after)
 {
+	/* 2020: Let's not. */
+	
+	#if 0
 	if (cpufile != NULL)
 	{
 		fprintf(cpufile, "%-30s ", name);
@@ -55,4 +58,23 @@ void print_time(char *name, struct tms *before, struct tms *after)
 		fprintf(cpufile, "system %8.6g\n",
 				(after->tms_stime - before->tms_stime) / (HZ * 1.0));
 	}
+	#endif
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,67 @@
+SUPREM-IV.GS B.9305
+	(c) 1991-1993 Stanford University
+	(c) 1991 University of Florida
+Reading Models...
+#This limits the anount of output data about the simulation is shown
+option quiet
+#This simulation will be one dimensional
+mode one.dim
+#the vertical definition
+#the thickness of the area being monitored for the diffusion region in micro-neters
+#even though the diffusion should be the 0.6 monitored will be 1
+line x loc = 0		spacing = 0.01	tag = top
+line x loc = 0.3	spacing = 0.01
+line x loc = 0.6	spacing = 0.01
+line x loc = 0.9	spacing = 0.01
+line x loc = 380	spacing = 100	tag = bottom
+#This defines where the diffusion witl start and end at based on the vertical
+#definition tags
+region silicon xlo = top xhi = bottom
+#This tells the simulation which surface is the exposed surface
+bound exposed xlo = top xhi = top
+#calculate the mesh
+#This is where the simulation is told which dopant and concentration of the
+#silicon wafer is being used
+init conc=1.0e16 boron
+#the diffusion card
+#this ts where the time and temperature of the diffusion are entered
+#also this is where the concentration of the phosphorous dopant is used
+#note that the dopant is simulated as 0 gas and not as a Liquid
+diffuse time=24 temp=1050 phosphorus gas.conc=1e20
+estimated first time step -0.000000e+00
+Solving            0 +          0.1 =          0.1,      100%, np 122
+Solving          0.1 +     0.191653 =     0.291653,  191.653%, np 122
+Solving     0.291653 +     0.375657 =      0.66731,  196.009%, np 122
+Solving      0.66731 +      0.71253 =      1.37984,  189.676%, np 122
+Solving      1.37984 +      1.18099 =      2.56083,  165.745%, np 122
+Solving      2.56083 +      1.77875 =      4.33958,  150.616%, np 122
+Solving      4.33958 +       2.5231 =      6.86268,  141.847%, np 122
+Solving      6.86268 +      3.42225 =      10.2849,  135.637%, np 122
+Solving      10.2849 +      4.48177 =      14.7667,  130.959%, np 122
+Solving      14.7667 +      5.70443 =      20.4711,  127.281%, np 122
+Solving      20.4711 +      7.10212 =      27.5732,  124.502%, np 122
+Solving      27.5732 +      8.70056 =      36.2738,  122.506%, np 122
+Solving      36.2738 +      10.5132 =       46.787,  120.833%, np 122
+Solving       46.787 +      12.5589 =      59.3459,  119.459%, np 122
+Solving      59.3459 +      14.8675 =      74.2134,  118.383%, np 122
+Solving      74.2134 +      17.4658 =      91.6792,  117.476%, np 122
+Solving      91.6792 +      20.3855 =      112.065,  116.716%, np 122
+Solving      112.065 +      23.6624 =      135.727,  116.075%, np 122
+Solving      135.727 +      27.3357 =      163.063,  115.523%, np 122
+Solving      163.063 +      31.4479 =      194.511,  115.044%, np 122
+Solving      194.511 +      36.0462 =      230.557,  114.622%, np 122
+Solving      230.557 +      41.1817 =      271.739,  114.247%, np 122
+Solving      271.739 +      46.9104 =      318.649,  113.911%, np 122
+Solving      318.649 +      53.2934 =      371.942,  113.607%, np 122
+Solving      371.942 +      60.3968 =      432.339,  113.329%, np 122
+Solving      432.339 +       68.293 =      500.632,  113.074%, np 122
+Solving      500.632 +      77.0605 =      577.693,  112.838%, np 122
+Solving      577.693 +      86.7843 =      664.477,  112.618%, np 122
+Solving      664.477 +      97.5569 =      762.034,  112.413%, np 122
+Solving      762.034 +      109.479 =      871.513,   112.22%, np 122
+Solving      871.513 +      122.658 =      994.171,  112.038%, np 122
+Solving      994.171 +      137.213 =      1131.38,  111.866%, np 122
+Solving      1131.38 +      153.271 =      1284.65,  111.703%, np 122
+Solving      1284.65 +      155.345 =         1440,  101.353%, np 122
+#save the data
+structure out=./str.actual

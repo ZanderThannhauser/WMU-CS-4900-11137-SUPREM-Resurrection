@@ -362,10 +362,13 @@ int soldif(int init, char *label, void (*do_setup)(double *))
 		/*print out the loop data*/
 		if (verbose >= V_NORMAL)
 		{
+			/* 2020: Yes, I am just hardcoding them to zero, this removes the noise
+			   2020: in the output files, they're much easier to check for consistency
+			   2020: this way! */
 			if (rhs2 == 0.0)
-				printf(ans, ' ', count, maxnorm * NEWT, tset, tsol, -10.0, blk);
+				printf(ans, ' ', count, maxnorm * NEWT, tset * 0, tsol * 0, -10.0, blk);
 			else
-				printf(ans, ' ', count, maxnorm * NEWT, tset, tsol, log10(rhs2),
+				printf(ans, ' ', count, maxnorm * NEWT, tset * 0, tsol * 0, log10(rhs2),
 					   blk);
 			fflush(stdout);
 		}

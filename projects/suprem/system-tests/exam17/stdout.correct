@@ -1,0 +1,69 @@
+SUPREM-IV.GS B.9305
+	(c) 1991-1993 Stanford University
+	(c) 1991 University of Florida
+Reading Models...
+mode one.dim
+line x loc=0.0 spacing=0.01 tag=top
+line x loc=1.0 spacing=0.01
+line x loc=20 spacing=0.25 tag=bottom
+region gaas      xlo=top  xhi=bottom
+boundary exposed xlo=top  xhi=top
+boundary backside xlo=bottom xhi=bottom
+init carbon conc=1e15
+implant beryllium dose=1e14 energy=100 pearson
+deposit nitride thick=.3
+interstitial gaas D.0=5e-14     D.E= 0.
+interstitial gaas Kr.0=1e-18    Kr.E= 0.
+interstitial gaas Cstar.0= 1.0e16    Cstar.E= 0.
+interstitial gaas  /nitride  Ksurf.0= 1e-3     Ksurf.E= 0.
+interstitial gaas neu.0=0 pos.0=1 neu.E=0 neg.0=0 pos.E=0 dneg.0=0 
+interstitial gaas dpos.0=0 dpos.E=0 neg.E=0 tpos.0=0 tneg.0=0
+interstitial gaas beryllium neu.0=0 pos.0=0 neg.0=0 dneg.0=0 dpos.0=0  
+interstitial gaas beryllium tneg.0=0 tpos.0=0
+vacancy gaas D.0= 1e-15      D.E= 0.
+vacancy gaas Kr.0=1e-18      Kr.E= 0.
+vacancy gaas Cstar.0= 1e16   Cstar.E= 0.
+vacancy gaas /nitride  Ksurf.0= 1e-3  Ksurf.E= 0.
+vacancy gaas neu.0=0 pos.0=0 neu.E=0 neg.0=0 pos.E=0 dneg.0=0 
+vacancy	dpos.0=0 dpos.E=0 neg.E=0 tpos.0=0 tneg.0=1
+vacancy gaas beryllium neu.0=0 pos.0=0 neg.0=0 dneg.0=0 dpos.0=0  
+vacancy gaas beryllium tneg.0=0 tpos.0=0
+method full.fac
+diffuse time=.00001 temp=800 argon 
+estimated first time step -0.000000e+00
+Solving            0 +       0.0006 =       0.0006,      0.6%, np 356
+	select z=log10(beryllium)	
+	plot.1d x.min=0 x.ma=2 y.mi=14 y.max=20 line.type=4
+	select z=log10(inter)	
+	plot.1d x.min=0 x.ma=2 y.mi=14 y.max=20 cle=f axi=f line.type=2
+method full.cpl init=1e-5
+diffuse time=15 temp=800 continue argon 
+***************************************************************
+*                                                             *
+*  Parameter extraction has not been completed for the full   *
+* coupling model.  This model should be considered a research *
+* tool only.                                                  *
+*                                                             *
+***************************************************************
+estimated first time step 1.597155e-04
+Solving       0.0006 +    0.0287458 =    0.0293458,      100%, np 356
+Solving    0.0293458 +     0.303114 =      0.33246,  1054.47%, np 356
+Solving      0.33246 +      2.23504 =       2.5675,  737.357%, np 356
+Solving       2.5675 +      5.25321 =       7.8207,  235.039%, np 356
+Solving       7.8207 +      8.96767 =      16.7884,  170.709%, np 356
+Solving      16.7884 +      20.9221 =      37.7104,  233.305%, np 356
+Solving      37.7104 +      45.7896 =         83.5,  218.858%, np 356
+Solving         83.5 +      59.9013 =      143.401,  130.819%, np 356
+Solving      143.401 +      76.4205 =      219.822,  127.577%, np 356
+Solving      219.822 +      92.6054 =      312.427,  121.179%, np 356
+Solving      312.427 +      128.037 =      440.465,  138.261%, np 356
+Solving      440.465 +      125.331 =      565.796,  97.8863%, np 356
+Solving      565.796 +       164.52 =      730.315,  131.268%, np 356
+Solving      730.315 +      169.685 =      900.001,   103.14%, np 356
+	select z=log10(beryllium)	
+	plot.1d x.min=0 x.ma=2 y.mi=14 y.max=20 cle=f axi=f line.type=4
+	select z=log10(inter)	
+	plot.1d x.min=0 x.ma=2 y.mi=14 y.max=20 cle=f axi=f line.type=2
+#2020: all examples must output meshes:
+struct outf=./str.actual
+quit

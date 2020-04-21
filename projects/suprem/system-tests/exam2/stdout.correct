@@ -1,0 +1,58 @@
+SUPREM-IV.GS B.9305
+	(c) 1991-1993 Stanford University
+	(c) 1991 University of Florida
+Reading Models...
+option quiet
+mode one.dim
+#the vertical definition
+line x loc = 0     spacing = 0.02 tag = top
+line x loc = 1.50  spacing = 0.05
+line x loc = 5.0   spacing = 0.5
+line x loc = 400.0                tag=bottom
+#the silicon wafer
+region silicon xlo = top xhi = bottom
+#set up the exposed surfaces
+bound exposed  xlo = top  xhi = top
+#calculate the mesh
+init boron conc=1.0e14
+#the pad oxide
+deposit oxide thick=0.075
+#the uniform boron implant
+implant boron dose=3e14 energy=70 pearson
+#plot the initial profile
+select z=log10(boron)
+plot.1d x.ma=2.0 y.mi=14.0 y.max=20.0
+#the diffusion card
+method init=1.0e-3 two.d
+diffuse time=30 temp=1100 dry
+estimated first time step -0.000000e+00
+Solving            0 +        0.001 =        0.001,      100%, np 80
+Solving        0.001 +   0.00281644 =   0.00381644,  281.644%, np 80
+Solving   0.00381644 +    0.0176591 =    0.0214756,  627.002%, np 80
+Solving    0.0214756 +     0.168429 =     0.189905,  953.779%, np 80
+Solving     0.189905 +     0.813906 =      1.00381,  483.233%, np 80
+Solving      1.00381 +       2.6438 =      3.64761,  324.828%, np 80
+Solving      3.64761 +      6.03434 =      9.68195,  228.245%, np 80
+Solving      9.68195 +      9.78821 =      19.4702,  162.208%, np 80
+Solving      19.4702 +      14.1452 =      33.6153,  144.512%, np 80
+Solving      33.6153 +      19.4714 =      53.0868,  137.654%, np 80
+Solving      53.0868 +      26.1378 =      79.2245,  134.236%, np 80
+Solving      79.2245 +      35.1156 =       114.34,  134.348%, np 80
+Solving       114.34 +      38.3539 =      152.694,  109.222%, np 80
+Solving      152.694 +      44.1769 =      196.871,  115.182%, np 80
+Solving      196.871 +      63.5629 =      260.434,  143.883%, np 80
+Solving      260.434 +      84.4433 =      344.877,   132.85%, np 80
+Solving      344.877 +        105.6 =      450.477,  125.054%, np 80
+Solving      450.477 +      78.7206 =      529.198,   74.546%, np 80
+Solving      529.198 +      71.7795 =      600.977,  91.1826%, np 80
+Solving      600.977 +      121.337 =      722.315,  169.042%, np 80
+Solving      722.315 +       191.01 =      913.324,   157.42%, np 80
+Solving      913.324 +      108.262 =      1021.59,  56.6787%, np 80
+Solving      1021.59 +      193.112 =       1214.7,  178.374%, np 80
+Solving       1214.7 +      350.262 =      1564.96,  181.378%, np 80
+Solving      1564.96 +       235.04 =         1800,   67.104%, np 81
+#save the data
+structure out=./str.actual
+#plot the final profile
+select z=log10(bor)
+plot.1d cle=f axi=f

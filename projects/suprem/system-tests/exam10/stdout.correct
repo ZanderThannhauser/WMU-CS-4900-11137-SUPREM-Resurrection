@@ -1,0 +1,44 @@
+SUPREM-IV.GS B.9305
+	(c) 1991-1993 Stanford University
+	(c) 1991 University of Florida
+Reading Models...
+mode one.dim
+line x loc=0.0 spacing=0.01 tag=top
+line x loc=1.0 spacing=0.01
+line x loc=20 spacing=0.25 tag=bottom
+region gaas	xlo=top  xhi=bottom
+boundary exposed xlo=top xhi=top
+boundary backside xlo=bottom xhi=bottom
+init carbon conc=1e15
+implant beryllium dose=2e13 energy=100 pearson
+implant isilicon dose=5e13 energy=50 pearson
+#beryllium gaas Dip.0=2.1e-8 Dip.E=1.74
+beryllium gaas /nitride Seg.0=.5 Seg.E=0
+deposit nitride thick=.3
+select z=log10(beryllium)
+plot.1d x.min=0.0 x.ma=2.0 y.mi=14.0 y.max=20.0 line.type=2
+select z=log10(isilicon)
+plot.1d x.min=0.0 x.ma=2.0 y.mi=14.0 y.max=20.0 cle=f axi=f line.type=3
+select z=log10(carbon)
+plot.1d x.min=0.0 x.ma=2.0 y.mi=14.0 y.max=20.0 cle=f axi=f line.type=4
+method fermi init=1e-5
+method full.fac
+diffuse time=15 temp=800 argon
+estimated first time step 0.000000e+00
+Solving            0 +        1e-05 =        1e-05,      100%, np 356
+Solving        1e-05 +  0.000588399 =  0.000598399,  5883.99%, np 356
+Solving  0.000598399 +     0.514349 =     0.514947,    87415%, np 356
+Solving     0.514947 +      2.84286 =       3.3578,   552.71%, np 356
+Solving       3.3578 +      6.48365 =      9.84146,  228.068%, np 356
+Solving      9.84146 +      6.73615 =      16.5776,  103.894%, np 356
+Solving      16.5776 +      10.4756 =      27.0532,  155.513%, np 356
+Solving      27.0532 +      47.2901 =      74.3432,  451.431%, np 356
+Solving      74.3432 +      76.8295 =      151.173,  162.464%, np 356
+Solving      151.173 +      226.834 =      378.006,  295.243%, np 356
+Solving      378.006 +      167.165 =      545.172,  73.6951%, np 356
+Solving      545.172 +      354.828 =          900,  212.262%, np 356
+select z=log10(beryllium)
+plot.1d x.min=0.0 x.ma=2.0 y.mi=14.0 y.max=20.0 cle=f axi=f line.type=5
+#save the data
+struct outf=./str.actual
+quit
