@@ -168,10 +168,10 @@ projects/suprem/%/success: bin/suprem data/suprem.uk data/modelrc ./data/sup4gs.
 			1> ./stdout.actual \
 			2> ./stderr.actual; \
 		echo $$? > ./exit-code.actual; \
-		cmp ./stdout.actual ./stdout.correct && \
-		cmp ./stderr.actual ./stderr.correct && \
-		cmp ./str.actual ./str.correct && \
-		cmp ./exit-code.actual ./exit-code.correct
+		diff ./stdout.actual ./stdout.correct && \
+		diff ./stderr.actual ./stderr.correct && \
+		diff ./str.actual ./str.correct && \
+		diff ./exit-code.actual ./exit-code.correct
 	touch $@
 
 .%-systest-othervars.mk:
