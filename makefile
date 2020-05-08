@@ -200,9 +200,9 @@ clean-successes:
 	find -path '*/success' -exec 'rm' '-v' '{}' \;
 	
 clean:
-	find -name '*.o' -exec 'rm' '-v' '{}' \;
-	find -name '*.mk' -exec 'rm' '-v' '{}' \;
-	find -executable -a -type f -exec 'rm' '-v' '{}' \;
+	find -name '*.o' -print -delete
+	find -name '*.mk' -print -delete
+	find -executable -a -type f -print -delete
 
 include $(keyread_depends)
 include $(preprocessor_depends)
