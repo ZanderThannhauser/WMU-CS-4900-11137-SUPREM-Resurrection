@@ -153,6 +153,7 @@ include .suprem-systestlist.mk
 
 projects/suprem/%/success: bin/suprem \
 	data/suprem.uk data/modelrc ./data/sup4gs.imp \
+	projects/suprem/%/flags \
 	projects/suprem/%/stdin \
 	projects/suprem/%/stdout.correct \
 	projects/suprem/%/stderr.correct \
