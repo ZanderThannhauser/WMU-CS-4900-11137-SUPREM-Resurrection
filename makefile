@@ -23,7 +23,7 @@ CFLAGS += -Wno-maybe-uninitialized
 CFLAGS += -Wno-array-bounds
 CFLAGS += -g
 
-#NDFLAGS += -O2
+NDFLAGS += -O2
 
 DFLAGS += -Wno-unused-but-set-variable
 DFLAGS += -D DEBUGGING_2020
@@ -49,11 +49,11 @@ include .preprocessor-othervars.mk
 include .scraper-othervars.mk
 include .suprem-othervars.mk
 
-#ARGS += ./projects/suprem/system-tests/durban1/stdin
+ARGS += ./projects/suprem/system-tests/durban1/stdin
 #ARGS += ./projects/suprem/system-tests/exam1/stdin
 #ARGS += ./projects/suprem/system-tests/exam2/stdin
 #ARGS += ./projects/suprem/system-tests/exam3/stdin
-ARGS += ./projects/suprem/system-tests/exam4/stdin
+#ARGS += ./projects/suprem/system-tests/exam4/stdin
 #ARGS += ./projects/suprem/system-tests/exam5/stdin
 #ARGS += ./projects/suprem/system-tests/exam6/stdin
 #ARGS += ./projects/suprem/system-tests/exam7/stdin
@@ -123,9 +123,8 @@ data/suprem.uk: ./bin/keyread ./data/suprem.key
 %.o: %.c %.mk
 	$(CC) -c $(NDFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || (gedit $< && false)
 
-%.d.o: %.c  %.mk
+%.d.o: %.c %.mk
 	$(CC) -c $(DFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || (gedit $< && false)
-
 
 .PHONY: test open-all-suprem format clean-successes clean
 .PHONY: test-keyread test-preprocessor test-scraper test-suprem
@@ -152,7 +151,8 @@ include .suprem-systestlist.mk
 #		cmp ./exit-code.actual ./exit-code.correct
 #	touch $@
 
-projects/suprem/%/success: bin/suprem data/suprem.uk data/modelrc ./data/sup4gs.imp \
+projects/suprem/%/success: bin/suprem \
+	data/suprem.uk data/modelrc ./data/sup4gs.imp \
 	projects/suprem/%/stdin \
 	projects/suprem/%/stdout.correct \
 	projects/suprem/%/stderr.correct \

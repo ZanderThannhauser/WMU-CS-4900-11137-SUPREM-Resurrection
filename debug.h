@@ -15,7 +15,8 @@ extern int debugging_depth;
 
 	#define TODO \
 	{\
-		printf("%*sTODO: File: %s, Line: %i\n", debugging_depth, "", __FILE__, __LINE__);\
+		printf("%*sTODO: File: %s, Line: %i\n", debugging_depth, "", \
+			__FILE__, __LINE__);\
 		char buffer[100];\
 		sprintf(buffer, "+%i", __LINE__);\
 		execlp("gedit", "gedit", __FILE__, buffer, NULL);\
@@ -25,7 +26,8 @@ extern int debugging_depth;
 	#define CHECK TODO
 	#define NOPE CHECK
 	#define HERE \
-		printf("%*sHERE: File: %s, Line: %i\n", debugging_depth, "", __FILE__, __LINE__);
+		printf("%*sHERE: File: %s, Line: %i\n", debugging_depth, "", \
+			__FILE__, __LINE__);
 	
 #else
 	#define D_2020(...)
