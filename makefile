@@ -113,7 +113,7 @@ data/suprem.uk: ./bin/keyread ./data/suprem.key
 	./bin/keyread ./data/suprem.uk < ./data/suprem.key
 
 %.mk: %.c
-	$(CPP) -MM -MT $@ $(CPPFLAGS) -MF $@ $< || (gedit $< && false)
+	$(CPP) -MM -MT $@ $(CPPFLAGS) -MF $@ $< || (code $< && false)
 
 %.h %.c: %.y
 	$(YACC) $(YFLAGS) -d $<
@@ -121,10 +121,10 @@ data/suprem.uk: ./bin/keyread ./data/suprem.key
 	mv y.tab.h $*.h
 
 %.o: %.c %.mk
-	$(CC) -c $(NDFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || (gedit $< && false)
+	$(CC) -c $(NDFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || (code $< && false)
 
 %.d.o: %.c %.mk
-	$(CC) -c $(DFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || (gedit $< && false)
+	$(CC) -c $(DFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || (code $< && false)
 
 .PHONY: test open-all-suprem format clean-successes clean
 .PHONY: test-keyread test-preprocessor test-scraper test-suprem

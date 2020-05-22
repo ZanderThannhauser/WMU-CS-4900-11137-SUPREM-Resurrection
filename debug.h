@@ -19,7 +19,7 @@ extern int debugging_depth;
 			__FILE__, __LINE__);\
 		char buffer[100];\
 		sprintf(buffer, "+%i", __LINE__);\
-		execlp("gedit", "gedit", __FILE__, buffer, NULL);\
+		execlp("code", "code", __FILE__, buffer, NULL);\
 		assert(0);\
 	}
 	
