@@ -1,5 +1,4 @@
 #ifndef STRUCTS_H
-
 #define STRUCTS_H
 
 struct arg_data
@@ -17,12 +16,10 @@ struct str_row
     double net_doping_concentration;
 };
 
-
 struct str_data
 {
 	unsigned int size;
 	struct str_row* rows;
 };
-
 
 #endif

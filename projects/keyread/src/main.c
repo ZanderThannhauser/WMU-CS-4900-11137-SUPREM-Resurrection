@@ -30,6 +30,10 @@
 #include "main.h"
 /* end of includes*/
 
+#ifdef DEBUGGING_2020
+int debugging_depth;
+#endif
+
 /* 2020 forward declarations*/
 /* end of declarations*/
 

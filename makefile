@@ -49,7 +49,7 @@ include .preprocessor-othervars.mk
 include .scraper-othervars.mk
 include .suprem-othervars.mk
 
-ARGS += ./projects/suprem/system-tests/durban1/stdin
+# ARGS += ./projects/suprem/system-tests/durban1/stdin
 #ARGS += ./projects/suprem/system-tests/exam1/stdin
 #ARGS += ./projects/suprem/system-tests/exam2/stdin
 #ARGS += ./projects/suprem/system-tests/exam3/stdin
@@ -129,6 +129,9 @@ data/suprem.uk: ./bin/keyread ./data/suprem.key
 .PHONY: test open-all-suprem format clean-successes clean
 .PHONY: test-keyread test-preprocessor test-scraper test-suprem
 
+.scraper-systestlist.mk:
+	find ./projects/scraper -path '*/input.str' | sort -V | sed 's/^/scraper_systests += /' > $@
+
 .%-systestlist.mk:
 	find ./projects/$* -path '*/stdin' | sort -V | sed 's/^/'$*'_systests += /' > $@
 
@@ -137,19 +140,19 @@ include .preprocessor-systestlist.mk
 include .scraper-systestlist.mk
 include .suprem-systestlist.mk
 
-#%/success: bin/checker %/flags %/stdin \
-#	%/stdout.correct %/stderr.correct %/exit-code.correct
-#	CHECKER=`realpath bin/checker`; \
-#		cd $*; \
-#		xargs -a ./flags -d \\n $$CHECKER \
-#			0< ./stdin \
-#			1> ./stdout.actual \
-#			2> ./stderr.actual; \
-#		echo $$? > ./exit-code.actual; \
-#		cmp ./stdout.actual ./stdout.correct && \
-#		cmp ./stderr.actual ./stderr.correct && \
-#		cmp ./exit-code.actual ./exit-code.correct
-#	touch $@
+%/success: bin/scraper %/input.str %/output.correct.csv %/stderr.correct %/exit-code.correct
+	SCRAPER=`realpath bin/scraper`; \
+		cd $*; \
+		echo '' > ./output.actual.csv; \
+		valgrind --leak-check=full --error-exitcode=42 --log-fd=3 \
+		$$SCRAPER input.str output.actual.csv \
+			2> ./stderr.actual \
+			3> ./valgrind-output; \
+		echo $$? > ./exit-code.actual; \
+		cmp ./output.actual.csv ./output.correct.csv && \
+		cmp ./stderr.actual ./stderr.correct && \
+		cmp ./exit-code.actual ./exit-code.correct
+	touch $@
 
 projects/suprem/%/success: bin/suprem \
 	data/suprem.uk data/modelrc ./data/sup4gs.imp \
@@ -174,6 +177,11 @@ projects/suprem/%/success: bin/suprem \
 		diff ./str.actual ./str.correct && \
 		diff ./exit-code.actual ./exit-code.correct
 	touch $@
+
+.scraper-systest-othervars.mk:
+	echo '' > $@
+	echo 'scraper_systests_success = $$(scraper_systests:/input.str=/success)' >> $@
+	echo 'systest_scraper: $$(scraper_systests_success)' >> $@
 
 .%-systest-othervars.mk:
 	echo '' > $@

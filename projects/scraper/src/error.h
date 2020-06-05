@@ -5,6 +5,7 @@ enum error_codes
 	e_wrong_number_of_parameters,
 	e_system_call_failed,
 	e_failed_to_open_str_file,
+	e_no_data_in_str_file,
 	e_invalid_input_file, 
 	e_failed_to_open_csv_file, 
 	e_fprintf_failed
