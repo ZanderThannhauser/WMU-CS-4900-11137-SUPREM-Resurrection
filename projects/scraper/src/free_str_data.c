@@ -3,7 +3,7 @@
 #include <assert.h>
 #include <stdlib.h>
 
-#include "debug.h"
+#include "../../../debug.h"
 
 #include "structs.h"
 #include "free_str_data.h"

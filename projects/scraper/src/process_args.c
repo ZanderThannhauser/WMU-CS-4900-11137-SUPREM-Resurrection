@@ -6,7 +6,7 @@
 #include "structs.h"
 #include "process_args.h"
 
-int process_args(int argc, char *argv[], struct arg_data *arg_data){
+int process_args(int argc, const char *argv[], struct arg_data *arg_data){
 
     int error = 0;
 
