@@ -30,24 +30,8 @@ DFLAGS += -D DEBUGGING_2020
 
 LDLIBS += -lm
 
-.%-srclist.mk:
-	find ./projects/$* -name '*.c' | sed 's/^/'$*'_src += /' > $@
 
-include .keyread-srclist.mk
-include .preprocessor-srclist.mk
-include .scraper-srclist.mk
-include .suprem-srclist.mk
 
-.%-othervars.mk:
-	echo > $@
-	echo $*'_objs = $$('$*'_src:.c=.o)' >> $@
-	echo $*'_dobjs = $$('$*'_src:.c=.d.o)' >> $@
-	echo $*'_depends = $$('$*'_src:.c=.mk)' >> $@
-
-include .keyread-othervars.mk
-include .preprocessor-othervars.mk
-include .scraper-othervars.mk
-include .suprem-othervars.mk
 
 # ARGS += ./projects/suprem/system-tests/durban1/stdin
 #ARGS += ./projects/suprem/system-tests/exam1/stdin
@@ -98,19 +82,17 @@ bin/%:
 	mkdir -p bin
 	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
-.%-executable.mk:
-	echo > $@
-	echo 'bin/'$*': $$('$*'_objs)' >> $@
-	echo 'bin/'$*'.d: $$('$*'_dobjs)' >> $@
-
-include .checker-executable.mk
-include .keyread-executable.mk
-include .preprocessor-executable.mk
-include .scraper-executable.mk
-include .suprem-executable.mk
 
 data/suprem.uk: ./bin/keyread ./data/suprem.key
 	./bin/keyread ./data/suprem.uk < ./data/suprem.key
+
+projects/%/makefile: template.mk
+	sed 's/project-name/$*/g' < $< > $@
+
+include projects/keyread/makefile
+include projects/preprocessor/makefile
+include projects/scraper/makefile
+include projects/suprem/makefile
 
 %.mk: %.c
 	$(CPP) -MM -MT $@ $(CPPFLAGS) -MF $@ $< || (code $< && false)
@@ -129,16 +111,12 @@ data/suprem.uk: ./bin/keyread ./data/suprem.key
 .PHONY: test open-all-suprem format clean-successes clean
 .PHONY: test-keyread test-preprocessor test-scraper test-suprem
 
+
+
 .scraper-systestlist.mk:
 	find ./projects/scraper -path '*/input.str' | sort -V | sed 's/^/scraper_systests += /' > $@
 
-.%-systestlist.mk:
-	find ./projects/$* -path '*/stdin' | sort -V | sed 's/^/'$*'_systests += /' > $@
 
-include .keyread-systestlist.mk
-include .preprocessor-systestlist.mk
-include .scraper-systestlist.mk
-include .suprem-systestlist.mk
 
 %/success: bin/scraper %/input.str %/output.correct.csv %/stderr.correct %/exit-code.correct
 	SCRAPER=`realpath bin/scraper`; \
@@ -183,22 +161,10 @@ projects/suprem/%/success: bin/suprem \
 	echo 'scraper_systests_success = $$(scraper_systests:/input.str=/success)' >> $@
 	echo 'systest_scraper: $$(scraper_systests_success)' >> $@
 
-.%-systest-othervars.mk:
-	echo '' > $@
-	echo $*'_systests_success = $$('$*'_systests:/stdin=/success)' >> $@
-	echo 'systest_'$*': $$('$*'_systests_success)' >> $@
 
-include .keyread-systest-othervars.mk
-include .preprocessor-systest-othervars.mk
-include .scraper-systest-othervars.mk
-include .suprem-systest-othervars.mk
-
-systest: systest_keyread
-systest: systest_preprocessor
-systest: systest_scraper
-systest: systest_suprem
 
 test: systest
+test: unittest
 
 format:
 	find -name '*.c' -exec 'clang-format' '-i' '-verbose' '{}' \;
@@ -212,13 +178,6 @@ clean:
 	find -name '*.o' -print -delete
 	find -name '*.mk' -print -delete
 	find -executable -a -type f -print -delete
-
-include $(keyread_depends)
-include $(preprocessor_depends)
-include $(scraper_depends)
-include $(suprem_depends)
-
-
 
 
 
