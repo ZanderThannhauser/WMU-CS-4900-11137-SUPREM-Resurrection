@@ -16,7 +16,7 @@
 int debugging_depth;
 #endif
 
-int main(int argc, char *argv[])
+int main(int argc, const char *argv[])
 {
 	int error = 0;
 	struct arg_data arg_data;

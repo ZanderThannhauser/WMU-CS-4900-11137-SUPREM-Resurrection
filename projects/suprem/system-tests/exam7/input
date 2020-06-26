@@ -26,13 +26,13 @@ etch    nitride left p1.x=0
 etch    oxide   left p1.x=0
 
 plot.2d grid bound 
-pause
+# 2020: pause
 
 #----------Field oxidation
 meth compr
 
 plot.2d bound y.mi=-0.5 line.b=2
-pause
+# 2020: pause
 
 diffuse tim=90 tem=1000 weto2 movie="plot.2d bound cle=f axi=f"
 stru outf=./str.actual

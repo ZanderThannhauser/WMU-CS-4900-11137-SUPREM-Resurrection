@@ -71,7 +71,9 @@ int read_str(const char* str_path, struct str_data *str_data)
 	else
 		*str_data = sd;
 	
-    fclose(str_file);
+	if (str_file)
+		fclose(str_file);
+	
     free(line);
 
     return error;

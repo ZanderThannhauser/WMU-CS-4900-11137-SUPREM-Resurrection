@@ -32,12 +32,10 @@ void test_error(int argc_input, const char *argv_input[], int expected_error){
 
 }
 
-int main(){
-
-    int error;
+int main()
+{
     
     test(3, (const char*[]){"foo", "bar", "baz"}, (struct arg_data){"bar", "baz"});
-
 
     test_error(4, (const char*[]){"foo", "bar", "baz", "qux"}, e_wrong_number_of_parameters);
 
