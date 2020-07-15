@@ -79,7 +79,7 @@ valrun-stop.d: bin/suprem.d data/suprem.uk
 bin:
 	mkdir -p bin
 
-data/suprem.uk: ./bin/keyread ./data/suprem.key
+data/suprem.uk: bin/keyread data/suprem.key
 	./bin/keyread ./data/suprem.uk < ./data/suprem.key
 
 projects/%/makefile: template.mk
