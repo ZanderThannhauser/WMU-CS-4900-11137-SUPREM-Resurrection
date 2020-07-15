@@ -33,7 +33,7 @@ include projects/projectname/systestlist.mk
 
 projectname_systests_success = $(projectname_systests:/input=/success)
 
-projects/projectname/system-tests/%/success: bin/projectname \
+projects/projectname/system-tests/%/success: bin/projectname data/suprem.uk \
 	projects/projectname/system-tests/%/input \
 	projects/projectname/system-tests/%/flags \
 	projects/projectname/system-tests/%/stdout.correct \
