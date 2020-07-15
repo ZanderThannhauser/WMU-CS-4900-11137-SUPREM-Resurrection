@@ -112,6 +112,7 @@ test: unittest
 
 clean-successes:
 	find -name '*.actual' -delete
+	find -name 'success' -delete
 	find -path '*/success' -delete
 	
 clean:
