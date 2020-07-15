@@ -48,6 +48,7 @@ projects/projectname/system-tests/%/success: bin/projectname \
 			1> ./stdout.actual \
 			2> ./stderr.actual; \
 		echo $$? > ./exit-code.actual; \
+		cat ./stdout.actual ./stderr.actual; \
 		diff ./stdout.actual ./stdout.correct && \
 		diff ./stderr.actual ./stderr.correct && \
 		diff ./exit-code.actual ./exit-code.correct

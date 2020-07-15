@@ -1,12 +1,12 @@
 # README
 
-*Default (master) branch*:
+**Default (master) branch**:
 ![Keyread](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Keyread/badge.svg)
 ![Preprocessor](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Preprocessor/badge.svg)
 ![Scraper](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Scraper/badge.svg)
 ![Suprem](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Suprem/badge.svg)
 
-*Alex's Branch*:
+**Alex's Branch**:
 ![Keyread](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Keyread/badge.svg?branch=alexs-branch)
 ![Preprocessor](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Preprocessor/badge.svg?branch=alexs-branch)
 ![Scraper](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Scraper/badge.svg?branch=alexs-branch)
