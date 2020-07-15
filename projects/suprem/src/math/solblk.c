@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   solblk.c                Version 5.1     */
-/*   Last Modification : 7/3/91 10:44:19 */
 
 #include <stdio.h>
 #include <stdlib.h>

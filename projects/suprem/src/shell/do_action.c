@@ -15,7 +15,6 @@
  *									 *
  *************************************************************************/
 /*   do_action.c                Version 5.1     */
-/*   Last Modification : 7/3/91  08:28:04 */
 
 #include <setjmp.h>
 #include <stdio.h>

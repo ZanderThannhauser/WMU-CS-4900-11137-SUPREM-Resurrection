@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   sp_edge.c                Version 5.1     */
-/*   Last Modification : 7/3/91 15:40:53 */
 
 #include <math.h>
 #include <stdio.h>

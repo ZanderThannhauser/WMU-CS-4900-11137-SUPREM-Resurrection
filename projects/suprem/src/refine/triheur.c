@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   triheur.c                Version 5.1     */
-/*   Last Modification : 7/3/91 15:41:01 */
 
 #include <math.h>
 #include <stdio.h>

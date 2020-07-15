@@ -8,7 +8,6 @@
  *									 *
  *************************************************************************/
 /*   device.c                Version 5.2     */
-/*   Last Modification : 7/3/91 15:44:22  */
 
 #include <math.h>
 #include <stdio.h>
@@ -303,10 +302,10 @@ void init_dev(double temp)
 {
 	register int i, j, imp;
 	register int Ps;
-	double		 Vt = kb * temp;
-	double		 ni, c, t1;
-	int			 Ns = imptosol[N];
-	int			 Hs = imptosol[H];
+	double	 Vt = kb * temp;
+	double	 ni, c, t1;
+	int	 Ns = imptosol[N];
+	int	 Hs = imptosol[H];
 
 	/*solution locations*/
 	Ps = imptosol[Psi];

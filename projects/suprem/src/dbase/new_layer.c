@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   new_layer.c                Version 5.1     */
-/*   Last Modification : 7/3/91 08:21:06 */
 
 #include <assert.h>
 #include <math.h>

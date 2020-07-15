@@ -1,9 +1,6 @@
 
 
 /*	check_active.c		Version 5.1		*/
-/*	Last Modification:	7/3/91 08:30:44		*/
-
-/*      rewritten Nov 2, 1992 by S. E. Hansen		*/
 
 /*----------------------------------------------------------------------
  *

@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   select.c                Version 5.1     */
-/*   Last Modification : 7/3/91 08:39:07 */
 
 #include <math.h>
 #include <stdio.h>

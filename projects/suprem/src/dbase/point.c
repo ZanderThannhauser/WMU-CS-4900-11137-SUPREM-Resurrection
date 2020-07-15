@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   point.c                Version 5.1     */
-/*   Last Modification : 7/3/91 08:21:10 */
 
 #include <stdio.h>
 #include <stdlib.h>

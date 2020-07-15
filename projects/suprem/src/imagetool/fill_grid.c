@@ -1,5 +1,4 @@
 /*	fill_grid.c		Version 1.2	*/
-/*	Last Modification:  1/11/91 10:42:43		*/
 
 /*
  *	fill_grid.c

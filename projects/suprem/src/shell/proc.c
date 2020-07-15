@@ -9,7 +9,6 @@
  *									 *
  *************************************************************************/
 /*   proc.c                Version 5.1     */
-/*   Last Modification : 7/3/91  08:28:16 */
 
 #include <stdio.h>
 #include <string.h>

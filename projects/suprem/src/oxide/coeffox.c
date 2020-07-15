@@ -7,7 +7,6 @@
  *									 *
  *************************************************************************/
 /*   coeffox.c                Version 5.1     */
-/*   Last Modification : 7/3/91  10:52:26 */
 
 #include <math.h>
 #include <stdio.h>

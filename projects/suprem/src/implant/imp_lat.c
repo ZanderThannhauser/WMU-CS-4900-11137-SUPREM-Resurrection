@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   imp_lat.c                Version 5.1     */
-/*   Last Modification : 7/3/91 12:08:37 */
 
 #include <math.h>
 #include <stdio.h>

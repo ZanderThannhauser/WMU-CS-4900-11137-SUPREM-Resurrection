@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   solve_time.c                Version 5.1     */
-/*   Last Modification : 7/3/91 10:50:18 */
 
 #include <assert.h>
 #include <math.h>

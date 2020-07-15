@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   kill_node.c                Version 5.1     */
-/*   Last Modification : 7/3/91 08:20:57 */
 
 #include <assert.h>
 #include <math.h>

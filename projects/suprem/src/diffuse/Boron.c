@@ -7,7 +7,6 @@
  *									 *
  *************************************************************************/
 /*   Boron.c                Version 5.1     */
-/*   Last Modification : 7/3/91 10:49:37 */
 
 #include <math.h>
 #include <stdio.h>

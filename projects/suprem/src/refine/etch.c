@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   etch.c                Version 5.1     */
-/*   Last Modification : 7/3/91 15:40:40 */
 
 #include <assert.h>
 #include <stdio.h>

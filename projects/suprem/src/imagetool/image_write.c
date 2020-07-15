@@ -1,9 +1,5 @@
 
 /*	image_write.c		Version 5.1	*/
-/*	Last Modification:  7/3/91 15:46:17		*/
-
-/*	image_write.c		Version 1.3		*/
-/*	Last Modification:	12/12/89 11:27:29		*/
 
 /*----------------------------------------------------------------------
 **  Copyright 1989 by

@@ -110,10 +110,6 @@ include projects/suprem/makefile
 test: systest
 test: unittest
 
-format:
-	find -name '*.c' -exec 'clang-format' '-i' '-verbose' '{}' \;
-	find -name '*.h' -exec 'clang-format' '-i' '-verbose' '{}' \;
-
 clean-successes:
 	find -name '*.actual' -delete
 	find -path '*/success' -delete

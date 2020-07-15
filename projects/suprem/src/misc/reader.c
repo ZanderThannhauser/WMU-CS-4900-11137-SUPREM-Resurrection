@@ -9,7 +9,6 @@
  *									 *
  *************************************************************************/
 /*   reader.c                Version 5.1     */
-/*   Last Modification : 7/3/91  08:41:16 */
 
 #include <ctype.h>
 #include <fcntl.h> /*not neeeded for lib version*/

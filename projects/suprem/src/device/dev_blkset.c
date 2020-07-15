@@ -7,7 +7,6 @@
  *									 *
  *************************************************************************/
 /*   dev_blkset.c                Version 5.2     */
-/*   Last Modification : 7/3/91  15:44:18 */
 
 #include <math.h>
 #include <stdio.h>

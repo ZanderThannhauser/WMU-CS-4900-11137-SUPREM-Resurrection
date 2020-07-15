@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   neigh.c                Version 5.1     */
-/*   Last Modification : 7/3/91 08:21:04 */
 
 #include "suprem/include/constant.h"
 #include "suprem/include/dbaccess.h"

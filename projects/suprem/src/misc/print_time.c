@@ -7,7 +7,6 @@
  *									 *
  *************************************************************************/
 /*   print_time.c                Version 5.1     */
-/*   Last Modification : 7/3/91  08:41:12 */
 
 #include <stdio.h>
 #include <sys/times.h>

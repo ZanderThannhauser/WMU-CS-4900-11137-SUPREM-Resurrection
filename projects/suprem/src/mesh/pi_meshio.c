@@ -18,7 +18,6 @@
  *									 *
  *************************************************************************/
 /*   pi_meshio.c                Version 5.1     */
-/*   Last Modification : 7/3/91 08:30:50  */
 
 #include <ctype.h>
 #include <math.h>

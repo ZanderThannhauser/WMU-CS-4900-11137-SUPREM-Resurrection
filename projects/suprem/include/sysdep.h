@@ -25,18 +25,9 @@ EXTERN char *IMP_FILE;
 #define HZ 60
 #endif
 
-/* 2020: guess it's a good time to make a new platform!*/
 #ifdef UBUNTU
-/* what is this #include used for? (I guess we don't need it?)*/
-/*#include <sys/file.h>*/
 #define PAGER "more"
-
-/* we don't need these, ubuntu already has the right calls*/
 #define index strchr
-/*#define strrchr rindex*/
-/*#define strncmp strcmpn*/
-/*#define strncpy strcpyn*/
-
 #endif
 
 #ifdef BSD
@@ -119,3 +110,9 @@ EXTERN char *IMP_FILE;
 /* Try "SUPREM-IV A.1 organization.12345" */
 EXTERN char VersionString[80];
 #define VERSION VersionString
+
+
+
+
+
+

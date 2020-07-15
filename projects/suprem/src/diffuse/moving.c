@@ -7,7 +7,6 @@
  *									 *
  *************************************************************************/
 /*   moving.c                Version 5.1     */
-/*   Last Modification : 7/3/91 10:50:05 */
 
 #include <math.h>
 #include <stdio.h>

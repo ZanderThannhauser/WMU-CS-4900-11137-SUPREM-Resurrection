@@ -8,7 +8,6 @@
  *									 *
  *************************************************************************/
 /*   dev_prep.c                Version 5.2     */
-/*   Last Modification : 7/3/91 15:44:19  */
 
 #include <math.h>
 #include <stdio.h>

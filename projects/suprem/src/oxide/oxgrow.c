@@ -14,7 +14,7 @@
  *									 *
  *************************************************************************/
 /*   oxgrow.c                Version 5.1     */
-/*   Last Modification : 7/3/91 10:52:33 */
+
 #include <stdio.h>
 #include <sys/times.h>
 

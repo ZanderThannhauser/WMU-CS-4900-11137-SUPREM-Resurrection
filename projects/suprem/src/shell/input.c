@@ -9,7 +9,6 @@
  *									 *
  *************************************************************************/
 /*   input.c                Version 5.1     */
-/*   Last Modification : 7/3/91 08:28:08 */
 
 #include <ctype.h>
 #include <stdio.h>

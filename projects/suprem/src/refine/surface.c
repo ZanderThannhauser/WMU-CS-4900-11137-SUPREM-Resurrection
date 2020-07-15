@@ -14,7 +14,6 @@
  *									 *
  *************************************************************************/
 /*   surface.c                Version 5.1     */
-/*   Last Modification : 7/3/91 15:40:56 */
 
 #include <assert.h>
 #include <math.h>

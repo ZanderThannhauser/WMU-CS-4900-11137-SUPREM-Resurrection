@@ -8,7 +8,6 @@
  *									 *
  *************************************************************************/
 /*   dev_solve.c                Version 5.2     */
-/*   Last Modification : 7/3/91 15:44:20  */
 
 #include <math.h>
 #include <stdio.h>

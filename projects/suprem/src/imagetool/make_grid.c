@@ -1,8 +1,4 @@
 /*	make_grid.c 		Version 5.1	*/
-/*	Last Modification:  7/3/91 15:46:18		*/
-
-/*	make_grid.c		Version 1.2		*/
-/*	Last Modification:	12/11/89 13:44:31		*/
 
 #include <stdio.h>
 #include <stdlib.h>

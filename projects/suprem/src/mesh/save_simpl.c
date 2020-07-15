@@ -1,5 +1,4 @@
 /*	save_simpl.c		Version 5.1		*/
-/*	Last Modification:	7/3/91 08:30:55		*/
 
 /*
  *	save_simpl.c
