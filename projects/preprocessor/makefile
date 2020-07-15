@@ -18,10 +18,10 @@ projects/preprocessor/systestlist.mk:
 
 include projects/preprocessor/systestlist.mk
 
-projects/preprocessor/unittestlist.mk:
-	find ./projects/preprocessor -path '*/input' | sort -V | sed 's/^/preprocessor_unittests += /' > $@
+#projects/preprocessor/unittestlist.mk:
+#	find ./projects/preprocessor -path '*/input' | sort -V | sed 's/^/preprocessor_unittests += /' > $@
 
-include projects/preprocessor/unittestlist.mk
+#include projects/preprocessor/unittestlist.mk
 
 preprocessor_systests_success = $(preprocessor_systests:/input=/success)
 systest_preprocessor: $(preprocessor_systests_success)
@@ -46,14 +46,12 @@ projects/preprocessor/system-tests/%/success: bin/preprocessor \
 		diff ./exit-code.actual ./exit-code.correct
 	touch $@
 
-#  diff ./str.actual ./str.correct && \
-
 preprocessor_unittests_success = $(preprocessor_unittests:/stdin=/success)
-unittest_preprocessor: $(preprocessor_unittests_success)
+#unittest_preprocessor: $(preprocessor_unittests_success)
 
 systest: systest_preprocessor
 
-unittest: unittest_preprocessor
+#unittest: unittest_preprocessor
 
 
 include $(preprocessor_depends)

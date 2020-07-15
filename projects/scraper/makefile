@@ -18,10 +18,10 @@ projects/scraper/systestlist.mk:
 
 include projects/scraper/systestlist.mk
 
-projects/scraper/unittestlist.mk:
-	find ./projects/scraper -path '*/input' | sort -V | sed 's/^/scraper_unittests += /' > $@
+#projects/scraper/unittestlist.mk:
+#	find ./projects/scraper -path '*/input' | sort -V | sed 's/^/scraper_unittests += /' > $@
 
-include projects/scraper/unittestlist.mk
+#include projects/scraper/unittestlist.mk
 
 scraper_systests_success = $(scraper_systests:/input=/success)
 systest_scraper: $(scraper_systests_success)
@@ -46,14 +46,12 @@ projects/scraper/system-tests/%/success: bin/scraper \
 		diff ./exit-code.actual ./exit-code.correct
 	touch $@
 
-#  diff ./str.actual ./str.correct && \
-
 scraper_unittests_success = $(scraper_unittests:/stdin=/success)
-unittest_scraper: $(scraper_unittests_success)
+#unittest_scraper: $(scraper_unittests_success)
 
 systest: systest_scraper
 
-unittest: unittest_scraper
+#unittest: unittest_scraper
 
 
 include $(scraper_depends)

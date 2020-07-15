@@ -18,10 +18,10 @@ projects/keyread/systestlist.mk:
 
 include projects/keyread/systestlist.mk
 
-projects/keyread/unittestlist.mk:
-	find ./projects/keyread -path '*/input' | sort -V | sed 's/^/keyread_unittests += /' > $@
+#projects/keyread/unittestlist.mk:
+#	find ./projects/keyread -path '*/input' | sort -V | sed 's/^/keyread_unittests += /' > $@
 
-include projects/keyread/unittestlist.mk
+#include projects/keyread/unittestlist.mk
 
 keyread_systests_success = $(keyread_systests:/input=/success)
 systest_keyread: $(keyread_systests_success)
@@ -46,14 +46,12 @@ projects/keyread/system-tests/%/success: bin/keyread \
 		diff ./exit-code.actual ./exit-code.correct
 	touch $@
 
-#  diff ./str.actual ./str.correct && \
-
 keyread_unittests_success = $(keyread_unittests:/stdin=/success)
-unittest_keyread: $(keyread_unittests_success)
+#unittest_keyread: $(keyread_unittests_success)
 
 systest: systest_keyread
 
-unittest: unittest_keyread
+#unittest: unittest_keyread
 
 
 include $(keyread_depends)

@@ -30,10 +30,7 @@ DFLAGS += -D DEBUGGING_2020
 
 LDLIBS += -lm
 
-
-
-
-# ARGS += ./projects/suprem/system-tests/durban1/stdin
+#ARGS += ./projects/suprem/system-tests/durban1/stdin
 #ARGS += ./projects/suprem/system-tests/exam1/stdin
 #ARGS += ./projects/suprem/system-tests/exam2/stdin
 #ARGS += ./projects/suprem/system-tests/exam3/stdin

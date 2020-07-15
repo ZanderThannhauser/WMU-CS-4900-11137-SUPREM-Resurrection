@@ -18,10 +18,10 @@ projects/suprem/systestlist.mk:
 
 include projects/suprem/systestlist.mk
 
-projects/suprem/unittestlist.mk:
-	find ./projects/suprem -path '*/input' | sort -V | sed 's/^/suprem_unittests += /' > $@
+#projects/suprem/unittestlist.mk:
+#	find ./projects/suprem -path '*/input' | sort -V | sed 's/^/suprem_unittests += /' > $@
 
-include projects/suprem/unittestlist.mk
+#include projects/suprem/unittestlist.mk
 
 suprem_systests_success = $(suprem_systests:/input=/success)
 systest_suprem: $(suprem_systests_success)
@@ -46,14 +46,12 @@ projects/suprem/system-tests/%/success: bin/suprem \
 		diff ./exit-code.actual ./exit-code.correct
 	touch $@
 
-#  diff ./str.actual ./str.correct && \
-
 suprem_unittests_success = $(suprem_unittests:/stdin=/success)
-unittest_suprem: $(suprem_unittests_success)
+#unittest_suprem: $(suprem_unittests_success)
 
 systest: systest_suprem
 
-unittest: unittest_suprem
+#unittest: unittest_suprem
 
 
 include $(suprem_depends)
