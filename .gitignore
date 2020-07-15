@@ -1,5 +1,5 @@
 
-bin/*
+bin
 
 *.o
 *.a
@@ -11,5 +11,11 @@ bin/*
 *.str
 *.mesh
 
+projects/keyread/makefile
+projects/preprocessor/makefile
+projects/scraper/makefile
+projects/suprem/makefile
+
 *.actual
+*.success
 success

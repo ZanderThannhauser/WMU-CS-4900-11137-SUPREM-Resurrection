@@ -10,8 +10,5 @@
 
 void free_str_data(struct str_data *str_data)
 {
-    HERE;
-
-    free(str_data->rows);
-	
+	free(str_data->rows);
 }

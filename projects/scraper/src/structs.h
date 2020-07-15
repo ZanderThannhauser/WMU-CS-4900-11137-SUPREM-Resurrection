@@ -10,10 +10,10 @@ struct arg_data
 
 struct str_row
 {
-    double depth_from_surface;
-    double boron_concentration;
-    double phosphorus_concentration;
-    double net_doping_concentration;
+	double depth_from_surface;
+	double boron_concentration;
+	double phosphorus_concentration;
+	double net_doping_concentration;
 };
 
 struct str_data

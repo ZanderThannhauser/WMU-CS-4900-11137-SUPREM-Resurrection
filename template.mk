@@ -1,42 +1,47 @@
-# project-name
+# projectname
 
-projects/project-name/srclist.mk:
-	find ./projects/project-name/src -name '*.c' | sed 's/^/project-name_src += /' > $@
+projects/projectname/srclist.mk:
+	find ./projects/projectname/src -name '*.c' | sed 's/^/projectname_src += /' > $@
 
-include projects/project-name/srclist.mk
+include projects/projectname/srclist.mk
 
-project-name_objs = $(project-name_src:.c=.o)
-project-name_dobjs = $(project-name_src:.c=.d.o)
-project-name_depends = $(project-name_src:.c=.mk)
+projectname_objs = $(projectname_src:.c=.o)
+projectname_dobjs = $(projectname_src:.c=.d.o)
+projectname_depends = $(projectname_src:.c=.mk)
 
-bin/project-name: $(project-name_objs)
-bin/project-name.d: $(project-name_dobjs)
+# <Program Linking/Building>
 
-projects/project-name/systestlist.mk:
-	find ./projects/project-name/system-tests -path '*/input' | \
-		sort -V | sed 's/^/project-name_systests += /' > $@
+bin/projectname: $(projectname_objs) | bin
+bin/projectname.d: $(projectname_dobjs) | bin
 
-include projects/project-name/systestlist.mk
+#bin/%:
+#	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
-projects/project-name/unittestlist.mk:
-	find ./projects/project-name -path '*/input' | sort -V | sed 's/^/project-name_unittests += /' > $@
+# </Program Linking/Building>
 
-include projects/project-name/unittestlist.mk
+# <Testing>
 
-project-name_systests_success = $(project-name_systests:/input=/success)
-systest_project-name: $(project-name_systests_success)
+# <System Testing>
 
-projects/project-name/system-tests/%/success: bin/project-name \
-	projects/project-name/system-tests/%/input \
-	projects/project-name/system-tests/%/stdout.correct \
-	projects/project-name/system-tests/%/stderr.correct \
-	projects/project-name/system-tests/%/exit-code.correct \
-	projects/project-name/system-tests/%/flags
-	PROGRAM=`realpath bin/project-name`; \
+projects/projectname/systestlist.mk:
+	find ./projects/projectname/system-tests -path '*/input' | sort -V | \
+		sed 's/^/projectname_systests += /' > $@
+
+include projects/projectname/systestlist.mk
+
+projectname_systests_success = $(projectname_systests:/input=/success)
+
+projects/projectname/system-tests/%/success: bin/projectname \
+	projects/projectname/system-tests/%/input \
+	projects/projectname/system-tests/%/stdout.correct \
+	projects/projectname/system-tests/%/stderr.correct \
+	projects/projectname/system-tests/%/exit-code.correct \
+	projects/projectname/system-tests/%/flags
+	PROGRAM=`realpath bin/projectname`; \
 	export SUP4KEYFILE=`realpath data/suprem.uk`; \
 	export SUP4MODELRC=`realpath data/modelrc`; \
 	export SUP4IMPDATA=`realpath data/sup4gs.imp`; \
-		cd projects/project-name/system-tests/$*; \
+		cd projects/projectname/system-tests/$*; \
 		xargs -a ./flags -d \\n $$PROGRAM ./input \
 			1> ./stdout.actual \
 			2> ./stderr.actual; \
@@ -46,12 +51,53 @@ projects/project-name/system-tests/%/success: bin/project-name \
 		diff ./exit-code.actual ./exit-code.correct
 	touch $@
 
-project-name_unittests_success = $(project-name_unittests:/stdin=/success)
-unittest_project-name: $(project-name_unittests_success)
+systest_projectname: $(projectname_systests_success)
 
-systest: systest_project-name
+systest: systest_projectname
 
-unittest: unittest_project-name
+# </System Testing>
+
+# <Unit Testing>
+
+projects/projectname/unittestlist.mk:
+	find ./projects/projectname/unit-tests -name '*.c' | sort -V | \
+		sed 's/^/projectname_unittests += /' > $@
+
+include projects/projectname/unittestlist.mk
+
+projectname_unittests_success = $(projectname_unittests:.c=.success)
+
+projectname_depends += $(projectname_unittests:.c=.mk)
+
+projects/projectname/unit-tests/%: \
+	projects/projectname/src/%.o \
+	projects/projectname/unit-tests/%.o
+	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
+
+projects/projectname/unit-tests/%.success: projects/projectname/unit-tests/%
+	valgrind --leak-check=full --error-exitcode=2 ./$<
+	touch $@
+
+unittest_projectname: $(projectname_unittests_success)
+
+unittest: unittest_projectname
+
+# </Unit Testing>
+
+# </Testing>
+
+include $(projectname_depends)
 
 
-include $(project-name_depends)
+
+
+
+
+
+
+
+
+
+
+
+

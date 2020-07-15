@@ -9,6 +9,7 @@ CPPFLAGS = -I . -I projects
 CPPFLAGS += -D DEVICE
 CPPFLAGS += -D NO_F77
 
+CPPFLAGS += -D _GNU_SOURCE
 CPPFLAGS += -D _XOPEN_SOURCE=500 # this brings in the needed stdlib functions
 
 # Define which platform we're using. I made up a new one!
@@ -75,16 +76,14 @@ valrun.d: bin/suprem.d data/suprem.uk
 valrun-stop.d: bin/suprem.d data/suprem.uk
 	valgrind --gen-suppressions=yes ./bin/suprem.d $(ARGS)
 
-bin/%:
+bin:
 	mkdir -p bin
-	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
-
 
 data/suprem.uk: ./bin/keyread ./data/suprem.key
 	./bin/keyread ./data/suprem.uk < ./data/suprem.key
 
 projects/%/makefile: template.mk
-	sed 's/project-name/$*/g' < $< > $@
+	sed 's/projectname/$*/g' < $< > $@
 
 include projects/keyread/makefile
 include projects/preprocessor/makefile
@@ -92,7 +91,7 @@ include projects/scraper/makefile
 include projects/suprem/makefile
 
 %.mk: %.c
-	$(CPP) -MM -MT $@ $(CPPFLAGS) -MF $@ $< || (code $< && false)
+	$(CPP) -MM -MT $@ $(CPPFLAGS) -MF $@ $< || ($$EDITOR $< && false)
 
 %.h %.c: %.y
 	$(YACC) $(YFLAGS) -d $<
@@ -100,63 +99,13 @@ include projects/suprem/makefile
 	mv y.tab.h $*.h
 
 %.o: %.c %.mk
-	$(CC) -c $(NDFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || (code $< && false)
+	$(CC) -c $(NDFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
 %.d.o: %.c %.mk
-	$(CC) -c $(DFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || (code $< && false)
+	$(CC) -c $(DFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
 .PHONY: test open-all-suprem format clean-successes clean
 .PHONY: test-keyread test-preprocessor test-scraper test-suprem
-
-
-
-#.scraper-systestlist.mk:
-#	find ./projects/scraper -path '*/input.str' | sort -V | sed 's/^/scraper_systests += /' > $@
-
-
-
-#%/success: bin/scraper %/input.str %/output.correct.csv %/stderr.correct %/exit-code.correct
-#	SCRAPER=`realpath bin/scraper`; \
-#		cd $*; \
-#		echo '' > ./output.actual.csv; \
-#		valgrind --leak-check=full --error-exitcode=42 --log-fd=3 \
-#		$$SCRAPER input.str output.actual.csv \
-#			2> ./stderr.actual \
-#			3> ./valgrind-output; \
-#		echo $$? > ./exit-code.actual; \
-#		cmp ./output.actual.csv ./output.correct.csv && \
-#		cmp ./stderr.actual ./stderr.correct && \
-#		cmp ./exit-code.actual ./exit-code.correct
-#	touch $@
-
-#projects/suprem/%/success: bin/suprem \
-#	data/suprem.uk data/modelrc ./data/sup4gs.imp \
-#	projects/suprem/%/flags \
-#	projects/suprem/%/stdin \
-#	projects/suprem/%/stdout.correct \
-#	projects/suprem/%/stderr.correct \
-#	projects/suprem/%/str.correct \
-#	projects/suprem/%/exit-code.correct
-#	SUPREM=`realpath bin/suprem`; \
-#	export SUP4KEYFILE=`realpath data/suprem.uk`; \
-#	export SUP4MODELRC=`realpath data/modelrc`; \
-#	export SUP4IMPDATA=`realpath data/sup4gs.imp`; \
-#		cd projects/suprem/$*; \
-#		xargs -a ./flags -d \\n $$SUPREM ./stdin \
-#			1> ./stdout.actual \
-#			2> ./stderr.actual; \
-#		echo $$? > ./exit-code.actual; \
-#		diff ./stdout.actual ./stdout.correct && \
-#		diff ./stderr.actual ./stderr.correct && \
-#		diff ./str.actual ./str.correct && \
-#		diff ./exit-code.actual ./exit-code.correct
-#	touch $@
-
-#.scraper-systest-othervars.mk:
-#	echo '' > $@
-#	echo 'scraper_systests_success = $$(scraper_systests:/input.str=/success)' >> $@
-#	echo 'systest_scraper: $$(scraper_systests_success)' >> $@
-
 
 test: systest
 test: unittest
@@ -170,6 +119,7 @@ clean-successes:
 	find -path '*/success' -delete
 	
 clean:
+	rm -rf bin
 	find -name '*.o' -print -delete
 	find -path './*/*.mk' -print -delete
 	find -executable -a -type f -print -delete

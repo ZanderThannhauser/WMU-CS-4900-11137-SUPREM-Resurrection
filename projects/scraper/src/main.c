@@ -5,7 +5,7 @@
 #include "debug.h"
 
 #include "structs.h"
-#include "error.h"
+#include "error_codes.h"
 
 #include "process_args.h"
 #include "read_str.h"
@@ -23,23 +23,23 @@ int main(int argc, const char *argv[])
 	struct str_data str_data;
 		
 	error = process_args(argc, argv, &arg_data);
-
-    verpv(error);
-
+	
+	verpv(error);
+	
 	if (!error)
 		error = read_str(arg_data.str_path, &str_data);
-
-    verpv(error);
+	
+	verpv(error);
 	
 	if (!error)
 		error = write_csv(arg_data.csv_path, &str_data),
 		free_str_data(&str_data);
-
+	
 	switch (error)
 	{
 		case e_success:
 			break;
-
+		
 		case e_wrong_number_of_parameters:
 			fprintf(stderr, "Wrong number of paramerters\n");
 			break;
@@ -64,6 +64,18 @@ int main(int argc, const char *argv[])
 			assert(0);
 			break;
 	}
-
+	
 	return error;
 }
+
+
+
+
+
+
+
+
+
+
+
+
