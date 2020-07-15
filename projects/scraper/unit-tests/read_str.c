@@ -11,7 +11,6 @@
 
 void free_str_data(struct str_data *str_data)
 {
-	printf("str_data->rows == %p\n", str_data->rows);
 	free(str_data->rows);
 }
 
