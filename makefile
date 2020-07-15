@@ -166,12 +166,12 @@ format:
 	find -name '*.h' -exec 'clang-format' '-i' '-verbose' '{}' \;
 
 clean-successes:
-	find -name '*.actual' -exec 'rm' '-v' '{}' \;
-	find -path '*/success' -exec 'rm' '-v' '{}' \;
+	find -name '*.actual' -delete
+	find -path '*/success' -delete
 	
 clean:
 	find -name '*.o' -print -delete
-	find -name '*.mk' -print -delete
+	find -path './*/*.mk' -print -delete
 	find -executable -a -type f -print -delete
 
 
