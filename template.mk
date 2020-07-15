@@ -9,13 +9,15 @@ projectname_objs = $(projectname_src:.c=.o)
 projectname_dobjs = $(projectname_src:.c=.d.o)
 projectname_depends = $(projectname_src:.c=.mk)
 
+include $(projectname_depends)
+
 # <Program Linking/Building>
 
 bin/projectname: $(projectname_objs) | bin
-bin/projectname.d: $(projectname_dobjs) | bin
+	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
-#bin/%:
-#	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
+bin/projectname.d: $(projectname_dobjs) | bin
+	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
 # </Program Linking/Building>
 
@@ -33,10 +35,10 @@ projectname_systests_success = $(projectname_systests:/input=/success)
 
 projects/projectname/system-tests/%/success: bin/projectname \
 	projects/projectname/system-tests/%/input \
+	projects/projectname/system-tests/%/flags \
 	projects/projectname/system-tests/%/stdout.correct \
 	projects/projectname/system-tests/%/stderr.correct \
-	projects/projectname/system-tests/%/exit-code.correct \
-	projects/projectname/system-tests/%/flags
+	projects/projectname/system-tests/%/exit-code.correct
 	PROGRAM=`realpath bin/projectname`; \
 	export SUP4KEYFILE=`realpath data/suprem.uk`; \
 	export SUP4MODELRC=`realpath data/modelrc`; \
@@ -67,7 +69,9 @@ include projects/projectname/unittestlist.mk
 
 projectname_unittests_success = $(projectname_unittests:.c=.success)
 
-projectname_depends += $(projectname_unittests:.c=.mk)
+projectname_unittests_depends = $(projectname_unittests:.c=.mk)
+
+include $(projectname_unittests_depends)
 
 projects/projectname/unit-tests/%: \
 	projects/projectname/src/%.o \
@@ -85,15 +89,6 @@ unittest: unittest_projectname
 # </Unit Testing>
 
 # </Testing>
-
-include $(projectname_depends)
-
-
-
-
-
-
-
 
 
 
