@@ -17,7 +17,15 @@
 #include <assert.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef LINUX
 #include <sys/times.h>
+#endif
+
+#ifdef WINDOWS
+#include "../windows/struct-tms.h"
+#include "../windows/times.h"
+#endif
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"

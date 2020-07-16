@@ -7,10 +7,12 @@ include projects/projectname/srclist.mk
 
 projectname_objs = $(projectname_src:.c=.o)
 projectname_dobjs = $(projectname_src:.c=.d.o)
-projectname_winobjs = $(projectname_src:.c=.win.o)
 projectname_depends = $(projectname_src:.c=.mk)
+projectname_winobjs = $(projectname_src:.c=.win.o)
+projectname_winobjs_depends = $(projectname_src:.c=.win.mk)
 
 include $(projectname_depends)
+include $(projectname_winobjs_depends)
 
 # <Program Linking/Building>
 

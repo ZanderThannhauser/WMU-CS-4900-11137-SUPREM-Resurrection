@@ -24,6 +24,11 @@
 #include "erfit.h"
 /* end of includes*/
 
+#ifdef WINDOWS
+#include "../windows/erf.h"
+#include "../windows/erfc.h"
+#endif
+
 /*-----------------ERFC_GROWTH------------------------------------------
  * Implement Hee-Gook Lee's analytic approximation for bird's beaks.
  * Original: CSR June 85.

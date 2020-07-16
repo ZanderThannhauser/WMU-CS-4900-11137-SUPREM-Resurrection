@@ -33,6 +33,11 @@
 #include "do_1d.h"
 /* end of 2020 includes*/
 
+#ifdef WINDOWS
+#include "../windows/__compar_fn_t.h"
+#include "../windows/hypot.h"
+#endif
+
 #define ABS(x) (((x) > 0.0) ? (x) : (-(x)))
 
 /* A doubly linked list to represent the boundary */

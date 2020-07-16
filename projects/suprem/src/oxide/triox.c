@@ -33,6 +33,10 @@ void TrioxBCinit();
 void obfix(double Cord[NEL][2], double cord[NEL][2]);
 /* end of declarations*/
 
+#ifdef WINDOWS
+#include "../windows/hypot.h"
+#endif
+
 /************************************************************************
  *									*
  *	FEshape - 6 or 7-noded triangle shape functions			*

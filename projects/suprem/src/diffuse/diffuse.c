@@ -17,7 +17,15 @@
 
 #include <math.h>
 #include <stdio.h>
+
+#ifdef LINUX
 #include <sys/times.h>
+#endif
+
+#ifdef WINDOWS
+#include "../windows/struct-tms.h"
+#include "../windows/times.h"
+#endif
 
 #include "suprem/include/constant.h"
 #include "suprem/include/defect.h"

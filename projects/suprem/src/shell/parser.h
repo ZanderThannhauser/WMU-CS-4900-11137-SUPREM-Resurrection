@@ -100,13 +100,12 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 73 "projects/suprem/src/shell/parser.y" /* yacc.c:1909  */
+#line 76 "projects/suprem/src/shell/parser.y" /* yacc.c:1909  */
 
-    int ival;
-    char *sval;
-    
+	int ival;
+	char *sval;
 
-#line 110 "y.tab.h" /* yacc.c:1909  */
+#line 109 "y.tab.h" /* yacc.c:1909  */
 };
 
 typedef union YYSTYPE YYSTYPE;

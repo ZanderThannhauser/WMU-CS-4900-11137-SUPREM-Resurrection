@@ -13,6 +13,28 @@
 
 #include "suprem/misc/panic.h"
 
+#ifdef LINUX
+#include <sys/times.h>
+#endif
+
+#ifdef WINDOWS
+#include "../windows/struct-tms.h"
+#include "../windows/times.h"
+#endif
+
+#ifdef WINDOWS
+#include "../windows/__compar_fn_t.h"
+#endif
+
+#ifdef WINDOWS
+#include "../windows/erf.h"
+#include "../windows/erfc.h"
+#endif
+
+#ifdef WINDOWS
+#include "../windows/hypot.h"
+#endif
+
 src/
 
 ./include/

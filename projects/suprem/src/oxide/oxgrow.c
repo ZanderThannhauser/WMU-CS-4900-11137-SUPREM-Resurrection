@@ -16,7 +16,15 @@
 /*   oxgrow.c                Version 5.1     */
 
 #include <stdio.h>
+
+#ifdef LINUX
 #include <sys/times.h>
+#endif
+
+#ifdef WINDOWS
+#include "../windows/struct-tms.h"
+#include "../windows/times.h"
+#endif
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"

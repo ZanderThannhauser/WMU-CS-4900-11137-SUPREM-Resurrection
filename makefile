@@ -10,13 +10,14 @@ CPPFLAGS = -I . -I projects
 CPPFLAGS += -D DEVICE
 CPPFLAGS += -D NO_F77
 
-UBUNTU_CPPFLAGS = $(CPPFLAGS)
-UBUNTU_CPPFLAGS += -D _GNU_SOURCE
-UBUNTU_CPPFLAGS += -D _XOPEN_SOURCE=500
-UBUNTU_CPPFLAGS += -D UBUNTU
+LINUX_CPPFLAGS = $(CPPFLAGS)
+LINUX_CPPFLAGS += -D HAVE_ASINH
+LINUX_CPPFLAGS += -D _GNU_SOURCE
+LINUX_CPPFLAGS += -D _XOPEN_SOURCE=500
+LINUX_CPPFLAGS += -D LINUX
 
-WIN_CPPFLAGS = $(CPPFLAGS)
-WIN_CPPFLAGS += -D WINDOWS
+WINDOWS_CPPFLAGS = $(CPPFLAGS)
+WINDOWS_CPPFLAGS += -D WINDOWS
 
 CFLAGS += -std=c90
 
@@ -94,7 +95,10 @@ include projects/scraper/makefile
 include projects/suprem/makefile
 
 %.mk: %.c
-	$(CPP) -MM -MT $@ $(CPPFLAGS) -MF $@ $< || ($$EDITOR $< && false)
+	$(CPP) -MM -MT $@ $(LINUX_CPPFLAGS) -MF $@ $< || ($$EDITOR $< && false)
+
+%.win.mk: %.c
+	$(WIN_CC) -MM -MT $@ $(WINDOWS_CPPFLAGS) -MF $@ $< || ($$EDITOR $< && false)
 
 %.h %.c: %.y
 	$(YACC) $(YFLAGS) -d $<
@@ -102,13 +106,13 @@ include projects/suprem/makefile
 	mv y.tab.h $*.h
 
 %.o: %.c %.mk
-	$(CC) -c $(NDFLAGS) $(UBUNTU_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
+	$(CC) -c $(NDFLAGS) $(LINUX_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
 %.d.o: %.c %.mk
-	$(CC) -c $(DFLAGS) $(UBUNTU_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
+	$(CC) -c $(DFLAGS) $(LINUX_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
 %.win.o: %.c %.mk
-	$(WIN_CC) -c $(NDFLAGS) $(WIN_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
+	$(WIN_CC) -c $(NDFLAGS) $(WINDOWS_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
 .PHONY: test open-all-suprem format clean-successes clean
 .PHONY: test-keyread test-preprocessor test-scraper test-suprem

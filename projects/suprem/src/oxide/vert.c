@@ -17,6 +17,10 @@
 #include "suprem/include/impurity.h"
 #include "suprem/include/material.h"
 
+#ifdef WINDOWS
+#include "../windows/__compar_fn_t.h"
+#endif
+
 /* 2020 function includes:*/
 #include "../dbase/locate.h"
 #include "../oxide/oxide_vel.h"

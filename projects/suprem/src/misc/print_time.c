@@ -9,7 +9,15 @@
 /*   print_time.c                Version 5.1     */
 
 #include <stdio.h>
+
+#ifdef LINUX
 #include <sys/times.h>
+#endif
+
+#ifdef WINDOWS
+#include "../windows/struct-tms.h"
+#include "../windows/times.h"
+#endif
 
 #include "suprem/include/global.h"
 #include "suprem/include/shell.h"

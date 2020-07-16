@@ -35,6 +35,9 @@ void   plane_strain(double E, double v, double *matco);
 void   FE_oxbulk(double *matco, int mat, double *eps, double *sig);
 void   synch2(double arg, double *val, double *deriv);
 void   exp_l(double arg, double *f, double *dfda, double lambda);
+#ifndef HAVE_ASINH
+double asinh(double arg);
+#endif
 /* end of declarations*/
 
 /*
@@ -820,7 +823,7 @@ test_bulk(ex, ey, ez, dx, dy, dz) double ex, ey, ez, dx, dy, dz;
 #endif
 
 #ifndef HAVE_ASINH
-double asinh(arg) double arg;
+double asinh(double arg)
 {
 	double s, delta;
 

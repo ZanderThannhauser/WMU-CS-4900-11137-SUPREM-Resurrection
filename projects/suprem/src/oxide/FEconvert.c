@@ -34,6 +34,10 @@ void valencies();
 void FE2s4(int SavWhat);
 /* end of declarations*/
 
+#ifdef WINDOWS
+#include "../windows/hypot.h"
+#endif
+
 #define X 0
 #define Y 1
 #define D 2

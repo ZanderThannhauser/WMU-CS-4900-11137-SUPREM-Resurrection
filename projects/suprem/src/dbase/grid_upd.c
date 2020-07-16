@@ -43,6 +43,10 @@ int   CknMcLen(double dt, double sepTol, double obTol, double abstol);
 float BadObtuse(float x, float y, float x1, float y1, float x2, float y2);
 /* end of declarations*/
 
+#ifdef WINDOWS
+#include "../windows/hypot.h"
+#endif
+
 #define assert(x)                                                              \
 	if (!(x))                                                                  \
 	panic("assertion failed")

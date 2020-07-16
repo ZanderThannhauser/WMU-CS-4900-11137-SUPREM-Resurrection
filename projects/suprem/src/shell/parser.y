@@ -34,7 +34,11 @@
 #include <ctype.h>
 #include <unistd.h>
 #include <sys/types.h>
+#include <assert.h>
+
+#ifdef LINUX
 #include <sys/wait.h>
+#endif
 
 #include "./suprem/include/sysdep.h"
 
@@ -47,7 +51,6 @@ static int te[10];
 
 #include "./suprem/include/shell.h"
 #include "proc.h"
-
 
 /* 2020 includes: */
 #include "lex.h"
@@ -62,7 +65,7 @@ int yylex();
 int yyerror();
 /* end of declarations */
 
-#define YYRETURN(A)        { return(A); }
+#define YYRETURN(A) { return(A); }
 
 %}
 
@@ -71,9 +74,9 @@ int yyerror();
 
 /*declare a union of types for the lex return value*/
 %union  {
-    int ival;
-    char *sval;
-    }
+	int ival;
+	char *sval;
+}
 
 %token <sval> PARAMETER COMMAND NAME LIST
 %token <ival> SOURCE EOL ENDFILE QUIT BACK REDIRECT BANG HELP
@@ -202,12 +205,14 @@ line
 	    char *par = $2, *red = $3;
 	    int back = $4;
 	    char str[160];
+	    #ifdef LINUX
 	    int status, pid, w;
-
+	    #endif
+	
 	    do_echo();
-
+	
 	    str[0] = '\0';
-
+	
 	    /*do no take the action if storing*/
 	    if (depth == -1) {
 		/*if no command give a shell*/
@@ -217,27 +222,32 @@ line
 		    strcpy(str, par);
 		    free(par);
 		    }
-
+		
 		/*if a redirect add that on*/
 		if (red != NULL) {
 		    strcat(str, red);
 		    free(red);
 		    }
-
+		
 		/*add background on*/
 		if (back & BACKGROUND)
 		    strcat(str, " & ");
-
+		
+		#ifdef LINUX
 		/*exec a shell to handle the request*/
 		if ((pid = vfork()) == 0) {
 		    if (execl("/bin/sh", "sh", "-c", str, NULL) == -1)
 			printf("error number %d\n", 127);
 		    _exit(127);
 		}
-
+		
 		/*wait for the process to finish*/
 		while ((w = wait(&status)) != pid && w != -1);
-
+		#endif
+		
+		#ifdef WINDOWS
+		assert(!"TODO");
+		#endif
 	    }
 	    if (depth == -1)
 		YYRETURN( PROMPT );

@@ -16,13 +16,17 @@
  *************************************************************************/
 /*   do_action.c                Version 5.1     */
 
+#include <assert.h>
 #include <setjmp.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
 #include <sys/types.h>
+
+#ifdef LINUX
 #include <sys/wait.h>
+#endif
 
 #include "suprem/include/sysdep.h"
 
@@ -106,6 +110,7 @@ void do_source(char *file,  /*the file to be sourced*/
 		in_file = tsrc;
 		if (back)
 		{
+			#ifdef LINUX
 			if (fork() == 0)
 			{
 				/*save this location*/
@@ -113,6 +118,11 @@ void do_source(char *file,  /*the file to be sourced*/
 					;
 				exit(0);
 			}
+			#endif
+			
+			#ifdef WINDOWS
+			assert(!"TODO");
+			#endif
 		}
 		else
 		{
@@ -175,25 +185,31 @@ void do_string(char *instr, char *redir, int back)
 	/*if background job, handle it*/
 	if (back)
 	{
+		#ifdef LINUX
 		if (fork() == 0)
 		{
-
+			
 			/*make sure there is enough space*/
 			if ((len = (strlen(instr) + 3)) > supbln)
 			{
 				supbln = len;
 				supbuf = sralloc(char, len * sizeof(int), supbuf);
 			}
-
+			
 			/*copy the string int line size pieces into the buffer*/
 			strcpy(supbuf, instr);
 			strcat(supbuf, "\n\001");
 			supbpt = 0;
-
+			
 			/*parse it*/
 			while (yyparse() != -1)
 				;
 		}
+		#endif
+		
+		#if WINDOWS
+		assert(!"TODO");
+		#endif
 	}
 	else
 	{
@@ -273,6 +289,7 @@ void do_command(char *name, char *param, int intr, char *file, int back)
 
 		if (back)
 		{
+			#ifdef LINUX
 			/*background the process*/
 			if (fork() == 0)
 			{
@@ -280,6 +297,11 @@ void do_command(char *name, char *param, int intr, char *file, int back)
 				do_exec(param, FALSE, index, noexecute);
 				exit(0);
 			}
+			#endif
+			
+			#if WINDOWS
+			assert(!"TODO");
+			#endif
 		}
 		else
 			do_exec(param, intr, index, noexecute);
@@ -294,9 +316,12 @@ void do_command(char *name, char *param, int intr, char *file, int back)
 	{
 		char *sh = (char *)getenv("SHELL");
 		char *str;
-		int   pid, w;
-		int   status;
-
+		
+		#if LINUX
+		int pid, w;
+		int status;
+		#endif
+		
 		if (file != NULL)
 			if (param != NULL)
 				str = malloc(strlen(file) + strlen(name) + strlen(param) + 20);
@@ -306,25 +331,26 @@ void do_command(char *name, char *param, int intr, char *file, int back)
 			str = malloc(strlen(name) + strlen(param) + 20);
 		else
 			str = malloc(strlen(name) + 20);
-
+		
 		if (sh == NULL)
 			sh = "/bin/sh";
-
+		
 		strcpy(str, name);
 		if (param != NULL)
 			strcat(str, param);
-
+		
 		/*if a redirect add that on*/
 		if (file != NULL)
 		{
 			strcat(str, ">");
 			strcat(str, file);
 		}
-
+		
 		/*add background on*/
 		if (back)
 			strcat(str, "&");
-
+		
+		#ifdef LINUX
 		/*exec a shell to handle the request*/
 		if ((pid = vfork()) == 0)
 		{
@@ -336,6 +362,11 @@ void do_command(char *name, char *param, int intr, char *file, int back)
 		/*wait for the process to finish*/
 		while ((w = wait(&status)) != pid && w != -1)
 			;
+		#endif
+		
+		#if WINDOWS
+		assert(!"TODO");
+		#endif
 	}
 	EXIT;
 }

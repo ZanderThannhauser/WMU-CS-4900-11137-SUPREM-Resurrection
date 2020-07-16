@@ -25,7 +25,12 @@ EXTERN char *IMP_FILE;
 #define HZ 60
 #endif
 
-#ifdef UBUNTU
+#ifdef WINDOWS
+#define PAGER "more"
+#define index strchr
+#endif
+
+#ifdef LINUX
 #define PAGER "more"
 #define index strchr
 #endif
