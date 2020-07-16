@@ -20,3 +20,4 @@ projects/suprem/makefile
 *.success
 success
 winsuccess
+winpack.zip

@@ -123,6 +123,15 @@ include projects/suprem/makefile
 .PHONY: test open-all-suprem format clean-successes clean
 .PHONY: test-keyread test-preprocessor test-scraper test-suprem
 
+winpack.zip: bin/suprem.exe \
+	data/modelrc \
+	data/sup4gs.imp \
+	data/suprem.uk \
+	examples/durban1/input \
+	examples/durban1/stdout.correct \
+	examples/durban1/str.correct
+	zip -r $@ $^
+
 test: systest
 test: unittest
 
