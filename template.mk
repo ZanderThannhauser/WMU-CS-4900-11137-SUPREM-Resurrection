@@ -7,6 +7,7 @@ include projects/projectname/srclist.mk
 
 projectname_objs = $(projectname_src:.c=.o)
 projectname_dobjs = $(projectname_src:.c=.d.o)
+projectname_winobjs = $(projectname_src:.c=.win.o)
 projectname_depends = $(projectname_src:.c=.mk)
 
 include $(projectname_depends)
@@ -18,6 +19,9 @@ bin/projectname: $(projectname_objs) | bin
 
 bin/projectname.d: $(projectname_dobjs) | bin
 	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
+
+bin/projectname.exe: $(projectname_winobjs) | bin
+	$(WIN_CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
 
 # </Program Linking/Building>
 

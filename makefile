@@ -3,17 +3,20 @@
 default: bin/suprem
 
 CC = gcc
+WIN_CC = x86_64-w64-mingw32-gcc-win32
 
 CPPFLAGS = -I . -I projects
 
 CPPFLAGS += -D DEVICE
 CPPFLAGS += -D NO_F77
 
-CPPFLAGS += -D _GNU_SOURCE
-CPPFLAGS += -D _XOPEN_SOURCE=500 # this brings in the needed stdlib functions
+UBUNTU_CPPFLAGS = $(CPPFLAGS)
+UBUNTU_CPPFLAGS += -D _GNU_SOURCE
+UBUNTU_CPPFLAGS += -D _XOPEN_SOURCE=500
+UBUNTU_CPPFLAGS += -D UBUNTU
 
-# Define which platform we're using. I made up a new one!
-CPPFLAGS += -D UBUNTU
+WIN_CPPFLAGS = $(CPPFLAGS)
+WIN_CPPFLAGS += -D WINDOWS
 
 CFLAGS += -std=c90
 
@@ -99,10 +102,13 @@ include projects/suprem/makefile
 	mv y.tab.h $*.h
 
 %.o: %.c %.mk
-	$(CC) -c $(NDFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
+	$(CC) -c $(NDFLAGS) $(UBUNTU_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
 %.d.o: %.c %.mk
-	$(CC) -c $(DFLAGS) $(CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
+	$(CC) -c $(DFLAGS) $(UBUNTU_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
+
+%.win.o: %.c %.mk
+	$(WIN_CC) -c $(NDFLAGS) $(WIN_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
 .PHONY: test open-all-suprem format clean-successes clean
 .PHONY: test-keyread test-preprocessor test-scraper test-suprem
