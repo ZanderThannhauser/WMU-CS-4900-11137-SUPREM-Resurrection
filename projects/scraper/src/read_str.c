@@ -8,6 +8,8 @@
 #include "windows/getline.h"
 #endif
 
+#include "debug.h"
+
 #include "error_codes.h"
 #include "structs.h"
 #include "free_str_data.h"
@@ -23,6 +25,7 @@ int read_str(const char* str_path, struct str_data *str_data)
 	struct str_data sd = {0, NULL};
 	unsigned long capacity = 0;
 	FILE* str_file = fopen(str_path, "r");
+	ENTER;
 	
 	if (!str_file)
 		error = e_failed_to_open_str_file;
@@ -30,6 +33,7 @@ int read_str(const char* str_path, struct str_data *str_data)
 	while (!error && getline(&line, &len, str_file) > 0)
 	{
 		line[strlen(line) - 1] = '\0';
+		verpvs(line);
 		
 		switch (line[0])
 		{
@@ -77,7 +81,8 @@ int read_str(const char* str_path, struct str_data *str_data)
 		fclose(str_file);
 	
 	free(line);
-
+	
+	EXIT;
 	return error;
 }
 

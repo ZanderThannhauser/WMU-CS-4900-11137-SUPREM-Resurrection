@@ -35,7 +35,6 @@
 
 #ifdef WINDOWS
 #include "../windows/__compar_fn_t.h"
-#include "../windows/hypot.h"
 #endif
 
 #define ABS(x) (((x) > 0.0) ? (x) : (-(x)))

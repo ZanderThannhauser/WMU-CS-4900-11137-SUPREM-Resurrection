@@ -22,6 +22,10 @@
 #include "suprem/include/dbaccess.h"
 #include "suprem/include/global.h"
 
+#ifdef WINDOWS
+#include "../windows/__compar_fn_t.h"
+#endif
+
 /* 2020 includes:*/
 #include "../refine/tridata.h"
 #include "../refine/rect_tri.h"

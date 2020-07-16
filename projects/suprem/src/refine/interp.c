@@ -18,7 +18,15 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+
+#ifdef LINUX
 #include <sys/times.h>
+#endif
+
+#ifdef WINDOWS
+#include "../windows/struct-tms.h"
+#include "../windows/times.h"
+#endif
 
 #include "suprem/include/refine.h"
 #include "suprem/include/skel.h"

@@ -42,10 +42,6 @@ int exposed(int in);
 int SplitNode(int aNode, float *v, int mSil);
 /* end of declarations*/
 
-#ifdef WINDOWS
-#include "../windows/hypot.h"
-#endif
-
 #ifdef CONVEX
 #define hypot(a, b) sqrt((a) * (a) + (b) * (b))
 #endif

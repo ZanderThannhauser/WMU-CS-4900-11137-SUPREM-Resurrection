@@ -21,7 +21,8 @@ int main(int argc, const char *argv[])
 	int error = 0;
 	struct arg_data arg_data;
 	struct str_data str_data;
-		
+	ENTER;
+	
 	error = process_args(argc, argv, &arg_data);
 	
 	verpv(error);
@@ -65,6 +66,7 @@ int main(int argc, const char *argv[])
 			break;
 	}
 	
+	EXIT;
 	return error;
 }
 

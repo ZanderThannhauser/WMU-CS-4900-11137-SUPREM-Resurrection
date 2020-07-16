@@ -12,16 +12,22 @@ extern int debugging_depth;
 
 	#define D_2020(...) __VA_ARGS__
 	#define ND_2020(...)
-
-	#define TODO \
-	{\
-		printf("%*sTODO: File: %s, Line: %i\n", debugging_depth, "", \
-			__FILE__, __LINE__);\
-		char buffer[100];\
-		sprintf(buffer, "+%i", __LINE__);\
-		execlp("code", "code", __FILE__, buffer, NULL);\
-		assert(0);\
-	}
+	
+	#ifdef LINUX
+		#define TODO \
+		{\
+			printf("%*sTODO: File: %s, Line: %i\n", debugging_depth, "", \
+				__FILE__, __LINE__);\
+			char buffer[100];\
+			sprintf(buffer, "+%i", __LINE__);\
+			execlp("code", "code", __FILE__, buffer, NULL);\
+			assert(0);\
+		}
+	#endif
+	
+	#ifdef WINDOWS
+		#define TODO assert(!"TODO");
+	#endif
 	
 	#define CHECK TODO
 	#define NOPE CHECK
@@ -59,6 +65,9 @@ extern int debugging_depth;
 	D_2020(printf("%*s" #b " == %s\n", debugging_depth, "",                    \
 			 (b) ? "true" : "false"))
 
+#define verpvfs(fs, x)                                                           \
+	D_2020(printf("%*s" #x " %" fs " == " fs "\n", debugging_depth, "", x))
+
 #define verpvc(ch)                                                             \
 	D_2020(printf("%*s" #ch " == '%c'\n", debugging_depth, "", ch))
 
@@ -69,21 +78,43 @@ extern int debugging_depth;
 	D_2020(printf("%*s" #str " == \"%.*s\"\n", debugging_depth, "",            \
 			 (int)(len), str))
 
-#define print(val)                                                             \
+#define print(val)                                                            \
 	printf("%*s" #val " == ", debugging_depth, ""),                       \
-		printf((_Generic(val, char                                             \
-						 : "%%c: %i\n", signed char                            \
-						 : "%%uc: %u\n", unsigned char                         \
-						 : "%%uc: %u\n", signed short                          \
-						 : "%%ss: %i\n", unsigned short                        \
-						 : "%%us: %u\n", signed int                            \
-						 : "%%si: %i\n", unsigned int                          \
-						 : "%%ui: %u\n", signed long                           \
-						 : "%%sl: %li\n", unsigned long                        \
-						 : "%%ul: %lu\n", float                                \
-						 : "%%f: %f\n", double                                 \
-						 : "%%lf: %lf\n", default                              \
-						 : "%%p: %p\n")), val)                                 \
+		printf((_Generic(val,                                         \
+			char : "%%c: %i\n",                                   \
+			signed char : "%%uc: %u\n",                           \
+			unsigned char : "%%uc: %u\n",                         \
+			signed short : "%%ss: %i\n",                          \
+			unsigned short : "%%us: %u\n",                        \
+			signed int  : "%%si: %i\n",                           \
+			unsigned int : "%%ui: %u\n",                          \
+			signed long : "%%sl: %li\n",                          \
+			unsigned long : "%%ul: %lu\n",                        \
+			float : "%%f: %f\n",                                  \
+			double : "%%lf: %lf\n",                               \
+			default : "%%p: %p\n")),                              \
+			val)                                                  \
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

@@ -25,6 +25,7 @@
 #include "suprem/include/sysdep.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../misc/reader.h"
 #include "../shell/proc.h"
 #include "read.h"
@@ -43,25 +44,40 @@
  ************************************************************************/
 int read_ukfile(char *name)
 {
+	ENTER;
+	
+	verpvs(name);
+	
 	FILE *fd;
 	char *file;
 	int   status;
 	int   i, j;
-
+	
 	/*try several places to get the key file name*/
 	if ((file = (char *)getenv("KEYFILE")) == NULL)
 		/*use the system wide one*/
 		file = name;
-
+	
+	verpvs(file);
+	
+	#ifdef LINUX
 	fd = fopen(file, "r");
+	#endif
+	
+	#ifdef WINDOWS
+	fd = fopen(file, "rb");
+	#endif
+	
+	verpv(fd);
+	
 	if (fd == NULL)
 	{
 		fprintf(stderr, "where is the unformatted key file???\n");
 		return (-1);
 	}
-
+	
 	status = read_list(cards - 1, fd);
-
+	
 	/*now match up the command names with the card names*/
 	for (i = 0; cards[i] && strlen(cards[i]->name) != 0; i++)
 	{
@@ -71,7 +87,23 @@ int read_ukfile(char *name)
 		else
 			fprintf(stderr, "no command defined for name %s\n", cards[i]->name);
 	}
-
+	
+	verpv(status);
 	fclose(fd);
+	EXIT;
 	return (status);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -19,3 +19,4 @@ projects/suprem/makefile
 *.actual
 *.success
 success
+winsuccess

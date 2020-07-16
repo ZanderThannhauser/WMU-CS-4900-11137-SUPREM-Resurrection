@@ -1,9 +1,7 @@
 
 /*stolen from /usr/include/sys/times.h on my Linux machine:*/
 
-typedef long int __clock_t;
-
-typedef __clock_t clock_t;
+#include "clock_t.h"
 
 struct tms
 {

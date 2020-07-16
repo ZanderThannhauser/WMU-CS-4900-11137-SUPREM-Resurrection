@@ -5,6 +5,8 @@ default: bin/suprem
 CC = gcc
 WIN_CC = x86_64-w64-mingw32-gcc-win32
 
+SHELL=/bin/bash
+
 CPPFLAGS = -I . -I projects
 
 CPPFLAGS += -D DEVICE
@@ -19,7 +21,8 @@ LINUX_CPPFLAGS += -D LINUX
 WINDOWS_CPPFLAGS = $(CPPFLAGS)
 WINDOWS_CPPFLAGS += -D WINDOWS
 
-CFLAGS += -std=c90
+CFLAGS += -std=c99 # We updated the source to use c99
+#CFLAGS += -std=c90 # Original SUPREM was written in c90, I think.
 
 CFLAGS += -Wall
 CFLAGS += -Werror
@@ -31,36 +34,36 @@ CFLAGS += -g
 NDFLAGS += -O2
 
 DFLAGS += -Wno-unused-but-set-variable
-DFLAGS += -D DEBUGGING_2020
+DFLAGS += -D DEBUGGING_2020=1
 
 LDLIBS += -lm
 
-#ARGS += ./projects/suprem/system-tests/durban1/stdin
-#ARGS += ./projects/suprem/system-tests/exam1/stdin
-#ARGS += ./projects/suprem/system-tests/exam2/stdin
-#ARGS += ./projects/suprem/system-tests/exam3/stdin
-#ARGS += ./projects/suprem/system-tests/exam4/stdin
-#ARGS += ./projects/suprem/system-tests/exam5/stdin
-#ARGS += ./projects/suprem/system-tests/exam6/stdin
-#ARGS += ./projects/suprem/system-tests/exam7/stdin
-#ARGS += ./projects/suprem/system-tests/exam8/stdin
-#ARGS += ./projects/suprem/system-tests/exam9/stdin
-#ARGS += ./projects/suprem/system-tests/exam10/stdin
-#ARGS += ./projects/suprem/system-tests/exam11/stdin
-#ARGS += ./projects/suprem/system-tests/exam12/stdin
-#ARGS += ./projects/suprem/system-tests/exam13/stdin
-#ARGS += ./projects/suprem/system-tests/exam14/stdin
-#ARGS += ./projects/suprem/system-tests/exam15/stdin
-#ARGS += ./projects/suprem/system-tests/exam16/stdin
-#ARGS += ./projects/suprem/system-tests/exam17/stdin
-#ARGS += ./projects/suprem/system-tests/gaas/stdin
-#ARGS += ./projects/suprem/system-tests/gaas/stdin
-#ARGS += ./projects/suprem/system-tests/gaas/stdin
-#ARGS += ./projects/suprem/system-tests/gaas/stdin
-#ARGS += ./projects/suprem/system-tests/gaas/stdin
-#ARGS += ./projects/suprem/system-tests/gaas/stdin
-#ARGS += ./projects/suprem/system-tests/gaas/stdin
-#ARGS += ./projects/suprem/system-tests/gaas/stdin
+ARGS += ./projects/suprem/system-tests/durban1/input
+#ARGS += ./projects/suprem/system-tests/exam1/input
+#ARGS += ./projects/suprem/system-tests/exam2/input
+#ARGS += ./projects/suprem/system-tests/exam3/input
+#ARGS += ./projects/suprem/system-tests/exam4/input
+#ARGS += ./projects/suprem/system-tests/exam5/input
+#ARGS += ./projects/suprem/system-tests/exam6/input
+#ARGS += ./projects/suprem/system-tests/exam7/input
+#ARGS += ./projects/suprem/system-tests/exam8/input
+#ARGS += ./projects/suprem/system-tests/exam9/input
+#ARGS += ./projects/suprem/system-tests/exam10/input
+#ARGS += ./projects/suprem/system-tests/exam11/input
+#ARGS += ./projects/suprem/system-tests/exam12/input
+#ARGS += ./projects/suprem/system-tests/exam13/input
+#ARGS += ./projects/suprem/system-tests/exam14/input
+#ARGS += ./projects/suprem/system-tests/exam15/input
+#ARGS += ./projects/suprem/system-tests/exam16/input
+#ARGS += ./projects/suprem/system-tests/exam17/input
+#ARGS += ./projects/suprem/system-tests/gaas/input
+#ARGS += ./projects/suprem/system-tests/gaas/input
+#ARGS += ./projects/suprem/system-tests/gaas/input
+#ARGS += ./projects/suprem/system-tests/gaas/input
+#ARGS += ./projects/suprem/system-tests/gaas/input
+#ARGS += ./projects/suprem/system-tests/gaas/input
+#ARGS += ./projects/suprem/system-tests/gaas/input
+#ARGS += ./projects/suprem/system-tests/gaas/input
 
 run: bin/suprem data/suprem.uk
 	./bin/suprem $(ARGS)
@@ -113,6 +116,9 @@ include projects/suprem/makefile
 
 %.win.o: %.c %.mk
 	$(WIN_CC) -c $(NDFLAGS) $(WINDOWS_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
+
+%.d.win.o: %.c %.mk
+	$(WIN_CC) -c $(DFLAGS) $(WINDOWS_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
 .PHONY: test open-all-suprem format clean-successes clean
 .PHONY: test-keyread test-preprocessor test-scraper test-suprem

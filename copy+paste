@@ -26,15 +26,6 @@
 #include "../windows/__compar_fn_t.h"
 #endif
 
-#ifdef WINDOWS
-#include "../windows/erf.h"
-#include "../windows/erfc.h"
-#endif
-
-#ifdef WINDOWS
-#include "../windows/hypot.h"
-#endif
-
 src/
 
 ./include/

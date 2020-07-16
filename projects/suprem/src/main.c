@@ -108,8 +108,8 @@ int debugging_depth;
 void mode_cmd(char *par, struct par_str *param)
 {
 	ENTER;
-#define CHOSEN(x) (is_specified(param, x) && get_bool(param, x))
-
+	#define CHOSEN(x) (is_specified(param, x) && get_bool(param, x))
+	
 	/*how much barfola the user wants*/
 	if (CHOSEN("one.dim"))
 	{
@@ -183,13 +183,17 @@ int main(int argc, char **argv)
 {
 	int i;
 	char dot_name[80], *t;
+	ENTER;
 	
 	/*line at a time buffering*/
 #ifdef BSD
 	setlinebuf(stdout);
 	setlinebuf(stderr);
 #endif
-	
+
+#ifdef WINDOWS
+	_set_output_format(_TWO_DIGIT_EXPONENT);
+#endif
 	/*initialize the file pointers, which are defined on the compile line*/
 	if ((t = (char *)getenv("SUP4MANDIR")))
 		MANDIR = t;
@@ -220,6 +224,8 @@ int main(int argc, char **argv)
 	parser_boot(KEYFILE, "SUPREM4 ");
 	verbose = V_CHAT;
 	
+	HERE;
+	
 	/*initialize the diffusion co_efficients and routine pointers*/
 	diffuse_init();
 #ifdef DEVICE
@@ -227,6 +233,8 @@ int main(int argc, char **argv)
 #endif
 	vxmin = vymin = 0.0;
 	vxmax = vymax = 1.0;
+	
+	HERE;
 	
 	/*some grid initialization*/
 	rect_boot();
@@ -239,12 +247,23 @@ int main(int argc, char **argv)
 	
 	/*read the modelrc file*/
 	do_source(MODELFILE, NULL, FALSE, /*report errors*/ TRUE);
+	HERE;
 	
 	/*read the .supremrc file*/
+	verpvs(getenv("HOME"));
+	verpvs(getenv("UserProfile"));
+	
+	#ifdef LINUX
 	strcpy(dot_name, (char *)getenv("HOME"));
+	#endif
+	#ifdef WINDOWS
+	strcpy(dot_name, (char *)getenv("UserProfile"));
+	#endif
 	strcat(dot_name, "/.supremrc");
 	do_source(dot_name, NULL, FALSE, /*report errors*/ FALSE);
 	do_source(".supremrc", NULL, FALSE, /*report errors*/ FALSE);
+	
+	HERE;
 	
 	/*do any command line files*/
 	for (i = 1; i < argc; i++)
@@ -260,6 +279,7 @@ int main(int argc, char **argv)
 	if (cpufile != NULL)
 		fclose(cpufile);
 	
+	EXIT;
 	return 0;
 }
 

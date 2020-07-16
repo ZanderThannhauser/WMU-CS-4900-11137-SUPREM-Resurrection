@@ -125,7 +125,7 @@ symbolic allocation 13920 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       1965.6       0       0       4.4714     11
-   2       5.413e-12    0       0       4.4714     11
+   2       6.1555e-12   0       0       4.4714     11
 Mesh statistics during update of diffusion:
     Points =   67	Nodes =  116	
 symbolic allocation 13920 bytes
@@ -133,15 +133,15 @@ symbolic allocation 13920 bytes
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
            error        time    time    norm
    1       0.0065915    0       0       4.4841     11
-   2       4.9278e-14   0       0       4.4841     11
+   2       4.3859e-14   0       0       4.4841     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       1.8356e-14   0       0       4.4841     11
+   1       1.9101e-14   0       0       4.4841     11
 Silicon consumed   -0.00008 oxide grown    0.00002 (-0.315)
 change in oxide area  0.06025%
 change in nitride area -0.00390%
 change in silicon area  0.00382%
-    new timestep is 223.372 increase 2233.72 [Ktd 1.17e+05 Kto 2.23e+03]
+    new timestep is 223.372 increase 2233.72 [Ktd 1.24e+05 Kto 2.23e+03]
 --------------------
 elapsed time = 0.1
 solving at update = 223.372
@@ -154,7 +154,7 @@ symbolic allocation 13920 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       18.292       0       0       4.5376     11
-   2       2.5154e-14   0       0       4.5376     11
+   2       3.3284e-14   0       0       4.5376     11
 Mesh statistics during update of diffusion:
     Points =   67	Nodes =  116	
 symbolic allocation 13920 bytes
@@ -162,15 +162,15 @@ symbolic allocation 13920 bytes
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
            error        time    time    norm
    1       11.102       0       0       4.5543     11
-   2       5.3795e-14   0       0       4.5543     11
+   2       5.4455e-14   0       0       4.5543     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       3.0209e-14   0       0       4.5543     11
+   1       6.2174e-14   0       0       4.5543     11
 Silicon consumed   -0.07843 oxide grown    0.04643 (-0.592)
 change in oxide area 115.94014%
 change in nitride area  0.05076%
 change in silicon area  3.91867%
-    new timestep is 223.372 increase 1 [Ktd 1.05e+05 Kto 1.00e+00]
+    new timestep is 223.372 increase 1 [Ktd 9.15e+04 Kto 1.00e+00]
 --------------------
 elapsed time = 223.472
 high water mark=2215 [0.875840 *asize]  loff=1416
@@ -269,7 +269,7 @@ symbolic allocation 13920 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       3579         0       0       4.4475     11
-   2       3.3873e-12   0       0       4.4475     11
+   2       3.596e-12    0       0       4.4475     11
 Mesh statistics during update of diffusion:
     Points =   67	Nodes =  116	
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
@@ -278,12 +278,12 @@ Mesh statistics during update of diffusion:
    2       5.2734e-08   0       0       4.6538     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       3.7156e-13   0       0       4.6538     11
+   1       3.7356e-13   0       0       4.6538     11
 Silicon consumed   -0.03321 oxide grown    0.03990 (-1.201)
 change in oxide area 46.14048%
 change in nitride area  0.04798%
 change in silicon area  1.59676%
-    new timestep is 266.6 increase 1.19352 [Ktd 5.46e+04 Kto 1.19e+00]
+    new timestep is 266.6 increase 1.19352 [Ktd 5.48e+04 Kto 1.19e+00]
 --------------------
 elapsed time = 446.844
 high water mark=2215 [0.875840 *asize]  loff=1416
@@ -339,7 +339,7 @@ symbolic allocation 14880 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       3175.2       0       0       4.6442     11
-   2       1.311e-12    0       0       4.6442     11
+   2       1.5241e-12   0       0       4.6442     11
 Mesh statistics during update of diffusion:
     Points =   75	Nodes =  124	
 symbolic allocation 14880 bytes
@@ -347,15 +347,15 @@ symbolic allocation 14880 bytes
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
            error        time    time    norm
    1       14.337       0       0       4.5737     11
-   2       5.7156e-14   0       0       4.5737     11
+   2       3.4006e-14   0       0       4.5737     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       5.3164e-14   0       0       4.5737     11
+   1       1.2405e-14   0       0       4.5737     11
 Silicon consumed   -0.03946 oxide grown    0.04201 (-1.065)
 change in oxide area 33.24502%
 change in nitride area  0.11138%
 change in silicon area  1.86752%
-    new timestep is 304.299 increase 1.14141 [Ktd 9.68e+04 Kto 1.14e+00]
+    new timestep is 304.299 increase 1.14141 [Ktd 1.37e+05 Kto 1.14e+00]
 --------------------
 elapsed time = 713.443
 high water mark=2759 [0.884578 *asize]  loff=1831
@@ -396,7 +396,7 @@ symbolic allocation 14880 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       2950.3       0       0       4.7148     11
-   2       2.6815e-12   0       0       4.7148     11
+   2       1.8205e-12   0       0       4.7148     11
 Mesh statistics during update of diffusion:
     Points =   75	Nodes =  124	
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
@@ -405,12 +405,12 @@ Mesh statistics during update of diffusion:
    2       8.3803e-08   0       0       4.6671     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       9.4648e-14   0       0       4.6671     11
+   1       7.8719e-14   0       0       4.6671     11
 Silicon consumed   -0.06419 oxide grown    0.04115 (-0.641)
 change in oxide area 24.44039%
 change in nitride area  0.05166%
 change in silicon area  2.98250%
-    new timestep is 341.322 increase 1.12167 [Ktd 7.00e+04 Kto 1.12e+00]
+    new timestep is 341.322 increase 1.12167 [Ktd 7.45e+04 Kto 1.12e+00]
 --------------------
 elapsed time = 1017.74
 high water mark=2759 [0.884578 *asize]  loff=1835
@@ -462,7 +462,7 @@ symbolic allocation 14880 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       1104.9       0       0       4.5122     11
-   2       9.2935e-13   0       0       4.5122     11
+   2       1.0651e-12   0       0       4.5122     11
 Mesh statistics during update of diffusion:
     Points =   75	Nodes =  124	
 symbolic allocation 14880 bytes
@@ -470,15 +470,15 @@ symbolic allocation 14880 bytes
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
            error        time    time    norm
    1       13.288       0       0       4.555      11
-   2       7.9174e-14   0       0       4.555      11
+   2       2.8701e-14   0       0       4.555      11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       1.8055e-14   0       0       4.555      11
+   1       3.2063e-14   0       0       4.555      11
 Silicon consumed   -0.00367 oxide grown    0.04160 (-11.346)
 change in oxide area 19.85401%
 change in nitride area  0.08774%
 change in silicon area  0.16540%
-    new timestep is 381.367 increase 1.11732 [Ktd 1.31e+05 Kto 1.12e+00]
+    new timestep is 381.367 increase 1.11732 [Ktd 1.11e+05 Kto 1.12e+00]
 --------------------
 elapsed time = 1359.06
 high water mark=2759 [0.884578 *asize]  loff=1842
@@ -523,7 +523,7 @@ symbolic allocation 15960 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       142.42       0       0       4.6519     11
-   2       3.3979e-13   0       0       4.6519     11
+   2       3.4119e-13   0       0       4.6519     11
 Mesh statistics during update of diffusion:
     Points =   84	Nodes =  133	
 symbolic allocation 15960 bytes
@@ -531,15 +531,15 @@ symbolic allocation 15960 bytes
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
            error        time    time    norm
    1       11.853       0       0       4.4422     11
-   2       2.5219e-14   0       0       4.4422     11
+   2       3.6499e-14   0       0       4.4422     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       1.0979e-14   0       0       4.4422     11
+   1       2.3802e-14   0       0       4.4422     11
 Silicon consumed   -0.07152 oxide grown    0.04496 (-0.629)
 change in oxide area 17.88426%
 change in nitride area  0.10072%
 change in silicon area  3.22151%
-    new timestep is 418.963 increase 1.09858 [Ktd 1.34e+05 Kto 1.10e+00]
+    new timestep is 418.963 increase 1.09858 [Ktd 1.28e+05 Kto 1.10e+00]
 --------------------
 elapsed time = 1740.43
 high water mark=3375 [0.891207 *asize]  loff=2411
@@ -594,7 +594,7 @@ symbolic allocation 16080 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       100          0       0       4.6891     11
-   2       2.1769e-13   0       0       4.6891     11
+   2       2.166e-13    0       0       4.6891     11
 Mesh statistics during update of diffusion:
     Points =   85	Nodes =  134	
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
@@ -603,12 +603,12 @@ Mesh statistics during update of diffusion:
    2       4.4961e-08   0       0       4.5305     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       4.6517e-13   0       0       4.5305     11
+   1       4.6258e-13   0       0       4.5305     11
 Silicon consumed   -0.01743 oxide grown    0.04453 (-2.555)
 change in oxide area 15.01289%
 change in nitride area  0.13782%
 change in silicon area  0.76059%
-    new timestep is 460.966 increase 1.10025 [Ktd 4.87e+04 Kto 1.10e+00]
+    new timestep is 460.966 increase 1.10025 [Ktd 4.81e+04 Kto 1.10e+00]
 --------------------
 elapsed time = 2159.4
 high water mark=3447 [0.891850 *asize]  loff=2445
@@ -650,7 +650,7 @@ Mesh statistics during update of diffusion:
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       974.2        0       0       4.6081     11
-   2       2.4139e-12   0       0       4.6081     11
+   2       2.5633e-12   0       0       4.6081     11
 Mesh statistics during update of diffusion:
     Points =   86	Nodes =  135	
 symbolic allocation 16200 bytes
@@ -658,15 +658,15 @@ symbolic allocation 16200 bytes
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
            error        time    time    norm
    1       13.684       0       0       4.7613     11
-   2       1.8731e-14   0       0       4.7613     11
+   2       5.6901e-14   0       0       4.7613     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       3.2285e-14   0       0       4.7613     11
+   1       3.7497e-14   0       0       4.7613     11
 Silicon consumed   -0.02739 oxide grown    0.04801 (-1.753)
 change in oxide area 14.07002%
 change in nitride area  0.18416%
 change in silicon area  1.18603%
-    new timestep is 496.204 increase 1.07644 [Ktd 1.10e+05 Kto 1.08e+00]
+    new timestep is 496.204 increase 1.07644 [Ktd 1.17e+05 Kto 1.08e+00]
 --------------------
 elapsed time = 2620.36
 high water mark=3519 [0.892468 *asize]  loff=2609
@@ -702,7 +702,7 @@ symbolic allocation 17280 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       1419.7       0       0       4.7585     11
-   2       2.9707e-12   0       0       4.7585     11
+   2       2.8039e-12   0       0       4.7585     11
 Mesh statistics during update of diffusion:
     Points =   95	Nodes =  144	
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
@@ -711,12 +711,12 @@ Mesh statistics during update of diffusion:
    2       7.8945e-07   0       0       4.6219     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       3.1413e-13   0       0       4.6219     11
+   1       3.1114e-13   0       0       4.6219     11
 Silicon consumed   -0.00740 oxide grown    0.05062 (-6.841)
 change in oxide area 12.99738%
 change in nitride area  0.25173%
 change in silicon area  0.31669%
-    new timestep is 538.931 increase 1.08611 [Ktd 5.59e+04 Kto 1.09e+00]
+    new timestep is 538.931 increase 1.08611 [Ktd 5.58e+04 Kto 1.09e+00]
 --------------------
 elapsed time = 3116.57
 high water mark=4135 [0.896769 *asize]  loff=3190
@@ -767,7 +767,7 @@ symbolic allocation 17520 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       1275.8       0       0       4.5004     11
-   2       5.1873e-13   0       0       4.5004     11
+   2       6.2135e-13   0       0       4.5004     11
 Mesh statistics during update of diffusion:
     Points =   97	Nodes =  146	
 symbolic allocation 17520 bytes
@@ -775,15 +775,15 @@ symbolic allocation 17520 bytes
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
            error        time    time    norm
    1       15.205       0       0       4.5378     11
-   2       5.041e-14    0       0       4.5378     11
+   2       4.8457e-14   0       0       4.5378     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       2.2667e-14   0       0       4.5378     11
+   1       3.8531e-14   0       0       4.5378     11
 Silicon consumed   -0.01102 oxide grown    0.05091 (-4.619)
 change in oxide area 11.55943%
 change in nitride area  0.29693%
 change in silicon area  0.47022%
-    new timestep is 576.22 increase 1.06919 [Ktd 1.19e+05 Kto 1.07e+00]
+    new timestep is 576.22 increase 1.06919 [Ktd 1.07e+05 Kto 1.07e+00]
 --------------------
 elapsed time = 3655.5
 high water mark=4279 [0.897630 *asize]  loff=3310
@@ -818,7 +818,7 @@ symbolic allocation 17520 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       740.4        0       0       4.5593     11
-   2       7.5949e-13   0       0       4.5593     11
+   2       1.012e-12    0       0       4.5593     11
 Mesh statistics during update of diffusion:
     Points =   97	Nodes =  146	
 symbolic allocation 17520 bytes
@@ -826,15 +826,15 @@ symbolic allocation 17520 bytes
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
            error        time    time    norm
    1       14.352       0       0       4.6164     11
-   2       4.5206e-14   0       0       4.6164     11
+   2       3.9403e-14   0       0       4.6164     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       3.1147e-14   0       0       4.6164     11
+   1       2.5206e-14   0       0       4.6164     11
 Silicon consumed   -0.03130 oxide grown    0.05769 (-1.843)
 change in oxide area 11.74235%
 change in nitride area  0.09794%
 change in silicon area  1.32941%
-    new timestep is 585.183 increase 1.01555 [Ktd 1.30e+05 Kto 1.02e+00]
+    new timestep is 585.183 increase 1.01555 [Ktd 1.35e+05 Kto 1.02e+00]
 --------------------
 elapsed time = 4231.72
 high water mark=4279 [0.897630 *asize]  loff=3349
@@ -876,7 +876,7 @@ symbolic allocation 18720 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       523.94       0       0       4.6531     11
-   2       2.2287e-13   0       0       4.6531     11
+   2       2.518e-13    0       0       4.6531     11
 Mesh statistics during update of diffusion:
     Points =  107	Nodes =  156	
 symbolic allocation 18720 bytes
@@ -884,15 +884,15 @@ symbolic allocation 18720 bytes
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
            error        time    time    norm
    1       15.044       0       0       4.5734     11
-   2       5.2678e-14   0       0       4.5734     11
+   2       7.6717e-14   0       0       4.5734     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       1.0003e-14   0       0       4.5734     11
+   1       1.4207e-14   0       0       4.5734     11
 Silicon consumed   -0.01416 oxide grown    0.04628 (-3.269)
 change in oxide area  8.42152%
 change in nitride area  0.16555%
 change in silicon area  0.59341%
-    new timestep is 656.085 increase 1.12116 [Ktd 1.55e+05 Kto 1.12e+00]
+    new timestep is 656.085 increase 1.12116 [Ktd 1.36e+05 Kto 1.12e+00]
 --------------------
 elapsed time = 4816.9
 high water mark=4967 [0.900961 *asize]  loff=4275
@@ -930,7 +930,7 @@ symbolic allocation 19080 bytes
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
    1       483.63       0       0       4.6393     11
-   2       7.8997e-13   0       0       4.6393     11
+   2       8.0198e-13   0       0       4.6393     11
 Mesh statistics during update of diffusion:
     Points =  110	Nodes =  159	
    iter    newton       setup   solve   ln rhs   Blk   (BDF)
@@ -939,9 +939,9 @@ Mesh statistics during update of diffusion:
    2       1.7057e-07   0       0       4.5023     11
    iter    newton       setup   solve   ln rhs   Blk   (TR)
            error        time    time    norm
-   1       4.0179e-13   0       0       4.5023     11
+   1       4.0613e-13   0       0       4.5023     11
 Silicon consumed   -0.02457 oxide grown    0.04768 (-1.941)
 change in oxide area  7.98912%
 change in nitride area  0.16660%
 change in silicon area  1.02346%
-    new timestep is 584.101 increase 1.00171 [Ktd 5.10e+04 Kto 1.19e+00]
+    new timestep is 584.101 increase 1.00171 [Ktd 5.09e+04 Kto 1.19e+00]

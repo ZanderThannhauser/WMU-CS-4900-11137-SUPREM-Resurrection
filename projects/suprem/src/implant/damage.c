@@ -35,11 +35,6 @@
 /* 2020 forward declarations*/
 /* end of declarations*/
 
-#ifdef WINDOWS
-#include "../windows/erf.h"
-#include "../windows/erfc.h"
-#endif
-
 #ifdef ardent
 #define ERFC(A) ((A > 0) ? (erfc(A)) : (1.0 + erf(A)))
 #else

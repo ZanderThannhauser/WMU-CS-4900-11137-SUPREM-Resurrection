@@ -19,9 +19,17 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
-#include <sys/times.h>
 #include <string.h>
 #include <strings.h>
+
+#ifdef LINUX
+#include <sys/times.h>
+#endif
+
+#ifdef WINDOWS
+#include "../windows/struct-tms.h"
+#include "../windows/times.h"
+#endif
 
 #include "suprem/include/constant.h"
 #include "suprem/include/defect.h"
@@ -79,15 +87,15 @@ void   dump_data(double total, int dump, char *movie, int *cnt);
 void solve_time(float time, float temp, double itime, int timemeth, int dump,
 				char *movie, int cont)
 {
-	ENTER;
-	double		  t;		/*the current time, total*/
+	double        t;		/*the current time, total*/
 	static double del_df;   /*the next delta for the diffusion*/
-	double		  last_ddf; /* the last delta for the diffusion */
-	double		  Ktd, Kto, Ktp;
-	struct tms	before, after;
-	int			  wrcnt = 1;
+	double        last_ddf; /* the last delta for the diffusion */
+	double        Ktd, Kto, Ktp;
+	struct tms    before, after;
+	int           wrcnt = 1;
 	register int  i;
-	double		  err = 1.0;
+	double        err = 1.0;
+	ENTER;
 
 	/*set up the loop*/
 	t = 0;

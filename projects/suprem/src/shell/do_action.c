@@ -121,7 +121,7 @@ void do_source(char *file,  /*the file to be sourced*/
 			#endif
 			
 			#ifdef WINDOWS
-			assert(!"TODO");
+			TODO;
 			#endif
 		}
 		else
@@ -208,7 +208,7 @@ void do_string(char *instr, char *redir, int back)
 		#endif
 		
 		#if WINDOWS
-		assert(!"TODO");
+		TODO;
 		#endif
 	}
 	else
@@ -268,18 +268,18 @@ void do_str(char *instr) { do_string(instr, NULL, 0); }
  ************************************************************************/
 void do_command(char *name, char *param, int intr, char *file, int back)
 {
-
 	FILE tout, *t1;
 	int  index;
+	
 	ENTER;
-
 	/*get proc parses the string associated with command*/
 	index = get_proc(name);
 
 	/*if command is -1, an illegal input was typed*/
 	if (index != -1)
 	{
-
+		HERE;
+		
 		tout = *stdout;
 		if (file != NULL)
 		{
@@ -289,6 +289,7 @@ void do_command(char *name, char *param, int intr, char *file, int back)
 
 		if (back)
 		{
+			HERE;
 			#ifdef LINUX
 			/*background the process*/
 			if (fork() == 0)
@@ -300,7 +301,7 @@ void do_command(char *name, char *param, int intr, char *file, int back)
 			#endif
 			
 			#if WINDOWS
-			assert(!"TODO");
+			TODO;
 			#endif
 		}
 		else
@@ -350,6 +351,7 @@ void do_command(char *name, char *param, int intr, char *file, int back)
 		if (back)
 			strcat(str, "&");
 		
+		HERE;
 		#ifdef LINUX
 		/*exec a shell to handle the request*/
 		if ((pid = vfork()) == 0)
@@ -365,9 +367,10 @@ void do_command(char *name, char *param, int intr, char *file, int back)
 		#endif
 		
 		#if WINDOWS
-		assert(!"TODO");
+		TODO;
 		#endif
 	}
+	
 	EXIT;
 }
 

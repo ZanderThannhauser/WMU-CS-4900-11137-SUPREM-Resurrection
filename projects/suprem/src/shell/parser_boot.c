@@ -73,3 +73,17 @@ void parser_boot(char *Pkeyfile, char *Pprompt)
 	for (i = 0; i < 10; i++)
 		store[i] = NULL;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

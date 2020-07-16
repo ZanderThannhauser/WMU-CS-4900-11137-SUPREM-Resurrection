@@ -30,10 +30,6 @@
 void set_crystal();
 /* end of declarations*/
 
-#ifdef WINDOWS
-#include "../windows/hypot.h"
-#endif
-
 #define chosen(A) ((is_specified(param, (A))) && (get_bool(param, (A))))
 #define fetch(N, V, S, A)                                                      \
 	if (is_specified(param, N))                                                \

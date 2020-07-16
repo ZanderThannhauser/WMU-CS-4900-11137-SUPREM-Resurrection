@@ -56,6 +56,10 @@ void print_time(char *name, struct tms *before, struct tms *after)
 {
 	/* 2020: Let's not. */
 	
+	/* 2020: also note that the windows port of suprem has a dud times() */
+	/* 2020: function, so even if this was uncommented, the times would  */
+	/* 2020: be inaccurate                                               */
+	
 	#if 0
 	if (cpufile != NULL)
 	{

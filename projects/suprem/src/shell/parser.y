@@ -53,6 +53,7 @@ static int te[10];
 #include "proc.h"
 
 /* 2020 includes: */
+#include "debug.h"
 #include "lex.h"
 #include "do_action.h"
 #include "help.h"
@@ -246,7 +247,7 @@ line
 		#endif
 		
 		#ifdef WINDOWS
-		assert(!"TODO");
+		TODO;
 		#endif
 	    }
 	    if (depth == -1)

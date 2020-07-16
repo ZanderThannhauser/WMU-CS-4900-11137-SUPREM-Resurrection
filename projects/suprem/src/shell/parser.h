@@ -100,7 +100,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 76 "projects/suprem/src/shell/parser.y" /* yacc.c:1909  */
+#line 77 "projects/suprem/src/shell/parser.y" /* yacc.c:1909  */
 
 	int ival;
 	char *sval;

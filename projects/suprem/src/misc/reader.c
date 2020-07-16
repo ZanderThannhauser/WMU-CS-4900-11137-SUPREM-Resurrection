@@ -21,6 +21,7 @@
 #include "suprem/include/key.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "reader.h"
 /* end of includes*/
 
@@ -54,20 +55,25 @@ static int level = 0;
 int read_list(struct par_str **par, FILE *fd)
 {
 	static int temp;
-	int		   eof;
-
+	int        eof;
+	
 	while (TRUE)
 	{
+		HERE;
+		
 		/*begin by reading the level of the next command*/
 		if ((eof = fread(&temp, sizeof(int), 1, fd)) != 1)
 		{
+			HERE;
+			verpv(eof);
+			
 			/*only place an eof can appear*/
 			if (eof == 0)
 				return (1);
 			else
 				return (eof);
 		}
-
+		
 		if (temp == level)
 		{
 			/*we are at the same level*/
@@ -82,7 +88,7 @@ int read_list(struct par_str **par, FILE *fd)
 			/*we are going somewhere, either up or down*/
 			if (temp < level)
 				return (1);
-
+			
 			/*set it up for a depth move*/
 			level++;
 			par[0]->param =
@@ -90,20 +96,20 @@ int read_list(struct par_str **par, FILE *fd)
 			/*allocate space for the first one*/
 			par[0]->param[0] =
 				(struct par_str *)calloc(1, sizeof(struct par_str));
-
+			
 			/*read the rest of that one of the current record*/
 			if ((eof = read_param(par[0]->param[0], fd)) != 1)
 				return (eof);
-
+			
 			/*read all the sub little parameters*/
 			if ((eof = read_list(&(par[0]->param[0]), fd)) != 1)
 				return (eof);
 			level--;
-
+			
 			/*if we are still below where we need to be pop*/
 			if (temp < level)
 				return (1);
-
+			
 			/*upon return, we ahve read level of the higher one, finish it*/
 			par++;
 			/*allocate space for par*/

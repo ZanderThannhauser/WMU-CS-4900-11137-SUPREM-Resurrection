@@ -36,11 +36,6 @@
 /* 2020 forward declarations*/
 /* end of declarations*/
 
-#ifdef WINDOWS
-#include "../windows/erf.h"
-#include "../windows/erfc.h"
-#endif
-
 /************************************************************************
  *									*
  *	This file contains the code and definitions for a real		*
