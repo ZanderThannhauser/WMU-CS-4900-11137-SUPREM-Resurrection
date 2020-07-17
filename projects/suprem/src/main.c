@@ -99,11 +99,19 @@
 int debugging_depth;
 #endif
 
-/* 2020: These used be set on the command line, but let's not:*/
-#define MANLOC "./help"
-#define KEYLOC "./data/suprem.uk"
+#ifdef LINUX
+#define MANLOC   "./help"
+#define KEYLOC   "./data/suprem.uk"
 #define MODELLOC "./data/modelrc"
-#define IMPLOC "./data/sup4gs.imp"
+#define IMPLOC   "./data/sup4gs.imp"
+#endif
+
+#ifdef WINDOWS
+#define MANLOC   "help"
+#define KEYLOC   "data\\suprem.uk"
+#define MODELLOC "data\\modelrc"
+#define IMPLOC   "data\\sup4gs.imp"
+#endif
 
 void mode_cmd(char *par, struct par_str *param)
 {

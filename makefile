@@ -114,10 +114,10 @@ include projects/suprem/makefile
 %.d.o: %.c %.mk
 	$(CC) -c $(DFLAGS) $(LINUX_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
-%.win.o: %.c %.mk
+%.win.o: %.c %.win.mk
 	$(WIN_CC) -c $(NDFLAGS) $(WINDOWS_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
-%.d.win.o: %.c %.mk
+%.d.win.o: %.c %.win.mk
 	$(WIN_CC) -c $(DFLAGS) $(WINDOWS_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
 .PHONY: test open-all-suprem format clean-successes clean
