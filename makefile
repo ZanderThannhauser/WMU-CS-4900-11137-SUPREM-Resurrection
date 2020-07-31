@@ -129,7 +129,10 @@ winpack.zip: bin/suprem.exe \
 	data/suprem.uk \
 	examples/durban1/input \
 	examples/durban1/stdout.correct \
-	examples/durban1/str.correct
+	examples/durban1/str.correct \
+	examples/exam4/input \
+	examples/exam4/stdout.correct \
+	examples/exam4/str.correct
 	zip -r $@ $^
 
 test: systest
@@ -141,7 +144,7 @@ clean-successes:
 	find -path '*/success' -delete
 	
 clean:
-	rm -rf bin
+	rm -rf bin winpack.zip
 	find -name '*.o' -print -delete
 	find -path './*/*.mk' -print -delete
 	find -executable -a -type f -print -delete
