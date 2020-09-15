@@ -93,12 +93,12 @@ struct sreg_str
 #endif
 
 /*number of, and skeleton region data*/
-EXT int				 nsreg;
+EXT int  nsreg;
 EXT struct sreg_str *sreg[MAXREG];
 
 EXT int debug1, debug2;
 
-EXT double mr;	/* Maximum spacing ratio. */
+// 2020: resolving conflict between two globals with the same name? EXT double mr; /* Maximum spacing ratio. */
 EXT double mgeom; /* Minimum triangle geometry. */
 
 #endif

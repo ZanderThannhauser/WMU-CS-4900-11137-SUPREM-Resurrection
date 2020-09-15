@@ -20,17 +20,11 @@
  *									*
  ************************************************************************/
 
-#ifndef GlobalH
-/* Already defined in include/global.h - DClark 19Oct98 */
 #ifdef STATIC_ALLOCATION_TIME
-#ifdef EXTERN
-#undef EXTERN
-#endif
 #define EXTERN
 #else
 #define EXTERN extern
 #endif /* STATIC_ALLOCATION_TIME */
-#endif /* GlobalH */
 
 /* Global min and max specified by user if more than one frame exists */
 EXTERN float gmin;

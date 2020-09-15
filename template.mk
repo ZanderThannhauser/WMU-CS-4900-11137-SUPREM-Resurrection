@@ -13,7 +13,7 @@ projectname_windows_dobjs = $(projectname_src:.c=.d.win.o)
 projectname_windows_depends = $(projectname_src:.c=.win.mk)
 
 include $(projectname_depends)
-include $(projectname_winobjs_depends)
+include $(projectname_windows_depends)
 
 # <Program Linking/Building>
 

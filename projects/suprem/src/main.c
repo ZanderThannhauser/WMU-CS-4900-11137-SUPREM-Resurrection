@@ -23,12 +23,15 @@
 #include <signal.h>
 
 #define STATIC_ALLOCATION_TIME
+#include "suprem/include/bound.h"
 #include "suprem/include/check.h"
 #include "suprem/include/constant.h"
 #include "suprem/include/dbaccess.h"
 #include "suprem/include/defect.h"
 #include "suprem/include/diffuse.h"
 #include "suprem/include/expr.h"
+#include "suprem/include/FEgeom.h"
+#include "suprem/include/FEmath.h"
 #include "suprem/include/global.h"
 #include "suprem/include/implant.h"
 #include "suprem/include/impurity.h"
@@ -41,6 +44,7 @@
 #include "suprem/include/regrid.h"
 #include "suprem/include/shell.h"
 #include "suprem/include/sysdep.h"
+
 #ifdef DEVICE
 #include "suprem/include/device.h"
 #endif
@@ -236,9 +240,10 @@ int main(int argc, char **argv)
 	
 	/*initialize the diffusion co_efficients and routine pointers*/
 	diffuse_init();
-#ifdef DEVICE
+	#ifdef DEVICE
 	device_init();
-#endif
+	#endif
+	
 	vxmin = vymin = 0.0;
 	vxmax = vymax = 1.0;
 	

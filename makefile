@@ -3,7 +3,7 @@
 default: bin/suprem
 
 CC = gcc
-WIN_CC = x86_64-w64-mingw32-gcc-win32
+WIN_CC = x86_64-w64-mingw32-gcc
 
 SHELL=/bin/bash
 
@@ -29,6 +29,7 @@ CFLAGS += -Werror
 #CFLAGS += -Wfatal-errors
 CFLAGS += -Wno-maybe-uninitialized
 CFLAGS += -Wno-array-bounds
+CFLAGS += -Wno-format-overflow
 CFLAGS += -g
 
 NDFLAGS += -O2

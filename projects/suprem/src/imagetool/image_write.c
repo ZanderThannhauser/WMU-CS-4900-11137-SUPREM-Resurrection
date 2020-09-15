@@ -26,7 +26,6 @@
 #include "suprem/include/geom.h"
 #include "suprem/include/global.h"
 
-#define STATIC_ALLOCATION_TIME
 #include "suprem/include/bound.h"
 
 /* 2020 includes:*/

@@ -14,11 +14,7 @@
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"
 #include "suprem/include/global.h"
-#undef EXTERN
-#define EXTERN /* FEgeom isn't included in main.c */
 #include "suprem/include/FEgeom.h"
-#undef EXTERN
-#define EXTERN extern
 #include "suprem/include/FEmath.h"
 #include "suprem/include/material.h"
 

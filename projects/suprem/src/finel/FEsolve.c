@@ -18,9 +18,6 @@
 #include "suprem/include/constant.h"
 #include "suprem/include/global.h"
 
-#undef EXTERN
-#define EXTERN
-
 #include "suprem/include/FEgeom.h"
 #include "suprem/include/FEmath.h"
 
@@ -37,17 +34,10 @@
 int  FlopCount(int *il);
 void build_ia(int **pia);
 void FEsymb(int **Pia, int **Pil, int *Paoff, int *Ploff, int **Ppv);
-int  FEnewton(int *ia, int aoff, double *a, int *il, int loff, double *l,
-			  double *rhs);
-void FEmilne(int *ia, int aoff, double *a, int *il, int loff, double *l,
-			 double *rhs, double *solo, double *deln, double *delm,
-			 double *derr);
-void FEfdiff(int *ia, int aoff, double *a, int *il, int loff, double *l,
-			 double *rhs, double *solo, double *deln, double *delo,
-			 double *derr);
-void FEstep(int *ia, int aoff, double *a, int *il, int loff, double *l,
-			double *rhs, double *solo, double *deln, double *delo, double *derr,
-			double lami, double lamf);
+int  FEnewton(int *ia, int aoff, double *a, int *il, int loff, double *l, double *rhs);
+void FEmilne(int *ia, int aoff, double *a, int *il, int loff, double *l, double *rhs, double *solo, double *deln, double *delm, double *derr);
+void FEfdiff(int *ia, int aoff, double *a, int *il, int loff, double *l, double *rhs, double *solo, double *deln, double *delo, double *derr);
+void FEstep(int *ia, int aoff, double *a, int *il, int loff, double *l, double *rhs, double *solo, double *deln, double *delo, double *derr, double lami, double lamf);
 void FEscramble(int *reorder);
 /* end of declarations*/
 

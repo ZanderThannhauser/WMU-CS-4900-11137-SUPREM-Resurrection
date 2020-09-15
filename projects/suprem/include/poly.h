@@ -7,7 +7,7 @@
 #define MAXPOLY 5
 #define MAXGRAIN 100
 
-struct poly_node
+EXTERN struct poly_node
 {
 	int ndtyp; /* 0: single node grain 1: grain boundary node 2: node in grain
 				*/
@@ -25,7 +25,7 @@ struct poly_node
 	struct poly_node *nnp; /* next node pointer */
 } * pnp;
 
-struct grain
+EXTERN struct grain
 {
 	int				  ngn;				/* number of grain */
 	int				  region;			/* poly region number involved */
@@ -36,7 +36,7 @@ struct grain
 	struct grain *	grain;			/* next grain pointer */
 } * grain;
 
-struct poly_str
+EXTERN struct poly_str
 {
 	int	n_poly; /* poly_region number from the outside */
 	int	n_reg;

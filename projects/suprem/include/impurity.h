@@ -163,19 +163,19 @@ EXTERN struct imp_str impur[MAXIMP];
 EXTERN int n_imp;
 
 /*structure for the parameters to be passed to the boundary code routine*/
-struct bound_str
+EXTERN struct bound_str
 {
-	int		 nx[2];		/*the node numbers involved*/
+	int nx[2];		/*the node numbers involved*/
 	double   delta;		/*timestep*/
-	float	temp;		/*temperature*/
+	float temp;		/*temperature*/
 	double   vel[2];	/*boundary velocity*/
 	double   conc[2];   /*solution values*/
 	double   eq[2];		/*equilibrium values*/
-	int		 mat[2];	/*material values*/
-	int		 loc[2][2]; /*coupling locations*/
+	int  mat[2];	/*material values*/
+	int  loc[2][2]; /*coupling locations*/
 	double   cpl;		/*coupling length*/
 	double **rhs;		/*right hand side*/
-	float	cord[2];   /*location of the nodes*/
+	float cord[2];   /*location of the nodes*/
 	double   vmax;		/*maximum velocity*/
 	double   dela[2];   /*change in the area*/
 } * bval;

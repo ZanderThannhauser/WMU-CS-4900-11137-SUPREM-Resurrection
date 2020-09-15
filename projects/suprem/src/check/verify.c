@@ -182,8 +182,7 @@ struct par_str **parloc;
 	if ((err = name_check(pars, par_name, parloc)) < 0)
 	{
 		if (err == -1)
-			fprintf(stderr, "parameter %s does not exist for this command\n",
-					par_name);
+			fprintf(stderr, "parameter %s does not exist for this command\n", par_name);
 		return (-1);
 	}
 
@@ -237,7 +236,7 @@ struct par_str **parloc;
 			if (par_value != NULL)
 				for (s = par_value; *s != '\0'; s++)
 					*s = isupper(*s) ? tolower(*s) : (*s);
-
+			
 			if (par_value == NULL)
 				value->ival = TRUE;
 			else if (substring("on", par_value))

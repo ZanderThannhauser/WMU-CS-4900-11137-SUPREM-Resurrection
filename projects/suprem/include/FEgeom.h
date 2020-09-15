@@ -63,7 +63,7 @@ typedef struct FEmat_str FEmat_typ;
 
 EXTERN FEnd_typ **FEnd;
 EXTERN FEelt_typ **FEelt;
-EXTERN int		   FEne, FEnn, FEdf, FEdm, FEnsc;
+EXTERN int  FEne, FEnn, FEdf, FEdm, FEnsc;
 EXTERN FEdesc_typ FEdesc[20];
 
 #define M_ELASTIC 0

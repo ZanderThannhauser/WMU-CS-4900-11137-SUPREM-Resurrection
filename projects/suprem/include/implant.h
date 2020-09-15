@@ -51,8 +51,8 @@ struct surf_info
 #define BF2 -1
 
 /*is there a manual overide value set for the implant*/
-int	override;
-double Rp, delRp, Rgam, Rkurt;
+EXTERN int override;
+EXTERN double Rp, delRp, Rgam, Rkurt;
 
 /*the ignore distance separator*/
 #define ERR 1.0e-10

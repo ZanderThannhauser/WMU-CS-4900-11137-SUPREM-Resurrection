@@ -58,16 +58,16 @@ float *  uloc[MAXDIM]; /* User locations */
 float *  uspa[MAXDIM]; /* User spacing */
 char **  utag[MAXDIM]; /* User labels */
 float *  rloc[MAXDIM]; /* Final locations. */
-int *	umap[MAXDIM]; /* Where user nodes maps to */
+int * umap[MAXDIM]; /* Where user nodes maps to */
 
-int	und[MAXDIM];			   /* User number in each dim */
-int	ureg[MAXMAT][MAXBNDS];  /* User regions */
-int	uedge[MAXMAT][MAXBNDS]; /* User regions */
-int	umattyp[MAXMAT];		   /* Groan */
-int	nur;					   /* Number of user regions */
-int	nuj;					   /* Number of user edges */
+int und[MAXDIM];			   /* User number in each dim */
+int ureg[MAXMAT][MAXBNDS];  /* User regions */
+int uedge[MAXMAT][MAXBNDS]; /* User regions */
+int umattyp[MAXMAT];		   /* Groan */
+int nur;					   /* Number of user regions */
+int nuj;					   /* Number of user edges */
 double mr = 1.5;			   /* The min ratio parameter*/
-int	rect_err;
+int rect_err;
 
 char XY[] = "xyz";
 

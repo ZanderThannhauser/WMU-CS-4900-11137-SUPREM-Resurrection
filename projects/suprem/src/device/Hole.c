@@ -46,8 +46,7 @@ double Hmobil() { return 0.0; }
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-void Hcoupling(float temp, double *area, double **new, double **equil,
-			   double **dequ, double **rhs)
+void Hcoupling(float temp, double *area, double **new, double **equil, double **dequ, double **rhs)
 {
 }
 
@@ -72,8 +71,7 @@ void Hboundary(struct bound_str *bval) {}
  *  Original:	MEL	2/89						*
  *									*
  ************************************************************************/
-double Phi_p(double hole, double psi, double ev, int mat, double *dqdp,
-			 double *dqdh)
+double Phi_p(double hole, double psi, double ev, int mat, double *dqdp, double *dqdh)
 {
 	double qfn;
 
