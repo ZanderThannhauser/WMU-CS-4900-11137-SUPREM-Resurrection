@@ -42,11 +42,9 @@ EXTERN double *mida[MAXIMP];		 /*active portion of each impurity*/
 EXTERN double *olda[MAXIMP];		 /*active portion of each impurity*/
 EXTERN double *dact[MAXIMP][MAXIMP]; /*partial of net w/r each imp*/
 EXTERN double *equil[MAXIMP]; /*equilibrium concentrations if appropriate*/
-EXTERN double
-	*dequ[MAXIMP];  /*partial of equilibrium concentrations if appropriate*/
+EXTERN double *dequ[MAXIMP];  /*partial of equilibrium concentrations if appropriate*/
 EXTERN double *net; /*net concentration at each point*/
-EXTERN double
-	*dnet[MAXIMP];   /*derivitive of the net concentration at each point*/
+EXTERN double *dnet[MAXIMP];   /*derivitive of the net concentration at each point*/
 EXTERN double *noni; /*n over ni at each point*/
 
 /*truncation errors as a function of impurity*/

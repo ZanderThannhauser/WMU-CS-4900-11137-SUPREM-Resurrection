@@ -28,8 +28,8 @@
 /*downward compatibility for a while*/
 EXTERN char * label;
 EXTERN char * title;
-EXTERN int	sel_log;
-EXTERN int	znn;
+EXTERN int sel_log;
+EXTERN int znn;
 EXTERN float *z;
 
 /*following stuff is all used in the three dimensional code*/

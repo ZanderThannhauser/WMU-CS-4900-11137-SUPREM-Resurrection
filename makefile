@@ -134,7 +134,7 @@ winpack.zip: bin/suprem.exe \
 	examples/exam4/input \
 	examples/exam4/stdout.correct \
 	examples/exam4/str.correct
-	zip -r $@ $^
+	zip $@ $^
 
 test: systest
 test: unittest
@@ -143,7 +143,7 @@ clean-successes:
 	find -name '*.actual' -delete
 	find -name '*.success' -delete
 	find -path '*/success' -delete
-	
+
 clean:
 	rm -rf bin winpack.zip
 	find -name '*.o' -print -delete

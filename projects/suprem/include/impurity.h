@@ -104,8 +104,7 @@ struct imp_str
 	/* 'assignment from incompatible pointer type' errors!*/
 	union {
 		double (*bad_diff_coeff)();
-		void (*diff_coeff)(float, double **, double **, double *, double *,
-						   double *, double *, double *);
+		void (*diff_coeff)(float, double **, double **, double *, double *, double *, double *, double *);
 	}; /*routine which calculates diff coeffs*/
 
 	void (*coupling)(float, double *, double **, double **, double **,
@@ -116,14 +115,10 @@ struct imp_str
 	/* 'assignment from incompatible pointer type' errors!*/
 	union {
 		PTR_FNC bad_active;
-		void (*active)(int, int, float, double **, double **, double **,
-					   double *);
+		void (*active)(int, int, float, double **, double **, double **, double *);
 	}; /*active concentration calculator*/
-	void (*time_val)(int, double *,
-					 struct call_str *); /*time term calculation function*/
-	void (*block_set)(int sol, float nu1, int nu2, int *nu3, double *coeff,
-					  double **chem, double **nu4, double *nu5,
-					  double *nu6); /*block jacobian terms*/
+	void (*time_val)(int, double *, struct call_str *); /*time term calculation function*/
+	void (*block_set)(int sol, float nu1, int nu2, int *nu3, double *coeff, double **chem, double **nu4, double *nu5, double *nu6); /*block jacobian terms*/
 };
 
 /*flag values and flag tests*/
