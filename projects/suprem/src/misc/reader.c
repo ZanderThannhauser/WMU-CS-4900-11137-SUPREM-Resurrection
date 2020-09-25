@@ -59,8 +59,6 @@ int read_list(struct par_str **par, FILE *fd)
 	
 	while (TRUE)
 	{
-		HERE;
-		
 		/*begin by reading the level of the next command*/
 		if ((eof = fread(&temp, sizeof(int), 1, fd)) != 1)
 		{

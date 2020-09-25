@@ -267,13 +267,21 @@ int main(int argc, char **argv)
 	verpvs(getenv("UserProfile"));
 	
 	#ifdef LINUX
-	strcpy(dot_name, (char *)getenv("HOME"));
+	if (t = getenv("HOME"))
+	{
+		strcpy(dot_name, t);
 	#endif
+	
 	#ifdef WINDOWS
-	strcpy(dot_name, (char *)getenv("UserProfile"));
+	if (t = getenv("UserProfile"))
+	{
+		strcpy(dot_name, t);
 	#endif
-	strcat(dot_name, "/.supremrc");
-	do_source(dot_name, NULL, FALSE, /*report errors*/ FALSE);
+	
+		strcat(dot_name, "/.supremrc");
+		do_source(dot_name, NULL, FALSE, /*report errors*/ FALSE);
+	}
+	
 	do_source(".supremrc", NULL, FALSE, /*report errors*/ FALSE);
 	
 	HERE;

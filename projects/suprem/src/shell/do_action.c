@@ -403,8 +403,13 @@ void do_exec(char *par, int intr, int index, int no_exec)
 	/*if not in no exec mode, do the work*/
 	if (!no_exec)
 	{
+		verpv(index);
+		verpv(command[index].func);
 		command[index].func(par, cards[command[index].param]);
 	}
 	EXIT;
 	return;
 }
+
+
+
