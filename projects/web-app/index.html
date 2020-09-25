@@ -1,0 +1,271 @@
+
+<style>
+	* {
+		box-sizing: border-box;
+	}
+
+	.graph {
+		-moz-user-select: none;
+		-webkit-user-select: none;
+		-ms-user-select: none;
+		height: 100%
+	}
+	
+	.submit {
+		font-size: 1.5rem;
+	}
+	
+	.left-half {
+		display: inline-block;
+		vertical-align: top;
+		width: 40%;
+		padding: 1rem;
+		background: #ff9e2c;
+	}
+
+	.right-half {
+		display: inline-block;
+		vertical-align: top;
+		width: 60%;
+		padding: 1rem;
+		background: #FFF;
+	}
+
+	textarea {
+		width: 100%;
+		max-width: 100%;
+	}
+	
+	h1 {
+		font-size: 1.75rem;
+		margin: 0 0 0.75rem 0;
+	}
+
+	body { 
+		font-family: sans-serif;
+		font-size: 1.25rem;
+		line-height: 150%;
+	}
+
+</style>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+<script>
+	var chart;
+	var data = {
+		datasets: [{
+			label: 'Net Doping Concentration (cm^-3)',
+			backgroundColor: 'rgb(255, 0, 0)',
+			showLine: true,
+			fill: false,
+			borderColor: 'rgb(128, 0, 0)',
+			borderWidth: 1,
+			pointRadius: 3,
+			pointBorderWidth: 0,
+			data: []
+		},{
+			label: 'Boron Concentration (cm^-3)',
+			backgroundColor: 'rgb(255, 255, 0)',
+			showLine: true,
+			fill: false,
+			borderWidth: 1,
+			pointRadius: 3,
+			pointBorderWidth: 0,
+			borderColor: 'rgb(128, 128, 0)',
+			data: []
+		},{
+			label: 'Phosphorus Concentration (cm^-3)',
+			backgroundColor: 'rgb(255, 0, 255)',
+			showLine: true,
+			fill: false,
+			borderWidth: 1,
+			pointRadius: 3,
+			pointBorderWidth: 0,
+			borderColor: 'rgb(128, 0, 128)',
+			data: []
+		}]
+	};
+	
+	function onload()
+	{
+		var ctx = document.getElementById('myChart').getContext('2d');
+		chart = new Chart(ctx, {
+			type: 'scatter',
+			data: data,
+			options: {
+				aspectRatio: 1.125,
+				scales: {
+					xAxes: [{
+						type: 'logarithmic',
+						position: 'bottom'
+					}],
+					yAxes: [{
+						type: 'logarithmic',
+						position: 'left'
+					}]
+				}
+			}
+		});
+	}
+	
+	function update_chart(strdata)
+	{
+		var depth_from_surface = [];
+		var boron_concentration = [];
+		var phosphorous_concentration = [];
+		var net_doping_concentration = [];
+		
+		strdata.split("\n").forEach((line) => {
+			if (line.startsWith("c"))
+			{
+				var args = line.split(/ +/).slice(1).map(parseFloat);
+				depth_from_surface.push(args[1]);
+			}
+			else if (line.startsWith("n"))
+			{
+				var args = line.split(/ +/).slice(1).map(parseFloat);
+				boron_concentration.push(args[2]);
+				phosphorous_concentration.push(args[4]);
+				net_doping_concentration.push(args[4] - args[2]);
+			}
+		});
+		
+		var i, n;
+		
+		data.datasets[0].data = Array.from(
+			{length: depth_from_surface.length},
+			(x, i) => ({
+				x: depth_from_surface[i],
+				y: net_doping_concentration[i]
+			})
+		);
+		data.datasets[1].data = Array.from(
+			{length: depth_from_surface.length},
+			(x, i) => ({
+				x: depth_from_surface[i],
+				y: boron_concentration[i]
+			})
+		);
+		
+		data.datasets[2].data = Array.from(
+			{length: depth_from_surface.length},
+			(x, i) => ({
+				x: depth_from_surface[i],
+				y: phosphorous_concentration[i]
+			})
+		);
+		
+		chart.update();
+	};
+	
+	function submit(e)
+	{
+		console.log("click!");
+		
+		var input_textarea = document.getElementById("stdin");
+		var stdout_textarea = document.getElementById("stdout");
+		var str_textarea = document.getElementById("str-data");
+		
+		$.ajax({
+			type: "POST",
+			url: 'suprem.php',
+			data: {input: input_textarea.value},
+			success: function(data) {
+				var json = JSON.parse(data);
+				stdout_textarea.value = json["stdout"];
+				update_chart(str_textarea.value = json["str-data"]);
+			}
+		});
+	}
+	
+
+</script>
+
+<html>
+	
+	<head>
+		<title> Hello! </title>
+	</head>
+	
+	<body onload="onload()">
+		
+	<div class="left-half">
+		<code> $ cat input.txt </code > <br>
+		<textarea id="stdin" rows="30">
+#some set stuff
+set echo
+
+#This limits the anount of output data about the simulation is shown
+option quiet
+
+#This simulation will be one dimensional
+mode one.dim
+
+#the vertical definition
+#the thickness of the area being monitored for the diffusion region in micro-neters
+#even though the diffusion should be the 0.6 monitored will be 1
+
+line x loc = 0		spacing = 0.01	tag = top
+line x loc = 0.3	spacing = 0.01
+line x loc = 0.6	spacing = 0.01
+line x loc = 0.9	spacing = 0.01
+line x loc = 380	spacing = 100	tag = bottom
+
+#This defines where the diffusion witl start and end at based on the vertical
+#definition tags
+
+region silicon xlo = top xhi = bottom
+
+#This tells the simulation which surface is the exposed surface
+bound exposed xlo = top xhi = top
+
+#calculate the mesh
+#This is where the simulation is told which dopant and concentration of the
+#silicon wafer is being used
+init conc=1.0e16 boron
+
+#the diffusion card
+#this ts where the time and temperature of the diffusion are entered
+#also this is where the concentration of the phosphorous dopant is used
+#note that the dopant is simulated as 0 gas and not as a Liquid
+
+diffuse time=24 temp=1050 phosphorus gas.conc=1e20
+</textarea> <br>
+		<button class="submit" type="button" onclick="submit()">Submit!</button>
+		
+		<code> $ cat output.txt </code> <br>
+		<textarea id="stdout" rows="30"></textarea> <br>
+		
+		<code> $ cat output.str </code> <br>
+		<textarea id="str-data" rows="40"></textarea>
+		
+	</div><div class="right-half">
+		<article>
+		<canvas id="myChart" class="graph"></canvas>
+		</article>
+	</div>
+	</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
