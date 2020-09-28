@@ -132,8 +132,6 @@
 			}
 		});
 		
-		var i, n;
-		
 		data.datasets[0].data = Array.from(
 			{length: depth_from_surface.length},
 			(x, i) => ({
@@ -141,6 +139,7 @@
 				y: net_doping_concentration[i]
 			})
 		);
+		
 		data.datasets[1].data = Array.from(
 			{length: depth_from_surface.length},
 			(x, i) => ({
@@ -172,14 +171,14 @@
 			type: "POST",
 			url: 'suprem.php',
 			data: {input: input_textarea.value},
-			success: function(data) {
+			success: function(data)
+			{
 				var json = JSON.parse(data);
 				stdout_textarea.value = json["stdout"];
 				update_chart(str_textarea.value = json["str-data"]);
 			}
 		});
 	}
-	
 
 </script>
 
@@ -192,7 +191,7 @@
 	<body onload="onload()">
 		
 	<div class="left-half">
-		<code> $ cat input.txt </code > <br>
+		<code> $ cat input.txt </code> <br>
 		<textarea id="stdin" rows="30">
 #some set stuff
 set echo
