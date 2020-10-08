@@ -267,13 +267,13 @@ int main(int argc, char **argv)
 	verpvs(getenv("UserProfile"));
 	
 	#ifdef LINUX
-	if (t = getenv("HOME"))
+	if ((t = getenv("HOME")))
 	{
 		strcpy(dot_name, t);
 	#endif
 	
 	#ifdef WINDOWS
-	if (t = getenv("UserProfile"))
+	if ((t = getenv("UserProfile")))
 	{
 		strcpy(dot_name, t);
 	#endif
