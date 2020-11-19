@@ -14,5 +14,3 @@ jobs:
         run: sudo apt-get install -y bison flex
       - name: make bin/keyread
         run: make bin/keyread
-      - name: make systest_keyread
-        run: make systest_keyread
