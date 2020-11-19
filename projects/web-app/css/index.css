@@ -1,0 +1,54 @@
+#commands
+{
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+/*	width: 30%;*/
+	width: 50%;
+}
+
+#commands > li
+{
+	margin: 0 3px 3px 3px;
+	padding: 0.4em;
+/*	margin: 0;*/
+/*	padding: 0;*/
+}
+
+canvas {
+	border: 1px black;
+	border-style: solid;
+}
+
+input, select {
+	width: 100%;
+
+}
+
+input[type="file"]{
+	color: transparent;
+
+}
+button{
+	padding: .05em;
+	width: 25%;
+}
+
+.parameter
+{
+	list-style-type: none;
+}
+
+.parameter li
+{
+/*	margin: 0;*/
+	padding: 0.1em;
+}
+
+.row{
+	padding: .5em;
+}
+
+
+
+
