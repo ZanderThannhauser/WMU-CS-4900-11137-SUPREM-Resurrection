@@ -106,7 +106,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 51 "projects/keyread/src/parser.y" /* yacc.c:1909  */
+#line 51 "projects/keyread/src/./parser.y" /* yacc.c:1909  */
 
     int ival;
     float dval;

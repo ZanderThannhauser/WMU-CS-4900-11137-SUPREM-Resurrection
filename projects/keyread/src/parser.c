@@ -62,7 +62,7 @@
 
 
 /* Copy the first part of user declarations.  */
-#line 1 "projects/keyread/src/parser.y" /* yacc.c:339  */
+#line 1 "projects/keyread/src/./parser.y" /* yacc.c:339  */
 
 
 /*************************************************************************
@@ -206,7 +206,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 51 "projects/keyread/src/parser.y" /* yacc.c:355  */
+#line 51 "projects/keyread/src/./parser.y" /* yacc.c:355  */
 
     int ival;
     float dval;
@@ -1344,7 +1344,7 @@ yyreduce:
   switch (yyn)
     {
         case 4:
-#line 88 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 88 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    /*add the pointer to the top of the boolean tree*/
 	    current[0]->bexp = (yyvsp[-1].bval);
@@ -1356,7 +1356,7 @@ yyreduce:
     break;
 
   case 5:
-#line 96 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 96 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    /*ignore the sucker*/
 	}
@@ -1364,7 +1364,7 @@ yyreduce:
     break;
 
   case 6:
-#line 100 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 100 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    /*push everything down on the stack*/
 	    current = (struct par_str **)push(current);
@@ -1373,7 +1373,7 @@ yyreduce:
     break;
 
   case 7:
-#line 105 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 105 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    /*pop a layer off and finish off the pointer list*/
 	    current = (struct par_str **)pop();
@@ -1385,7 +1385,7 @@ yyreduce:
     break;
 
   case 8:
-#line 113 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 113 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    /*ignore the line in error*/
 	    fprintf(stderr, "error in parsing the input key file\n");
@@ -1394,7 +1394,7 @@ yyreduce:
     break;
 
   case 9:
-#line 123 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 123 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    if (strlen((yyvsp[-1].sval)) >= 12)
 		*((yyvsp[-1].sval) + 11) = '\0';
@@ -1406,7 +1406,7 @@ yyreduce:
     break;
 
   case 10:
-#line 131 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 131 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    if (strlen((yyvsp[-2].sval)) >= 12)
 		*((yyvsp[-2].sval) + 11) = '\0';
@@ -1418,7 +1418,7 @@ yyreduce:
     break;
 
   case 11:
-#line 139 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 139 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    if (strlen((yyvsp[-2].sval)) >= 12)
 		*((yyvsp[-2].sval) + 11) = '\0';
@@ -1430,7 +1430,7 @@ yyreduce:
     break;
 
   case 12:
-#line 147 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 147 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    if (strlen((yyvsp[-3].sval)) >= 12)
 		*((yyvsp[-3].sval) + 11) = '\0';
@@ -1442,7 +1442,7 @@ yyreduce:
     break;
 
   case 13:
-#line 159 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 159 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    (yyval.ival) = COMM;
 	}
@@ -1450,7 +1450,7 @@ yyreduce:
     break;
 
   case 14:
-#line 163 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 163 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    (yyval.ival) = (yyvsp[0].ival);
 	}
@@ -1458,7 +1458,7 @@ yyreduce:
     break;
 
   case 15:
-#line 171 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 171 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    current[0]->def.dval = (yyvsp[0].dval);
 	}
@@ -1466,7 +1466,7 @@ yyreduce:
     break;
 
   case 16:
-#line 175 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 175 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    current[0]->def.sval = (yyvsp[0].sval);
 	}
@@ -1474,7 +1474,7 @@ yyreduce:
     break;
 
   case 17:
-#line 179 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 179 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    current[0]->def.ival = (yyvsp[0].ival);
 	}
@@ -1482,7 +1482,7 @@ yyreduce:
     break;
 
   case 18:
-#line 183 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 183 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    current[0]->def.ival = 0;
 	}
@@ -1490,7 +1490,7 @@ yyreduce:
     break;
 
   case 19:
-#line 191 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 191 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    current[0]->err_msg = (yyvsp[0].sval);
 	}
@@ -1498,7 +1498,7 @@ yyreduce:
     break;
 
   case 20:
-#line 195 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 195 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    current[0]->err_msg = NULL;
 	}
@@ -1506,7 +1506,7 @@ yyreduce:
     break;
 
   case 21:
-#line 202 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 202 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    (yyval.bval) = (yyvsp[0].bval);
 	}
@@ -1514,7 +1514,7 @@ yyreduce:
     break;
 
   case 22:
-#line 206 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 206 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    (yyval.bval) = NULL;
 	}
@@ -1522,7 +1522,7 @@ yyreduce:
     break;
 
   case 23:
-#line 214 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 214 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    (yyval.bval) = (yyvsp[-1].bval);
 	}
@@ -1530,7 +1530,7 @@ yyreduce:
     break;
 
   case 24:
-#line 218 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 218 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '>';
@@ -1540,7 +1540,7 @@ yyreduce:
     break;
 
   case 25:
-#line 224 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 224 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '<';
@@ -1550,7 +1550,7 @@ yyreduce:
     break;
 
   case 26:
-#line 230 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 230 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = 'g';
@@ -1560,7 +1560,7 @@ yyreduce:
     break;
 
   case 27:
-#line 236 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 236 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = 'l';
@@ -1570,7 +1570,7 @@ yyreduce:
     break;
 
   case 28:
-#line 242 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 242 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '|';
@@ -1580,7 +1580,7 @@ yyreduce:
     break;
 
   case 29:
-#line 248 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 248 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '&';
@@ -1590,7 +1590,7 @@ yyreduce:
     break;
 
   case 30:
-#line 254 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 254 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '=';
@@ -1600,7 +1600,7 @@ yyreduce:
     break;
 
   case 31:
-#line 260 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 260 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = 'n';
@@ -1610,7 +1610,7 @@ yyreduce:
     break;
 
   case 32:
-#line 266 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 266 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '!';
@@ -1620,7 +1620,7 @@ yyreduce:
     break;
 
   case 33:
-#line 272 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 272 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '+';
@@ -1630,7 +1630,7 @@ yyreduce:
     break;
 
   case 34:
-#line 278 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 278 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.ival = '*';
@@ -1640,7 +1640,7 @@ yyreduce:
     break;
 
   case 35:
-#line 284 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 284 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    (yyval.bval) = (yyvsp[0].bval);
 	}
@@ -1648,7 +1648,7 @@ yyreduce:
     break;
 
   case 36:
-#line 292 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 292 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.dval = (yyvsp[0].dval);
@@ -1658,7 +1658,7 @@ yyreduce:
     break;
 
   case 37:
-#line 298 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 298 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.sval = (yyvsp[0].sval);
@@ -1668,7 +1668,7 @@ yyreduce:
     break;
 
   case 38:
-#line 304 "projects/keyread/src/parser.y" /* yacc.c:1646  */
+#line 304 "projects/keyread/src/./parser.y" /* yacc.c:1646  */
     {
 	    val_str t;
 	    t.dval = (float)(yyvsp[0].ival);
@@ -1906,7 +1906,7 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 311 "projects/keyread/src/parser.y" /* yacc.c:1906  */
+#line 311 "projects/keyread/src/./parser.y" /* yacc.c:1906  */
 
 
 

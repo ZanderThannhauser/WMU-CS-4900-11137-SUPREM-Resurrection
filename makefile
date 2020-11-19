@@ -1,7 +1,4 @@
 
-
-default: bin/suprem
-
 CC = gcc
 WIN_CC = x86_64-w64-mingw32-gcc
 
@@ -21,23 +18,25 @@ LINUX_CPPFLAGS += -D LINUX
 WINDOWS_CPPFLAGS = $(CPPFLAGS)
 WINDOWS_CPPFLAGS += -D WINDOWS
 
-CFLAGS += -std=c99 # We updated the source to use c99
-#CFLAGS += -std=c90 # Original SUPREM was written in c90, I think.
+CFLAGS += -std=c99
 
+CFLAGS += -g
 CFLAGS += -Wall
 CFLAGS += -Werror
 #CFLAGS += -Wfatal-errors
 CFLAGS += -Wno-maybe-uninitialized
 CFLAGS += -Wno-array-bounds
 CFLAGS += -Wno-format-overflow
-CFLAGS += -g
+#CFLAGS += -flto
 
-NDFLAGS += -O2
+RFLAGS += -O2
 
 DFLAGS += -Wno-unused-but-set-variable
 DFLAGS += -D DEBUGGING_2020=1
 
 LDLIBS += -lm
+
+default: bin/suprem
 
 ARGS += ./projects/suprem/system-tests/durban1/input
 #ARGS += ./projects/suprem/system-tests/exam1/input
@@ -66,6 +65,12 @@ ARGS += ./projects/suprem/system-tests/durban1/input
 #ARGS += ./projects/suprem/system-tests/gaas/input
 #ARGS += ./projects/suprem/system-tests/gaas/input
 
+bin:
+	rm -f ./bin
+	ln -s `mktemp -d` bin
+#	mkdir bin
+	find -type d | sed 's ^ bin/ ' | xargs -d \\n mkdir -p
+
 run: bin/suprem data/suprem.uk
 	./bin/suprem $(ARGS)
 
@@ -84,24 +89,15 @@ valrun.d: bin/suprem.d data/suprem.uk
 valrun-stop.d: bin/suprem.d data/suprem.uk
 	valgrind --gen-suppressions=yes ./bin/suprem.d $(ARGS)
 
-bin:
-	mkdir -p bin
-
 data/suprem.uk: bin/keyread data/suprem.key
 	./bin/keyread ./data/suprem.uk < ./data/suprem.key
 
-projects/%/makefile: template.mk
-	sed 's/projectname/$*/g' < $< > $@
+.PRECIOUS: bin/%.mk bin/%.win.mk
 
-include projects/keyread/makefile
-include projects/preprocessor/makefile
-include projects/scraper/makefile
-include projects/suprem/makefile
-
-%.mk: %.c
+bin/%.mk: %.c
 	$(CPP) -MM -MT $@ $(LINUX_CPPFLAGS) -MF $@ $< || ($$EDITOR $< && false)
 
-%.win.mk: %.c
+bin/%.win.mk: %.c
 	$(WIN_CC) -MM -MT $@ $(WINDOWS_CPPFLAGS) -MF $@ $< || ($$EDITOR $< && false)
 
 %.h %.c: %.y
@@ -109,22 +105,22 @@ include projects/suprem/makefile
 	mv y.tab.c $*.c
 	mv y.tab.h $*.h
 
-%.o: %.c %.mk
-	$(CC) -c $(NDFLAGS) $(LINUX_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
+bin/%.o: %.c bin/%.mk
+	$(CC) -c $(RFLAGS) $(LINUX_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
-%.d.o: %.c %.mk
+bin/%.d.o: %.c bin/%.mk
 	$(CC) -c $(DFLAGS) $(LINUX_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
-%.win.o: %.c %.win.mk
-	$(WIN_CC) -c $(NDFLAGS) $(WINDOWS_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
+bin/%.win.o: %.c bin/%.win.mk
+	$(WIN_CC) -c $(RFLAGS) $(WINDOWS_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
-%.d.win.o: %.c %.win.mk
+bin/%.d.win.o: %.c bin/%.win.mk
 	$(WIN_CC) -c $(DFLAGS) $(WINDOWS_CPPFLAGS) $(CFLAGS) $< -o $@ || ($$EDITOR $< && false)
 
-.PHONY: test open-all-suprem format clean-successes clean
-.PHONY: test-keyread test-preprocessor test-scraper test-suprem
+#.PHONY: test open-all-suprem format clean-successes clean
+#.PHONY: test-keyread test-preprocessor test-scraper test-suprem
 
-winpack.zip: bin/suprem.exe \
+bin/winpack.zip: bin/suprem.exe \
 	data/modelrc \
 	data/sup4gs.imp \
 	data/suprem.uk \
@@ -137,18 +133,76 @@ winpack.zip: bin/suprem.exe \
 	zip $@ $^
 
 test: systest
-test: unittest
 
-clean-successes:
-	find -name '*.actual' -delete
-	find -name '*.success' -delete
-	find -path '*/success' -delete
+bin/projects/%/makefile: template.mk | bin
+	sed 's/projectname/$*/g' < $< > $@
 
-clean:
-	rm -rf bin winpack.zip
-	find -name '*.o' -print -delete
-	find -path './*/*.mk' -print -delete
-	find -executable -a -type f -print -delete
+include bin/projects/keyread/makefile
+include bin/projects/suprem/makefile
+
+# rule to search and list all system tests for suprem:
+bin/systestlist.mk: | bin
+	find ./projects/suprem/system-tests -path '*/input' | sort -V | sed 's/^/systests += /' > $@
+
+include bin/systestlist.mk
+
+systests_success = $(patsubst %/input,bin/%/success,$(systests))
+
+systest: $(systests_success)
+
+# rule to copy whatever over for testing:
+bin/projects/suprem/system-tests/%: projects/suprem/system-tests/%
+	cp -v $< $@
+
+# example 15 needs 'be1' to by copied along for testing:
+bin/./projects/suprem/system-tests/exam15/success: bin/projects/suprem/system-tests/exam15/be1
+
+# example 16 needs 'file1' to by copied along for testing:
+bin/./projects/suprem/system-tests/exam16/success: bin/projects/suprem/system-tests/exam16/file1
+
+# example 18 needs 'initepi.dat' to by copied along for testing:
+bin/./projects/suprem/system-tests/exam18/success: bin/projects/suprem/system-tests/exam18/initepi.dat
+
+# example 18b needs 'initepi.dat' to by copied along for testing:
+bin/./projects/suprem/system-tests/exam18b/success: bin/projects/suprem/system-tests/exam18b/initepi.dat
+
+# example 19 needs 'si.50.5e12' to by copied along for testing:
+bin/./projects/suprem/system-tests/exam19/success: bin/projects/suprem/system-tests/exam19/si.50.5e12
+
+# example 19b needs 'initepi.dat' to by copied along for testing:
+bin/./projects/suprem/system-tests/exam19b/success: bin/projects/suprem/system-tests/exam19b/initepi.dat
+bin/./projects/suprem/system-tests/exam19b/success: bin/projects/suprem/system-tests/exam19b/si.50.5e12
+
+# example 20 needs 'initepi.dat' to by copied along for testing:
+bin/./projects/suprem/system-tests/exam20/success: bin/projects/suprem/system-tests/exam20/initepi.dat
+bin/./projects/suprem/system-tests/exam20/success: bin/projects/suprem/system-tests/exam20/si.50.6e12
+
+# example 20b needs 'initepi.dat' to by copied along for testing:
+bin/./projects/suprem/system-tests/exam20b/success: bin/projects/suprem/system-tests/exam20b/initepi.dat
+bin/./projects/suprem/system-tests/exam20b/success: bin/projects/suprem/system-tests/exam20b/si.50.6e12
+
+# rule for all system tests:
+bin/%/success: bin/suprem \
+	data/suprem.uk data/modelrc data/sup4gs.imp \
+	%/input %/stdout %/stderr %/exitcode
+	SUPREM=`realpath bin/suprem`; \
+	export SUP4KEYFILE=`realpath data/suprem.uk`; \
+	export SUP4MODELRC=`realpath data/modelrc`; \
+	export SUP4IMPDATA=`realpath data/sup4gs.imp`; \
+	export INPUT=`realpath $*/input`; \
+		cd bin/$*; \
+		$$SUPREM $$INPUT 0< /dev/null 1> ./stdout 2> ./stderr; \
+		echo $$? > ./exitcode;
+	diff ./bin/$*/stdout   ./$*/stdout
+	diff ./bin/$*/stderr   ./$*/stderr
+	diff ./bin/$*/exitcode ./$*/exitcode
+	touch $@
+
+
+
+
+
+
 
 
 
