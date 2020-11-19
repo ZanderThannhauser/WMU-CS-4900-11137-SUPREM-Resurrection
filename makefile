@@ -160,27 +160,6 @@ bin/./projects/suprem/system-tests/exam15/success: bin/projects/suprem/system-te
 # example 16 needs 'file1' to by copied along for testing:
 bin/./projects/suprem/system-tests/exam16/success: bin/projects/suprem/system-tests/exam16/file1
 
-# example 18 needs 'initepi.dat' to by copied along for testing:
-bin/./projects/suprem/system-tests/exam18/success: bin/projects/suprem/system-tests/exam18/initepi.dat
-
-# example 18b needs 'initepi.dat' to by copied along for testing:
-bin/./projects/suprem/system-tests/exam18b/success: bin/projects/suprem/system-tests/exam18b/initepi.dat
-
-# example 19 needs 'si.50.5e12' to by copied along for testing:
-bin/./projects/suprem/system-tests/exam19/success: bin/projects/suprem/system-tests/exam19/si.50.5e12
-
-# example 19b needs 'initepi.dat' to by copied along for testing:
-bin/./projects/suprem/system-tests/exam19b/success: bin/projects/suprem/system-tests/exam19b/initepi.dat
-bin/./projects/suprem/system-tests/exam19b/success: bin/projects/suprem/system-tests/exam19b/si.50.5e12
-
-# example 20 needs 'initepi.dat' to by copied along for testing:
-bin/./projects/suprem/system-tests/exam20/success: bin/projects/suprem/system-tests/exam20/initepi.dat
-bin/./projects/suprem/system-tests/exam20/success: bin/projects/suprem/system-tests/exam20/si.50.6e12
-
-# example 20b needs 'initepi.dat' to by copied along for testing:
-bin/./projects/suprem/system-tests/exam20b/success: bin/projects/suprem/system-tests/exam20b/initepi.dat
-bin/./projects/suprem/system-tests/exam20b/success: bin/projects/suprem/system-tests/exam20b/si.50.6e12
-
 # rule for all system tests:
 bin/%/success: bin/suprem \
 	data/suprem.uk data/modelrc data/sup4gs.imp \
