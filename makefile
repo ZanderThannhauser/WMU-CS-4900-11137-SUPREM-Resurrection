@@ -125,11 +125,9 @@ bin/winpack.zip: bin/suprem.exe \
 	data/sup4gs.imp \
 	data/suprem.uk \
 	examples/durban1/input \
-	examples/durban1/stdout.correct \
-	examples/durban1/str.correct \
+	examples/durban1/stdout \
 	examples/exam4/input \
-	examples/exam4/stdout.correct \
-	examples/exam4/str.correct
+	examples/exam4/stdout
 	zip $@ $^
 
 test: systest
