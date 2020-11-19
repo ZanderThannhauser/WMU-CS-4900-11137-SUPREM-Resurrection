@@ -8,8 +8,6 @@
 
 **Alex's Branch**:
 ![Keyread](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Keyread/badge.svg?branch=alexs-branch)
-![Preprocessor](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Preprocessor/badge.svg?branch=alexs-branch)
-![Scraper](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Scraper/badge.svg?branch=alexs-branch)
 ![Suprem](https://github.com/ZanderThannhauser/WMU-CS-4900-11137-SUPREM-Resurrection/workflows/Suprem/badge.svg?branch=alexs-branch)
 
 SUPREM is an advanced two dimensional process simulator for silicon and
