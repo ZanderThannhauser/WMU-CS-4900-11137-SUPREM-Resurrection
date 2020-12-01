@@ -43,13 +43,15 @@ var layout = {
 		title: 'Concentration',
 		range: [0, 1e20]
 	},
-	width: 600,
-	height: 400
+	// width: 600,
+	// height: 400
 };
+
+var config = {responsive: true};
 	
 function setup_chart()
 {
-	Plotly.newPlot('chart', data, layout);
+	Plotly.newPlot('chart', data, layout, config);
 };
 
 function update_chart(strdata)

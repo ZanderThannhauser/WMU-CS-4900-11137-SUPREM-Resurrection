@@ -114,12 +114,13 @@ function ex_three(e){
 	myonload();
 }
 
-function ex_five(e){
-	console.log("click five!")
-	initial_commands = ex_five_commands;
-	document.getElementById("commands").innerHTML = ""
-	myonload();
-}
+//maybe later
+// function ex_five(e){
+// 	console.log("click five!")
+// 	initial_commands = ex_five_commands;
+// 	document.getElementById("commands").innerHTML = ""
+// 	myonload();
+// }
 
 
 function set(input, obj, i)

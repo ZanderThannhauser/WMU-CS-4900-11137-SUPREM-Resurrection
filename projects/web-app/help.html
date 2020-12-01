@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+		<meta content="utf-8" http-equiv="encoding">
+		
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+		<link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+		<link rel="stylesheet" href="css/index.css">
+		<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+		<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+	
+		
+		<title>Suprem Resurrection-Help</title>
+	</head>
+	
+	<nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+		<ul class="navbar-nav">
+			<li class="nav-item active">
+				<a class="nav-link" href="index.html">Suprem</a>
+			</li>
+			<li class="nav-item">
+				<a class="nav-link" href="help.html">Help</a>
+			</li>
+		</ul>
+	</nav>
+
+	<br>
+
+	<body>
+		<div class="row">
+			<div class="col-sm-12 container">
+                <pre>
+                    This web app is used to run supreme. In its current version we do not allow adding new or custom commands.
+                    We have included the following preset examples, which are labeled 
+                    according to their names in the original Supreme code, to run your own example 
+                    select the example that is closest to yours and adjust accordingly.
+
+                    <b>On website load and on Reset Button press:</b>
+
+                    #some set stuff
+                    set echo
+
+                    #This limits the anount of output data about the simulation is shown
+                    option quiet
+
+                    #This simulation will be one dimensional
+                    mode one.dim
+
+                    #the vertical definition
+                    #the thickness of the area being monitored for the diffusion region in micro-neters
+                    #even though the diffusion should be the 0.6 monitored will be 1
+
+                    line x loc = 0		spacing = 0.01	tag = top
+                    line x loc = 0.3	spacing = 0.01
+                    line x loc = 0.6	spacing = 0.01
+                    line x loc = 0.9	spacing = 0.01
+                    line x loc = 380	spacing = 100	tag = bottom
+
+                    #This defines where the diffusion witl start and end at based on the vertical
+                    #definition tags
+
+                    region silicon xlo = top xhi = bottom
+
+                    #This tells the simulation which surface is the exposed surface
+                    bound exposed xlo = top xhi = top
+
+                    #calculate the mesh
+                    #This is where the simulation is told which dopant and concentration of the
+                    #silicon wafer is being used
+                    init conc=1.0e16 boron
+
+                    #the diffusion card
+                    #this ts where the time and temperature of the diffusion are entered
+                    #also this is where the concentration of the phosphorous dopant is used
+                    #note that the dopant is simulated as 0 gas and not as a Liquid
+
+                    diffuse time=24 temp=1050 phosphorus gas.conc=1e20
+
+                    #save the data
+                    structure out=./str.actual
+
+
+                </pre>
+                <pre>
+                    <b>Example One:</b>
+                    #some set stuff
+                    set echo
+                    option quiet
+                    mode one.dim
+
+                    #the vertical definition
+                    line x loc = 0     spacing = 0.02 tag = top
+                    line x loc = 0.50  spacing = 0.02
+                    line x loc = 2.0   spacing = 0.25 tag=bottom
+
+                    #the silicon wafer
+                    region silicon xlo = top xhi = bottom
+
+                    #set up the exposed surfaces
+                    bound exposed  xlo = top  xhi = top
+
+                    #calculate the mesh
+                    init boron conc=1.0e14
+
+                    #the pad oxide
+                    deposit oxide thick=0.075
+
+                    #the uniform boron implant
+                    implant boron dose=3e14 energy=70 pearson
+
+                    #plot the initial profile
+                    select z=log10(boron)
+                    plot.1d x.ma=2.0 y.mi=14.0 y.max=20.0
+
+                    #the diffusion card
+                    diffuse time=30 temp=1100 
+
+                    #save the data
+                    structure out=./str.actual
+
+                    #plot the final profile
+                    select z=log10(bor)
+                    plot.1d x.v=0.1 cle=f axi=f
+
+                </pre>
+                <pre>
+                    <b>Example Two:</b>
+                    #some set stuff
+                    set echo
+                    option quiet
+                    mode one.dim
+
+                    #the vertical definition
+                    line x loc = 0     spacing = 0.02 tag = top
+                    line x loc = 1.50  spacing = 0.05
+                    line x loc = 5.0   spacing = 0.5
+                    line x loc = 400.0                tag=bottom
+
+                    #the silicon wafer
+                    region silicon xlo = top xhi = bottom
+
+                    #set up the exposed surfaces
+                    bound exposed  xlo = top  xhi = top
+
+                    #calculate the mesh
+                    init boron conc=1.0e14
+
+                    #the pad oxide
+                    deposit oxide thick=0.075
+
+                    #the uniform boron implant
+                    implant boron dose=3e14 energy=70 pearson
+
+                    #plot the initial profile
+                    select z=log10(boron)
+                    plot.1d x.ma=2.0 y.mi=14.0 y.max=20.0
+
+                    #the diffusion card
+                    method init=1.0e-3 two.d
+                    diffuse time=30 temp=1100 dry
+
+                    #save the data
+                    structure out=./str.actual
+
+                    #plot the final profile
+                    select z=log10(bor)
+                    plot.1d cle=f axi=f
+                </pre>
+                <pre>
+                    <b>Example Three:</b>
+                    #some set stuff
+                    option quiet
+                    mode one.dim
+
+                    #the vertical definition
+                    line x loc = 0     spacing = 0.02 tag = top
+                    line x loc = 1.50  spacing = 0.05
+                    line x loc = 5.0   spacing = 0.5
+                    line x loc = 28.0  tag=bottom
+
+                    #the silicon wafer
+                    region silicon xlo = top xhi = bottom
+
+                    #set up the exposed surfaces
+                    bound exposed  xlo = top  xhi = top
+                    bound backsid  xlo = bottom  xhi = bottom
+
+                    #calculate the mesh
+                    init 
+
+                    #the pad oxide
+                    deposit oxide thick=0.02
+
+                    #the diffusion card
+                    method init=1.0e-3 two.d
+                    %define otim 0.0
+                    %define oldfci 1.0
+                    %define oldbci 1.0
+                    %define totfci 0.0
+                    %define totbci 0.0
+
+                    %diffuse time=240 temp=1100 dry movie="
+                        select z=(inter/ci.star);
+                        %define newfci zfn(0.0,sil@oxi(0.0)+1.0e-6)
+                        %define newbci zfn(0.0,27.9)
+                        %define totfci ${totfci} + 0.5 * (${time}-${otim})*(${newfci}+${oldfci})
+                        %define totbci ${totbci} + 0.5 * (${time}-${otim})*(${newbci}+${oldbci})
+                        %define den ${time}+1.0e-6
+                        printf Data ${time}/60.0 (${totfci}/${den}) (${totbci}/${den})
+                        %define otim ${time}
+                        %define oldfci ${newfci}
+                        %define oldbci ${newbci}"
+
+
+                    #save the data
+                    structure out=./str.actual
+                </pre>
+                <pre>
+                    <b>Example Five:</b>
+                    set echo
+                    cpu log
+                    #
+                    phos poly /gas Trn.0=0.0
+                    bor poly /gas Trn.0=0.0
+                    phos oxide /gas Trn.0=0.0
+                    bor oxide /gas Trn.0=0.0
+                    #change the phosphorus diffusivity like this
+                    #phos  silicon Dix.0=0.0 Dim.0=0.0 Dimm.0=0.0 
+                    #
+                    line x loc=0.0 tag=lft spacing=0.25
+                    line x loc=0.45        spacing=0.03
+                    line x loc=0.75        spacing=0.03
+                    line x loc=1.4         spacing=0.25
+                    line x loc=1.5 tag=rht spacing=0.25
+
+                    line y loc=0.0 tag=top spacing=0.01
+                    line y loc=0.1 	       spacing=0.01
+                    line y loc=0.25         spacing=0.05
+                    line y loc=3.0 tag=bot 
+
+                    region silicon xlo=lft xhi=rht ylo=top yhi=bot
+
+                    bound exposed xlo=lft xhi=rht ylo=top yhi=top
+                    bound backside xlo=lft xhi=rht ylo=bot yhi=bot
+
+                    init boron conc=1.0e16
+
+                    #deposit the gate oxide
+                    deposit oxide thick=0.025
+
+                    #channel implant
+                    implant boron dose=1.0e12 energy=15.0
+
+                    #deposit the gate poly
+                    deposit poly thick=0.500 div=10 phos conc=1.0e19
+
+                    #anneal the beast
+                    diff time=10 temp=1000
+
+                    #etch the poly away
+                    etch poly right p1.x=0.55 p1.y=-0.020 p2.x=0.45 p2.y=-0.55
+
+                    #anneal this step
+                    diffuse time=30.0 temp=950
+
+                    struct outf=./poly.str.actual
+
+                    #do the phosphorus implant
+                    implant phos dose=1.0e13 energy=50.0
+
+                    #deposit the oxide spacer
+                    deposit oxide thick=0.400 spac=0.05
+
+                    #etch the spacer back
+                    etch dry oxide thick=0.420 
+
+                    struct outf=./imp2.str.actual
+                    #after etch anneal
+                    method vert fermi grid.ox=0.0
+                    diffuse time=30 temp=950 dry
+
+                    #implant the arsenic
+                    implant ars dose=5.0e15 energy=80.0
+
+                    #deposit a cap oxide
+                    deposit oxide thick=0.15 space=0.03
+
+                    struct outf=./imp4.str.actual
+
+                    #do the final anneal
+                    diffuse time=20 temp=950
+
+                    struct outf=./str.actual
+                </pre>
+                
+			</div>
+		</div>
+	</body>
+	
+	<footer style="text-align: center; font-family: monospace;">
+		<small>&copy; Copyright 2020, WMU Senior Project</small>
+	</footer>
+
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
