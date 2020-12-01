@@ -84,8 +84,10 @@ function submit(e)
 		{
 			console.log(data);
 			
-			if (data.exitcode != 0)
-				alert("nah, (error)");
+			if (data.error != undefined)
+				alert("python had an error!");
+			else if (data.exitcode != 0)
+				alert("suprem had an error!");
 			else
 			{
 				stdout_textarea.innerHTML = data.stdout;

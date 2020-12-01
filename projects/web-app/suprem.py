@@ -243,7 +243,7 @@ try:
 	f = open('infile', 'w');
 	f.write(suprem_input);
 	f.close();
-
+	
 	process = Popen(["./suprem", "./infile"], stdout=PIPE, stderr=STDOUT)
 	(output, err) = process.communicate(timeout=15);
 	exitcode = process.wait();
@@ -261,7 +261,7 @@ try:
 	print(json.dumps(O));
 
 except Exception as e:
-	print(json.dumps(e));
+	print(json.dumps({'error': str(type(e))}));
 
 
 
