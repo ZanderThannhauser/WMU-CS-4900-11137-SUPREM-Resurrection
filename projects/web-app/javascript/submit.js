@@ -54,6 +54,14 @@ function submit(e)
 					structure(input, obj, i);
 					break;
 				
+				case "deposit":
+					deposit(input, obj, i);
+					break;
+				
+				case "implant":
+					implant(input, obj, i);
+					break;
+				
 				default:
 					alert('whoops!');
 					break;
@@ -65,7 +73,8 @@ function submit(e)
 	console.log(obj);
 	console.log(JSON.stringify(obj));
 	
-	var stdout_textarea = document.getElementById('stdout');
+	var stdout_textarea  = document.getElementById('stdout');
+	var strdata_textarea = document.getElementById('strdata');
 	
 	 $.ajax({
 		type: "POST",
@@ -76,12 +85,18 @@ function submit(e)
 			console.log(data);
 			
 			if (data.exitcode != 0)
-				alert("nah,");
+				alert("nah, (error)");
 			else
+			{
 				stdout_textarea.innerHTML = data.stdout;
-			
-			if (Object.keys(data.outfiles).length > 1);
-				update_chart(data.outfiles[Object.keys(data.outfiles)[0]]);
+				
+				if (Object.keys(data.outfiles).length >= 1)
+				{
+					var strdata = data.outfiles[Object.keys(data.outfiles)[0]];
+					strdata_textarea.innerHTML = strdata;
+					update_chart(strdata);
+				}
+			}
 		}
 	 });
 
@@ -89,6 +104,7 @@ function submit(e)
 
 function reset(e) {
 	console.log("click reset!")
+	initial_commands = durbin_1;
 	document.getElementById("commands").innerHTML = ""
 	myonload();
 }
@@ -315,5 +331,70 @@ function structure(input, obj, i)
 		"command": "structure",
 		"outfile": item.value
 	});
-
 }
+
+function deposit(input, obj, i)
+{
+	i++;
+	var material = input[i++];
+	var thicc = input[i++];
+	var implant = input[i];
+	
+	if (implant.name == "implant")
+		i++;
+	else
+		implant = {value: ""};
+	
+	var concentrat = input[i++];
+	var space = input[i++];
+	
+	obj.push({
+		"command": "deposit",
+		"material": material.value,
+		"thick": parseFloat(thicc.value),
+		"implant": implant.value,
+		"concentrat": parseFloat(concentrat.value),
+		"space": parseFloat(space.value)
+	});
+}
+
+
+function implant(input, obj, i)
+{
+	i++;
+	var impurity = input[i];
+	
+	if (impurity.name == "impurity")
+		i++;
+	else
+		impurity = {value: ""};
+	
+	var dose = input[i++];
+	var energy = input[i++];
+	var model = input[i++];
+	
+	obj.push({
+		"command": "implant",
+		"impurity": impurity.value,
+		"dose": parseFloat(dose.value),
+		"energy": parseFloat(energy.value),
+		"model": model.value,
+	});
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

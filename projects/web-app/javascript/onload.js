@@ -2,6 +2,7 @@
 function myonload()
 {
 	console.log("onload")
+	
 	var commands = document.getElementById("commands");
 	
 	initial_commands.forEach((command) => 

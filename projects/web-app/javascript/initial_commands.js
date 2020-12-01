@@ -1,5 +1,6 @@
 
-var initial_commands = [
+
+var durbin_1 = [
 	{command: "set", noexecute: false, echo: true},
 	{command: "option", "print-level": "quiet"},
 	{command: "mode", dim: "one.dim"},
@@ -14,6 +15,8 @@ var initial_commands = [
 	{command: "diffuse", time: "24.0", temp: "1050", gas: "phosphorus", "gas.conc": "1e20"},
 	{command: "structure", out: "out.str"},
 ];
+
+var initial_commands = durbin_1;
 
 var ex_one_commands = [
 	{command: "set", noexecute: false, echo: true},

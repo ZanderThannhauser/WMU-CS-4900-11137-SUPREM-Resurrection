@@ -154,11 +154,16 @@ templates['deposit'] = {
 };
 
 
-def implant_handler(impurity, dose, energy, model = None):
+#def implant_handler(impurity = None, dose, energy, model = None):
+def implant_handler(**params):
 	global suprem_input;
-	suprem_input += f"implant {impurity} dose = {dose} energy = {energy}";
-	if model:
-		suprem_input += f" {model}";
+	
+	impurity = params.get("impurity", "");
+	dose = params.get("dose");
+	energy = params.get("energy");
+	model = params.get("model", "");
+	
+	suprem_input += f"implant {impurity} dose = {dose:e} energy = {energy} {model}";
 
 templates['implant'] = {
 	'impurity': {'type': str, 'choices': ['silicon', 'arsenic', 'phosphorus', 'antimony', 'boron', 'bf2', 'cesium', 'beryllium', 'magnesium', 'selenium', 'isilicon', 'tin', 'germanium', 'zinc', 'carbon', 'generic']},
