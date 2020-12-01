@@ -52,7 +52,7 @@ Solving      1021.59 +      193.112 =       1214.7,  178.374%, np 80
 Solving       1214.7 +      350.262 =      1564.96,  181.378%, np 80
 Solving      1564.96 +       235.04 =         1800,   67.104%, np 81
 #save the data
-structure out=./str.actual
+structure out=./oed.str
 #plot the final profile
 select z=log10(bor)
 plot.1d cle=f axi=f
