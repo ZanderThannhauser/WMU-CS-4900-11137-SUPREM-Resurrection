@@ -74,7 +74,6 @@ function submit(e)
 	console.log(JSON.stringify(obj));
 	
 	var stdout_textarea  = document.getElementById('stdout');
-	var strdata_textarea = document.getElementById('strdata');
 	
 	 $.ajax({
 		type: "POST",
@@ -92,12 +91,19 @@ function submit(e)
 			{
 				stdout_textarea.innerHTML = data.stdout;
 				
-				if (Object.keys(data.outfiles).length >= 1)
-				{
-					var strdata = data.outfiles[Object.keys(data.outfiles)[0]];
-					strdata_textarea.innerHTML = strdata;
-					update_chart(strdata);
-				}
+				var ul = document.getElementById('strdata-links');
+				ul.innerHTML = "";
+				
+				Object.keys(data.outfiles).forEach((outpath) => {
+					var li = document.createElement('li');
+					var a = document.createElement('a');
+					a.href = outpath;
+					a.target = "_blank";
+					a.text = "Link to '" + outpath + "'";
+					li.appendChild(a);
+					ul.appendChild(li);
+				});
+				
 			}
 		}
 	 });
