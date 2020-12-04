@@ -94,6 +94,12 @@ function submit(e)
 				var ul = document.getElementById('strdata-links');
 				ul.innerHTML = "";
 				
+				if (Object.keys(data.outfiles).length >= 1)
+				{
+					var strdata = data.outfiles[Object.keys(data.outfiles)[0]];
+					update_chart(strdata);
+				}
+				
 				Object.keys(data.outfiles).forEach((outpath) => {
 					var li = document.createElement('li');
 					var a = document.createElement('a');
