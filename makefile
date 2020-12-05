@@ -38,7 +38,7 @@ LDLIBS += -lm
 
 default: bin/suprem
 
-ARGS += ./projects/suprem/system-tests/durban1/input
+ARGS += ./projects/suprem/system-tests/durbin1/input
 #ARGS += ./projects/suprem/system-tests/exam1/input
 #ARGS += ./projects/suprem/system-tests/exam2/input
 #ARGS += ./projects/suprem/system-tests/exam3/input
