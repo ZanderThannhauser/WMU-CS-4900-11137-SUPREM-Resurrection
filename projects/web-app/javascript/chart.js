@@ -1,24 +1,24 @@
 
 var boron = {
 	type: 'scatter',
-	x: [1, 2, 3, 4],
-	y: [2, 4, 8, 16],
+	x: [],
+	y: [],
 	mode: 'lines+markers',
 	name: 'Boron Concentration (cm^-3)'
 };
 
 var phosphorus = {
 	type: 'scatter',
-	x: [1, 2, 3, 4],
-	y: [2, 4, 8, 16],
+	x: [],
+	y: [],
 	mode: 'lines+markers',
 	name: 'Phosphorus Concentration (cm^-3)'
 };
 
 var net_dope = {
 	type: 'scatter',
-	x: [1, 2, 3, 4],
-	y: [2, 4, 8, 16],
+	x: [],
+	y: [],
 	mode: 'lines+markers',
 	name: 'Net Concentration (cm^-3)',
 	marker: {
