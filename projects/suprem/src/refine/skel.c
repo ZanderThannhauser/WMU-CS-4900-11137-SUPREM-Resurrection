@@ -301,22 +301,22 @@ int sub_2dskel(int s1, int s2, int *s, int *inside)
 			/*create a new skeleton...*/
 			num++;
 			s[num] = cr_sreg(sreg[s1]->mat);
-
+			
 			/*add the fragment of the initial edge*/
 			e = bp->edge;
 			out_node = nF(bp);
 			ha = l_edge(e);
 			hsp = min2(get_space(pt_edg(e, 0)), get_space(pt_edg(e, 0)));
 			bte = edg_crs(e, s2, c);
-
+			
 			/*shorten the edge*/
 			enew = sp_edge(e, c, &ip, TRUE);
 			set_space(ip, min2(get_space(ip), hsp));
 			mk_surf(ip);
-
+			
 			/*save the first node*/
 			first_node = node_mat(nd_pt(ip, 0), sreg[s1]->mat);
-
+			
 			/*convolutions to figure out the edge*/
 			if (enew < 0)
 			{
@@ -491,7 +491,7 @@ void check_in(int s1, int s2, int *inside, int *ai, int *ao)
 			cnt++;
 		}
 	}
-
+	
 	*ai = allin == cnt;
 	*ao = allout == cnt;
 }
@@ -501,9 +501,10 @@ int on_bound(int p, int sr)
 	int			   f;
 	float		   len, alph[MAXDIM];
 	struct LLedge *bp, *bnd;
-
+	
 	/* If the perpindicular distance to the line is zero, its on the line*/
 	bnd = sreg[sr]->bnd;
+	
 	for (bp = bnd, f = 1; f || bp != bnd; f = 0, bp = bp->next)
 	{
 		if (mode == ONED)
@@ -531,6 +532,7 @@ int on_bound(int p, int sr)
 void plot_on(sr, inside) int sr;
 int *inside;
 {
+	#if 0
 	int			   f;
 	struct LLedge *bp, *bnd;
 
@@ -539,6 +541,8 @@ int *inside;
 	{
 		node_pl(nB(bp), inside[nB(bp)] + 1);
 	}
+	#endif
+	TODO;
 }
 
 /*-----------------PTNREG-----------------------------------------------
@@ -551,10 +555,11 @@ int pt_in_skel(float c[3], int sr)
 	int			   flag, f;
 	double		   xi, yi, xin, yin;
 	struct LLedge *bp, *bnd;
-
+	
 	/*
 	 * If a line to infinity crosses an odd number of edges, its inside.
 	 */
+	
 	flag = TRUE;
 	bnd = sreg[sr]->bnd;
 
@@ -662,5 +667,18 @@ struct LLedge *edg_crs(int e, int s2, float c[MAXDIM])
 			}
 		}
 	}
+	
 	return (NULL);
 }
+
+
+
+
+
+
+
+
+
+
+
+

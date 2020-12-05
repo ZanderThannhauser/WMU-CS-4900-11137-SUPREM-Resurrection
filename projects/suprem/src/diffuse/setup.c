@@ -31,6 +31,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../math/blklu.h"
 #include "../diffuse/active.h"
 #include "setup.h"

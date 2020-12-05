@@ -30,6 +30,7 @@
 #include "suprem/include/plot.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../geom/limits.h"
 #include "../mesh/simpl.h"
 #include "../misc/panic.h"
@@ -180,7 +181,8 @@ void write_SIMPLPolygon(FILE *SIMPLfile)
 		fprintf(stderr, "can't allocate memory for poly_data\n");
 		exit(-1);
 	}
-
+	
+	#if 0
 	fprintf(SIMPLfile, "%d\n", nreg);
 	for (ir = 0; ir < nreg; ir++)
 	{
@@ -271,6 +273,8 @@ void write_SIMPLPolygon(FILE *SIMPLfile)
 		free(poly_array);
 	} /* end for ir */
 	free(poly_data);
+	#endif
+	TODO;
 }
 
 void write_SIMPLGrid(FILE *SIMPLfile, float *xloc, int xlocsize, float *yloc,

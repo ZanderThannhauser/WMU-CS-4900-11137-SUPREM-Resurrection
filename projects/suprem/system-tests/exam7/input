@@ -32,9 +32,9 @@ plot.2d grid bound
 meth compr
 
 plot.2d bound y.mi=-0.5 line.b=2
-# 2020: pause
+# 2020: # pause
 
 diffuse tim=90 tem=1000 weto2 movie="plot.2d bound cle=f axi=f"
-stru outf=./str.actual
+stru outf=./out.str
 
 plot.2d bound flow vleng=0.1

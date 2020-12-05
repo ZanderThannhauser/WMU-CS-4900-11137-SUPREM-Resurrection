@@ -284,7 +284,7 @@ void face_ache(FEelt_typ *ae, int j)
 	int	ip1, ip2, ip;
 	double vlen;
 	int	in;
-
+	#if 0
 	/* Get local normal at either end and average for center*/
 	ip1 = ae->nd[(j + 1) % 3];
 	in = node_mat(pt[ip1]->nd[0], ae->mat);
@@ -308,6 +308,8 @@ void face_ache(FEelt_typ *ae, int j)
 	vlen = hypot(FEnd[ip]->garbage[X], FEnd[ip]->garbage[Y]);
 	FEnd[ip]->garbage[X] /= vlen;
 	FEnd[ip]->garbage[Y] /= vlen;
+	#endif
+	TODO;
 }
 
 /*-----------------GAS_FIXITIES-----------------------------------------
@@ -347,6 +349,7 @@ void gas_fixities()
  *----------------------------------------------------------------------*/
 void sil_face()
 {
+	#if 0
 	int		   ie, ip, j, nbr;
 	FEnd_typ * an1, *an2, *an3;
 	FEelt_typ *ae;
@@ -428,6 +431,8 @@ void sil_face()
 			an3->garbage[Y] /= vlen;
 		}
 	}
+	#endif
+	TODO;
 }
 
 /*-----------------SilOxLoad--------------------------------------------

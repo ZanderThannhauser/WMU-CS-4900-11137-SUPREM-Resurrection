@@ -66,12 +66,12 @@ implant ars dose=5.0e15 energy=80.0
 #deposit a cap oxide
 deposit oxide thick=0.15 space=0.03
 
-struct outf=./imp4.str.actual
+struct outf=./imp4.sup
 
 #do the final anneal
 diffuse time=20 temp=950
 
-struct outf=./str.actual
+struct outf=./ldd.sup
 
 
 

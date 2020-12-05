@@ -34,6 +34,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 function includes*/
+#include <debug.h>
 #include "../oxide/oxide_vel.h"
 #include "../dbase/grid_loop.h"
 #include "../dbase/grid_upd.h"
@@ -94,7 +95,6 @@ void point_vel()
 {
 	int ip, nx, ix;
 	int arr[3];
-
 	arr[0] = imptosol[XVEL];
 	arr[1] = imptosol[YVEL];
 
@@ -209,3 +209,11 @@ int ClockTri(int FixEm)
 	}
 	return ((nzero + nclock) * (nzero ? -1 : 1));
 }
+
+
+
+
+
+
+
+

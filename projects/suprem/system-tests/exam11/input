@@ -63,6 +63,6 @@ contour val=v line.type=4
 end
 
 #save the data
-struct outf=./str.actual
+struct outf=./out.str
 
 quit

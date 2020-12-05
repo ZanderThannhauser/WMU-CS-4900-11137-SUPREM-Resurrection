@@ -24,6 +24,7 @@
 #include "suprem/include/skel.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../mesh/rect.h"
 #include "../dbase/geom.h"
 #include "../geom/misc.h"
@@ -299,3 +300,20 @@ struct LLedge *quadsplit(struct sreg_str *rg)
 	else
 		return (rg->bnd->next);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

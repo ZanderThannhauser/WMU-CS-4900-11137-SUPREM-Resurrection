@@ -56,5 +56,5 @@ Solving      868.962 +      31.0377 =          900,  10.8653%, np 356
 	select z=log10(inter)
 	plot.1d x.min=0 x.ma=2 y.mi=14 y.max=20 cle=f axi=f line.type=2
 #save the data
-struct outf=./str.actual
+struct outf=./out.str
 quit

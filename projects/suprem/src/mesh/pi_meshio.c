@@ -37,6 +37,7 @@
 #include "suprem/include/sysdep.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../geom/limits.h"
 #include "../shell/do_action.h"
 #include "../dbase/locate.h"
@@ -109,12 +110,15 @@ int pi_write(char *name, int show)
 	fprintf(lu, "%d %d %d\n", Pnp, Pne, Pnb);
 	fprintf(lu, "%d %d\n", Pnelect, -Pnmat);
 
+	#if 0
 	/* Points */
 	for (i = 0; i < np; i++)
 		if (Ppt[i] >= 0)
 			fprintf(lu, "%16e %16e %16e %16e\n", cordinate(i, 0),
 					cordinate(i, 1), Pr1[i], Ptconc[i]);
-
+	#endif
+	TODO;
+	
 	/* Triangles */
 	for (i = 0; i < ne; i++)
 	{
@@ -262,7 +266,8 @@ int ShowElect(int show, int Pnelect, int Pnb, int *Pnbc, int *Pietype)
 				txmin - xslop, txmax + xslop, tymin - yslop, tymax + yslop);
 		do_str(CommandBuf);
 	}
-
+	
+	#if 0
 	/* Each electrode point */
 	for (i = 0; i < Pnb; i++)
 	{
@@ -292,6 +297,8 @@ int ShowElect(int show, int Pnelect, int Pnb, int *Pnbc, int *Pietype)
 		printf("Electrode %d: xmin %8.3f xmax %8.3f ymin %8.3f ymax %8.3f\n",
 			   ie, 1e4 * xlo[ie], 1e4 * xhi[ie], 1e4 * ylo[ie], 1e4 * yhi[ie]);
 	return 0;
+	#endif
+	TODO;
 }
 
 /*-----------------PI_DOP-----------------------------------------------
@@ -325,6 +332,7 @@ char *pi_dop(float **r1, float **tconc)
 	strcat(SelectBuf, "0 )");
 	do_str(SelectBuf);
 
+	#if 0
 	/* Copy the silicon value if there is one */
 	for (i = 0; i < np; i++)
 	{
@@ -338,7 +346,9 @@ char *pi_dop(float **r1, float **tconc)
 		if (Pr1[i] == 0)
 			Pr1[i] = 1.0;
 	}
-
+	#endif
+	TODO;
+	
 	free(tmp);
 	return (0);
 }
@@ -393,6 +403,7 @@ void reflect_grid(float sign, int xy)
 
 	nodmap = salloc(int, 2 * nn);
 
+	#if 0
 	/* First pass is to get the smallest/largest x cordinate */
 	extreme = -sign * MAXFLOAT;
 	for (i = 0; i < np; i++)
@@ -400,11 +411,14 @@ void reflect_grid(float sign, int xy)
 		if (sign * cordinate(i, xy) > sign * extreme)
 			extreme = cordinate(i, xy);
 	}
+	#endif
+	TODO;
 
 	/* OK, now loop over elements, creating new points and nodes as necc. */
 	neO = ne;
 	npO = np;
-
+	
+	#if 0
 	/* Duplicate the points*/
 	for (i = 0; i < npO; i++)
 	{
@@ -458,7 +472,9 @@ void reflect_grid(float sign, int xy)
 			}
 		}
 	}
-
+	#endif
+	TODO;
+	
 	/* Duplicate the triangles. */
 	nb[0] = nb[1] = nb[2] = -1024;
 	for (i = 0; i < neO; i++)
@@ -476,3 +492,17 @@ void reflect_grid(float sign, int xy)
 
 	free(nodmap);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

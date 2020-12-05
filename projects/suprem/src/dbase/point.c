@@ -27,6 +27,7 @@
 #include "suprem/include/diffuse.h"  /* for the time of creation */
 
 /* 2020 includes*/
+#include <debug.h>
 #include "../misc/panic.h"
 #include "point.h"
 /* end of includes*/
@@ -40,7 +41,11 @@ static int maxpt = 0;
 char *alloc_pt()
 {
 	int j;
-
+	ENTER;
+	
+	verpv(pt);
+	verpv(maxpt);
+	
 	if (np + 1 >= maxpt)
 	{
 		if (maxpt == 0)
@@ -54,7 +59,12 @@ char *alloc_pt()
 			pt = sralloc(pt_typ *, maxpt, pt);
 		}
 	}
+	
+	verpv(pt);
+	verpv(maxpt);
+	
 	pt[np] = (pt_typ *)malloc(sizeof(pt_typ));
+	
 	if (!pt[np])
 		return ("Out of storage in alloc_pt");
 
@@ -74,6 +84,8 @@ char *alloc_pt()
 		pt[np]->nd[j] = -1;
 
 	np++;
+	
+	EXIT;
 	return (0);
 }
 

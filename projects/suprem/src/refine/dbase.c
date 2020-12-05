@@ -25,6 +25,7 @@
 #include "suprem/include/skel.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../dbase/list.h"
 #include "../misc/panic.h"
 #include "../dbase/element.h"
@@ -70,7 +71,7 @@ int cr_tri(int rn, int ir)
 	nv[0] = nB(bnd->prev);
 	nv[1] = nB(bnd);
 	nv[2] = nB(bnd->next);
-
+	
 	/*check for the edges*/
 	nb[0] = nb[1] = nb[2] = BC_OFFSET;
 	if (is_surf(pt_nd(nv[1])) && is_surf(pt_nd(nv[2])))
@@ -79,7 +80,7 @@ int cr_tri(int rn, int ir)
 		nb[1] = EXPOSED;
 	if (is_surf(pt_nd(nv[1])) && is_surf(pt_nd(nv[0])))
 		nb[2] = EXPOSED;
-
+	
 	nt = mk_ele(3, nv, 3, nb, rn, FALSE);
 
 	add_ele_edg(bnd->prev->edge, nt);
@@ -205,7 +206,7 @@ void add_ang(struct sreg_str *r, struct LLedge *lep)
 void trip_tri(int p, int *t1, int *m1, int *t2, int *m2)
 {
 	int i, j, m[2], n[2], mat, t, ft, nb;
-
+	
 	/*find the two non-gas materials*/
 	for (j = i = 0; i < pt[p]->nn; i++)
 	{
@@ -247,6 +248,7 @@ void trip_tri(int p, int *t1, int *m1, int *t2, int *m2)
 			}
 		}
 	}
+	
 	*t2 = ft;
 	*m2 = m[1];
 }

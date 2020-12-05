@@ -187,6 +187,7 @@ int read_data(float *val, char *infile, int col, float offset)
 		return (-1);
 	}
 
+	#if 0
 	/*for all mesh points, add in the new doping values*/
 	for (i = 0; i < nn; i++)
 	{
@@ -216,6 +217,8 @@ int read_data(float *val, char *infile, int col, float offset)
 			val[i] = 0.0;
 		}
 	}
+	#endif
+	TODO;
 
 	free(data);
 	fclose(lu);

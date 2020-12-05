@@ -20,6 +20,7 @@
 #include "suprem/include/global.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "neigh.h"
 /* end of includes*/
 
@@ -41,8 +42,8 @@ static int work_pt;
  */
 int num_neigh_nd(int n)
 {
+	ENTER;
 	int i, j, p, t;
-
 	num_neigh = 0;
 	work_nd = n;
 
@@ -64,7 +65,8 @@ int num_neigh_nd(int n)
 	}
 
 	elim_dups(neigh_list, &num_neigh);
-
+	
+	EXIT;
 	return (num_neigh);
 }
 
@@ -88,7 +90,7 @@ int neigh_nd(int n, int i)
 int num_neigh_pt(int p)
 {
 	int i, j, n, t;
-
+	#if 0
 	num_neighp = 0;
 	work_pt = p;
 
@@ -112,6 +114,8 @@ int num_neigh_pt(int p)
 	elim_dups(neigh_plist, &num_neighp);
 
 	return (num_neighp);
+	#endif
+	TODO;
 }
 
 /*
@@ -159,3 +163,16 @@ void elim_dups(int *taken, int *num)
 		if (taken[i] != taken[*num - 1])
 			taken[(*num)++] = taken[i];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

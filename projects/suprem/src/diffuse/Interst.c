@@ -488,6 +488,7 @@ void Itime_val(int is, double *rhsnm, struct call_str *cs)
 		if (a[is][is][i] == 0.0)
 			a[is][is][i] = 1.0;
 	}
+	EXIT;
 }
 
 void foo1(arr) double *arr;

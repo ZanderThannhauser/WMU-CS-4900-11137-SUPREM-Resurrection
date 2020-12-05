@@ -4,4 +4,4 @@ projects/suprem/src/shell/parser.c
 projects/suprem/src/shell/parser.h
 projects/keyread/src/parser.c
 projects/keyread/src/parser.h
-str.actual
+*.str

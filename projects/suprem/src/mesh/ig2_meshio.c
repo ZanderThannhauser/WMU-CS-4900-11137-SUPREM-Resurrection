@@ -26,6 +26,7 @@
 #include "suprem/include/sysdep.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../dbase/dispose.h"
 #include "../mesh/check_active.h"
 #include "../dbase/dimen.h"

@@ -32,6 +32,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../math/generate.h"
 #include "../math/symb.h"
 #include "../diffuse/prepare.h"
@@ -221,11 +222,8 @@ void ckt_ia_bld()
 	register int i, j, k, ij, c, p, row;
 	short *		 taken;
 	int			 num;
-
-	/* 2020: this value will be overwritten before it is used:*/
-	row = 0;
-	/* 2020: This is just to remove the GCC error*/
-
+	
+	#if 0
 	/*first assign the current and voltage numbers to the contacts*/
 	for (i = 0; i < n_con; i++)
 	{
@@ -301,4 +299,10 @@ void ckt_ia_bld()
 	ao_cc = ia_cc[nn] - ia_cc[0];
 	free(ia_cn);
 	free(taken);
+	#endif
+	TODO;
 }
+
+
+
+

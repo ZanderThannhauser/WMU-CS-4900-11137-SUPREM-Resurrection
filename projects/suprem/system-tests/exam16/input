@@ -44,6 +44,6 @@ diffuse time=15 temp=800 argon
 
 
 #save the data
-struct outf=./str.actual
+struct outf=./out.str
 
 quit

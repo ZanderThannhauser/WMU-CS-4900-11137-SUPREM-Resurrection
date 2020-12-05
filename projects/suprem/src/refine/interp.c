@@ -38,6 +38,7 @@
 #include "suprem/include/regrid.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../geom/misc.h"
 #include "../misc/print_time.h"
 #include "../misc/panic.h"
@@ -77,7 +78,7 @@ void interp(int r1, int r2)
 	ie1 = 0;
 	while (done_tri(ie1))
 	{
-
+		
 		/*if this triangle is in the region*/
 		if (reg_tri(ie1) == r1)
 		{
@@ -86,19 +87,19 @@ void interp(int r1, int r2)
 				in = vert_tri(ie1, i);
 				if (done[in])
 					continue;
-
+				
 				/*now look in the second region for triangles...*/
 				done[in] = TRUE;
-
+				
 				fnd = FALSE;
 				for (j = 0; !fnd && j < num_tri_reg(r2); j++)
 				{
 					ie2 = tri_reg(r2, j);
-
+					
 					if (pt_in_tri(cord_arr(pt_nd(in)), ie2))
 					{
 						fnd = TRUE;
-
+						
 						if (mode == TWOD)
 						{
 							interp_2d(in, ie2);
@@ -125,11 +126,11 @@ void interp_1d(int in, int ie2)
 	register int i;
 	double		 r, ir;
 	double		 ans[3], new;
-
+	
 	r = pdist(pt_nd(in), pt_nd(vert_tri(ie2, 0))) /
 		pdist(pt_nd(vert_tri(ie2, 1)), pt_nd(vert_tri(ie2, 0)));
 	ir = 1.0 - r;
-
+	
 	/*solve the system for all solutions*/
 	for (i = 0; i < n_imp; i++)
 	{

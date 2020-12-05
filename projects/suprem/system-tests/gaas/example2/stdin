@@ -63,7 +63,4 @@ foreach v (16.5 to 17.0 step .5)
 contour val=v line.type=4
 end
 
-#2020: all examples must output meshes:
-struct outf=./str.actual
-
 quit

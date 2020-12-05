@@ -23,21 +23,23 @@
 #include "suprem/include/skel.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "hinit.h"
 /* end of includes*/
 
 /* 2020 forward declarations*/
 /* end of declarations*/
 
+#define min2(A, B) (A < B) ? A : B
+
 /*-----------------HINIT------------------------------------------------
  * Initialize the local spacing for each node.
  *----------------------------------------------------------------------*/
+
 void hinit(int ir, double sp)
 {
 	int			   f, p, i, n;
 	struct LLedge *bp;
-
-#define min2(A, B) (A < B) ? A : B
 
 	for (f = 1, bp = sreg[ir]->bnd; (bp != sreg[ir]->bnd) || f;
 		 f = 0, bp = bp->next)
@@ -53,3 +55,19 @@ void hinit(int ir, double sp)
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

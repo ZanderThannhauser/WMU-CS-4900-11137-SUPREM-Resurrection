@@ -50,5 +50,5 @@ Solving      829.069 +      70.9313 =          900,  107.867%, np 556
 	select z=log10(beryllium)	
 	plot.1d x.min=-1 x.ma=1 y.mi=14 y.max=20 cle=f axi=f line.type=2
 #save the data
-struct outf=./str.actual
+struct outf=./out.str
 quit

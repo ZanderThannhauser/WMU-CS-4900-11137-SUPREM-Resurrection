@@ -41,7 +41,17 @@ method init=1.0e-3 two.d
     %define oldfci ${newfci}
     %define oldbci ${newbci}"
 
-
 #save the data
-structure out=./str.actual
+structure out=./oed.str
+pause
+
+
+
+
+
+
+
+
+
+
 

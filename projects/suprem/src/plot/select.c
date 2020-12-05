@@ -49,78 +49,79 @@
  ************************************************************************/
 void sel_var(char *par, struct par_str *param)
 {
-	char *			zstr;
+	char *zstr;
 	struct vec_str *zexp;
-	char *			err;
-	char *			tmp;
+	char *err;
+	char *tmp;
 	ENTER;
 
 	zstr = get_string(param, "z");
 	znn = nn;
 	z = salloc(float, nn);
 
-	if (is_specified(param, "label"))
-	{
-		if (label != NULL)
-			free(label);
-		tmp = get_string(param, "label");
-		label = (char *)malloc(strlen(tmp) + 1);
-		strcpy(label, tmp);
-	}
-	else
-	{
-		if (label != NULL)
-			free(label);
-		label = (char *)malloc(strlen(zstr) + 1);
-		strcpy(label, zstr);
+	if ( is_specified( param, "label" ) ) {
+		if ( label != NULL ) free( label );
+		tmp = get_string( param, "label" );
+		label = (char*) malloc( strlen(tmp) + 1 );
+		strcpy( label, tmp );
+	} else {
+		if ( label != NULL ) free( label );
+		label = (char *)malloc( strlen( zstr ) + 1 );
+		strcpy( label, zstr );
 	}
 
-	if (is_specified(param, "title"))
-	{
-		if (title != NULL)
-			free(title);
-		tmp = get_string(param, "title");
-		title =
-			(char *)malloc(strlen(tmp) + strlen(VERSION) + strlen(" - ") + 1);
-		strcpy(title, tmp);
+	if ( is_specified( param, "title" ) ) {
+		if ( title != NULL ) free( title );
+		tmp = get_string( param, "title" );
+		title = (char *)malloc(strlen(tmp) + strlen(VERSION) + strlen(" - ") + 1);
+		strcpy(title, tmp );
 		strcat(title, " - ");
-		strcat(title, VERSION);
-	}
-	else
-	{
-		if (title != NULL)
-			free(title);
+		strcat(title, VERSION );
+	} else {
+		if ( title != NULL ) free( title );
 		title = (char *)malloc(strlen(VERSION) + 1);
-		strcpy(title, VERSION);
+		strcpy(title, VERSION );
 	}
 
-	if (is_specified(param, "temp"))
-	{
-		last_temp = get_float(param, "temp") + 273.0;
+	if ( is_specified( param, "temp" ) ) {
+		last_temp = get_float( param, "temp" ) + 273.0;
 		/*compute the sislicon material constants*/
-		comp_mat(last_temp);
+		comp_mat( last_temp );
 	}
+
 
 	/*attempt to parse the string*/
-	if ((err = (char *)parse_expr(zstr, &zexp)) != NULL)
-	{
+	if ( (err = (char *)parse_expr(zstr, &zexp)) != NULL) {
 		fprintf(stderr, "%s\n", err);
-		EXIT;
-		return; /*(-1);*/
+		return; // (-1);
 	}
 
 	/*evaluate the vector expression*/
-	if ((err = (char *)eval_vec(zexp, z)) != NULL)
-	{
+	if ( (err = (char *)eval_vec( zexp, z )) != NULL) {
 		fprintf(stderr, "%s\n", err);
-		EXIT;
-		return; /*(-1);*/
+		return; // (-1);
 	}
 
-	sel_log = islogexp(zexp);
+	sel_log = islogexp( zexp );
 
-	free_expr(zexp);
+	free_expr( zexp );
 	
 	EXIT;
-	return; /*(0);*/
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

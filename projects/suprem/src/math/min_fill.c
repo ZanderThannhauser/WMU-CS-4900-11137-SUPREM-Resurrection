@@ -35,23 +35,24 @@ int  o_compar(struct d_sort *f1, struct d_sort *f2);
 void new_storage();
 
 /* 2020 function header includes:*/
+#include <debug.h>
 #include "../dbase/locate.h"
 #include "min_fill.h"
 /* end of 2020 includes*/
 
 /* All links come off a single big list */
-typedef struct _link
+struct _link
 {
 	struct _link *n;
 	int			  v;
-} link;
-link *storage, *freelist;
+};
+struct _link *storage, *freelist;
 int   storage_size;
 int   su, hwm; /* Storage used, high water mark */
 
 #define takefrom(F, O)                                                         \
 	{                                                                          \
-		link *t = (O);                                                         \
+		struct _link *t = (O);                                                         \
 		(O) = (F);                                                             \
 		(F) = (F)->n;                                                          \
 		(O)->n = t;                                                            \
@@ -86,7 +87,8 @@ int   su, hwm; /* Storage used, high water mark */
  ************************************************************************/
 int min_ia_fill(int *ia, int *reorder, int talk)
 {
-	link *nbrs; /* Base of each nodes nbr list: .v=length */
+	ENTER;
+	struct _link *nbrs; /* Base of each nodes nbr list: .v=length */
 	int   in, nn, j;
 
 	struct d_sort *order;
@@ -96,10 +98,10 @@ int min_ia_fill(int *ia, int *reorder, int talk)
 	int *		   remaining, nremain;	/* Array of uneliminated nodes */
 	int *		   mask;				  /* Tmp for computing union */
 	int			   work;				  /* neighbor of best being worked on */
-	link *		   p, *workl, *bestl;
-	register link *q, *lastq;
+	struct _link *		   p, *workl, *bestl;
+	register struct _link *q, *lastq;
 	int			   nnb, step, Obestn = -1, total = 0, e;
-
+	
 	/* Initialize storage - make a guess of l ~ 5*a, update later.*/
 	nn = ia[0] - 1;
 
@@ -111,7 +113,7 @@ int min_ia_fill(int *ia, int *reorder, int talk)
 		remaining = salloc(int, nn);
 	}
 
-	nbrs = salloc(link, nn);
+	nbrs = salloc(struct _link, nn);
 	storage_size = 1.5 * ia[nn];
 	su = hwm = 0;
 	storage = 0;
@@ -294,6 +296,7 @@ int min_ia_fill(int *ia, int *reorder, int talk)
 	free(nbrs);
 	free(storage);
 	free(order);
+	EXIT;
 	return (total - nn);
 }
 
@@ -313,17 +316,17 @@ int o_compar(struct d_sort *f1, struct d_sort *f2)
 
 void new_storage()
 {
-	link *start, *end, *p;
+	struct _link *start, *end, *p;
 
 	if (!storage)
 	{
-		storage = salloc(link, storage_size);
+		storage = salloc(struct _link, storage_size);
 		start = storage;
 		end = storage + storage_size - 1;
 	}
 	else
 	{
-		storage = sralloc(link, 2 * storage_size, storage);
+		storage = sralloc(struct _link, 2 * storage_size, storage);
 		start = storage + storage_size;
 		end = storage + 2 * storage_size - 1;
 		storage_size *= 2;
@@ -338,11 +341,11 @@ void new_storage()
 
 #ifdef notdef
 run_length(nn, nbrs) int nn;
-link *nbrs;
+struct _link *nbrs;
 {
 	int   in, last, nrlen, rlen, sumrlen;
 	float averlen;
-	link *j;
+	struct _link *j;
 
 	sumrlen = nrlen = 0;
 	for (in = 0; in < nn; in++)

@@ -306,7 +306,6 @@ int build_skel(int nump, struct line *p, int numop, struct line *op, int div,
 	int			 e, ln, ip, e1, ef;
 	float		 c[3];
 	int			 sq;
-
 #define min3(A, B, C) (A < B) ? ((B < C) ? B : C) : ((A < C) ? A : C)
 #define min2(A, B) ((A < B) ? (A) : (B))
 
@@ -478,3 +477,14 @@ int build_skel(int nump, struct line *p, int numop, struct line *op, int div,
 
 	return (ir);
 }
+
+
+
+
+
+
+
+
+
+
+

@@ -64,4 +64,4 @@ Solving      994.171 +      137.213 =      1131.38,  111.866%, np 122
 Solving      1131.38 +      153.271 =      1284.65,  111.703%, np 122
 Solving      1284.65 +      155.345 =         1440,  101.353%, np 122
 #save the data
-structure out=./str.actual
+structure out=./out.str

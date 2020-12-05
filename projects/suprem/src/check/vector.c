@@ -33,6 +33,7 @@
 #endif
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../diffuse/defect.h"
 #include "../oxide/mater.h"
 #include "../diffuse/Interst.h"
@@ -225,8 +226,11 @@ char *get_solval(float *val, int type)
 			break;
 
 		case X:
+			#if 0
 			for (i = 0; i < nn; i++)
 				val[i] = cordinate(pt_nd(i), 0);
+			#endif
+			TODO;
 			break;
 
 		case Y:
@@ -750,6 +754,7 @@ void RoughGrad(int which, float *vector)
 	int	i, in, nnb, nb, e;
 	float *accum, wt, len, ehed;
 
+	#if 0
 	/* Initialize averaging */
 	accum = salloc(float, nn);
 
@@ -784,4 +789,17 @@ void RoughGrad(int which, float *vector)
 		vector[i] = accum[i];
 
 	sfree(accum);
+	#endif
+	TODO;
 }
+
+
+
+
+
+
+
+
+
+
+

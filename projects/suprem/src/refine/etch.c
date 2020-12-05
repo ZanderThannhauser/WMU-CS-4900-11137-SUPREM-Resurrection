@@ -150,7 +150,7 @@ void user_etch(char *par, struct par_str *param)
 	verpv(p[1]);
 	verpv(p[3]);
 	HERE;
-
+	
 	/*get the limits of the given material*/
 	xmi = xma = cordinate(pt_nd(0), 0);
 	ymi = yma = cordinate(pt_nd(0), 1);
@@ -165,7 +165,7 @@ void user_etch(char *par, struct par_str *param)
 		if (yma < cordinate(pt_nd(i), 1))
 			yma = cordinate(pt_nd(i), 1);
 	}
-
+	
 	HERE;
 	verpv(p);
 	verpv(p[0]);
@@ -446,7 +446,7 @@ void etch(float *p[MAXDIM + 1], int nump, int mater)
 			verpv(i);
 			verpv(p[3]);
 			HERE;
-
+			
 			c[0] = p[0][i];
 			c[1] = p[1][i];
 
@@ -552,9 +552,20 @@ void etch(float *p[MAXDIM + 1], int nump, int mater)
 			r = -1;
 		bd_connect("after etch of a single region");
 	}
+	
 	/*clear the temporary skeleton marker*/
 	for (i = 0; i < np; i++)
 		clr(pt[i], SKELP);
-
+	
 	EXIT;
 }
+
+
+
+
+
+
+
+
+
+

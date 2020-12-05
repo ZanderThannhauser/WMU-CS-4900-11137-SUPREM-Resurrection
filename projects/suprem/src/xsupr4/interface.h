@@ -1,0 +1,11 @@
+void xgPlotInit();
+void xgClear();
+void xgAxisLabels(char* xl, char* yl, char* ti);
+void xgSetScale(double x, double y);
+void xgLogAxis(int xlog, int ylog);
+void xgSetBounds(double lowX, double upX, double lowY, double upY);
+void xgNewSet();
+void xgSetName(char* name);
+void xgSetMark(int mark);
+void xgPoint(double xval, double yval);
+void xgUpdate( int reset_axis );

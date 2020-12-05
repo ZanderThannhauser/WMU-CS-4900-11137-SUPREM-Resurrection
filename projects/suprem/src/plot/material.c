@@ -22,6 +22,7 @@
 #include "suprem/include/dbaccess.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "material.h"
 /* end of includes*/
 
@@ -38,4 +39,41 @@
  *  draws any sides that are material boundaries.			*
  *									*
  ************************************************************************/
-void material(int line_bound) {}
+void material(int line_bound)
+{
+	ENTER;
+	#if 0
+    register int ir;	/*current triangle*/
+    register int sr;
+
+
+    xgNewSet();
+    xgSetName("Materials");
+    for(ir = 0; ir < nreg; ir++) {
+	sr = skel_reg(ir);
+	reg_pl(sr);
+	free_skel(sr);
+    }
+	#endif
+	TODO;
+	EXIT;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

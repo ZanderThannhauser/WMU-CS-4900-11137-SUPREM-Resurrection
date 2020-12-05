@@ -24,6 +24,7 @@
 #include "suprem/include/material.h" /* So we can set nmat to 0 - want this? */
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../dbase/list.h"
 #include "../geom/tnabor.h"
 #include "../misc/panic.h"
@@ -91,7 +92,7 @@ int mk_ele(int nv, int *v, int nb, int *b, int r, int flag)
 {
 	char *		 err;
 	register int i, j, p, t;
-
+	
 	if ((err = alloc_tri()) != NULL)
 		panic(err);
 
@@ -230,20 +231,19 @@ void dis_1tri(struct tri_str **t)
  ************************************************************************/
 void make_bc()
 {
+	ENTER;
 	register int ie, jf, nf, nfp, fp;
 	register int bck, srf;
-
 	/*check every element*/
 	for (ie = 0; ie < ne; ie++)
 	{
-
 		if (ask(tri[ie], TRIPTS))
 		{
 			/*check every element facet*/
 			nf = num_face(ie);
+			verpv(nf);
 			for (jf = 0; jf < nf; jf++)
 			{
-
 				/*for each point on this facet*/
 				nfp = num_nd_fc(ie, jf);
 				bck = TRUE;
@@ -271,7 +271,6 @@ void make_bc()
 			nf = num_face(ie);
 			for (jf = 0; jf < nf; jf++)
 			{
-
 				/*for each point on this facet*/
 				nfp = num_nd_fc(ie, jf);
 				bck = TRUE;
@@ -294,6 +293,8 @@ void make_bc()
 			}
 		}
 	}
+	
+	EXIT;
 }
 
 /************************************************************************
@@ -313,7 +314,7 @@ void tri_to_node()
 	int p;   /*point number*/
 	int n;   /*node counter*/
 	int mat; /*material of the triangle in question*/
-
+	
 	/*foreach triangle*/
 	for (t = 0; t < ne; t++)
 	{
@@ -337,6 +338,7 @@ void tri_to_node()
 		}
 		clr(tri[t], TRIPTS);
 	}
+	
 	/*whew!*/
 }
 
@@ -354,7 +356,7 @@ void nxtel()
 	register int jelema, n, in;
 	register int i, p, j;
 	int			 nsidea, nsideb, jelemb;
-
+	
 	/*this routine does not check or build the external edge codes*/
 	make_bc();
 
@@ -362,43 +364,49 @@ void nxtel()
 	jelema = 0;
 	while (done_tri(jelema))
 	{
-
 		if (!ask(tri[jelema], NEIGHB))
 		{
 			set(tri[jelema], NEIGHB);
 			/*check each of the vertices connect list*/
 			for (i = 0; i < num_vert(jelema); i++)
 			{
-
 				p = pt_nd(vert_tri(jelema, i));
-
 				/*for all the nodes at this point*/
 				for (in = 0; in < num_nd(p); in++)
 				{
 					n = nd_pt(p, in);
-
 					/*for all the triangles at this node*/
 					for (j = 0; j < num_tri_nd(n); j++)
 					{
-
 						jelemb = tri_nd(n, j);
-
 						/*do not check this triangle or higher numbered ones*/
 						if (jelemb != jelema)
 						{
 							if (tnabor(jelema, jelemb, &nsidea, &nsideb))
 							{
-
 								/*make the entries*/
 								tri[jelema]->nb[nsidea] = jelemb;
 								tri[jelemb]->nb[nsideb] = jelema;
 							}
 						}
 					} /*end of triangle list for this node*/
-				}	 /*end of nodes at this vertex*/
-			}		  /*end of the vertices to check*/
+				} /*end of nodes at this vertex*/
+			}  /*end of the vertices to check*/
 		}
-
 		next_tri(jelema);
 	} /*end of the triangles*/
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

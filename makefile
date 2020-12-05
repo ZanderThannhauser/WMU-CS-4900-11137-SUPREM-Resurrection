@@ -1,4 +1,7 @@
 
+# might need to install:
+# sudo apt install libxaw7-dev
+
 CC = gcc
 WIN_CC = x86_64-w64-mingw32-gcc
 
@@ -14,6 +17,7 @@ LINUX_CPPFLAGS += -D HAVE_ASINH
 LINUX_CPPFLAGS += -D _GNU_SOURCE
 LINUX_CPPFLAGS += -D _XOPEN_SOURCE=500
 LINUX_CPPFLAGS += -D LINUX
+#LINUX_CPPFLAGS += -D GRAPHING
 
 WINDOWS_CPPFLAGS = $(CPPFLAGS)
 WINDOWS_CPPFLAGS += -D WINDOWS
@@ -23,24 +27,28 @@ CFLAGS += -std=c99
 CFLAGS += -g
 CFLAGS += -Wall
 CFLAGS += -Werror
-#CFLAGS += -Wfatal-errors
+CFLAGS += -Wfatal-errors
 CFLAGS += -Wno-maybe-uninitialized
 CFLAGS += -Wno-array-bounds
 CFLAGS += -Wno-format-overflow
-#CFLAGS += -flto
 
 RFLAGS += -O2
+RFLAGS += -flto
 
+DFLAGS += -Wno-unused-function
+DFLAGS += -Wno-unused-variable
 DFLAGS += -Wno-unused-but-set-variable
 DFLAGS += -D DEBUGGING_2020=1
 
 LDLIBS += -lm
 
+LDLIBS += -lXaw -lXmu -lXt -lXext -lX11 # you need these three for plotting
+
 default: bin/suprem
 
-ARGS += ./projects/suprem/system-tests/durban1/input
+#ARGS += ./projects/suprem/system-tests/durban1/input
 #ARGS += ./projects/suprem/system-tests/exam1/input
-#ARGS += ./projects/suprem/system-tests/exam2/input
+ARGS += ./projects/suprem/system-tests/exam2/input
 #ARGS += ./projects/suprem/system-tests/exam3/input
 #ARGS += ./projects/suprem/system-tests/exam4/input
 #ARGS += ./projects/suprem/system-tests/exam5/input

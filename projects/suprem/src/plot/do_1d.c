@@ -75,14 +75,15 @@ int do_1d(int ptype, float val, struct d_str data[], int mat1, int mat2,
 	char		 a[80], b[80];
 	b_typ **	 seeds, *ttt;
 	ENTER;
-	verpv(ptype);
-	verpv(val);
-	verpv(data);
-	verpv(mat1);
-	verpv(mat2);
-	verpv(byarc);
-	verpv(z);
-
+	
+/*	verpv(ptype);*/
+/*	verpv(val);*/
+/*	verpv(data);*/
+/*	verpv(mat1);*/
+/*	verpv(mat2);*/
+/*	verpv(byarc);*/
+/*	verpv(z);*/
+	
 	/* Looking for x-y cross-sections */
 	if ((ptype == XSEC) || (ptype == YSEC) || (ptype == ZSEC))
 	{
@@ -115,20 +116,20 @@ int do_1d(int ptype, float val, struct d_str data[], int mat1, int mat2,
 		{
 			if (!leaf(tri[t]))
 				continue;
-
+			
 			/*step through each triangle index*/
 			for (i = 0; i < nvrt; i++)
 			{
 				nx = tri[t]->nd[i];
 				px = nd[nx]->pt;
-
+				
 				for (j = 0; j < mode; j++)
 					arr[i][l[j]] = pt[px]->cord[j];
 				for (j = mode; j < 2; j++)
 					arr[i][l[j]] = pt[px]->cord[j];
 				arr[i][l[2]] = z[nx];
 			}
-
+			
 			/*now that we have all that done, calculate the line*/
 			num = intersect(arr, val, p);
 			for (j = 0; j < num; j++)
@@ -195,7 +196,7 @@ int do_1d(int ptype, float val, struct d_str data[], int mat1, int mat2,
 		count = 0;
 		for (i = 0; seeds[i]; i++)
 		{
-
+			#if 0
 			/* Leftmost point is special */
 			in = tri[seeds[i]->ie]->nd[(seeds[i]->j + 2) % 3];
 			xo = pt[nd[in]->pt]->cord[0];
@@ -204,16 +205,22 @@ int do_1d(int ptype, float val, struct d_str data[], int mat1, int mat2,
 			data[count].y = z[in];
 			data[count].mat = nd[in]->mater;
 			count++;
-
+			#endif
+			TODO;
+			
+			#if 0
 			/* A heuristic to make both sides of an interface look the same */
 			sign = 1;
 			in = tri[seeds[i]->ie]->nd[(seeds[i]->j + 1) % 3];
 			if (pt[nd[in]->pt]->cord[0] < xo)
 				sign = -1;
-
+			#endif
+			TODO;
+			
 			/* Then all the right points */
 			for (ttt = seeds[i]; ttt; ttt = ttt->right)
 			{
+				#if 0
 				in = tri[ttt->ie]->nd[(ttt->j + 1) % 3];
 				xn = pt[nd[in]->pt]->cord[0];
 				yn = pt[nd[in]->pt]->cord[1];
@@ -227,11 +234,13 @@ int do_1d(int ptype, float val, struct d_str data[], int mat1, int mat2,
 				count++;
 				xo = xn;
 				yo = yn;
+				#endif
+				TODO;
 			}
 		}
 		free(seeds);
 	}
-
+	
 	/*return the number of data points*/
 	EXIT;
 	return (count);
