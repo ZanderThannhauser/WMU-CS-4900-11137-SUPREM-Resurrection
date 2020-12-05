@@ -27,9 +27,9 @@ CFLAGS += -Werror
 CFLAGS += -Wno-maybe-uninitialized
 CFLAGS += -Wno-array-bounds
 CFLAGS += -Wno-format-overflow
-#CFLAGS += -flto
 
 RFLAGS += -O2
+RFLAGS += -flto
 
 DFLAGS += -Wno-unused-but-set-variable
 DFLAGS += -D DEBUGGING_2020=1
