@@ -124,8 +124,8 @@ bin/winpack.zip: bin/suprem.exe \
 	data/modelrc \
 	data/sup4gs.imp \
 	data/suprem.uk \
-	examples/durban1/input \
-	examples/durban1/stdout \
+	examples/durbin1/input \
+	examples/durbin1/stdout \
 	examples/exam4/input \
 	examples/exam4/stdout
 	zip $@ $^
