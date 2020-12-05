@@ -56,14 +56,6 @@ ARGS += ./projects/suprem/system-tests/durban1/input
 #ARGS += ./projects/suprem/system-tests/exam15/input
 #ARGS += ./projects/suprem/system-tests/exam16/input
 #ARGS += ./projects/suprem/system-tests/exam17/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
 
 bin:
 	rm -f ./bin
