@@ -30,6 +30,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../oxide/oxgrow.h"
 #include "../dbase/geometry.h"
 #include "../dbase/couple.h"
@@ -266,7 +267,7 @@ void ia_calc()
 {
 	register int i, ij;
 	register int p, n, j;
-
+	
 	/*first get the old geometry pulled together*/
 	if (ClockTri(FALSE))
 		printf("bad initial grid\n");
@@ -310,9 +311,13 @@ void ia_calc()
 		free(irow_d);
 	if (jrow_d != NULL)
 		free(jrow_d);
+	
 	irow_d = salloc(int, (ia_d[nn] + 1 + aoff_d) * 2);
 	jrow_d = salloc(int, (ia_d[nn] + 1 + aoff_d) * 2);
+	
 	genrow(ia_d, aoff_d, irow_d, jrow_d);
+	
+	return;
 }
 
 /************************************************************************

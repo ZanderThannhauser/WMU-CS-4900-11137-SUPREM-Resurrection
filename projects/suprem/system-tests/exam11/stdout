@@ -55,5 +55,5 @@ select z=log10(beryllium)
 contour val=16.5 line.type=4
 contour val=17 line.type=4
 #save the data
-struct outf=./str.actual
+struct outf=./out.str
 quit

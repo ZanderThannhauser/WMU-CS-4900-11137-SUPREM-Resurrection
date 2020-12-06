@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"
@@ -12,6 +13,7 @@
 #include "suprem/include/shell.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../shell/do_action.h"
 #include "../geom/limits.h"
 #include "newbackside.h"
@@ -99,3 +101,8 @@ int newbackside(float line)
 	}
 	return (0);
 }
+
+
+
+
+

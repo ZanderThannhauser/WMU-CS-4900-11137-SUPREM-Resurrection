@@ -1,6 +1,6 @@
 
 bin/projects/projectname/srclist.mk:
-	find ./projects/projectname/src -name '*.c' | sed 's/^/projectname_srcs += /' > $@
+	find ./projects/projectname/src -name '*.c' ! -path '*/#*' | sed 's/^/projectname_srcs += /' > $@
 
 include bin/projects/projectname/srclist.mk
 
@@ -15,16 +15,16 @@ projectname_wdeps = $(patsubst %.c,bin/%.win.mk,$(projectname_srcs))
 include $(projectname_deps)
 
 bin/projectname: $(projectname_objs) | bin
-	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
+	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LINUX_LDLIBS) -o $@
 
 bin/projectname.d: $(projectname_dobjs) | bin
-	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
+	$(CC) $(LDFLAGS) $^ $(LOADLIBES) $(LINUX_LDLIBS) -o $@
 
 bin/projectname.exe: $(projectname_wobjs) | bin
-	$(WIN_CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
+	$(WIN_CC) $(LDFLAGS) $^ $(LOADLIBES) $(WINDOWS_LDLIBS) -o $@
 
 bin/projectname.d.exe: $(projectname_wdobjs) | bin
-	$(WIN_CC) $(LDFLAGS) $^ $(LOADLIBES) $(LDLIBS) -o $@
+	$(WIN_CC) $(LDFLAGS) $^ $(LOADLIBES) $(WINDOWS_LDLIBS) -o $@
 
 #projects/projectname/system-tests/%/winsuccess: bin/projectname.exe data/suprem.uk \
 #	projects/projectname/system-tests/%/input \

@@ -11,6 +11,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"
@@ -21,6 +22,7 @@
 #include "suprem/include/regrid.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../dbase/alloc.h"
 #include "../oxide/oxgrow.h"
 #include "../dbase/grid_loop.h"
@@ -227,7 +229,7 @@ void compute_rate(double *rate, int *prio)
 				nd[n]->sol[xsol] = rate[s[0].map];
 			}
 			break;
-
+		
 		case TWOD:
 			/*for each surface segment, figure the etch rate*/
 			for (i = 0; i < ns - 1; i++)
@@ -235,11 +237,11 @@ void compute_rate(double *rate, int *prio)
 				p1 = s[i].p;
 				p2 = s[i + 1].p;
 				dis = 0.0;
-
+				
 				/*sanity checks....*/
 				if ((pt[p1]->nn != 2) || (pt[p2]->nn != 2))
 					printf("error in triple handler - l2\n");
-
+				
 				if (s[i].map == s[i + 1].map)
 				{
 					dir[0] = pt[p2]->cord[0] - pt[p1]->cord[0];
@@ -247,13 +249,13 @@ void compute_rate(double *rate, int *prio)
 					dis = sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
 					perp[0] = -dir[1] / dis;
 					perp[1] = dir[0] / dis;
-
+					
 					/*compute the rate of the nodes on this edge*/
 					lastv[0] = newv[0];
 					lastv[1] = newv[1];
 					newv[0] = rate[s[i].map] * perp[0];
 					newv[1] = rate[s[i].map] * perp[1];
-
+					
 					if (i == 0)
 					{
 						for (j = 0; j < pt[p1]->nn; j++)
@@ -332,11 +334,11 @@ void rate_trip(int p, double rate, int t1, int t2)
 		p2 = p1;
 		p1 = p;
 	}
-
+	
 	/*compute the direction along the segment*/
 	dir[0] = pt[p2]->cord[0] - pt[p1]->cord[0];
 	dir[1] = pt[p2]->cord[1] - pt[p1]->cord[1];
-
+	
 	for (i = 0; i < pt[p]->nn; i++)
 	{
 		nb = pt[p]->nd[i];
@@ -344,3 +346,13 @@ void rate_trip(int p, double rate, int t1, int t2)
 		nd[nb]->sol[ysol] = rate * dir[1];
 	}
 }
+
+
+
+
+
+
+
+
+
+

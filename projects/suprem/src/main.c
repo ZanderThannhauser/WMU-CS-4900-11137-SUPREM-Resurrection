@@ -97,6 +97,7 @@
 #include "refine/etch.h"
 #include "shell/do_action.h"
 #include "shell/parser_boot.h"
+#include "xsupr4/interface.h"
 /* end of includes*/
 
 #ifdef DEBUGGING_2020
@@ -104,17 +105,17 @@ int debugging_depth;
 #endif
 
 #ifdef LINUX
-#define MANLOC   "./help"
-#define KEYLOC   "./data/suprem.uk"
+#define MANLOC "./help"
+#define KEYLOC "./data/suprem.uk"
 #define MODELLOC "./data/modelrc"
-#define IMPLOC   "./data/sup4gs.imp"
+#define IMPLOC "./data/sup4gs.imp"
 #endif
 
 #ifdef WINDOWS
-#define MANLOC   "help"
-#define KEYLOC   "data\\suprem.uk"
+#define MANLOC "help"
+#define KEYLOC "data\\suprem.uk"
 #define MODELLOC "data\\modelrc"
-#define IMPLOC   "data\\sup4gs.imp"
+#define IMPLOC "data\\sup4gs.imp"
 #endif
 
 void mode_cmd(char *par, struct par_str *param)
@@ -249,6 +250,11 @@ int main(int argc, char **argv)
 	
 	HERE;
 	
+	#ifdef LINUX
+	/*plot initialization*/
+	xgPlotInit();
+	#endif
+	
 	/*some grid initialization*/
 	rect_boot();
 	
@@ -266,19 +272,9 @@ int main(int argc, char **argv)
 	verpvs(getenv("HOME"));
 	verpvs(getenv("UserProfile"));
 	
-	#ifdef LINUX
-	if ((t = getenv("HOME")))
+	if ((t = getenv("HOME") ?: getenv("UserProfile")))
 	{
-		strcpy(dot_name, t);
-	#endif
-	
-	#ifdef WINDOWS
-	if ((t = getenv("UserProfile")))
-	{
-		strcpy(dot_name, t);
-	#endif
-	
-		strcat(dot_name, "/.supremrc");
+		strcat(strcpy(dot_name, t), "/.supremrc");
 		do_source(dot_name, NULL, FALSE, /*report errors*/ FALSE);
 	}
 	
@@ -294,15 +290,28 @@ int main(int argc, char **argv)
 	
 	/*main command parsing loop*/
 	if (argc < 2)
-		while ((i = yyparse()) != -1);
-	
+		while ((i = yyparse()) != -1)
+			;
+
 	/*if we are logging cpu stats, close the file*/
 	if (cpufile != NULL)
 		fclose(cpufile);
 	
+	#ifdef LINUX
+	xgUpdate(1);
+	#endif
+	
 	EXIT;
 	return 0;
 }
+
+
+
+
+
+
+
+
 
 
 

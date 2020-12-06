@@ -52,8 +52,8 @@ void MeshInvalidate();
  ************************************************************************/
 void dis_all()
 {
-	int i;
 	ENTER;
+	int i;
 	while (nsreg > 0)
 	{
 		free_skel(0);
@@ -77,13 +77,13 @@ void dis_all()
  *----------------------------------------------------------------------*/
 void waste()
 {
+	ENTER;
 	int ie, save_ne = ne, *new_tri, in, save_nn = nn, *new_nd, ip, save_np = np,
 			*new_pt, *new_edg, ir, save_nreg = nreg, *new_reg, j;
 	tri_typ *		tswap;
 	nd_typ *		nswap;
 	pt_typ *		pswap;
 	struct reg_str *rswap;
-	ENTER;
 
 	new_tri = salloc(int, ne);
 	new_nd = salloc(int, nn);
@@ -139,7 +139,7 @@ void waste()
 			pt[ip] = NULL;
 			pt[np++] = pswap;
 		}
-
+	
 	for (nreg = 0, ir = 0; ir < save_nreg; ir++)
 		if (dead_reg(ir))
 		{
@@ -183,7 +183,7 @@ void waste()
 		if ((nd[in]->pt = new_pt[nd[in]->pt]) < 0)
 			panic("pointer to zombie point");
 	}
-
+	
 	/*fix up the point structure*/
 	for (ip = 0; ip < np; ip++)
 	{
@@ -206,8 +206,8 @@ void waste()
 
 void lose_impurity(int imp)
 {
-	int i, j, sol = imptosol[imp];
 	ENTER;
+	int i, j, sol = imptosol[imp];
 
 	if (sol != -1)
 	{

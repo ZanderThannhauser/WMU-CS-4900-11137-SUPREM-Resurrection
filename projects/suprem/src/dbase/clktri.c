@@ -23,6 +23,7 @@
 #include "suprem/include/global.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "clktri.h"
 /* end of includes*/
 
@@ -61,14 +62,15 @@ void sclk_tri(int ie)
 	switch (mode)
 	{
 		case ONED:
+			
 			/*get the node numbers*/
 			i = tri[ie]->nd[0];
 			j = tri[ie]->nd[1];
-
+			
 			/*get the coordinate terms*/
 			xi = pt[nd[i]->pt]->cord[0];
 			xj = pt[nd[j]->pt]->cord[0];
-
+			
 			if ((xi - xj) < 0.0)
 			{
 				tri[ie]->nd[0] = j;
@@ -78,7 +80,7 @@ void sclk_tri(int ie)
 				tri[ie]->nb[0] = tt;
 			}
 			break;
-
+		
 		case TWOD:
 			/*get the point numbers*/
 			i = tri[ie]->nd[0];
@@ -112,5 +114,12 @@ void sclk_tri(int ie)
 				tri[ie]->edg[1] = tri[ie]->edg[2];
 				tri[ie]->edg[2] = tt;
 			}
+			break;
 	}
 }
+
+
+
+
+
+

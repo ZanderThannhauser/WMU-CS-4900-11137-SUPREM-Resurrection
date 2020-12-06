@@ -39,5 +39,5 @@ init conc=1.0e16 boron
 diffuse time=24 temp=1050 phosphorus gas.conc=1e20
 
 #save the data
-structure out=./str.actual
+structure out=./out.str
 

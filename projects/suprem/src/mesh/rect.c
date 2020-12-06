@@ -504,7 +504,7 @@ int squares(float new_mr)
 			}
 		}
 	}
-
+	
 	/*for all the specified boundaries, mark the points*/
 	for (ij = 0; ij < nuj; ij++)
 	{
@@ -516,6 +516,7 @@ int squares(float new_mr)
 				for (ix[2] = uedge[ij][4]; ix[2] <= uedge[ij][5]; ix[2]++)
 				{
 					k = ix[2] + nxy[2] * ix[1] + nxy[1] * nxy[2] * ix[0];
+					verpv(k);
 					if (uedge[ij][TYPLOC] == EXPOSED)
 					{
 						set_surf(k);

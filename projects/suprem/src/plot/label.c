@@ -43,6 +43,41 @@
 void draw_lab(char *par, struct par_str *param)
 {
 	ENTER;
-	TODO; /* 2020: took this out */
+	#if 0
+	char *label;
+	float x,y;
+
+	/*get the card parameters*/
+	label = get_string(param, "label");
+
+	if( is_specified( param, "x") && is_specified( param, "y")) {
+	x = get_float(param, "x");
+	y = get_float(param, "y");
+
+	xgLabel(label, x, y);
+	}
+	xgUpdate(FALSE);
+	#endif
+	TODO;
 	EXIT;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

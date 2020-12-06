@@ -343,13 +343,19 @@ float DoOriDep(double *dir, float valOri[3])
 	/* Interpolate between known values */
 	i = -1;
 	if (func >= fval[0])
+	{
+		EXIT;
 		return (valOri[0]);
+	}
 	if (func <= fval[0] && func >= fval[1])
 		i = 0;
 	if (func <= fval[1] && func >= fval[2])
 		i = 1;
 	if (func <= fval[2])
+	{
+		EXIT;
 		return (valOri[2]);
+	}
 	if (i < 0)
 		panic("bad interpolation");
 	

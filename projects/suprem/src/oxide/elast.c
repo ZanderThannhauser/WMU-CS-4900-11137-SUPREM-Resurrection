@@ -34,6 +34,7 @@
 #include "suprem/include/material.h"
 
 /* 2020 function includes*/
+#include <debug.h>
 #include "../math/generate.h"
 #include "../math/blklu.h"
 #include "../misc/print_time.h"
@@ -57,6 +58,7 @@ float elstif[6][6];
 
 void elast_growth(float temp, double dt)
 {
+	ENTER;
 	int		   n, sXVEL, sYVEL, i, j, ie, v, w, s, t;
 	int		   col, row, lcol, lrow, nat_p, where, *fix, *nx, *nx1, p;
 	int *	  ia = 0, *il, aoff, loff;
@@ -230,7 +232,8 @@ void elast_growth(float temp, double dt)
 	free(l);
 	free(a);
 	free(fix);
-
+	
+	EXIT;
 	/* shut the door when you leave */
 	return;
 }
@@ -371,3 +374,15 @@ int get_elasconn(int ind, short *taken, int *num)
 
 	return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
+

@@ -14,6 +14,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <assert.h>
 
 #ifdef CONVEX
 #include <strings.h>
@@ -31,6 +32,7 @@
 #include "suprem/include/plot.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../imagetool/window.h"
 #include "../imagetool/make_grid.h"
 #include "../geom/misc.h"
@@ -84,7 +86,8 @@ int fill_grid(int xsize, int ysize, float *xdata, float *ydata, float *data,
 		min_yindex = ysize;
 		max_xindex = 0;
 		max_yindex = 0;
-
+		
+		#if 0
 		for (j = 0; j < 3; j++)
 		{
 			node_num = tri[i]->nd[j];
@@ -104,6 +107,8 @@ int fill_grid(int xsize, int ysize, float *xdata, float *ydata, float *data,
 				max_yindex = y_hi;
 
 		} /* end for j */
+		#endif
+		TODO;
 
 		/* not that the vertices are done, lets see if there are
 		 *   any points we need to fill that are inside the triangle.
@@ -193,7 +198,7 @@ float interpolate(float x, float y, int tri_num, float *val)
 	float		 cords[3][3];
 	register int i;
 	int			 node_num;
-
+	
 	for (i = 0; i < 3; i++)
 	{
 		node_num = tri[tri_num]->nd[i];
@@ -222,7 +227,7 @@ float interpolate(float x, float y, int tri_num, float *val)
 int vertex_tri(float x, float y, int tri_num)
 {
 	register int index;
-
+	
 	if ((pt[nd[tri[tri_num]->nd[0]]->pt]->cord[0] == x) &&
 		(pt[nd[tri[tri_num]->nd[0]]->pt]->cord[1] == y))
 		index = nd[tri[tri_num]->nd[0]]->pt;
@@ -234,17 +239,37 @@ int vertex_tri(float x, float y, int tri_num)
 		index = nd[tri[tri_num]->nd[2]]->pt;
 	else
 		index = -1;
+	
 	return (index);
 }
 
 /* si_interface determines whether point pt_num is at a silicon interface */
 int si_interface(int pt_num)
 {
+	#if 0
 	register int i;
 	int			 nnodes;
 	nnodes = pt[pt_num]->nn;
 	for (i = 0; i < nnodes; i++)
 		if (nd[pt[pt_num]->nd[i]]->mater == Si)
 			return (1);
+	#endif
+	TODO;
 	return (0);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

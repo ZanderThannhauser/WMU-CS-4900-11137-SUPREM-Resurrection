@@ -39,6 +39,7 @@
 #include "yyparse.h"
 #include "proc.h"
 #include "../check/verify.h"
+#include "../xsupr4/interface.h"
 #include "do_action.h"
 /* end of includes*/
 
@@ -386,8 +387,12 @@ void do_command(char *name, char *param, int intr, char *file, int back)
  ************************************************************************/
 void do_exec(char *par, int intr, int index, int no_exec)
 {
-
 	ENTER;
+	
+	#if LINUX
+	check_x();
+	#endif
+	
 	if (check(par, cards[command[index].param]) == -1)
 	{
 		fprintf(stderr, "errors detected on command input\n");

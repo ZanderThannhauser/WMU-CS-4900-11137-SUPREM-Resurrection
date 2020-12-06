@@ -25,6 +25,6 @@ diffuse time=15 temp=800 argon
 	plot.1d x.min=-1 x.ma=1 y.mi=14 y.max=20 cle=f axi=f line.type=2
 
 #save the data
-struct outf=./str.actual
+struct outf=./out.str
 
 quit

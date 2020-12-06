@@ -26,6 +26,7 @@
 #include "suprem/include/skel.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../geom/misc.h"
 #include "../dbase/edge.h"
 #include "../dbase/element.h"
@@ -61,7 +62,6 @@ void move_edge(int ie, int ind, float *c);
 int sp_edge(int ie, float c[MAXDIM], int *ip, int mv)
 {
 	double l1, l2;
-
 	if (ask(edg[ie], REGS))
 		mv = FALSE;
 
@@ -136,7 +136,7 @@ int sp_gredg(int ie, float c[MAXDIM], int *p)
 {
 	int ip, in;
 	int eoth, en1;
-
+	
 	eoth = insert_pt_edg(ie, c, p);
 	ip = *p;
 
@@ -153,6 +153,7 @@ int sp_gredg(int ie, float c[MAXDIM], int *p)
 		/*update this edge and its neighbors*/
 		(void)upd_edg(eoth, in);
 	}
+	
 	return (en1);
 }
 
@@ -201,7 +202,6 @@ int upd_edg(int ie, int in)
 void move_edge(int ie, int ind, float *c)
 {
 	int i;
-
 	/*move the point to the given new cordinates*/
 	for (i = 0; i < mode; i++)
 		set_cord(pt_edg(ie, ind), i, c[i]);

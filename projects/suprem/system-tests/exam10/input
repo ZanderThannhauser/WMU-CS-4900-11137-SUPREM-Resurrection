@@ -36,6 +36,7 @@ select z=log10(beryllium)
 plot.1d x.min=0.0 x.ma=2.0 y.mi=14.0 y.max=20.0 cle=f axi=f line.type=5
 
 #save the data
-struct outf=./str.actual
+struct outf=./out.str
 
+pause
 quit

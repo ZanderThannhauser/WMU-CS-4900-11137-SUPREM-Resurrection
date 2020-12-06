@@ -23,6 +23,7 @@
 #include "suprem/include/skel.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../refine/sp_edge.h"
 #include "../mesh/rect.h"
 #include "bfill.h"
@@ -41,7 +42,7 @@ void div_edg(int ie)
 	int	nn, inew, i;
 	double updn = 10.0;
 	float  c[MAXDIM];
-
+	
 	lej = len_edg(ie);
 	ha = get_space(pt_edg(ie, 0));
 	hb = get_space(pt_edg(ie, 1));
@@ -50,8 +51,7 @@ void div_edg(int ie)
 	{
 		/*split the edge in half, than treat the pieces...*/
 		for (i = 0; i < mode; i++)
-			c[i] = 0.5 *
-				   (cordinate(pt_edg(ie, 0), i) + cordinate(pt_edg(ie, 1), i));
+			c[i] = 0.5 * (cordinate(pt_edg(ie, 0), i) + cordinate(pt_edg(ie, 1), i));
 		inew = sp_edge(ie, c, &nn, FALSE);
 		ha = get_space(pt_edg(ie, 0));
 		hb = get_space(pt_edg(ie, 1));
@@ -79,7 +79,7 @@ void dvedge(int ie, double lej, int nnew, double ratio, double first)
 	int	inew, ip, ied;
 	double dx, dy, h, frac;
 	float  c[MAXDIM];
-
+	
 	/*if we don't need to add any, we don't need to add any*/
 	if (nnew == 0)
 		return;
@@ -90,12 +90,12 @@ void dvedge(int ie, double lej, int nnew, double ratio, double first)
 	dy = cordinate(pt_edg(ie, 1), 1) - c[1];
 	frac = first;
 	h = frac * lej;
+	
 	if (ratio < 1)
 		h *= ratio;
 
 	for (inew = 1; inew <= nnew; inew++)
 	{
-
 		c[0] += frac * dx;
 		c[1] += frac * dy;
 
@@ -108,6 +108,19 @@ void dvedge(int ie, double lej, int nnew, double ratio, double first)
 		h *= ratio;
 		frac *= ratio;
 	}
-
 	return;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

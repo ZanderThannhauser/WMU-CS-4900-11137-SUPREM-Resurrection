@@ -22,6 +22,7 @@
 #endif
 
 /* 2020 function includes:*/
+#include <debug.h>
 #include "../dbase/locate.h"
 #include "../oxide/oxide_vel.h"
 #include "vert.h"
@@ -43,7 +44,7 @@ void vert_growth(float temp) /* Processing temperature */
 	int	n, p, jn, i, j;
 	int	vs = (mode == ONED) ? (imptosol[XVEL]) : (imptosol[YVEL]);
 	float  x, xl, xh, vl, vh, dx1, dx2, dxdt;
-
+	
 	/* Compute dx/dt at each interface node */
 	dofx = salloc(float, 2 * nn);
 

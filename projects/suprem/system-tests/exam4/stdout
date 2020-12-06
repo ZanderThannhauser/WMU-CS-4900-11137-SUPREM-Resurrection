@@ -1289,4 +1289,4 @@ change in nitride area -0.00374%
 change in silicon area -0.00025%
     new timestep is 140.734 increase 1.00716 [Ktd 2.06e+00 Kto 1.41e+01]
 #save the data
-structure out=./str.actual
+structure out=./out.str

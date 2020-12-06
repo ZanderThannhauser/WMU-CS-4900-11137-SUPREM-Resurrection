@@ -25,6 +25,7 @@
 #include "suprem/include/skel.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../refine/triheur.h"
 #include "../refine/sp_edge.h"
 #include "../refine/tridata.h"
@@ -81,7 +82,6 @@ int rect_div(struct sreg_str *r, struct LLedge **lep1, struct LLedge **lep2)
 						ang3 = intang(nB(t1), nF(t1), nB(bp2));
 						eps1 = fabs(cos(ang1) * ndist(nF(bp2), nB(t1)));
 						eps3 = fabs(cos(ang3) * ndist(nF(t1), nB(bp2)));
-
 						if ((eps1 > 1.0e-8) || (eps3 > 1.0e-8))
 						{
 							break;
@@ -163,11 +163,12 @@ int dvrecedg(struct sreg_str *r1, struct sreg_str *r2, int ie,
 #define min2(A, B) ((A) < (B)) ? (A) : (B)
 	if (nump != 0)
 	{
+		
 		if (dist(cord_arr(pt_edg(ie, 0)), p) < dist(cord_arr(pt_edg(ie, 1)), p))
 			nbase = nd_edg(ie, 1);
 		else
 			nbase = nd_edg(ie, 0);
-
+		
 		for (n = 0; n < nump; n++)
 		{
 			ied = sp_edge(ie, &(p[n * MAXDIM]), &ip, FALSE);
@@ -189,14 +190,13 @@ int rect_cnt(struct sreg_str *r, float *p, int ie)
 	/*if this infinite loops, big trouble*/
 	for (bnd = r->bnd; bnd->edge != ie; bnd = bnd->next)
 		;
-
 	x[0] = cordinate(pt_edg(ie, 0), 0);
 	x[1] = cordinate(pt_edg(ie, 0), 1);
 	dx[0] = cordinate(pt_edg(ie, 1), 0) - x[0];
 	dx[1] = cordinate(pt_edg(ie, 1), 1) - x[1];
 	dq[0] = -dx[1];
 	dq[1] = dx[0];
-
+	
 	/*walk around the rest of the edges*/
 	nump = 0;
 	for (bp1 = bnd->next; (bp1->next != bnd); bp1 = bp1->next)
@@ -204,7 +204,6 @@ int rect_cnt(struct sreg_str *r, float *p, int ie)
 		if (dabs(bp1->ang - PI) < 1.0e-3)
 		{
 			n = pt_nd(nB(bp1));
-
 			q[0] = cordinate(n, 0);
 			q[1] = cordinate(n, 1);
 			if (lil(x, dx, q, dq, alp))
@@ -231,13 +230,15 @@ int chk_pt(float *q, struct sreg_str *r)
 {
 	struct LLedge *bp1;
 	int			   p, f;
-
+	
 	for (bp1 = r->bnd, f = 1; (bp1 != r->bnd) || f; bp1 = bp1->next, f = 0)
 	{
 		p = pt_nd(nB(bp1));
+		
 		if (dist(cord_arr(p), q) < EPS)
 			return (0);
 	}
+	
 	return (1);
 }
 

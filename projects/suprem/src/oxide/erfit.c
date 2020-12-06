@@ -10,6 +10,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"
@@ -18,6 +19,7 @@
 #include "suprem/include/material.h"
 
 /* 2020 includes*/
+#include <debug.h>
 #include "../oxide/oxrate.h"
 #include "../dbase/locate.h"
 #include "../shell/smisc.h"
@@ -68,7 +70,7 @@ void erfc_growth(float temp, int ornt, int oxhow, double dt)
 		return;
 
 	/* Compute displacements */
-
+	
 	/* Look at each node */
 	for (in = 0; in < nn; in++)
 	{
@@ -89,7 +91,7 @@ void erfc_growth(float temp, int ornt, int oxhow, double dt)
 		nd[in]->sol[imptosol[YVEL]] =
 			xdep * ((nd[in]->mater == Si) ? dx2 : (dx2 - dx1));
 	}
-
+	
 	return;
 }
 
@@ -183,7 +185,7 @@ void erf1_growth(float temp, int ornt, int oxhow, double dt, int which)
 		else
 			which = O_ERF2;
 	}
-
+	
 	/* Look at each node */
 	for (in = 0; in < nn; in++)
 	{
@@ -261,3 +263,19 @@ void erf1_growth(float temp, int ornt, int oxhow, double dt, int which)
 
 	return;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

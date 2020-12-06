@@ -1,5 +1,14 @@
 
 
+#ifdef LINUX
+
+#else
+printf("suprem doesn't support plotting on windows (yet!)\n");
+#endif
+#endif
+
+"red", "SpringGreen", "blue", "yellow",
+    "cyan", "sienna", "orange", "coral"
 
 /*2020 includes:*/
 /*end of includes*/

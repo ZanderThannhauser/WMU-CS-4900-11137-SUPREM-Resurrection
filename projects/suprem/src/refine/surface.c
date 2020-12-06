@@ -77,12 +77,12 @@ int find_surf(struct line **pp) /*the point numbers*/
 				n2 = nd_edg(i, 1);
 				p1 = pt_edg(i, 0);
 				p2 = pt_edg(i, 1);
-
+				
 				/*order these so the normal points out*/
 				(void)local_normal(n1, -1, nrm);
 				ny = XC(p1) - XC(p2);
 				nx = YC(p2) - YC(p1);
-
+				
 				if ((nx * nrm[0]) + (ny * nrm[1]) > 0.0)
 				{
 					left = p1;
@@ -95,7 +95,7 @@ int find_surf(struct line **pp) /*the point numbers*/
 					right = p1;
 					ln = n2;
 				}
-
+				
 				if (ns == 0)
 				{
 					p[0].p = left;
@@ -154,7 +154,7 @@ int find_surf(struct line **pp) /*the point numbers*/
 			while (!done)
 			{
 				p1 = pt_edg(el, ind);
-
+				
 				found = FALSE;
 				for (j = 0; j < num_nd(p1) && !found; j++)
 				{
@@ -191,7 +191,6 @@ int find_surf(struct line **pp) /*the point numbers*/
 			/* 1-D need surface point only */
 			for (i = 0; i < ne; i++)
 			{
-
 				/* find out nd[0] or nd[1] to be surface point? */
 				/* really have to check both nodes? yes!        */
 				if (tri[i]->nb[0] == BC_OFFSET + 2)
@@ -203,7 +202,6 @@ int find_surf(struct line **pp) /*the point numbers*/
 				{
 					p[0].p = nd[tri[i]->nd[0]]->pt;
 					p[0].x = XC(p[0].p);
-
 					/* Be alert! p[0].p associate to point not node */
 				}
 			}

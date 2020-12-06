@@ -17,6 +17,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"
@@ -40,10 +41,27 @@ void get_edge(float mval[], int mat[], int *mnum, int dir, float value);
  *  Original:	MEL	8/85						*
  *									*
  ************************************************************************/
-void  mat_edges(dir, value, ymin, ymax) int dir;
-float value;
-float ymin, ymax;
+void mat_edges(int dir, float value, float ymin, float ymax)
 {
+	#if 0
+	int i;
+	float mval[MAXMAT];		/*array of the crossing locations*/
+	int mat[MAXMAT];		/*material that is crossed*/
+	int mnum;			/*number of materials that are crossed*/
+
+	/*the next step is to find the crossing values*/
+	get_edge(mval, mat, &mnum, dir, value);
+
+	/*now draw the vertical lines at the crossings*/
+	for(i = 0; i < mnum; i += 2 ) {
+	xgNewSet();
+	xgSetName(MatNames[mat_reg(mat[i])]);
+	xgNewGroup();
+	xgPoint( mval[i], ymin );
+	xgPoint( mval[i], ymax );
+	}
+	#endif
+	TODO;
 }
 
 /************************************************************************
@@ -80,14 +98,14 @@ void get_edge(float mval[], int mat[], int *mnum, int dir, float value)
 				for (j = 1, bp = bnd = sreg[reg[i]->sreg]->bnd; j || bp != bnd;
 					 j = 0, bp = bp->next)
 				{
-
+					
 					e = bp->edge;
-
+					
 					c1[0] = xcord(pt_edg(e, 0));
 					c1[1] = ycord(pt_edg(e, 0));
 					c2[0] = xcord(pt_edg(e, 1));
 					c2[1] = ycord(pt_edg(e, 1));
-
+					
 					/*check and see if the line crosses*/
 					if (dir)
 					{
@@ -129,7 +147,7 @@ void get_edge(float mval[], int mat[], int *mnum, int dir, float value)
 					}
 				}
 				break;
-
+			
 			case ONED:
 				mn = MAXFLOAT;
 				mx = -MAXFLOAT;
@@ -144,7 +162,7 @@ void get_edge(float mval[], int mat[], int *mnum, int dir, float value)
 					mn = (mn < c2[0]) ? mn : c2[0];
 					mx = (mx > c2[0]) ? mx : c2[0];
 				}
-
+				
 				mat[*mnum] = i;
 				mval[*mnum] = mn;
 				(*mnum)++;

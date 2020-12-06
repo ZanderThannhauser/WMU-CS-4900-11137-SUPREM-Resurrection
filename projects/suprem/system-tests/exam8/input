@@ -27,7 +27,4 @@ foreach SEP ( 10 5 4 2.5 )
     select z=Sxy
     contour val=-3.0e7
 end
-
-#2020: rule: every example must output mesh:
-struct outf=./str.actual
-
+pause

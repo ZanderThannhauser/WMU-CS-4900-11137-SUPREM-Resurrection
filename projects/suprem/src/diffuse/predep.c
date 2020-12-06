@@ -19,6 +19,7 @@
 #include "suprem/include/material.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../dbase/alloc.h"
 #include "../dbase/dispose.h"
 #include "../dbase/locate.h"
@@ -147,12 +148,25 @@ void predep()
 		add_impurity(impa, 1.0, -1);
 		SET_FLAGS(impa, ACTIVE);
 	}
-
+	
 	/*set the gas node concs*/
 	for (ie = 0; ie < np; ie++)
 	{
 		if (is_surf(ie))
 			set_sol_nd(node_mat(nd_pt(ie, 0), GAS), imptosol[imp], conc);
 	}
+	
 	return;
 }
+
+
+
+
+
+
+
+
+
+
+
+

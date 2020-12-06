@@ -24,6 +24,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/dbaccess.h"
@@ -37,6 +38,7 @@
 #include "suprem/include/sysdep.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../geom/limits.h"
 #include "../shell/do_action.h"
 #include "../dbase/locate.h"
@@ -109,12 +111,15 @@ int pi_write(char *name, int show)
 	fprintf(lu, "%d %d %d\n", Pnp, Pne, Pnb);
 	fprintf(lu, "%d %d\n", Pnelect, -Pnmat);
 
+	#if 0
 	/* Points */
 	for (i = 0; i < np; i++)
 		if (Ppt[i] >= 0)
 			fprintf(lu, "%16e %16e %16e %16e\n", cordinate(i, 0),
 					cordinate(i, 1), Pr1[i], Ptconc[i]);
-
+	#endif
+	TODO;
+	
 	/* Triangles */
 	for (i = 0; i < ne; i++)
 	{
@@ -262,7 +267,7 @@ int ShowElect(int show, int Pnelect, int Pnb, int *Pnbc, int *Pietype)
 				txmin - xslop, txmax + xslop, tymin - yslop, tymax + yslop);
 		do_str(CommandBuf);
 	}
-
+	
 	/* Each electrode point */
 	for (i = 0; i < Pnb; i++)
 	{
@@ -338,7 +343,7 @@ char *pi_dop(float **r1, float **tconc)
 		if (Pr1[i] == 0)
 			Pr1[i] = 1.0;
 	}
-
+	
 	free(tmp);
 	return (0);
 }
@@ -404,7 +409,7 @@ void reflect_grid(float sign, int xy)
 	/* OK, now loop over elements, creating new points and nodes as necc. */
 	neO = ne;
 	npO = np;
-
+	
 	/* Duplicate the points*/
 	for (i = 0; i < npO; i++)
 	{
@@ -458,7 +463,7 @@ void reflect_grid(float sign, int xy)
 			}
 		}
 	}
-
+	
 	/* Duplicate the triangles. */
 	nb[0] = nb[1] = nb[2] = -1024;
 	for (i = 0; i < neO; i++)
@@ -476,3 +481,17 @@ void reflect_grid(float sign, int xy)
 
 	free(nodmap);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

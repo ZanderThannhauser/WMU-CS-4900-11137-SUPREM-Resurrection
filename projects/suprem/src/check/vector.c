@@ -20,6 +20,7 @@
 #include <string.h>
 #include <stdlib.h>
 #include <ctype.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/dbaccess.h"
@@ -33,6 +34,7 @@
 #endif
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "../diffuse/defect.h"
 #include "../oxide/mater.h"
 #include "../diffuse/Interst.h"
@@ -785,3 +787,14 @@ void RoughGrad(int which, float *vector)
 
 	sfree(accum);
 }
+
+
+
+
+
+
+
+
+
+
+

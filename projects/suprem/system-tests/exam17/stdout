@@ -64,6 +64,4 @@ Solving      730.315 +      169.685 =      900.001,   103.14%, np 356
 	plot.1d x.min=0 x.ma=2 y.mi=14 y.max=20 cle=f axi=f line.type=4
 	select z=log10(inter)	
 	plot.1d x.min=0 x.ma=2 y.mi=14 y.max=20 cle=f axi=f line.type=2
-#2020: all examples must output meshes:
-struct outf=./str.actual
 quit

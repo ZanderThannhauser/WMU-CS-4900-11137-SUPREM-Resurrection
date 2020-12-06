@@ -135,7 +135,7 @@ int mk_nd(int p, int m)
 
 	/*build the reverse pointer while we are at it*/
 	add_nd_pt(p, nn - 1);
-
+	
 	EXIT;
 	return (nn - 1);
 }
@@ -166,6 +166,10 @@ void dis_1nd(struct nd_str **n)
 	n[0] = NULL;
 }
 
+#define PC(ARG)                                                                \
+	if (err = ARG)                                                             \
+	panic(err)
+
 /************************************************************************
  *									*
  *	make_nodes() - This routine generates the node list in a two 	*
@@ -179,16 +183,18 @@ void dis_1nd(struct nd_str **n)
  *					 history buffs)			*
  *									*
  ************************************************************************/
+
 void make_nodes()
 {
 	register int i;   /*every routine needs an i for indexing*/
 	register int p;   /*point count*/
 	register int t;   /*triangle count*/
 	register int mat; /*material type of the current triangle*/
-#define PC(ARG)                                                                \
-	if (err = ARG)                                                             \
-	panic(err)
-
+	ENTER;
+	
+	verpv(np);
+	verpv(pt);
+	
 	/*pass 0: clear out the pt->nd arrays (slightly redundant but safe) */
 	for (p = 0; p < np; p++)
 	{
@@ -219,8 +225,9 @@ void make_nodes()
 			if (pt[p]->nd[i])
 				(void)mk_nd(p, i);
 	}
-
+	
 	/*that was easier than I expected, how about you?*/
+	EXIT;
 }
 
 /************************************************************************

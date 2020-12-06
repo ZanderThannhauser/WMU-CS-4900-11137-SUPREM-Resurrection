@@ -16,6 +16,7 @@
 /*   make_db.c                Version 5.1     */
 
 #include <stdio.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"
@@ -65,7 +66,7 @@ void create_db(int mk_nodes)
 {
 	int i;
 	ENTER;
-
+	
 	/*make edge boundaries self-consistent with the points*/
 	bc_dirty = FALSE;
 	make_bc();
@@ -81,13 +82,16 @@ void create_db(int mk_nodes)
 	}
 	else
 	{
+		#if 0
 		/*make Gas nodes for points if they need them and don't have them*/
 		for (i = 0; i < np; i++)
 			if (is_surf(i) && (node_mat(nd_pt(i, 0), GAS) == -1))
 				mk_nd(i, GAS);
-
+		
 		/*get the point to node lists set up*/
 		pt_to_node();
+		#endif
+		TODO;
 	}
 
 	/*next, change the triangle to point data to triangle to nodes*/
@@ -99,6 +103,7 @@ void create_db(int mk_nodes)
 
 	/*next build the connectivity pieces that are not fundamental*/
 	bd_connect("Mesh Creation");
+	
 	EXIT;
 }
 

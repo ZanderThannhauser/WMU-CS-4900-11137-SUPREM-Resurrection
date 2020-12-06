@@ -38,4 +38,4 @@ structure out=./oed.str
 #plot the final profile
 select z=log10(bor)
 plot.1d cle=f axi=f
-
+pause

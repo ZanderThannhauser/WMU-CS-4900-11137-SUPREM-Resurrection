@@ -22,9 +22,11 @@
 #include "suprem/include/material.h"
 
 /* 2020 includes*/
+#include <debug.h>
 #include "../dbase/alloc.h"
 #include "../dbase/locate.h"
 #include "../misc/panic.h"
+#include "viscous.h"
 #include "FEconvert.h"
 /* end of includes*/
 
@@ -199,7 +201,6 @@ int FEconvert(int element, int dof)
 	}
 
 	valencies();
-
 	return (0);
 }
 
@@ -342,8 +343,6 @@ void valencies()
 	}
 }
 
-extern float proc_temp;
-
 /*-----------------STASH_NONI-------------------------------------------
  * Stores suprem4's value of n/ni and current oxidant conc
  * in the finite element structure so it can be passed into Oxidant.c
@@ -364,3 +363,16 @@ void stash_noniC(int in, double where[])
 	if ((io = node_mat(pt[in]->nd[0], SiO2)) >= 0)
 		where[1] = nd[io]->sol[iconc];
 }
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -20,6 +20,7 @@
 #include "suprem/include/matrix.h"
 
 /* 2020 includes:*/
+#include <debug.h>
 #include "moving.h"
 /* end of includes*/
 
@@ -167,3 +168,20 @@ void moving_bound(double dt, double scale)
 		}
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -284,7 +284,6 @@ void face_ache(FEelt_typ *ae, int j)
 	int	ip1, ip2, ip;
 	double vlen;
 	int	in;
-
 	/* Get local normal at either end and average for center*/
 	ip1 = ae->nd[(j + 1) % 3];
 	in = node_mat(pt[ip1]->nd[0], ae->mat);
