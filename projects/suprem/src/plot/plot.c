@@ -50,15 +50,18 @@ void node_pl(int i)
 
 void edge_pl(int i)
 {
+	#ifdef LINUX
     xgNewGroup();
     xgPoint( XC( pt_edg(i,0) ), YC(pt_edg(i,0)) );
     xgPoint( XC( pt_edg(i,1) ), YC(pt_edg(i,1)) );
     if ( pl_debug ) {xgUpdate(FALSE); check_x();}
+    #endif
 }
 
 void reg_pl (int i)
 {
 	ENTER;
+	#ifdef LINUX
     struct LLedge *f, *b;
     int temp;
 
@@ -73,6 +76,7 @@ void reg_pl (int i)
     }
     pl_debug = temp;
     if ( pl_debug ) {xgUpdate(FALSE); check_x();}
+    #endif
     EXIT;
 }
 

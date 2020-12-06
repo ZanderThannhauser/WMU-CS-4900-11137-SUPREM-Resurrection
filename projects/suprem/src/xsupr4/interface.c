@@ -3,7 +3,7 @@
  * See ../Copyright for complete rights and liability information.
  */
 
-
+#ifdef LINUX
 
 /*
  * xbitmap1.c
@@ -385,3 +385,4 @@ double x,y;
 }
 #endif
 
+#endif

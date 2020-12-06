@@ -17,7 +17,6 @@ LINUX_CPPFLAGS += -D HAVE_ASINH
 LINUX_CPPFLAGS += -D _GNU_SOURCE
 LINUX_CPPFLAGS += -D _XOPEN_SOURCE=500
 LINUX_CPPFLAGS += -D LINUX
-#LINUX_CPPFLAGS += -D GRAPHING
 
 WINDOWS_CPPFLAGS = $(CPPFLAGS)
 WINDOWS_CPPFLAGS += -D WINDOWS
@@ -43,7 +42,10 @@ DFLAGS += -D DEBUGGING_2020=1
 
 LDLIBS += -lm
 
-LDLIBS += -lXaw -lXmu -lXt -lXext -lX11 # you need these three for plotting
+LINUX_LDLIBS += $(LDLIBS)
+LINUX_LDLIBS += -lXaw -lXmu -lXt -lXext -lX11 # you need these three for plotting
+
+WINDOWS_LDLIBS += $(LDLIBS)
 
 default: bin/suprem
 

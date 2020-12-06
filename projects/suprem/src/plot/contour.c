@@ -49,6 +49,7 @@
 void contour(char *par, struct par_str *param)
 {
 	ENTER;
+	#ifdef LINUX
     float value;
     float arr[MAXVRT][3], p[2][3];
     int t,i,nx;
@@ -112,6 +113,9 @@ void contour(char *par, struct par_str *param)
     }
     xgUpdate( FALSE );
     pl_debug = deb;
+	#else
+	printf("suprem doesn't support plotting on windows (yet!)\n");
+	#endif
     return; // (0);
 }
 

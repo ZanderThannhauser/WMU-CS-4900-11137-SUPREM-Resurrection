@@ -7,6 +7,8 @@
  * idraw.c 1.1
  */
 
+#ifdef LINUX
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
@@ -476,3 +478,5 @@ struct hard_dev idraw = {
  *   hardcopy dialog.
  */
 
+
+#endif

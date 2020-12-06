@@ -389,7 +389,9 @@ void do_exec(char *par, int intr, int index, int no_exec)
 {
 	ENTER;
 	
+	#if LINUX
 	check_x();
+	#endif
 	
 	if (check(par, cards[command[index].param]) == -1)
 	{

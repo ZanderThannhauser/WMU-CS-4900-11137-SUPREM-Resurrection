@@ -70,6 +70,7 @@ void plot_2d(char *par, struct par_str *param)
 	float		 vleng, vmax;
 	int			 deb;
 	ENTER;
+	#ifdef LINUX
 	
 	if (InvalidMeshCheck())
 	{
@@ -212,6 +213,10 @@ void plot_2d(char *par, struct par_str *param)
     xgUpdate(0);
 	pl_debug = deb;
 	
+	#else
+	printf("suprem doesn't support plotting on windows (yet!)\n");
+	#endif
+
 	EXIT;
 	return; /* (0);*/
 }
@@ -355,6 +360,7 @@ void draw_stress ( float vleng, float smax, int ccol, int tcol)
 void draw_flow( float vleng, float vmax, int col)
 {
 	ENTER;
+	#ifdef LINUX
     int in;
     float vel, vx, vy, dx, dy, cx, cy, delt;
 
@@ -404,6 +410,9 @@ void draw_flow( float vleng, float vmax, int col)
 	xgPoint( cx + dx + (-dy-dx)/5, cy + dy + (-dy+dx)/5);
 
     }
+	#else
+	printf("suprem doesn't support plotting on windows (yet!)\n");
+	#endif
 	EXIT;
 }
 

@@ -46,6 +46,7 @@
 void material(int line_bound)
 {
 	ENTER;
+	#ifdef LINUX
 	register int ir;	/*current triangle*/
 	register int sr;
 
@@ -56,7 +57,7 @@ void material(int line_bound)
 		reg_pl(sr);
 		free_skel(sr);
 	}
-	
+	#endif
 	EXIT;
 }
 

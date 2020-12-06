@@ -76,8 +76,10 @@ void get_input(FILE *in, int per)
 			supbuf[1] = '\0';
 		}
 	}
-
+	
+	#ifdef LINUX
 	check_x();
+	#endif
 	
 	/*read an input line into the lex buffer and macro expand*/
 	for (bufptr = 0;

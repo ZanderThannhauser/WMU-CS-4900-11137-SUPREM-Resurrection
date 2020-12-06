@@ -6,6 +6,8 @@
  * ps.c 1.1
  */
 
+#ifdef LINUX
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <X11/IntrinsicP.h>
@@ -588,7 +590,7 @@ char *userState;    /* state information */
 }
 #endif
 
-
+#endif
 
 
 

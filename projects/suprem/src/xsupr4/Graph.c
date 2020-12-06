@@ -8,6 +8,7 @@
  * Graph.c - bitmap editor widget.
  */
 
+#ifdef LINUX 
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -630,7 +631,7 @@ void add_label(Widget widget, XtPointer client_data, XtPointer call_data)
 	EXIT;
 }
 
-
+#endif
 
 
 

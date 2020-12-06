@@ -5,6 +5,8 @@
  * hpgl.c 1.2
  */
 
+#ifdef LINUX
+
 #define MAPX(state,x) ( (x) + P1X + state->clipminX )
 #define MAPY(state,y) ( MAXY - (y) + P1Y - state->clipminY)
 
@@ -342,7 +344,7 @@ hpglEnd(userState)
 }
 #endif
 
-
+#endif
 
 
 

@@ -11,6 +11,8 @@
  * xgX.c 1.2
  */
 
+#ifdef LINUX
+
 #include <X11/IntrinsicP.h>
 #include <X11/StringDefs.h>
 #include <X11/Xos.h>
@@ -428,6 +430,7 @@ void dot_X(Widget w, int x, int y, int style, int type, int color)
 	TODO;
 }
 
+#endif
 
 
 

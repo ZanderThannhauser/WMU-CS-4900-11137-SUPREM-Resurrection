@@ -1,4 +1,6 @@
 
+#ifdef LINUX
+
 #include <X11/IntrinsicP.h>
 #include <X11/StringDefs.h>
 
@@ -706,7 +708,7 @@ void do_redraw(GraphWidget userdata, GraphWin * wi)
 	}
 }
 
-
+#endif
 
 
 

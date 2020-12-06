@@ -249,10 +249,12 @@ int main(int argc, char **argv)
 	vxmax = vymax = 1.0;
 	
 	HERE;
-
+	
+	#ifdef LINUX
 	/*plot initialization*/
 	xgPlotInit();
-
+	#endif
+	
 	/*some grid initialization*/
 	rect_boot();
 	
@@ -295,7 +297,9 @@ int main(int argc, char **argv)
 	if (cpufile != NULL)
 		fclose(cpufile);
 	
+	#ifdef LINUX
 	xgUpdate(1);
+	#endif
 	
 	EXIT;
 	return 0;

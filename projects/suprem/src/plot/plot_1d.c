@@ -54,6 +54,7 @@
 void plot_1d(char *par, struct par_str *param)
 {
 	ENTER;
+	#ifdef LINUX
 	int boundary;
 	// 2020: int line_type;
 	int clear;
@@ -209,6 +210,9 @@ void plot_1d(char *par, struct par_str *param)
 	pl_debug=deb;
 
 	free(data);
+	#else
+	printf("suprem doesn't support plotting on windows (yet!)\n");
+	#endif
 	EXIT;
 	return; // (0);
 }
