@@ -54,10 +54,10 @@ default: bin/suprem
 #ARGS += ./examples/exam4/input
 #ARGS += ./examples/exam5/input
 #ARGS += ./examples/exam6/input
-ARGS += ./examples/exam7/input
+#ARGS += ./examples/exam7/input
 #ARGS += ./examples/exam8/input
 #ARGS += ./examples/exam9/input
-#ARGS += ./examples/exam10/input
+ARGS += ./examples/exam10/input
 #ARGS += ./examples/exam11/input
 #ARGS += ./examples/exam12/input
 #ARGS += ./examples/exam13/input
