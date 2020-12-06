@@ -10,6 +10,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"
@@ -70,7 +71,6 @@ void erfc_growth(float temp, int ornt, int oxhow, double dt)
 
 	/* Compute displacements */
 	
-	#if 0
 	/* Look at each node */
 	for (in = 0; in < nn; in++)
 	{
@@ -91,8 +91,6 @@ void erfc_growth(float temp, int ornt, int oxhow, double dt)
 		nd[in]->sol[imptosol[YVEL]] =
 			xdep * ((nd[in]->mater == Si) ? dx2 : (dx2 - dx1));
 	}
-	#endif
-	TODO;
 	
 	return;
 }
@@ -188,7 +186,6 @@ void erf1_growth(float temp, int ornt, int oxhow, double dt, int which)
 			which = O_ERF2;
 	}
 	
-	#if 0
 	/* Look at each node */
 	for (in = 0; in < nn; in++)
 	{
@@ -263,8 +260,6 @@ void erf1_growth(float temp, int ornt, int oxhow, double dt, int which)
 		else
 			nd[in]->sol[syvel] = xdep * (dx2 - dx1);
 	}
-	#endif
-	TODO;
 
 	return;
 }

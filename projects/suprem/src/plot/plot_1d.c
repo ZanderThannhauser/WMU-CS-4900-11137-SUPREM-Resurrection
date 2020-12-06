@@ -55,7 +55,7 @@ void plot_1d(char *par, struct par_str *param)
 {
 	ENTER;
 	int boundary;
-	int line_type;
+	// 2020: int line_type;
 	int clear;
 	float x;
 	float y;
@@ -69,7 +69,6 @@ void plot_1d(char *par, struct par_str *param)
 	int symb = -1;
 	char *xlab;
 	int mat1, mat2, byarc;
-	char pbuf[120];
 	int deb;
 	int axis;
 
@@ -91,7 +90,7 @@ void plot_1d(char *par, struct par_str *param)
 	boundary  = get_bool(param, "boundary");
 	clear  = get_bool(param, "clear");
 	axis  = get_bool(param, "axis");
-	line_type = get_int(param, "line.type");
+	// 2020: line_type = get_int(param, "line.type");
 	
 	if ( is_specified( param, "symb" ) ) symb = get_int(param, "symb");
 	

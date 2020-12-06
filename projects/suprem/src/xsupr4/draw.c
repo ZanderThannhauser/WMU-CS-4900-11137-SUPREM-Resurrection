@@ -23,17 +23,21 @@ double stepGrid();
 double RoundUp(double val);
 /*end of declarations*/
 
+#if 0
 /* Default line styles */
 static char *defStyle[] = {
     "1", "10", "11110000", "010111", "1110",
     "1111111100000000", "11001111", "0011000111"
 };
+#endif
 
+#if 0
 /* Default color names */
 static char *defColors[] = {
     "red", "SpringGreen", "blue", "yellow",
     "cyan", "sienna", "orange", "coral"
 };
+#endif
 
 
 static int rdFindMax(GraphWin *wi);
@@ -466,7 +470,7 @@ void DrawLegend(void *gw, GraphWin * wi)
 	DataSet *temp;
 	int cnt;
 
-	int idx, spot, lineLen, oneLen;
+	int spot, lineLen, oneLen;
 	XSegment leg_line;
 	int markFlag;
 
@@ -533,7 +537,7 @@ int TransformCompute(GraphWin * wi)
 	ENTER;
 	DataSet *temp;
 	double bbCenX, bbCenY, bbHalfWidth, bbHalfHeight;
-	int idx, maxName, leftWidth;
+	int maxName, leftWidth;
 
 	/*
 	* First,  we figure out the origin in the X window.  Above
@@ -678,7 +682,6 @@ void DrawNumber(char *w, GraphWin * wi, double val, int x, int y, int just, int 
 static int rdFindMax(GraphWin * wi)
 {
     DataSet *temp;
-    int i;
     PointList *list;
     int max = -1;
 

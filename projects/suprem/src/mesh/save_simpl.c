@@ -15,6 +15,7 @@
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <assert.h>
 #ifdef CONVEX
 #include <strings.h>
 #else
@@ -182,7 +183,6 @@ void write_SIMPLPolygon(FILE *SIMPLfile)
 		exit(-1);
 	}
 	
-	#if 0
 	fprintf(SIMPLfile, "%d\n", nreg);
 	for (ir = 0; ir < nreg; ir++)
 	{
@@ -272,9 +272,8 @@ void write_SIMPLPolygon(FILE *SIMPLfile)
 		count = 0;
 		free(poly_array);
 	} /* end for ir */
+	
 	free(poly_data);
-	#endif
-	TODO;
 }
 
 void write_SIMPLGrid(FILE *SIMPLfile, float *xloc, int xlocsize, float *yloc,

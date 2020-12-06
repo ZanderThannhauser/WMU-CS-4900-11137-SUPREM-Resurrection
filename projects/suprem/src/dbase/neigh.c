@@ -90,7 +90,6 @@ int neigh_nd(int n, int i)
 int num_neigh_pt(int p)
 {
 	int i, j, n, t;
-	#if 0
 	num_neighp = 0;
 	work_pt = p;
 
@@ -114,8 +113,6 @@ int num_neigh_pt(int p)
 	elim_dups(neigh_plist, &num_neighp);
 
 	return (num_neighp);
-	#endif
-	TODO;
 }
 
 /*

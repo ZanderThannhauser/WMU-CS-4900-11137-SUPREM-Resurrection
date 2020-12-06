@@ -33,6 +33,8 @@
 #include "debug.h"
 #include "../dbase/dispose.h"
 #include "../misc/get.h"
+#include "../xsupr4/interface.h"
+#include "intersect.h"
 #include "contour.h"
 /* end of includes*/
 
@@ -47,25 +49,24 @@
 void contour(char *par, struct par_str *param)
 {
 	ENTER;
-	TODO;
-	#if 0
     float value;
     float arr[MAXVRT][3], p[2][3];
     int t,i,nx;
-    int line_type;
+   // 2020: int line_type;
     int deb;
     int symb;
 
 
-    if ( InvalidMeshCheck()) return( -1);
+    if ( InvalidMeshCheck()) return; // ( -1);
+   
     if( znn != nn ) {
-	fprintf(stderr, "Z variable is out of date w/r to mesh");
-	return( -1);
+		fprintf(stderr, "Z variable is out of date w/r to mesh");
+		return; // ( -1);
     }
 
     if ( mode == ONED ) {
-	fprintf(stderr, "Can't do contouring in one dimension\n");
-	return( - 1);
+		fprintf(stderr, "Can't do contouring in one dimension\n");
+		return; // ( - 1);
     }
 
     deb = pl_debug;
@@ -73,7 +74,7 @@ void contour(char *par, struct par_str *param)
 
 
     value = get_float( param, "value" );
-    line_type = get_int(param, "line.type");
+  // 2020:   line_type = get_int(param, "line.type");
     if ( is_specified( param, "symb" ) ) {
 	symb = get_int(param, "symb");
     }
@@ -111,10 +112,7 @@ void contour(char *par, struct par_str *param)
     }
     xgUpdate( FALSE );
     pl_debug = deb;
-    return(0);
-    #endif
-    TODO;
-    EXIT;
+    return; // (0);
 }
 
 

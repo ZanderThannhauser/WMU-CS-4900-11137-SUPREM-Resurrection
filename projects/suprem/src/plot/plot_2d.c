@@ -17,6 +17,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"
@@ -34,6 +35,7 @@
 #include "../geom/limits.h"
 #include "../plot/plot.h"
 #include "../plot/material.h"
+#include "../xsupr4/interface.h"
 #include "plot_2d.h"
 /* end of includes*/
 
@@ -59,6 +61,7 @@ void plot_2d(char *par, struct par_str *param)
 	int			 i;
 	int			 boundary;
 	int			 grid;
+    int clear, axis;
 	int			 fill;
 	static int   line_bound = 1, line_com = 3, line_ten = 4;
 	int			 vornoi, diamonds;
@@ -68,7 +71,6 @@ void plot_2d(char *par, struct par_str *param)
 	int			 deb;
 	ENTER;
 	
-	#if 0
 	if (InvalidMeshCheck())
 	{
 		EXIT;
@@ -91,6 +93,8 @@ void plot_2d(char *par, struct par_str *param)
 	vornoi = get_int(param, "vornoi");
 	diamonds = get_bool(param, "diamonds");
 	stress = get_bool(param, "stress");
+    clear    = get_bool(param, "clear");
+    axis     = get_bool(param, "axis");
 	fill = get_bool(param, "fill");
 	if (is_specified(param, "line.bound"))
 		line_bound = get_int(param, "line.bound");
@@ -119,6 +123,8 @@ void plot_2d(char *par, struct par_str *param)
 	if (is_specified(param, "y.max"))
 		tymax = get_float(param, "y.max") * 1e-4;
 
+    if (clear) xgClear();
+    
 	/* have a heart */
 	if (txmin > txmax)
 	{
@@ -161,8 +167,19 @@ void plot_2d(char *par, struct par_str *param)
 		EXIT;
 		return; /* (-1);*/
 	}
-
+	
 	yflip = TRUE;
+	xgSetScale(1.0e4, -1.0e4);
+	xgLogAxis(FALSE, FALSE);
+
+	if (axis)
+	{
+		xgSetBounds(txmin*1.0e4, txmax*1.0e4, -tymax*1.0e4, -tymin*1.0e4);
+	}
+	
+	xgAxisLabels("x in microns", "y in microns", title);
+
+	xgNewSet();
 
 	if (grid)
 	{
@@ -192,9 +209,8 @@ void plot_2d(char *par, struct par_str *param)
 		draw_flow(vleng, vmax, line_com);
 
 	/*clean up plotting and post it out*/
+    xgUpdate(0);
 	pl_debug = deb;
-	#endif
-	TODO;
 	
 	EXIT;
 	return; /* (0);*/
@@ -339,7 +355,6 @@ void draw_stress ( float vleng, float smax, int ccol, int tcol)
 void draw_flow( float vleng, float vmax, int col)
 {
 	ENTER;
-	#if 0
     int in;
     float vel, vx, vy, dx, dy, cx, cy, delt;
 
@@ -389,8 +404,6 @@ void draw_flow( float vleng, float vmax, int col)
 	xgPoint( cx + dx + (-dy-dx)/5, cy + dy + (-dy+dx)/5);
 
     }
-	#endif
-	TODO;
 	EXIT;
 }
 

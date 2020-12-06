@@ -8,7 +8,6 @@
  *************************************************************************/
 /*   rate.c                Version 5.1     */
 
-#if LINUX && GRAPHING
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -84,7 +83,6 @@ void phys_etch(double *rate, double time)
 	xsol = imptosol[XVEL];
 	ysol = imptosol[YVEL];
 
-	#if 0
 	/*zero the initial velocities and interface flags*/
 	for (i = 0; i < nn; i++)
 		nd[i]->sol[xsol] = nd[i]->sol[ysol] = 0.0;
@@ -93,8 +91,6 @@ void phys_etch(double *rate, double time)
 		isgrow[i] = FALSE;
 		unsettr(i);
 	}
-	#endif
-	TODO;
 
 	/*process only twenty angstroms at a time*/
 	dtmax = time;
@@ -164,7 +160,6 @@ void compute_rate(double *rate, int *prio)
 	ns = find_surf(&s);
 
 	/*first fix up any unfixed triple points*/
-	#if 0
 	for (i = 0; i < ns; i++)
 	{
 		p = s[i].p;
@@ -224,20 +219,15 @@ void compute_rate(double *rate, int *prio)
 			}
 		}
 	}
-	#endif
-	TODO;
 
 	switch (mode)
 	{
 		case ONED:
-			#if 0
 			for (i = 0; j < pt[s[0].p]->nn; j++)
 			{
 				n = pt[p]->nd[j];
 				nd[n]->sol[xsol] = rate[s[0].map];
 			}
-			#endif
-			TODO;
 			break;
 		
 		case TWOD:
@@ -248,23 +238,17 @@ void compute_rate(double *rate, int *prio)
 				p2 = s[i + 1].p;
 				dis = 0.0;
 				
-				#if 0
 				/*sanity checks....*/
 				if ((pt[p1]->nn != 2) || (pt[p2]->nn != 2))
 					printf("error in triple handler - l2\n");
-				#endif
-				TODO;
 				
 				if (s[i].map == s[i + 1].map)
 				{
-					#if 0
 					dir[0] = pt[p2]->cord[0] - pt[p1]->cord[0];
 					dir[1] = pt[p2]->cord[1] - pt[p1]->cord[1];
 					dis = sqrt(dir[0] * dir[0] + dir[1] * dir[1]);
 					perp[0] = -dir[1] / dis;
 					perp[1] = dir[0] / dis;
-					#endif
-					TODO;
 					
 					/*compute the rate of the nodes on this edge*/
 					lastv[0] = newv[0];
@@ -272,7 +256,6 @@ void compute_rate(double *rate, int *prio)
 					newv[0] = rate[s[i].map] * perp[0];
 					newv[1] = rate[s[i].map] * perp[1];
 					
-					#if 0
 					if (i == 0)
 					{
 						for (j = 0; j < pt[p1]->nn; j++)
@@ -302,23 +285,17 @@ void compute_rate(double *rate, int *prio)
 								0.5 * (newv[1] + lastv[1]) * perp[1];
 						}
 					}
-					#endif
-					TODO;
 				}
 				else
 				{
-					#if 0
 					for (j = 0; j < pt[p1]->nn; j++)
 					{
 						n = pt[p1]->nd[j];
 						nd[n]->sol[xsol] = newv[0] * perp[0];
 						nd[n]->sol[ysol] = newv[1] * perp[1];
 					}
-					#endif
-					TODO;
 				}
 			}
-			#if 0
 			p2 = s[ns - 1].p;
 			for (j = 0; j < pt[p2]->nn; j++)
 			{
@@ -326,8 +303,6 @@ void compute_rate(double *rate, int *prio)
 				nd[n]->sol[xsol] = 0.0;
 				nd[n]->sol[ysol] = rate[s[i].map];
 			}
-			#endif
-			TODO;
 			break;
 	}
 }
@@ -360,7 +335,6 @@ void rate_trip(int p, double rate, int t1, int t2)
 		p1 = p;
 	}
 	
-	#if 0
 	/*compute the direction along the segment*/
 	dir[0] = pt[p2]->cord[0] - pt[p1]->cord[0];
 	dir[1] = pt[p2]->cord[1] - pt[p1]->cord[1];
@@ -371,11 +345,7 @@ void rate_trip(int p, double rate, int t1, int t2)
 		nd[nb]->sol[xsol] = rate * dir[0];
 		nd[nb]->sol[ysol] = rate * dir[1];
 	}
-	#endif
-	TODO;
 }
-
-#endif
 
 
 

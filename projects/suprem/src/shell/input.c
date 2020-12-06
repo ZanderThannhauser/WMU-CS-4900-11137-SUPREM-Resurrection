@@ -21,6 +21,7 @@
 
 /* 2020 includes:*/
 #include "macro.h"
+#include "../xsupr4/interface.h"
 #include "input.h"
 /* end of includes*/
 
@@ -66,7 +67,7 @@ void get_input(FILE *in, int per)
 			else
 				i = 1;
 		}
-
+		
 		/*fix up the values*/
 		if (i == 0)
 		{
@@ -76,6 +77,8 @@ void get_input(FILE *in, int per)
 		}
 	}
 
+	check_x();
+	
 	/*read an input line into the lex buffer and macro expand*/
 	for (bufptr = 0;
 		 supbuf[supbpt] && (buffer[bufptr] = supbuf[supbpt]) != '\n';

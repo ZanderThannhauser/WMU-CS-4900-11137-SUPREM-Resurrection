@@ -26,6 +26,7 @@
 #include "../dbase/alloc.h"
 #include "../dbase/locate.h"
 #include "../misc/panic.h"
+#include "viscous.h"
 #include "FEconvert.h"
 /* end of includes*/
 
@@ -64,7 +65,6 @@ static double *   impbase;
 
 int FEconvert(int element, int dof)
 {
-	#if 0
 	int		   ie, in, j, jl, jr, nbj, jnbj, *nl, is;
 	double *   dp, *dpl, *dpr;
 	double	 rad, rad2, myr;
@@ -201,8 +201,6 @@ int FEconvert(int element, int dof)
 	}
 
 	valencies();
-	#endif
-	TODO;
 	return (0);
 }
 
@@ -258,7 +256,6 @@ void FE2s4sil() { FE2s4(SavOnlySil); }
 
 void FE2s4(int SavWhat)
 {
-	#if 0
 	int		   ip, in, i, j;
 	static int imps[] = {XVEL, YVEL, Sxx, Syy, Sxy};
 	FEnd_typ * an;
@@ -311,8 +308,6 @@ void FE2s4(int SavWhat)
 			}
 		}
 	}
-	#endif
-	TODO;
 }
 
 void FEfree()
@@ -348,15 +343,12 @@ void valencies()
 	}
 }
 
-extern float proc_temp;
-
 /*-----------------STASH_NONI-------------------------------------------
  * Stores suprem4's value of n/ni and current oxidant conc
  * in the finite element structure so it can be passed into Oxidant.c
  *----------------------------------------------------------------------*/
 void stash_noniC(int in, double where[])
 {
-	#if 0
 	int	Ps = imptosol[Psi];
 	int	is, io, iconc = imptosol[gas_type];
 	double Kt = KB * proc_temp;
@@ -370,8 +362,6 @@ void stash_noniC(int in, double where[])
 
 	if ((io = node_mat(pt[in]->nd[0], SiO2)) >= 0)
 		where[1] = nd[io]->sol[iconc];
-	#endif
-	TODO;
 }
 
 

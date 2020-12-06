@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"
@@ -196,7 +197,6 @@ int do_1d(int ptype, float val, struct d_str data[], int mat1, int mat2,
 		count = 0;
 		for (i = 0; seeds[i]; i++)
 		{
-			#if 0
 			/* Leftmost point is special */
 			in = tri[seeds[i]->ie]->nd[(seeds[i]->j + 2) % 3];
 			xo = pt[nd[in]->pt]->cord[0];
@@ -205,22 +205,16 @@ int do_1d(int ptype, float val, struct d_str data[], int mat1, int mat2,
 			data[count].y = z[in];
 			data[count].mat = nd[in]->mater;
 			count++;
-			#endif
-			TODO;
 			
-			#if 0
 			/* A heuristic to make both sides of an interface look the same */
 			sign = 1;
 			in = tri[seeds[i]->ie]->nd[(seeds[i]->j + 1) % 3];
 			if (pt[nd[in]->pt]->cord[0] < xo)
 				sign = -1;
-			#endif
-			TODO;
 			
 			/* Then all the right points */
 			for (ttt = seeds[i]; ttt; ttt = ttt->right)
 			{
-				#if 0
 				in = tri[ttt->ie]->nd[(ttt->j + 1) % 3];
 				xn = pt[nd[in]->pt]->cord[0];
 				yn = pt[nd[in]->pt]->cord[1];
@@ -234,8 +228,6 @@ int do_1d(int ptype, float val, struct d_str data[], int mat1, int mat2,
 				count++;
 				xo = xn;
 				yo = yn;
-				#endif
-				TODO;
 			}
 		}
 		free(seeds);

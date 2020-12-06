@@ -39,6 +39,7 @@ static char check_bits[] = {
 /*2020 includes:*/
 #include <debug.h>
 #include "app1.h"
+#include "interface.h"
 #include "help.h"
 /*end of includes*/
 
@@ -81,14 +82,11 @@ Widget widget;
 XtPointer client_data;   /* cast to bigBitmap */
 XtPointer call_data;    /* unused */
 {
-	#if 0
 	xgClear();
 	XtDestroyApplicationContext(app_context);
 	app_context = NULL;
 	free(newwin);
 	newwin = NULL;
-	#endif
-	TODO;
 }
 		
 void make_graph( GraphWin* win )
@@ -118,11 +116,13 @@ void make_graph( GraphWin* win )
 		XtErrorMsg("invalidDisplay","xtInitialize","XtToolkitError", "Can't Open display", (String *) NULL, (Cardinal *)NULL);
 
 	tL1 = XtVaAppCreateShell( NULL, "XSuprem", applicationShellWidgetClass, dpy, XtNscreen, (XtArgVal)DefaultScreenOfDisplay(dpy), NULL);
-
+	
+	HERE;
 	vpane = XtVaCreateManagedWidget("vpane", panedWidgetClass, tL1, NULL);
 	buttonbox = XtVaCreateManagedWidget("buttonbox", boxWidgetClass, vpane, NULL);
 	graph = (GraphWidget) XtVaCreateManagedWidget("graph", graphWidgetClass, vpane, XtNGraphWin, win, NULL);
-
+	HERE;
+	
 	/*Make the Help Button*/
 	help = XtVaCreateManagedWidget("Help", commandWidgetClass, buttonbox, NULL);
 	XtAddCallback(help, XtNcallback, help_win, NULL);

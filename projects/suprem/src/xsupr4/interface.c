@@ -54,21 +54,24 @@ void xgPlotInit()
 	EXIT;
 }
 
-#if 0
-check_x()
+void check_x()
 {
-    XEvent event_return;
+	XEvent event_return;
+	ENTER;
 
-    while( app_context && XtAppPending(app_context)) {
-	    XtAppNextEvent(app_context, &event_return);
-	    XtDispatchEvent(&event_return);
-    }
-    while( help_context && XtAppPending(help_context)) {
-	    XtAppNextEvent(help_context, &event_return);
-	    XtDispatchEvent(&event_return);
-    }
+	while (app_context && XtAppPending(app_context))
+	{
+		XtAppNextEvent(app_context, &event_return);
+		XtDispatchEvent(&event_return);
+	}
+	while (help_context && XtAppPending(help_context))
+	{
+		XtAppNextEvent(help_context, &event_return);
+		XtDispatchEvent(&event_return);
+	}
+	
+	EXIT;
 }
-#endif
 
 
 void xgSetBounds(double lowX, double upX, double lowY, double upY)
@@ -181,8 +184,7 @@ void xgSetName(char* name)
     curspot->setName = STRDUP(name);
 }
 
-void xgSetValue(val)
-double val;
+void xgSetValue(double val)
 {
     curspot->setValue = val;
 }
@@ -194,10 +196,10 @@ void xgSetMark(int mark)
 }
 
 
-void xgNewGroup()
 /*
  * Set up for reading new group of points within a dataset.
  */
+void xgNewGroup()
 {
     newGroup = 1;
 }
@@ -209,41 +211,43 @@ void xgNewGroup()
  */
 void xgPoint(double xval, double yval)
 {
-    if ( curpt == NULL ) {
-	curspot->list = (PointList *)malloc(sizeof(PointList));
-	curpt = curspot->list;
-	curpt->numPoints = 0;
-	curpt->allocSize = INITSIZE;
-	curpt->xvec = (double *) malloc((unsigned)(INITSIZE * sizeof(double)));
-	curpt->yvec = (double *) malloc((unsigned)(INITSIZE * sizeof(double)));
-	curpt->next = (PointList *) 0;
-	newGroup = 0;
-    }
-    else if (newGroup) {
-	curpt->next = (PointList *) malloc(sizeof(PointList));
-	curpt = curpt->next;
-	curpt->numPoints = 0;
-	curpt->allocSize = INITSIZE;
-	curpt->xvec = (double *) malloc((unsigned)(INITSIZE * sizeof(double)));
-	curpt->yvec = (double *) malloc((unsigned)(INITSIZE * sizeof(double)));
-	curpt->next = (PointList *) 0;
-	newGroup = 0;
-    }
+	ENTER;
+	
+	verpv(curpt);
+	
+	if (curpt == NULL) {
+		verpv(curspot);
+		curspot->list = (PointList *)malloc(sizeof(PointList));
+		curpt = curspot->list;
+		curpt->numPoints = 0;
+		curpt->allocSize = INITSIZE;
+		curpt->xvec = (double *) malloc((unsigned)(INITSIZE * sizeof(double)));
+		curpt->yvec = (double *) malloc((unsigned)(INITSIZE * sizeof(double)));
+		curpt->next = (PointList *) 0;
+		newGroup = 0;
+	} else if (newGroup) {
+		curpt->next = (PointList *) malloc(sizeof(PointList));
+		curpt = curpt->next;
+		curpt->numPoints = 0;
+		curpt->allocSize = INITSIZE;
+		curpt->xvec = (double *) malloc((unsigned)(INITSIZE * sizeof(double)));
+		curpt->yvec = (double *) malloc((unsigned)(INITSIZE * sizeof(double)));
+		curpt->next = (PointList *) 0;
+		newGroup = 0;
+	}
 
-    if (curpt->numPoints >= curpt->allocSize) {
-	curpt->allocSize *= 2;
-	curpt->xvec = (double *) realloc((char *) curpt->xvec,
-					   (unsigned) (curpt->allocSize *
-						       sizeof(double)));
-	curpt->yvec = (double *) realloc((char *) curpt->yvec,
-					   (unsigned) (curpt->allocSize *
-						       sizeof(double)));
-    }
+	if (curpt->numPoints >= curpt->allocSize) {
+		curpt->allocSize *= 2;
+		curpt->xvec = (double *) realloc((char *) curpt->xvec, (unsigned) (curpt->allocSize * sizeof(double)));
+		curpt->yvec = (double *) realloc((char *) curpt->yvec, (unsigned) (curpt->allocSize * sizeof(double)));
+	}
 
-    curpt->xvec[curpt->numPoints] = xval * newwin->xg_xscl;
-    curpt->yvec[curpt->numPoints] = yval * newwin->xg_yscl;
+	curpt->xvec[curpt->numPoints] = xval * newwin->xg_xscl;
+	curpt->yvec[curpt->numPoints] = yval * newwin->xg_yscl;
 
-    (curpt->numPoints)++;
+	(curpt->numPoints)++;
+
+	EXIT;
 }
 
 
@@ -279,7 +283,7 @@ double x, y;
 void xgSetScale(double x, double y)
 {
     if ( newwin == NULL) {
-	newwin = make_datawin();
+		newwin = make_datawin();
     }
     newwin->xg_xscl = x;
     newwin->xg_yscl = y;
@@ -341,7 +345,13 @@ void xgUpdate( int reset_axis )
 {
 	int flags;
 	ENTER;
-
+	
+	if ( newwin == NULL)
+	{
+		EXIT;
+		return;
+	}
+	
 	if ( reset_axis && app_context ) {
 		XClearWindow(XtDisplay(graph), XtWindow(graph));
 	}
@@ -354,7 +364,7 @@ void xgUpdate( int reset_axis )
 	
 	verpv(dpy);
 	
-	XFlush(dpy);
+/*	XFlush(dpy);*/
 	
 	EXIT;
 }

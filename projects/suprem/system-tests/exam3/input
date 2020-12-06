@@ -43,7 +43,6 @@ method init=1.0e-3 two.d
 
 #save the data
 structure out=./oed.str
-pause
 
 
 

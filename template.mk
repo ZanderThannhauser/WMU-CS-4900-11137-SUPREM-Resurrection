@@ -1,6 +1,6 @@
 
 bin/projects/projectname/srclist.mk:
-	find ./projects/projectname/src -name '*.c' | sed 's/^/projectname_srcs += /' > $@
+	find ./projects/projectname/src -name '*.c' ! -path '*/#*' | sed 's/^/projectname_srcs += /' > $@
 
 include bin/projects/projectname/srclist.mk
 

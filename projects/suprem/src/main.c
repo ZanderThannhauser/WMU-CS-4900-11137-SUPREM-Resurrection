@@ -270,19 +270,9 @@ int main(int argc, char **argv)
 	verpvs(getenv("HOME"));
 	verpvs(getenv("UserProfile"));
 	
-	#ifdef LINUX
-	if ((t = getenv("HOME")))
+	if ((t = getenv("HOME") ?: getenv("UserProfile")))
 	{
-		strcpy(dot_name, t);
-	#endif
-	
-	#ifdef WINDOWS
-	if ((t = getenv("UserProfile")))
-	{
-		strcpy(dot_name, t);
-	#endif
-	
-		strcat(dot_name, "/.supremrc");
+		strcat(strcpy(dot_name, t), "/.supremrc");
 		do_source(dot_name, NULL, FALSE, /*report errors*/ FALSE);
 	}
 	
@@ -304,9 +294,23 @@ int main(int argc, char **argv)
 	/*if we are logging cpu stats, close the file*/
 	if (cpufile != NULL)
 		fclose(cpufile);
-
+	
 	xgUpdate(1);
 	
 	EXIT;
 	return 0;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+

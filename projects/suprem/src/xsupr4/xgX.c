@@ -16,6 +16,7 @@
 #include <X11/Xos.h>
 #include <X11/Xlib.h>
 #include <X11/Xutil.h>
+#include <assert.h>
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -62,15 +63,21 @@ char *l_chars;                  /* Character spec   */
 int l_len;                      /* Length of spec   */
 {
 	ENTER;
+	
 	GraphWidget gw = (GraphWidget) w;
 	XGCValues gcvals;
 	unsigned long gcmask;
-
+	
+	verpv(l_width);
+	
 	gcvals.foreground = l_fg;
 	gcvals.line_style = l_style;
 	gcvals.line_width = l_width;
 	gcmask = GCForeground | GCLineStyle | GCLineWidth;
-
+	
+	verpv(l_fg);
+	verpv(gcvals.foreground);
+	
 	if ( gw->graph.seg_gc == (GC) 0)
 	{
 		gw->graph.seg_gc = XCreateGC(XtDisplay(gw), XtWindow(gw), gcmask, &gcvals);
@@ -96,11 +103,6 @@ void set_X(GraphWidget gw)
 {
 	ENTER;
 	GraphWin *wi = gw->graph.wi;
-	int i;
-	
-	verpv(gw);
-	
-	verpv(wi);
 	
 	wi->dev_info.area_w = gw->core.width;
 	wi->dev_info.area_h = gw->core.height;
@@ -253,10 +255,12 @@ void seg_X(Widget w, int ns, XSegment* segs, int width, int style, int lappr, in
 	{
 		dash_list[0] = 1;
 		dash_list[1] = 1;
+		verpv(gw->graph.gridColor);
 		segGC(w, gw->graph.gridColor, LineOnOffDash, 0, dash_list, 2);
 	}
 	else if (style == L_ZERO)
 	{
+		verpv(gw->graph.zeroColor);
 		segGC(w, gw->graph.zeroColor, LineSolid, 0, (char *) 0, 0);
 	}
 	else
@@ -265,12 +269,13 @@ void seg_X(Widget w, int ns, XSegment* segs, int width, int style, int lappr, in
 		lappr = (int)lappr/MAXCOL;
 		if (lappr == 0)
 		{
-			segGC(w, gw->graph.pix[color%MAXCOL], LineSolid, width, (char *) 0, 0);
+			verpv(color);
+			verpv(MAXCOL);
+			segGC(w, gw->graph.pix[color % MAXCOL], LineSolid, width, (char *) 0, 0);
 		}
 		else
 		{
-			segGC(w, gw->graph.pix[color%MAXCOL], LineOnOffDash, width,
-			dashlist[lappr], 2);
+			segGC(w, gw->graph.pix[color%MAXCOL], LineOnOffDash, width, dashlist[lappr], 2);
 		}
 	}
 	
@@ -281,11 +286,10 @@ void seg_X(Widget w, int ns, XSegment* segs, int width, int style, int lappr, in
 
 #define LAST_CHECK
 
-
-#define dot_width 8
-#define dot_height 8
-static char dot_bits[] = {
-   0x00, 0x3c, 0x7e, 0x7e, 0x7e, 0x7e, 0x3c, 0x00};
+/*#define dot_width 8*/
+/*#define dot_height 8*/
+/*static char dot_bits[] = {*/
+/*   0x00, 0x3c, 0x7e, 0x7e, 0x7e, 0x7e, 0x3c, 0x00};*/
 
 #define mark1_width 8
 #define mark1_height 8
@@ -343,40 +347,40 @@ static char mark8_bits[] = {
    0x00, 0x3e, 0x1c, 0x08, 0x1c, 0x3e, 0x00, 0x00};
 
 /* Sizes exported for marker drawing */
-static unsigned int dot_w = dot_width;
-static unsigned int dot_h = dot_height;
+/*static unsigned int dot_w = dot_width;*/
+/*static unsigned int dot_h = dot_height;*/
 static unsigned int mark_w = mark1_width;
 static unsigned int mark_h = mark1_height;
-static int mark_cx = mark1_x_hot;
-static int mark_cy = mark1_y_hot;
+/*static int mark_cx = mark1_x_hot;*/
+/*static int mark_cy = mark1_y_hot;*/
 
 void make_markers(GraphWidget gw)
 {
 	ENTER;
 	
 	gw->graph.marker[0] = XCreateBitmapFromData(XtDisplay(gw),
-	RootWindowOfScreen(XtScreen(gw)), mark1_bits, mark_w, mark_h);
+		RootWindowOfScreen(XtScreen(gw)), mark1_bits, mark_w, mark_h);
 
 	gw->graph.marker[1] = XCreateBitmapFromData(XtDisplay(gw),
-	RootWindowOfScreen(XtScreen(gw)), mark2_bits, mark_w, mark_h);
+		RootWindowOfScreen(XtScreen(gw)), mark2_bits, mark_w, mark_h);
 
 	gw->graph.marker[2] = XCreateBitmapFromData(XtDisplay(gw),
-	RootWindowOfScreen(XtScreen(gw)), mark3_bits, mark_w, mark_h);
+		RootWindowOfScreen(XtScreen(gw)), mark3_bits, mark_w, mark_h);
 
 	gw->graph.marker[3] = XCreateBitmapFromData(XtDisplay(gw),
-	RootWindowOfScreen(XtScreen(gw)), mark4_bits, mark_w, mark_h);
+		RootWindowOfScreen(XtScreen(gw)), mark4_bits, mark_w, mark_h);
 
 	gw->graph.marker[4] = XCreateBitmapFromData(XtDisplay(gw),
-	RootWindowOfScreen(XtScreen(gw)), mark5_bits, mark_w, mark_h);
+		RootWindowOfScreen(XtScreen(gw)), mark5_bits, mark_w, mark_h);
 
 	gw->graph.marker[5] = XCreateBitmapFromData(XtDisplay(gw),
-	RootWindowOfScreen(XtScreen(gw)), mark6_bits, mark_w, mark_h);
+		RootWindowOfScreen(XtScreen(gw)), mark6_bits, mark_w, mark_h);
 
 	gw->graph.marker[6] = XCreateBitmapFromData(XtDisplay(gw),
-	RootWindowOfScreen(XtScreen(gw)), mark7_bits, mark_w, mark_h);
+		RootWindowOfScreen(XtScreen(gw)), mark7_bits, mark_w, mark_h);
 
 	gw->graph.marker[7] = XCreateBitmapFromData(XtDisplay(gw),
-	RootWindowOfScreen(XtScreen(gw)), mark8_bits, mark_w, mark_h);
+		RootWindowOfScreen(XtScreen(gw)), mark8_bits, mark_w, mark_h);
 	
 	EXIT;
 }

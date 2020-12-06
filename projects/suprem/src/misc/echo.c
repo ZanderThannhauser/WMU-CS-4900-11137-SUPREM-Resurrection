@@ -90,7 +90,7 @@ void uPause(char *unused_0, struct par_str *unused_1)
 		for (;;)
 		{
 
-			printf("Type <RETURN> to continue, or a command to be executed: ");
+			printf("Type \"RETURN\" to continue, or a command to be executed: ");
 			fflush(stdout);
 
 #ifdef HAVE_KSH
@@ -103,7 +103,8 @@ void uPause(char *unused_0, struct par_str *unused_1)
 #else
 			CommandBuf = salloc(char, 256);
 			if (fgets(CommandBuf, 256, stdin))
-				if (!CommandBuf[0])
+				// 2020: before: if (!CommandBuf[0])
+				if (!strcmp(CommandBuf, "RETURN\n")) // 2020: Makes 'pause' return correctly
 					break;
 #endif
 

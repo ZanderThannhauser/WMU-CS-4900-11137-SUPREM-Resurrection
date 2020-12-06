@@ -14,6 +14,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <assert.h>
 
 #ifdef CONVEX
 #include <strings.h>

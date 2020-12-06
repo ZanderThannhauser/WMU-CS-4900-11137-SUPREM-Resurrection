@@ -10,7 +10,7 @@
 #include <stdlib.h>
 #include <X11/IntrinsicP.h>
 #include <X11/StringDefs.h>
-
+#include <assert.h>
 #include "DataRec.h"
 
 /*2020 includes:*/
@@ -180,8 +180,7 @@ char *errmsg;			/* Returned error message */
 }
 
 
-
-
+#if 0
 static void psHeader(psFile, docu_flag)
 FILE *psFile;
 int docu_flag;
@@ -204,8 +203,9 @@ int docu_flag;
     #endif
     TODO;
 }
+#endif
 
-
+#if 0
 static void psScale(psFile, width, height, flags)
 FILE *psFile;			/* Output stream */
 int width;			/* Output width  */
@@ -300,9 +300,9 @@ int flags;			/* Output options */
     #endif
     TODO;
 }
+#endif
 
-
-
+#if 0
 static void psFonts(psFile)
 FILE *psFile;			/* Output stream                */
 /*
@@ -380,9 +380,9 @@ FILE *psFile;			/* Output stream                */
     #endif
     TODO;
 }
+#endif
 
-
-
+#if 0
 static void psMarks(psFile)
 FILE *psFile;
 /*
@@ -428,9 +428,9 @@ FILE *psFile;
     #endif
     TODO;
 }
+#endif
 
-
-
+#if 0
 static void psText(state, x, y, text, just, style)
 char *state;			/* Really (struct userInfo *) */
 int x, y;			/* Text position (devs)       */
@@ -462,9 +462,9 @@ int style;			/* Style                      */
     #endif
     TODO;
 }
+#endif
 
-
-
+#if 0
 /*ARGSUSED*/
 static void psSeg(state, ns, seglist, width, style, lappr, color)
 char *state;			/* Really (struct userInfo *) */
@@ -525,9 +525,9 @@ int color;			/* Zero to seven              */
     #endif
     TODO;
 }
+#endif
 
-
-
+#if 0
 /*ARGSUSED*/
 static void psDot(state, x, y, style, type, color)
 char *state;    	/* state information */
@@ -569,8 +569,9 @@ int color;  		/* color of dot */
     #endif
     TODO;
 }
+#endif
 
-
+#if 0
 static void psEnd(userState)
 char *userState;    /* state information */
 {
@@ -585,7 +586,7 @@ char *userState;    /* state information */
     #endif
     TODO;
 }
-
+#endif
 
 
 

@@ -16,6 +16,7 @@
 /*   make_db.c                Version 5.1     */
 
 #include <stdio.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"

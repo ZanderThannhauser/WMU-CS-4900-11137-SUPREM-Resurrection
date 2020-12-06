@@ -23,6 +23,10 @@
 
 /* 2020 includes:*/
 #include <debug.h>
+#include "../xsupr4/interface.h"
+#include "../refine/skel.h"
+#include "../plot/plot.h"
+#include "../refine/triang.h"
 #include "material.h"
 /* end of includes*/
 
@@ -42,20 +46,17 @@
 void material(int line_bound)
 {
 	ENTER;
-	#if 0
-    register int ir;	/*current triangle*/
-    register int sr;
+	register int ir;	/*current triangle*/
+	register int sr;
 
-
-    xgNewSet();
-    xgSetName("Materials");
-    for(ir = 0; ir < nreg; ir++) {
-	sr = skel_reg(ir);
-	reg_pl(sr);
-	free_skel(sr);
-    }
-	#endif
-	TODO;
+	xgNewSet();
+	xgSetName("Materials");
+	for (ir = 0; ir < nreg; ir++) {
+		sr = skel_reg(ir);
+		reg_pl(sr);
+		free_skel(sr);
+	}
+	
 	EXIT;
 }
 

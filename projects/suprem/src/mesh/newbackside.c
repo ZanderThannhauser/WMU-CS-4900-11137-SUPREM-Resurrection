@@ -5,6 +5,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <stdlib.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"
@@ -79,7 +80,6 @@ int newbackside(float line)
 		/* for now lets just walk through all the triangle.  it's inefficient
 		 *	but should work
 		 */
-		#if 0
 		for (ie = 0; ie < ne; ie++)
 		{
 			if (WITHIN(pt[nd[tri[ie]->nd[0]]->pt]->cord[1], line * 1.0e-4))
@@ -98,8 +98,6 @@ int newbackside(float line)
 						tri[ie]->nb[0] = BC_OFFSET + 1;
 			}
 		}
-		#endif
-		TODO;
 	}
 	return (0);
 }

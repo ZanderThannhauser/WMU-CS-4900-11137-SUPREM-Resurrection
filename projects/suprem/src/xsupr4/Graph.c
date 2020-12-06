@@ -12,6 +12,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <pwd.h>
+#include <assert.h>
 
 #define __UNIXOS2__
 #include <X11/Xlib.h>
@@ -23,6 +24,8 @@
 /*2020 includes:*/
 #include <debug.h>
 #include "xgX.h"
+#include "draw.h"
+#include "interface.h"
 #include "Graph.h"
 /*end of includes*/
 
@@ -76,7 +79,8 @@ static XtResource resources[] = {
         sizeof(Pixel),
         XtOffset(GraphRec *, graph.pix[0]),
         XtRString,
-        XtDefaultForeground
+        // 2020: before: XtDefaultForeground
+        "red" // 2020 Xresources are hard, why not hard-code?
      },
      {
         XtNLineColor2,
@@ -85,7 +89,8 @@ static XtResource resources[] = {
         sizeof(Pixel),
         XtOffset(GraphRec *, graph.pix[1]),
         XtRString,
-        XtDefaultForeground
+        // 2020: before: XtDefaultForeground
+        "SpringGreen" // 2020 Xresources are hard, why not hard-code?
      },
      {
         XtNLineColor3,
@@ -94,7 +99,8 @@ static XtResource resources[] = {
         sizeof(Pixel),
         XtOffset(GraphRec *, graph.pix[2]),
         XtRString,
-        XtDefaultForeground
+        // 2020: before: XtDefaultForeground
+        "blue" // 2020 Xresources are hard, why not hard-code?
      },
      {
         XtNLineColor4,
@@ -103,7 +109,8 @@ static XtResource resources[] = {
         sizeof(Pixel),
         XtOffset(GraphRec *, graph.pix[3]),
         XtRString,
-        XtDefaultForeground
+        // 2020: before: XtDefaultForeground
+        "yellow" // 2020 Xresources are hard, why not hard-code?
      },
      {
         XtNLineColor5,
@@ -112,7 +119,8 @@ static XtResource resources[] = {
         sizeof(Pixel),
         XtOffset(GraphRec *, graph.pix[4]),
         XtRString,
-        XtDefaultForeground
+        // 2020: before: XtDefaultForeground
+        "cyan" // 2020 Xresources are hard, why not hard-code?
      },
      {
         XtNLineColor6,
@@ -121,7 +129,8 @@ static XtResource resources[] = {
         sizeof(Pixel),
         XtOffset(GraphRec *, graph.pix[5]),
         XtRString,
-        XtDefaultForeground
+        // 2020: before: XtDefaultForeground
+        "sienna" // 2020 Xresources are hard, why not hard-code?
      },
      {
         XtNLineColor7,
@@ -130,7 +139,8 @@ static XtResource resources[] = {
         sizeof(Pixel),
         XtOffset(GraphRec *, graph.pix[6]),
         XtRString,
-        XtDefaultForeground
+        // 2020: before: XtDefaultForeground
+        "orange" // 2020 Xresources are hard, why not hard-code?
      },
      {
         XtNLineColor8,
@@ -139,7 +149,8 @@ static XtResource resources[] = {
         sizeof(Pixel),
         XtOffset(GraphRec *, graph.pix[7]),
         XtRString,
-        XtDefaultForeground
+        // 2020: before: XtDefaultForeground
+        "coral" // 2020 Xresources are hard, why not hard-code?
      },
      {
         XtNGraphWin,
@@ -171,7 +182,7 @@ static XtActionsRec actions[] = {
 	{"DrawCell", DrawCell},
 };
 
-static void tildeExpand(char *, char *);
+/*static void tildeExpand(char *, char *);*/
 
 /* these Core methods not needed by Graph:
  *
@@ -228,13 +239,15 @@ GraphClassRec graphClassRec = {
     },
 };
 
-WidgetClass graphWidgetClass = (WidgetClass) & graphClassRec;
+WidgetClass graphWidgetClass = (WidgetClass) &graphClassRec;
 
 void associate(gw, wi)
 GraphWidget gw;
 GraphWin *wi;
 {
-    gw->graph.wi = wi;
+	ENTER;
+	gw->graph.wi = wi;
+	EXIT;
 }
 
 /* ARGSUSED */
@@ -246,7 +259,7 @@ Cardinal *num_args;
 {
 	ENTER;
 	GraphWidget new = (GraphWidget) tnew;
-
+	
 	if (new->core.width == 0) {
 		new->core.width = 512;
 	}
@@ -262,7 +275,7 @@ Cardinal *num_args;
 	new->graph.title_gc = (GC) 0;
 	new->graph.label_gc = (GC) 0;
 
-	set_X( new );
+	set_X(new);
 	
 	EXIT;
 }
@@ -275,14 +288,18 @@ Widget w;
 XEvent *event;
 {
 	ENTER;
-	#if 0
+	
 	GraphWidget gw = (GraphWidget) w;
 	GraphWin *wi = gw->graph.wi;
-
-	if (!XtIsRealized(gw)) return;
+	
+	if (!XtIsRealized((Widget) gw))
+	{
+		EXIT;
+		return;
+	}
+	
 	do_redraw(gw, wi);
-	#endif
-	TODO;
+	
 	EXIT;
 }
 
@@ -294,9 +311,9 @@ ArgList args;
 Cardinal *num_args;
 {
 	#if 0
-    GraphWidget curcw = (GraphWidget) current;
-    GraphWidget newcw = (GraphWidget) new;
-    Boolean do_redisplay = False;
+	GraphWidget curcw = (GraphWidget) current;
+	GraphWidget newcw = (GraphWidget) new;
+	Boolean do_redisplay = False;
 	#endif
 	TODO;
 }
@@ -315,11 +332,8 @@ static void
 Resize(w)
 Widget w;
 {
-	#if 0
 	GraphWidget gw = (GraphWidget) w;
 	set_X(gw);
-	#endif
-	TODO;
 }
 
 static XtGeometryResult QueryGeometry(w, proposed, answer)
@@ -547,6 +561,7 @@ void do_pr(Widget widget, XtPointer client_data, XtPointer call_data)
 	TODO;
 }
 
+#if 0
 static void tildeExpand(out, in)
 char *out;			/* Output space for expanded file name */
 char *in;			/* Filename with tilde                 */
@@ -589,32 +604,31 @@ char *in;			/* Filename with tilde                 */
     #endif
     TODO;
 }
+#endif
 
 void add_label(Widget widget, XtPointer client_data, XtPointer call_data)
 // XtPointer client_data;   /* cast to bigBitmap */
 // XtPointer call_data;    /* unused */
 {
-	#if 0
-    print_calldata *foo = (print_calldata *)client_data;
-    GraphWidget gw = foo->graph;
-    Arg args[1];
-    char *x, *y, *t;
+	ENTER;
+	print_calldata *foo = (print_calldata *)client_data;
+	GraphWidget gw = foo->graph;
+	Arg args[1];
+	char *x, *y, *t;
 
-    XtSetArg(args[0], XtNstring, &x);
-    XtGetValues(foo->dev_file, args, 1);
-    XtSetArg(args[0], XtNstring, &y);
-    XtGetValues(foo->dev_type, args, 1);
-    XtSetArg(args[0], XtNstring, &t);
-    XtGetValues(foo->dev_name, args, 1);
+	XtSetArg(args[0], XtNstring, &x);
+	XtGetValues(foo->dev_file, args, 1);
+	XtSetArg(args[0], XtNstring, &y);
+	XtGetValues(foo->dev_type, args, 1);
+	XtSetArg(args[0], XtNstring, &t);
+	XtGetValues(foo->dev_name, args, 1);
 
-    xgAxisLabels(x, y, t);
+	xgAxisLabels(x, y, t);
 
-    XClearWindow(XtDisplay(gw), XtWindow(gw));
-    do_redraw(gw, gw->graph.wi);
-	#endif
-	TODO;
+	XClearWindow(XtDisplay(gw), XtWindow(gw));
+	do_redraw(gw, gw->graph.wi);
+	EXIT;
 }
-
 
 
 

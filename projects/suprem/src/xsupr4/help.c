@@ -5,6 +5,8 @@
 
 
 #include <stdio.h>
+#include <assert.h>
+
 #include <X11/Intrinsic.h>
 #include <X11/StringDefs.h>
 
@@ -18,6 +20,7 @@
 
 /*2020 includes:*/
 #include <debug.h>
+#include "xgraph.h"
 #include "help.h"
 /*end of includes*/
 
@@ -36,7 +39,6 @@ static void destroy_help(Widget widget, XtPointer client_data, XtPointer call_da
 
 void help_win(Widget widget, XtPointer client_data, XtPointer call_data)
 {
-	#if 0
     Widget tL1, vpane, buttonbox;
     Widget close, txt;
     int one = 1;
@@ -77,8 +79,6 @@ void help_win(Widget widget, XtPointer client_data, XtPointer call_data)
 				  NULL);
 
     XtRealizeWidget(tL1);
-    #endif
-    TODO;
 }
 
 

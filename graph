@@ -1,0 +1,71 @@
+./projects/suprem/src/xsupr4/xgX.c:	if ( gw->graph.seg_gc == (GC) 0)
+./projects/suprem/src/xsupr4/xgX.c:		gw->graph.seg_gc = XCreateGC(XtDisplay(gw), XtWindow(gw), gcmask, &gcvals);
+./projects/suprem/src/xsupr4/xgX.c:		XChangeGC(XtDisplay(gw), gw->graph.seg_gc, gcmask, &gcvals);
+./projects/suprem/src/xsupr4/xgX.c:		XSetDashes(XtDisplay(gw), gw->graph.seg_gc, 0, l_chars, l_len);
+./projects/suprem/src/xsupr4/xgX.c:	GraphWin *wi = gw->graph.wi;
+./projects/suprem/src/xsupr4/xgX.c:	wi->dev_info.area_w = gw->core.width;
+./projects/suprem/src/xsupr4/xgX.c:	wi->dev_info.area_h = gw->core.height;
+./projects/suprem/src/xsupr4/xgX.c:	wi->dev_info.axis_width = XTextWidth(gw->graph.labelFont, "8", 1);
+./projects/suprem/src/xsupr4/xgX.c:	wi->dev_info.axis_height = gw->graph.labelFont->max_bounds.ascent + gw->graph.labelFont->max_bounds.descent;
+./projects/suprem/src/xsupr4/xgX.c:	wi->dev_info.title_width = XTextWidth(gw->graph.titleFont, "8", 1);
+./projects/suprem/src/xsupr4/xgX.c:	wi->dev_info.title_height = gw->graph.labelFont->max_bounds.ascent + gw->graph.labelFont->max_bounds.descent;
+./projects/suprem/src/xsupr4/xgX.c:	if ( gw->graph.title_gc == (GC) 0 ) {
+./projects/suprem/src/xsupr4/xgX.c:		gcvals.font = gw->graph.titleFont->fid;
+./projects/suprem/src/xsupr4/xgX.c:		gw->graph.title_gc = XCreateGC(XtDisplay(gw), XtWindow(gw), gcmask, &gcvals);
+./projects/suprem/src/xsupr4/xgX.c:	if ( gw->graph.label_gc == (GC) 0 ) {
+./projects/suprem/src/xsupr4/xgX.c:		gcvals.font = gw->graph.labelFont->fid;
+./projects/suprem/src/xsupr4/xgX.c:		gw->graph.label_gc = XCreateGC(XtDisplay(gw), XtWindow(gw), gcmask, &gcvals);
+./projects/suprem/src/xsupr4/xgX.c:	font = ((style == T_TITLE) ? gw->graph.titleFont : gw->graph.labelFont);
+./projects/suprem/src/xsupr4/xgX.c:	loc_gc = ((style == T_TITLE) ? gw->graph.title_gc : gw->graph.label_gc);
+./projects/suprem/src/xsupr4/xgX.c:		verpv(gw->graph.gridColor);
+./projects/suprem/src/xsupr4/xgX.c:		segGC(w, gw->graph.gridColor, LineOnOffDash, 0, dash_list, 2);
+./projects/suprem/src/xsupr4/xgX.c:		verpv(gw->graph.zeroColor);
+./projects/suprem/src/xsupr4/xgX.c:		segGC(w, gw->graph.zeroColor, LineSolid, 0, (char *) 0, 0);
+./projects/suprem/src/xsupr4/xgX.c:					verpv(gw->graph.pix[i]);
+./projects/suprem/src/xsupr4/xgX.c:				int tmp = gw->graph.pix[color%MAXCOL];
+./projects/suprem/src/xsupr4/xgX.c:			segGC(w, gw->graph.pix[color % MAXCOL], LineSolid, width, (char *) 0, 0);
+./projects/suprem/src/xsupr4/xgX.c:			segGC(w, gw->graph.pix[color%MAXCOL], LineOnOffDash, width, dashlist[lappr], 2);
+./projects/suprem/src/xsupr4/xgX.c:	XDrawSegments(XtDisplay(gw), XtWindow(gw), gw->graph.seg_gc, segs, ns);
+./projects/suprem/src/xsupr4/xgX.c:	gw->graph.marker[0] = XCreateBitmapFromData(XtDisplay(gw),
+./projects/suprem/src/xsupr4/xgX.c:	gw->graph.marker[1] = XCreateBitmapFromData(XtDisplay(gw),
+./projects/suprem/src/xsupr4/xgX.c:	gw->graph.marker[2] = XCreateBitmapFromData(XtDisplay(gw),
+./projects/suprem/src/xsupr4/xgX.c:	gw->graph.marker[3] = XCreateBitmapFromData(XtDisplay(gw),
+./projects/suprem/src/xsupr4/xgX.c:	gw->graph.marker[4] = XCreateBitmapFromData(XtDisplay(gw),
+./projects/suprem/src/xsupr4/xgX.c:	gw->graph.marker[5] = XCreateBitmapFromData(XtDisplay(gw),
+./projects/suprem/src/xsupr4/xgX.c:	gw->graph.marker[6] = XCreateBitmapFromData(XtDisplay(gw),
+./projects/suprem/src/xsupr4/xgX.c:	gw->graph.marker[7] = XCreateBitmapFromData(XtDisplay(gw),
+./projects/suprem/src/xsupr4/xgX.c:    gcvals.foreground = gw->graph.pix[color%MAXCOL];
+./projects/suprem/src/xsupr4/xgX.c:    gcvals.clip_mask = gw->graph.marker[type%MAXCOL];
+./projects/suprem/src/xsupr4/xgX.c:    if (gw->graph.dot_gc == (GC) 0) {
+./projects/suprem/src/xsupr4/xgX.c:	gw->graph.dot_gc = XCreateGC(XtDisplay(gw), XtWindow(gw),
+./projects/suprem/src/xsupr4/xgX.c:	XChangeGC(XtDisplay(gw), gw->graph.dot_gc, gcmask, &gcvals);
+./projects/suprem/src/xsupr4/xgX.c:    XFillRectangle(XtDisplay(gw), XtWindow(gw), gw->graph.dot_gc,
+./projects/suprem/src/xsupr4/Graph.c:    gw->graph.wi = wi;
+./projects/suprem/src/xsupr4/Graph.c:	GraphWin *wi = gw->graph.wi;
+./projects/suprem/src/xsupr4/Graph.c:    GraphWin *wi = gw->graph.wi;
+./projects/suprem/src/xsupr4/Graph.c:    if ( gw->graph.echo_gc == (GC) 0 ) {
+./projects/suprem/src/xsupr4/Graph.c:		gw->graph.echo_gc = XCreateGC(XtDisplay(gw), XtWindow(gw), gcmask, &gcvals);
+./projects/suprem/src/xsupr4/Graph.c:		gw->graph.crx = gw->graph.stx = ((XButtonEvent *)event)->x;
+./projects/suprem/src/xsupr4/Graph.c:		gw->graph.cry = gw->graph.sty = ((XButtonEvent *)event)->y;
+./projects/suprem/src/xsupr4/Graph.c:	SetBox( gw->graph, boxEcho );
+./projects/suprem/src/xsupr4/Graph.c:	XDrawRectangles(XtDisplay(gw), XtWindow(gw), gw->graph.echo_gc, &boxEcho, 1);
+./projects/suprem/src/xsupr4/Graph.c:	gw->graph.crx = ((XMotionEvent *)event)->x;
+./projects/suprem/src/xsupr4/Graph.c:	gw->graph.cry = ((XMotionEvent *)event)->y;
+./projects/suprem/src/xsupr4/Graph.c:	SetBox( gw->graph, boxEcho );
+./projects/suprem/src/xsupr4/Graph.c:	XDrawRectangles(XtDisplay(gw), XtWindow(gw), gw->graph.echo_gc, &boxEcho, 1);
+./projects/suprem/src/xsupr4/Graph.c:	SetBox( gw->graph, boxEcho );
+./projects/suprem/src/xsupr4/Graph.c:	XDrawRectangles(XtDisplay(gw), XtWindow(gw), gw->graph.echo_gc, &boxEcho, 1);
+./projects/suprem/src/xsupr4/Graph.c:	lx = TRANX(gw->graph.crx);
+./projects/suprem/src/xsupr4/Graph.c:	ly = TRANY(gw->graph.cry);
+./projects/suprem/src/xsupr4/Graph.c:	hx = TRANX(gw->graph.stx);
+./projects/suprem/src/xsupr4/Graph.c:	hy = TRANY(gw->graph.sty);
+./projects/suprem/src/xsupr4/Graph.c:	gw->graph.wi->loX = lx;
+./projects/suprem/src/xsupr4/Graph.c:	gw->graph.wi->loY = ly;
+./projects/suprem/src/xsupr4/Graph.c:	gw->graph.wi->hiX = hx;
+./projects/suprem/src/xsupr4/Graph.c:	gw->graph.wi->hiY = hy;
+./projects/suprem/src/xsupr4/Graph.c:    gw->graph.wi->loX = gw->graph.wi->llx;
+./projects/suprem/src/xsupr4/Graph.c:    gw->graph.wi->loY = gw->graph.wi->lly;
+./projects/suprem/src/xsupr4/Graph.c:    gw->graph.wi->hiX = gw->graph.wi->urx;
+./projects/suprem/src/xsupr4/Graph.c:    gw->graph.wi->hiY = gw->graph.wi->ury;
+./projects/suprem/src/xsupr4/Graph.c:    GraphWin *curWin = (GraphWin *)gw->graph.wi;
+./projects/suprem/src/xsupr4/Graph.c:	do_redraw(gw, gw->graph.wi);

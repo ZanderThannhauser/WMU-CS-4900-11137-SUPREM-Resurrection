@@ -31,6 +31,7 @@ CFLAGS += -Wfatal-errors
 CFLAGS += -Wno-maybe-uninitialized
 CFLAGS += -Wno-array-bounds
 CFLAGS += -Wno-format-overflow
+CFLAGS += -Wno-unused-variable -Wno-unused-but-set-variable
 
 RFLAGS += -O2
 RFLAGS += -flto
@@ -46,32 +47,32 @@ LDLIBS += -lXaw -lXmu -lXt -lXext -lX11 # you need these three for plotting
 
 default: bin/suprem
 
-#ARGS += ./projects/suprem/system-tests/durban1/input
-#ARGS += ./projects/suprem/system-tests/exam1/input
-ARGS += ./projects/suprem/system-tests/exam2/input
-#ARGS += ./projects/suprem/system-tests/exam3/input
-#ARGS += ./projects/suprem/system-tests/exam4/input
-#ARGS += ./projects/suprem/system-tests/exam5/input
-#ARGS += ./projects/suprem/system-tests/exam6/input
-#ARGS += ./projects/suprem/system-tests/exam7/input
-#ARGS += ./projects/suprem/system-tests/exam8/input
-#ARGS += ./projects/suprem/system-tests/exam9/input
-#ARGS += ./projects/suprem/system-tests/exam10/input
-#ARGS += ./projects/suprem/system-tests/exam11/input
-#ARGS += ./projects/suprem/system-tests/exam12/input
-#ARGS += ./projects/suprem/system-tests/exam13/input
-#ARGS += ./projects/suprem/system-tests/exam14/input
-#ARGS += ./projects/suprem/system-tests/exam15/input
-#ARGS += ./projects/suprem/system-tests/exam16/input
-#ARGS += ./projects/suprem/system-tests/exam17/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
-#ARGS += ./projects/suprem/system-tests/gaas/input
+#ARGS += ./examples/durban1/input
+#ARGS += ./examples/exam1/input
+#ARGS += ./examples/exam2/input
+#ARGS += ./examples/exam3/input
+#ARGS += ./examples/exam4/input
+#ARGS += ./examples/exam5/input
+#ARGS += ./examples/exam6/input
+ARGS += ./examples/exam7/input
+#ARGS += ./examples/exam8/input
+#ARGS += ./examples/exam9/input
+#ARGS += ./examples/exam10/input
+#ARGS += ./examples/exam11/input
+#ARGS += ./examples/exam12/input
+#ARGS += ./examples/exam13/input
+#ARGS += ./examples/exam14/input
+#ARGS += ./examples/exam15/input
+#ARGS += ./examples/exam16/input
+#ARGS += ./examples/exam17/input
+#ARGS += ./examples/gaas/example1/input
+#ARGS += ./examples/gaas/example2/input
+#ARGS += ./examples/gaas/example3/input
+#ARGS += ./examples/gaas/example4/input
+#ARGS += ./examples/gaas/example5/input
+#ARGS += ./examples/gaas/example6/input
+#ARGS += ./examples/gaas/example7/input
+#ARGS += ./examples/gaas/example8/input
 
 bin:
 	rm -f ./bin

@@ -18,8 +18,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <math.h>
-
-#include "debug.h"
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"
@@ -29,6 +28,7 @@
 #include "suprem/include/regrid.h"
 
 /* 2020 includes:*/
+#include "debug.h"
 #include "../refine/dbase.h"
 #include "../refine/hinit.h"
 #include "../plot/plot.h"

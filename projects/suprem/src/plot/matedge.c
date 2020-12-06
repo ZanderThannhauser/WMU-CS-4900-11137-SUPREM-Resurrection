@@ -17,6 +17,7 @@
 
 #include <math.h>
 #include <stdio.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/geom.h"

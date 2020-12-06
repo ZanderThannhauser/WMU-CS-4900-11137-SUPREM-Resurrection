@@ -13,6 +13,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <assert.h>
 
 #include "suprem/include/constant.h"
 #include "suprem/include/device.h"
@@ -92,7 +93,7 @@ void gen_contact()
 	double		 minx, miny, maxx, maxy;
 	double		 mat, matlist[MAXMAT];
 	char *		 matnam[MAXMAT];
-	#if 0
+	
 	matnam[0] = "gas";
 	matnam[1] = "oxide";
 	matnam[2] = "nitride";
@@ -242,8 +243,6 @@ void gen_contact()
 		printf("    x :\t%e\t%e\n", minx, maxx);
 		printf("    y :\t%e\t%e\n", miny, maxy);
 	}
-	#endif
-	TODO;
 }
 
 /************************************************************************
@@ -259,7 +258,6 @@ void find_con(int n, int nc, int *chk[3], int *len)
 	register int i, ie, j, p, k;
 	register int n1, n2, nt, mat1;
 	ENTER;
-	#if 0
 	/*check all the triangles this node is connected to*/
 	for (i = 0; i < num_tri_nd(n); i++)
 	{
@@ -324,8 +322,6 @@ void find_con(int n, int nc, int *chk[3], int *len)
 			}
 		}
 	}
-	#endif
-	TODO;
 	EXIT;
 }
 

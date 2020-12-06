@@ -58,7 +58,7 @@ float elstif[6][6];
 
 void elast_growth(float temp, double dt)
 {
-	#if 0
+	ENTER;
 	int		   n, sXVEL, sYVEL, i, j, ie, v, w, s, t;
 	int		   col, row, lcol, lrow, nat_p, where, *fix, *nx, *nx1, p;
 	int *	  ia = 0, *il, aoff, loff;
@@ -232,11 +232,10 @@ void elast_growth(float temp, double dt)
 	free(l);
 	free(a);
 	free(fix);
-
+	
+	EXIT;
 	/* shut the door when you leave */
 	return;
-	#endif
-	TODO;
 }
 
 /*-----------------ELEM_STIFF-------------------------------------------*
@@ -246,7 +245,6 @@ void elast_growth(float temp, double dt)
  *----------------------------------------------------------------------*/
 void elem_stiff(int ie) /* Triangle number */
 {
-	#if 0
 	int   nic1, nic2, nic3, mat, i, j;
 	float x1, y1, x2, y2, x3, y3, area, C12, C1, C2;
 	float bi, ci, bj, cj, bm, cm;
@@ -324,8 +322,6 @@ void elem_stiff(int ie) /* Triangle number */
 	for (i = 0; i < 6; i++)
 		for (j = 0; j < 6; j++)
 			elstif[i][j] *= 1 / (4 * area);
-	#endif
-	TODO;
 }
 
 /*-----------------GET_ELASCONN-----------------------------------------
@@ -340,7 +336,6 @@ int get_elasconn(int ind, short *taken, int *num)
 	tri_typ *at;
 	pt_typ * ap;
 
-	#if 0
 	avail = *num;
 	*num = 0;
 
@@ -378,8 +373,6 @@ int get_elasconn(int ind, short *taken, int *num)
 	clean_list(taken, num);
 
 	return (0);
-	#endif
-	TODO;
 }
 
 

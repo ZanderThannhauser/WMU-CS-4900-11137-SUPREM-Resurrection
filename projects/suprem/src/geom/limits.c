@@ -35,7 +35,9 @@ void dev_lmts(float *dxmin, float *dxmax, float *dymin, float *dymax)
 {
 	register float *		 val;
 	register struct pt_str **p;
-
+	int i = 0;
+	ENTER;
+	
 	/*initialize max and mins to first values**/
 	*dxmin = *dxmax = pt[0]->cord[0];
 	*dymin = *dymax = pt[0]->cord[1];
@@ -45,7 +47,6 @@ void dev_lmts(float *dxmin, float *dxmax, float *dymin, float *dymax)
 	
 	/*loop through all the points*/
 	// for (p = pt; *p != NULL; p++) // 2020: before
-	int i = 0;
 	for (p = pt; i < np; p++, i++) // 2020: after
 	{
 		verpv(*p);
@@ -57,6 +58,8 @@ void dev_lmts(float *dxmin, float *dxmax, float *dymin, float *dymax)
 		*dymin = (*dymin < *val) ? *dymin : *val;
 		*dymax = (*dymax > *val) ? *dymax : *val;
 	}
+	
+	EXIT;
 }
 
 

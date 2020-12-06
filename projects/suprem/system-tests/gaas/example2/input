@@ -63,4 +63,5 @@ foreach v (16.5 to 17.0 step .5)
 contour val=v line.type=4
 end
 
+pause
 quit

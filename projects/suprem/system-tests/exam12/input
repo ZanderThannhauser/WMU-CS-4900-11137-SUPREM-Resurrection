@@ -30,6 +30,6 @@ diffuse time=.001 temp=750 argon
 
 #save the data
 struct outf=./out.str
-
+pause
 quit
 

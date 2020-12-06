@@ -49,4 +49,8 @@ diffuse time=15 temp=800 continue argon
 	select z=log10(inter)	
 	plot.1d x.min=0.0 x.ma=2.0 y.mi=14.0 y.max=20.0 cle=f axi=f line.type=2
 
+pause
 quit
+
+
+

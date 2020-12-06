@@ -3,6 +3,9 @@
  * See ../Copyright for complete rights and liability information.
  */
 
+#include "Graph.h" // 2020: for GraphWidget
+#include "DataRec.h" // 2020: for GraphWin
+
 XtAppContext app_context;
 XtAppContext help_context;
 GraphWidget graph;

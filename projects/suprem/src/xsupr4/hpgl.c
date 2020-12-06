@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <math.h>
 #include <X11/Xlib.h>
+#include <assert.h>
 
 #include "DataRec.h"
 #include "plotter.h"
@@ -26,11 +27,12 @@
 /*end of declarations*/
 
 
-static void hpglText();
-static void hpglSeg();
-static void hpglDot();
-static void hpglEnd();
+/*static void hpglText();*/
+/*static void hpglSeg();*/
+/*static void hpglDot();*/
+/*static void hpglEnd();*/
 
+#if 0
 static xgOut hpglInfo = {
     D_COLOR,    /* device characteristics */
     MAXX,   /* width */
@@ -47,8 +49,8 @@ static xgOut hpglInfo = {
     hpglSeg,    /* segment  drawing function */
     hpglDot,    /* dot/marker drawing function */
     hpglEnd,    /* end of plot function */
-
 };
+#endif
 
 typedef struct {
 	double axis_w;
@@ -120,6 +122,7 @@ hpglInit(stream,width,height,title_family, title_size,
 	TODO;
 }
 
+#if 0
 static void
 hpglText(userState,x,y,text,just,style)
     mydata *userState;    /* my state information  */
@@ -189,15 +192,15 @@ hpglText(userState,x,y,text,just,style)
 	#endif
 	TODO;
 }
+#endif
 
-
-
+#if 0
 static int penselect[8] = { PEN1, PEN2, PEN3, PEN4, PEN5, PEN6, PEN7, PEN8};
 static int lineselect[8] = { LINE1, LINE2, LINE3, LINE4, LINE5, LINE6,
         LINE7, LINE8};
+#endif
 
-
-
+#if 0
 static void
 hpglSeg(userState,ns,segs,width,style,lappr,color)
     mydata *userState;    /* my state information (not used) */
@@ -280,10 +283,14 @@ hpglSeg(userState,ns,segs,width,style,lappr,color)
 	#endif
 	TODO;
 }
+#endif
 
+#if 0
 static char *markselect[8] = { MARK1, MARK2, MARK3, MARK4, MARK5, MARK6,
         MARK7, MARK8};
+#endif
 
+#if 0
 static void
 hpglDot(userState,x,y,style,type,color)
     mydata *userState;    /* my state information (not used) */
@@ -318,7 +325,9 @@ hpglDot(userState,x,y,style,type,color)
     #endif
     TODO;
 }
+#endif
 
+#if 0
 static void
 hpglEnd(userState)
     mydata *userState;    /* my state information (not used) */
@@ -331,6 +340,7 @@ hpglEnd(userState)
     #endif
     TODO;
 }
+#endif
 
 
 
